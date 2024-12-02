@@ -1,4 +1,5 @@
-import {Header, Footer} from "@/components/layout";
+import Header from "./Header";
+import Footer from "./Footer";
 import styled from "styled-components";
 
 type LayoutProps = {
@@ -6,20 +7,16 @@ type LayoutProps = {
 }
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+  flex-grow: 1;
   background-color: ${ ({ theme }) => theme.colors.white };
 `;
 
-export const Layout: React.FC<LayoutProps> = ({ children }) => {
+export default function Layout({ children }: LayoutProps) {
   return (
     <>
       <Header />
-      <Wrapper>
-        { children}
-      </Wrapper>
+      <Wrapper>{children}</Wrapper>
       <Footer />
     </>
-  )
+  );
 }

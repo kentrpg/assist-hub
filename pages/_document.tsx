@@ -30,7 +30,7 @@ export default class MyDocument extends Document {
 
   render() {
     return (
-      <Html>
+      <Html lang="zh-Hant">
         <Head>
           {/* 在這裡添加全域的 meta 標籤、字體或其他標籤 */}
         </Head>

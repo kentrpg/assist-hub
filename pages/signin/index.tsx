@@ -8,11 +8,12 @@ import Image from 'next/image';
 import { Spinner } from '@/components/Spinner';
 
 const Container = styled.div`
+  width: 100%;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 40px 20px;
-  max-width: 400px;
   margin: 0 auto;
 `;
 
@@ -54,7 +55,7 @@ const Input = styled.input`
 `;
 
 const PasswordInput = styled(Input)`
-  padding: 12px 32px 12px 12px;
+  padding: 12px 34px 12px 12px;
 `;
 
 const PasswordWrapper = styled.div`
@@ -194,7 +195,7 @@ const SignIn = () => {
                   onClick={() => setShowPassword(prevVisible => !prevVisible)}
                   aria-label={showPassword ? "隱藏密碼" : "顯示密碼"}
                 >
-                  {showPassword ? <FiEye size={22} /> : <FiEyeOff size={22} />}
+                  {showPassword ? <FiEye size={24} /> : <FiEyeOff size={24} />}
                 </TogglePassword>
               </PasswordWrapper>
             </InputGroup>

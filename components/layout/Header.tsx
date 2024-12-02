@@ -78,7 +78,7 @@ const CartButton = styled.button`
 `;
 
 const Header = () => {
-  const isLoggedIn = (process.env.NEXT_PUBLIC_IS_LOGGED_IN === 'true');
+  const isLoggedIn = !(process.env.NEXT_PUBLIC_IS_LOGGED_IN === 'true');
   const avatarPath = process.env.NEXT_PUBLIC_AVATAR_IMAGE_PATH || '';
 
   return (
@@ -110,4 +110,4 @@ const Header = () => {
   );
 }
 
-export {Header};
+export default Header;

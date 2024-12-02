@@ -85,7 +85,7 @@ const Header = () => {
     <HeaderWrapper>
       <Container>
         <Navbar>
-          <StyledLink href="/">首頁</StyledLink>
+          <StyledLink href="/">手YA</StyledLink>
           <StyledLink href="/products">所有輔具</StyledLink>
           <StyledLink href="/faq">常見問題</StyledLink>
           <StyledLink href="/inquiry">詢問單</StyledLink>

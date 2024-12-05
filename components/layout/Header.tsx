@@ -1,7 +1,7 @@
 import { FiSearch, FiShoppingCart } from 'react-icons/fi';
 import Link from 'next/link';
 import styled from 'styled-components';
-import Avatar from '../Avatar';
+import Avatar from '../ui/Avatar';
 
 const HeaderWrapper = styled.header`
   width: 100%;

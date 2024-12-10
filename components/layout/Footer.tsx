@@ -5,14 +5,14 @@ import Image from 'next/image';
 const FooterWrapper = styled.footer`
   width: 100%;
   background-color: ${ ({ theme }) => theme.colors.primary };
-  color: white;
+  color: #333333;
   padding: 40px 0;
 `;
 
 const Container = styled.div`
   max-width: 1920px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 288px;
 `;
 
 const FooterContent = styled.div`
@@ -41,7 +41,7 @@ const LinkList = styled.div`
 `;
 
 const FooterLink = styled(Link)`
-  color: white;
+  color: #333333;
   text-decoration: none;
   &:hover {
     text-decoration: underline;

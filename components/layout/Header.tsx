@@ -11,7 +11,7 @@ const HeaderWrapper = styled.header`
 const Container = styled.div`
   max-width: 1920px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 288px;
   height: 64px;
   display: flex;
   align-items: center;

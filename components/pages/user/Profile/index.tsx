@@ -1,8 +1,13 @@
 import {
+  GenderField,
+  SubTitle,
+  GenderSelection,
   ProfileContainer,
-  ProfileForm,
   ProfileTitile,
   SaveBtn,
+  NameField,
+  DobField,
+  Wrapper,
 } from "./styled";
 import { useForm } from "react-hook-form";
 
@@ -36,50 +41,55 @@ const Profile = () => {
   return (
     <>
       <ProfileContainer>
-        <ProfileForm onSubmit={onSubmit}>
+        <form onSubmit={onSubmit}>
           <ProfileTitile>基本資料</ProfileTitile>
-          {/* 性別 */}
-          <div>
-            <label>性別：</label>
-            <input
-              type="radio"
-              id="male"
-              value="male"
-              {...register("gender", { required: true })}
-            />
-            <label htmlFor="male">男生</label>
-            <input
-              type="radio"
-              id="female"
-              value="female"
-              {...register("gender", { required: true })}
-            />
-            <label htmlFor="female">女生</label>
+          <GenderField>
+            <SubTitle htmlFor="male">性別：</SubTitle>
+            <GenderSelection>
+              <input
+                type="radio"
+                id="male"
+                value="male"
+                {...register("gender", { required: true })}
+              />
+              <label htmlFor="male">男生</label>
+              <input
+                type="radio"
+                id="female"
+                value="female"
+                {...register("gender", { required: true })}
+              />
+              <label htmlFor="female">女生</label>
+            </GenderSelection>
             {errors.gender && <p style={{ color: "red" }}>請選擇性別</p>}
-          </div>
+          </GenderField>
 
           {/* 姓名與生日 */}
-          <div>
-            <label htmlFor="name">姓名：</label>
-            <input
-              type="text"
-              id="name"
-              placeholder="王小姐"
-              {...register("name", { required: "請輸入姓名" })}
-            />
-            {errors.name && (
-              <p style={{ color: "red" }}>{errors.name.message}</p>
-            )}
-
-            <label htmlFor="dob">出生年月日：</label>
-            <input
-              type="date"
-              id="dob"
-              {...register("dob", { required: "請輸入出生年月日" })}
-            />
-            {errors.dob && <p style={{ color: "red" }}>{errors.dob.message}</p>}
-          </div>
-
+          <Wrapper>
+            <NameField>
+              <SubTitle htmlFor="name">姓名：</SubTitle>
+              <input
+                type="text"
+                id="name"
+                placeholder="王小姐"
+                {...register("name", { required: "請輸入姓名" })}
+              />
+              {errors.name && (
+                <p style={{ color: "red" }}>{errors.name.message}</p>
+              )}
+            </NameField>
+            <DobField>
+              <SubTitle htmlFor="dob">出生年月日：</SubTitle>
+              <input
+                type="date"
+                id="dob"
+                {...register("dob", { required: "請輸入出生年月日" })}
+              />
+              {errors.dob && (
+                <p style={{ color: "red" }}>{errors.dob.message}</p>
+              )}
+            </DobField>
+          </Wrapper>
           {/* 電子信箱與密碼 */}
           <div>
             <label htmlFor="email">電子信箱：</label>
@@ -203,7 +213,7 @@ const Profile = () => {
             <label htmlFor="disabled-no">無</label>
           </div>
           <SaveBtn>儲存編輯</SaveBtn>
-        </ProfileForm>
+        </form>
       </ProfileContainer>
     </>
   );

@@ -1,18 +1,48 @@
-import { SideBarButton, SideBarContainer, SideBarTabs,SideBarActiveButton } from "./styled";
+import {
+  Button,
+  SideBarContainer,
+  Tabs,
+  ButtonContent,
+  SideBarHeader,
+  ProfileImg,
+  Email,
+} from "./styled";
 import Image from "next/image";
+import { MdPerson, MdChecklist, MdOutlineAccessible } from "react-icons/md";
 
 const SideBar = () => {
   return (
     <>
       <SideBarContainer>
-        <Image src="/images/Avatar.png" alt="" width={60} height={60} />
-        <div>王小姐</div>
-        <div>A0912345678@gmail.com</div>
-        <SideBarTabs>
-          <SideBarActiveButton>基本資料</SideBarActiveButton>
-          <SideBarButton>我的訂單</SideBarButton>
-          <SideBarButton>詢問單</SideBarButton>
-        </SideBarTabs>
+        <ProfileImg>
+          <Image src="/images/Avatar.png" alt="" width={60} height={60} />
+        </ProfileImg>
+        <SideBarHeader>
+          <span>王小姐</span>
+          <Email>A0912345678@gmail.com</Email>
+        </SideBarHeader>
+        <Tabs>
+          <Button isActive>
+            <ButtonContent>
+              <MdPerson size={24} />
+              <span>基本資料</span>
+            </ButtonContent>
+          </Button>
+
+          <Button>
+            <ButtonContent>
+              <MdChecklist size={24} />
+              <span>我的訂單</span>
+            </ButtonContent>
+          </Button>
+
+          <Button>
+            <ButtonContent>
+              <MdOutlineAccessible size={24} />
+              <span>詢問單</span>
+            </ButtonContent>
+          </Button>
+        </Tabs>
       </SideBarContainer>
     </>
   );

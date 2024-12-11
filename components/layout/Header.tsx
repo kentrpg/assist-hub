@@ -2,16 +2,14 @@ import { FiSearch, FiShoppingCart } from 'react-icons/fi';
 import Link from 'next/link';
 import styled from 'styled-components';
 import Avatar from '../ui/Avatar';
+import { Container1344 } from '@/styles/container';
 
 const HeaderWrapper = styled.header`
   width: 100%;
   border-bottom: 1px solid #e5e7eb;
 `;
 
-const Container = styled.div`
-  max-width: 1920px;
-  margin: 0 auto;
-  padding: 0 288px;
+const Container = styled(Container1344)`
   height: 64px;
   display: flex;
   align-items: center;
@@ -94,7 +92,7 @@ const Header = () => {
         <Action>
           <SearchWrapper>
             <SearchIcon />
-            <SearchInput placeholder="電動輔助" />
+            <SearchInput placeholder="電動輪椅" />
           </SearchWrapper>
           
           <CartButton>

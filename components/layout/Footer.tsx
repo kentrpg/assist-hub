@@ -1,24 +1,20 @@
 import styled from 'styled-components';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Container1344 as Container } from '@/styles/container';
 
 const FooterWrapper = styled.footer`
   width: 100%;
   background-color: ${ ({ theme }) => theme.colors.primary };
   color: #333333;
   padding: 40px 0;
-`;
-
-const Container = styled.div`
-  max-width: 1920px;
-  margin: 0 auto;
-  padding: 0 288px;
-`;
+  `;
 
 const FooterContent = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 40px;
+  color: ${ ({ theme }) => theme.colors.footer };
   margin-bottom: 40px;
 `;
 

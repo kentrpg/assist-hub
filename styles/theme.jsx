@@ -1,5 +1,5 @@
 const colors = {
-  primary: '#479CD7',
+  primary: '#08204D',
   gray: {
     50: '#F9FAFB',
     100: '#F3F4F6',
@@ -13,6 +13,11 @@ const colors = {
     900: '#111827',
   },
   white: '#fff',
+  black: '#000',
+  secondary: '#103F99',
+  footerBg: '#E9E5DE',
+  footer: '#333333',
+  muted: '#888888',
 }
 
 const body = {

@@ -9,12 +9,44 @@ export const ProfileContainer = styled.div`
   background-color: #f4f2ee;
 `;
 
-export const Wrapper = styled.div`
-  max-width: 906px;
+export const Form = styled.form`
   display: flex;
+  flex-direction: column;
+  row-gap: 16px;
 `;
 
-export const ProfileTitile = styled.h2`
+export const Input = styled.input`
+  max-width: 441px;
+  height: 48px;
+  padding: 12px 16px;
+  font-size: 16px;
+  border-radius: 4px;
+  outline: solid #888888 1px;
+  flex: 1;
+`;
+
+export const Select = styled.select`
+  max-width: 441px;
+  height: 48px;
+  padding: 12px 16px;
+`;
+
+export const IconWrapper = styled.div`
+  max-width: 24px;
+  height: 24px;
+  position: absolute;
+  right: 16px;
+  bottom: 13px;
+`;
+
+export const Wrapper = styled.div`
+  max-width: 906px;
+  height: 112px;
+  display: flex;
+  column-gap: 24px;
+`;
+
+export const ProfileTitile = styled.h4`
   max-width: 906px;
   font-size: 24px;
   height: 36px;
@@ -24,12 +56,14 @@ export const ProfileTitile = styled.h2`
 `;
 
 export const GenderField = styled.div`
-  height: 74px;
+  height: 61px;
 `;
 export const SubTitle = styled.label`
   display: inline-block;
-  height: 40px;
-  font-size: 20px;
+  font-weight: 700;
+  height: 27px;
+  font-size: 18px;
+  margin-bottom: 12px;
 `;
 export const GenderSelection = styled.div`
   display: flex;
@@ -39,20 +73,97 @@ export const GenderSelection = styled.div`
 `;
 
 export const NameField = styled.div`
-  height: 112px;
+  height: 87px;
+  display: flex;
+  flex-direction: column;
   max-width: 441px;
-  margin-right: 24px;
   flex: 1;
+  position: relative;
 `;
 export const DobField = styled.div`
-  height: 112px;
+  height: 87px;
+  display: flex;
+  flex-direction: column;
   max-width: 441px;
   flex: 1;
+`;
+
+export const EmailField = styled.div`
+  max-width: 441px;
+  height: 87px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+`;
+
+export const ChangePwField = styled.div`
+  max-width: 441px;
+  height: 87px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const PhoneField = styled.div`
+  max-width: 441px;
+  height: 87px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+`;
+
+export const ContactField = styled.div`
+  max-width: 441px;
+  height: 87px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const AddressGroup = styled.div`
+  max-width: 906px;
+  height: 87px;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const AddressDetails = styled.div`
+  height: 48px;
+  display: flex;
+  column-gap: 24px;
+`;
+
+export const AddressInput = styled.input`
+  max-width: 131px;
+  height: 48px;
+  padding: 0px 12px;
+  border-radius: 4px;
+  outline: solid #888888 1px;
+`
+
+export const AddressSelect = styled.select`
+  min-width: 131px;
+  height: 48px;
+  padding: 0px 12px;
+  border-radius: 4px;
+  outline: solid #888888 1px;
+`
+
+export const ChangPwBtn = styled.button`
+  max-width: 112px;
+  height: 50px;
+  font-size: 16px;
+  color: #08204d;
+  background-color: #ffffff;
+  border-radius: 30px;
 `;
 
 export const SaveBtn = styled.button`
   font-size: 16px;
   width: 100%;
+  height: 48px;
   padding: 12px 0px;
   background-color: #ffc123;
   border-radius: 38px;

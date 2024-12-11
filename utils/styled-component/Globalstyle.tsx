@@ -35,6 +35,8 @@ const GlobalStyle = createGlobalStyle`
   a {
     display: inline-block;
     text-decoration: none;
+    color: black;
+    appearance: none;
   }
 
   // cursor override
@@ -47,6 +49,11 @@ const GlobalStyle = createGlobalStyle`
     & * {
       cursor: pointer;
     }
+  }
+
+  h1 {
+    font-size: 40px;
+    font-weight: 400;
   }
 `;
 

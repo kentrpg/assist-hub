@@ -4,9 +4,10 @@ export const ProfileContainer = styled.div`
   flex: 1;
   max-width: 1002px;
   color: #08204d;
-  height: 1132px;
   padding: 48px;
-  background-color: #f4f2ee;
+  border-radius: 10px;
+  border: 1px #888888 solid;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
 `;
 
 export const Form = styled.form`
@@ -29,6 +30,16 @@ export const Select = styled.select`
   max-width: 441px;
   height: 48px;
   padding: 12px 16px;
+  border-radius: 4px;
+  outline: solid #888888 1px;
+`;
+
+export const SelectCheckbox = styled.div`
+  min-width: 90px;
+  height: 22px;
+  font-size: 16px;
+  display: flex;
+  column-gap: 12px;
 `;
 
 export const IconWrapper = styled.div`
@@ -52,7 +63,7 @@ export const ProfileTitile = styled.h4`
   height: 36px;
   padding-left: 17px;
   border-left: 5px solid #08204d;
-  margin-bottom: 20px;
+  margin-bottom: 32px;
 `;
 
 export const GenderField = styled.div`
@@ -124,7 +135,7 @@ export const ContactField = styled.div`
 
 export const AddressGroup = styled.div`
   max-width: 906px;
-  height: 87px;
+  height: 112px;
   display: flex;
   flex-direction: column;
 `;
@@ -133,6 +144,7 @@ export const AddressDetails = styled.div`
   height: 48px;
   display: flex;
   column-gap: 24px;
+  position: relative;
 `;
 
 export const AddressInput = styled.input`
@@ -141,7 +153,7 @@ export const AddressInput = styled.input`
   padding: 0px 12px;
   border-radius: 4px;
   outline: solid #888888 1px;
-`
+`;
 
 export const AddressSelect = styled.select`
   min-width: 131px;
@@ -149,7 +161,34 @@ export const AddressSelect = styled.select`
   padding: 0px 12px;
   border-radius: 4px;
   outline: solid #888888 1px;
-`
+`;
+
+export const IdentityField = styled.div`
+  max-width: 906px;
+  height: 61px;
+  display: flex;
+  flex-direction: column;
+`;
+export const IdentitySelection = styled.div`
+  max-width: 906px;
+  height: 22px;
+  display: flex;
+  column-gap: 12px;
+`;
+
+export const DisabilityField = styled.div`
+  max-width: 906px;
+  height: 61px;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const DisabilitySelection = styled.div`
+  max-width: 906px;
+  height: 22px;
+  display: flex;
+  column-gap: 12px;
+`;
 
 export const ChangPwBtn = styled.button`
   max-width: 112px;
@@ -158,9 +197,11 @@ export const ChangPwBtn = styled.button`
   color: #08204d;
   background-color: #ffffff;
   border-radius: 30px;
+  border: 1px solid #08204d;
 `;
 
 export const SaveBtn = styled.button`
+  margin-top: 44px;
   font-size: 16px;
   width: 100%;
   height: 48px;

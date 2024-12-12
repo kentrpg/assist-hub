@@ -21,8 +21,13 @@ import {
   AddressDetails,
   AddressInput,
   AddressSelect,
+  IdentityField,
+  IdentitySelection,
+  SelectCheckbox,
+  DisabilityField,
+  DisabilitySelection,
 } from "./styled";
-import { MdPerson, MdMail } from "react-icons/md";
+import { MdPerson, MdMail, MdLocalShipping } from "react-icons/md";
 import { useForm } from "react-hook-form";
 
 type FormData = {
@@ -55,25 +60,29 @@ const Profile = () => {
   return (
     <>
       <ProfileContainer>
+        <ProfileTitile>基本資料</ProfileTitile>
         <Form onSubmit={onSubmit}>
-          <ProfileTitile>基本資料</ProfileTitile>
           <GenderField>
             <SubTitle htmlFor="male">性別</SubTitle>
             <GenderSelection>
-              <input
-                type="radio"
-                id="male"
-                value="male"
-                {...register("gender", { required: true })}
-              />
-              <label htmlFor="male">男生</label>
-              <input
-                type="radio"
-                id="female"
-                value="female"
-                {...register("gender", { required: true })}
-              />
-              <label htmlFor="female">女生</label>
+              <SelectCheckbox>
+                <input
+                  type="radio"
+                  id="male"
+                  value="male"
+                  {...register("gender", { required: true })}
+                />
+                <label htmlFor="male">男生</label>
+              </SelectCheckbox>
+              <SelectCheckbox>
+                <input
+                  type="radio"
+                  id="female"
+                  value="female"
+                  {...register("gender", { required: true })}
+                />
+                <label htmlFor="female">女生</label>
+              </SelectCheckbox>
             </GenderSelection>
             {errors.gender && <p style={{ color: "red" }}>請選擇性別</p>}
           </GenderField>
@@ -203,46 +212,61 @@ const Profile = () => {
                 placeholder="民生一路"
                 {...register("address")}
               />
+              <IconWrapper>
+                <MdLocalShipping size={24} />
+              </IconWrapper>
             </AddressDetails>
           </AddressGroup>
 
           {/* 身份別 */}
-          <div>
-            <label>身份別：</label>
-            <input
-              type="radio"
-              id="middle-income"
-              value="middle-income"
-              {...register("identity")}
-            />
-            <label htmlFor="middle-income">中低收</label>
-            <input
-              type="radio"
-              id="low-income"
-              value="low-income"
-              {...register("identity")}
-            />
-            <label htmlFor="low-income">低收</label>
-          </div>
+          <IdentityField>
+            <SubTitle>身份別：</SubTitle>
+            <IdentitySelection>
+              <SelectCheckbox>
+                <input
+                  type="radio"
+                  id="middle-income"
+                  value="middle-income"
+                  {...register("identity")}
+                />
+                <label htmlFor="middle-income">中低收</label>
+              </SelectCheckbox>
+              <SelectCheckbox>
+                <input
+                  type="radio"
+                  id="low-income"
+                  value="low-income"
+                  {...register("identity")}
+                />
+                <label htmlFor="low-income">低收</label>
+              </SelectCheckbox>
+            </IdentitySelection>
+          </IdentityField>
 
           {/* 身障證明 */}
-          <div>
-            <label>身障證明：</label>
-            <input
-              type="checkbox"
-              id="disabled-yes"
-              value="yes"
-              {...register("declaration")}
-            />
-            <label htmlFor="disabled-yes">有</label>
-            <input
-              type="checkbox"
-              id="disabled-no"
-              value="no"
-              {...register("declaration")}
-            />
-            <label htmlFor="disabled-no">無</label>
-          </div>
+          <DisabilityField>
+            <SubTitle>身障證明：</SubTitle>
+            <DisabilitySelection>
+              <SelectCheckbox>
+                <input
+                  type="radio"
+                  id="disabled-yes"
+                  value="yes"
+                  {...register("declaration")}
+                />
+                <label htmlFor="disabled-yes">有</label>
+              </SelectCheckbox>
+              <SelectCheckbox>
+                <input
+                  type="radio"
+                  id="disabled-no"
+                  value="no"
+                  {...register("declaration")}
+                />
+                <label htmlFor="disabled-no">無</label>
+              </SelectCheckbox>
+            </DisabilitySelection>
+          </DisabilityField>
           <SaveBtn>儲存編輯</SaveBtn>
         </Form>
       </ProfileContainer>

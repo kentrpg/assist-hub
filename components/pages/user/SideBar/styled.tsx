@@ -1,6 +1,6 @@
 import styled from "styled-components";
 interface ButtonProps {
-  isActive?: boolean;
+  $isActive?: boolean;
 }
 
 export const SideBarContainer = styled.div`
@@ -55,7 +55,7 @@ export const Button = styled.button<ButtonProps>`
   justify-content: center;
   font-size: 14px;
   padding: 10px 0px;
-  background-color: ${({ isActive }) => (isActive ? "#103f99" : "white")};
+  background-color: ${({ $isActive }) => ($isActive ? "#103f99" : "white")};
   border-radius: 10px;
-  color: ${({ isActive }) => (isActive ? "white" : "black")};
+  color: ${({ $isActive }) => ($isActive ? "white" : "black")};
 `;

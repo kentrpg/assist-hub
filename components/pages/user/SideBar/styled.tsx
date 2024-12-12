@@ -58,4 +58,8 @@ export const Button = styled.button<ButtonProps>`
   background-color: ${({ $isActive }) => ($isActive ? "#103f99" : "white")};
   border-radius: 10px;
   color: ${({ $isActive }) => ($isActive ? "white" : "black")};
+
+  &:hover {
+    background-color: #ffe08a;
+  }
 `;

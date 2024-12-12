@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { FaLine } from "react-icons/fa";
 
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 import Link from "next/link";
 import {
   Container,
@@ -25,7 +25,7 @@ type SignInResponse = {
   status: boolean;
   token: string;
   message?: string;
-}
+};
 
 type Inputs = {
   email: string;
@@ -49,9 +49,9 @@ const Signin: React.FC = () => {
     setLoading(true);
     try {
       const response = await fetch(signIn, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           email: data.email,
@@ -62,17 +62,16 @@ const Signin: React.FC = () => {
       const result: SignInResponse = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.message || '登入失敗');
+        throw new Error(result.message || "登入失敗");
       }
 
       if (result.token) {
         console.log(result.token);
-        localStorage.setItem('token', result.token);
-        router.push('/');
+        localStorage.setItem("token", result.token);
+        router.push("/");
       }
-
     } catch (error) {
-      console.error('登入錯誤:', error);
+      console.error("登入錯誤:", error);
     } finally {
       setLoading(false);
     }

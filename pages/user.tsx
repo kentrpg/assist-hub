@@ -1,6 +1,6 @@
 import Profile from "@/components/pages/user/Profile";
 import SideBar from "@/components/pages/user/SideBar";
-import { UserContainer } from "@/styles/user";
+import { UserContainer } from "@/styles/Wrappers";
 // import Orders from "@/components/pages/user/Orders";
 // import Inquiries from "@/components/pages/user/Inquiries";
 

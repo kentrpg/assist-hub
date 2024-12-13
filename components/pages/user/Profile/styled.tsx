@@ -6,7 +6,7 @@ export const ProfileContainer = styled.div`
   color: #08204d;
   padding: 48px;
   border-radius: 10px;
-  border: 1px #888888 solid;
+  outline: 1px #888888 solid;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
 `;
 
@@ -61,7 +61,7 @@ export const ProfileTitile = styled.h4`
   max-width: 906px;
   font-size: 24px;
   height: 36px;
-  padding-left: 17px;
+  padding-left: 14px;
   border-left: 5px solid #08204d;
   margin-bottom: 32px;
 `;

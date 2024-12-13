@@ -28,27 +28,39 @@ const GlobalStyle = createGlobalStyle`
     list-style: none;
   }
 
-  a, button, input {
-    cursor: pointer;
-  }
-
   a {
     display: inline-block;
     text-decoration: none;
     color: black;
     appearance: none;
   }
-
-  // cursor override
-  h1, h2, h3, h4, h5, h6, div, span, p {
-    cursor: default;
+  
+  a, button, input {
+    cursor: pointer;
   }
-
-  a, label, button, select, textarea {
+  
+  /* a, label, button, select, textarea {
     cursor: pointer;
     & * {
       cursor: pointer;
     }
+  } */
+
+  input {
+    border-radius: 0;
+    &[type="search"] {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+
+    &:-webkit-autofill {
+      box-shadow: 0 0 0px 1000px ${({ theme }) => theme.colors.white} inset;
+    }
+  }
+  
+  h1, h2, h3, h4, h5, h6, div, span, p {
+    cursor: default;
   }
 
   h1 {

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const InputButton = styled.button`
   width: 100%;
@@ -10,13 +10,13 @@ const InputButton = styled.button`
 `;
 
 const SubmitButton = styled(InputButton)`
-  background-color: ${ ({ theme }) => theme.colors.secondary };
+  background-color: ${({ theme }) => theme.colors.secondary};
   border: none;
   color: white;
-  margin-bottom: 8px;
+  margin-top: 30px;
 
   &:hover {
-    background-color: #2563EB;
+    background-color: #2563eb;
   }
 `;
 
@@ -25,16 +25,16 @@ const LineButton = styled(InputButton)`
   align-items: center;
   justify-content: center;
   gap: 8px;
-  border: 1px solid ${ ({ theme }) => theme.colors.secondary };
+  border: 1px solid ${({ theme }) => theme.colors.secondary};
   font-weight: normal;
-  margin-bottom: 8px;
+  margin: 8px 0;
   transition: background-color 0.2s;
   svg {
-    color: #00B900;
+    color: #06c755;
   }
   &:hover {
     background-color: #f5f5f5;
   }
 `;
 
-export { SubmitButton, LineButton }
+export { SubmitButton, LineButton };

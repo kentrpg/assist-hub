@@ -1,19 +1,20 @@
 import Profile from "@/components/pages/user/Profile";
 import SideBar from "@/components/pages/user/SideBar";
-import { UserContainer } from "@/styles/user";
+import WrapperLayout from "@/components/pages/user/WrapperLayout";
+import { Container } from "@/components/pages/user/WrapperLayout/styled";
 // import Orders from "@/components/pages/user/Orders";
 // import Inquiries from "@/components/pages/user/Inquiries";
 
 const User = () => {
   return (
-    <>
-      <UserContainer>
-        <SideBar/>
+    <WrapperLayout>
+      <Container>
+        <SideBar />
         <Profile />
-        {/* <Orders /> */}
-        {/* <Inquiries /> */}
-      </UserContainer>
-    </>
+      </Container>
+      {/* <Orders /> */}
+      {/* <Inquiries /> */}
+    </WrapperLayout>
   );
 };
 

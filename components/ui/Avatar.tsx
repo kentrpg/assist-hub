@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import styled from 'styled-components';
+import Image from "next/image";
+import styled from "styled-components";
 
 const AvatarWrapper = styled.div`
   width: 32px;
@@ -23,7 +23,7 @@ const DefaultAvatar = styled.div`
 type AvatarProps = {
   isLoggedIn: boolean;
   imageSrc: string;
-}
+};
 
 const Avatar = ({ isLoggedIn, imageSrc }: AvatarProps) => {
   // const [imageError, setImageError] = useState(false);
@@ -32,10 +32,10 @@ const Avatar = ({ isLoggedIn, imageSrc }: AvatarProps) => {
   return (
     <AvatarWrapper>
       {isLoggedIn ? (
-        <Image 
+        <Image
           src={imageSrc}
-          alt="User avatar" 
-          width={32} 
+          alt="User avatar"
+          width={32}
           height={32}
           priority
         />

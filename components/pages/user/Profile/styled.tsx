@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const ProfileContainer = styled.div`
   flex: 1;
-  max-width: 1002px;
   color: #08204d;
   padding: 48px;
   border-radius: 10px;
@@ -58,9 +57,7 @@ export const Wrapper = styled.div`
 `;
 
 export const ProfileTitile = styled.h4`
-  max-width: 906px;
   font-size: 24px;
-  height: 36px;
   padding-left: 14px;
   border-left: 5px solid #08204d;
   margin-bottom: 32px;
@@ -72,7 +69,6 @@ export const GenderField = styled.div`
 export const SubTitle = styled.label`
   display: inline-block;
   font-weight: 700;
-  height: 27px;
   font-size: 18px;
   margin-bottom: 12px;
 `;
@@ -80,7 +76,6 @@ export const GenderSelection = styled.div`
   display: flex;
   column-gap: 12px;
   font-size: 18px;
-  height: 22px;
 `;
 
 export const NameField = styled.div`

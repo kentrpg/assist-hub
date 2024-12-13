@@ -14,7 +14,6 @@ export const InquiryContainer = styled.div`
 export const InquiryTitle = styled.h4`
   font-size: 24px;
   color: #08204d;
-  height: 36px;
   border-left: 5px #103f99 solid;
   padding: 0px 14px;
   margin-bottom: 24px;
@@ -58,8 +57,8 @@ export const Tbody = styled.tbody`
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 1px; /* 框線寬度 */
-    background-color: #ccc; /* 框線顏色 */
+    height: 1px; 
+    background-color: #ccc; 
   }
   &:last-of-type::after {
     content: none;

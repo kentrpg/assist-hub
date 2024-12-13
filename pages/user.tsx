@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Profile from "@/components/pages/user/Profile";
 import SideBar from "@/components/pages/user/SideBar";
-import { UserContainer } from "@/styles/Wrappers";
+import { UserContainer } from "@/styles/wrappers";
 import Orders from "@/components/pages/user/Orders";
 import Inquiries from "@/components/pages/user/Inquiries";
 

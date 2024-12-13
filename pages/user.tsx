@@ -1,20 +1,20 @@
 import Profile from "@/components/pages/user/Profile";
 import SideBar from "@/components/pages/user/SideBar";
-import WrapperLayout from "@/components/pages/user/WrapperLayout";
-import { Container } from "@/components/pages/user/WrapperLayout/styled";
+import Wrapper from "@/components/pages/user/Wrapper";
+import { Container } from "@/components/pages/user/Wrapper/styled";
 // import Orders from "@/components/pages/user/Orders";
 // import Inquiries from "@/components/pages/user/Inquiries";
 
 const User = () => {
   return (
-    <WrapperLayout>
+    <Wrapper>
       <Container>
         <SideBar />
         <Profile />
       </Container>
       {/* <Orders /> */}
       {/* <Inquiries /> */}
-    </WrapperLayout>
+    </Wrapper>
   );
 };
 

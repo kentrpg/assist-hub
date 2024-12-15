@@ -4,9 +4,6 @@ interface ButtonProps {
 }
 
 export const SideBarContainer = styled.div`
-  max-width: 270px;
-  height: 476px;
-  /* background-color: #b5a4a4; */
   padding: 60px 33px;
 `;
 

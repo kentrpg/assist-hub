@@ -1,5 +1,6 @@
 import { Container432 } from "@/styles/container";
 import styled from "styled-components";
+import { InputFieldProps } from "../Register/data";
 
 export const Form = styled.form`
   display: flex;
@@ -23,23 +24,26 @@ export const InputWrapper = styled.div`
   margin: 12px 0;
 
   input:focus + label,
-  input[data-has-value="true"] + label {
+  :not(:placeholder-shown) + label {
     top: 0;
     left: 12px;
     font-size: 16px;
     padding: 0 6.5px;
   }
 `;
-type InputFieldProps = {
-  isError?: boolean;
-  isValid?: boolean;
-};
+
 export const InputField = styled.input<InputFieldProps>`
   width: 100%;
   padding: 16px 16px;
   font-size: 16px;
   border: 1px solid #e9e5de;
   border-radius: 8px;
+  /* border-color: ${({ $isError, $isValid, theme }) =>
+    $isError
+      ? theme.colors.error
+      : $isValid
+      ? theme.colors.success
+      : theme.colors.border}; */
   outline: none;
 
   &:focus {
@@ -65,8 +69,13 @@ export const ErrorMessage = styled.span`
   margin: -8px 0 12px;
 `;
 
-export const PasswordErrorMessage = styled.span`
-  color: ${({ theme }) => theme.colors.textMuted};
+export const PasswordErrorMessage = styled.span<InputFieldProps>`
+  color: ${({ $isError, $isValid, theme }) =>
+    $isError
+      ? theme.colors.error
+      : $isValid
+      ? theme.colors.success
+      : theme.colors.textMuted};
   font-size: 14px;
   margin: -8px 0 12px;
 `;

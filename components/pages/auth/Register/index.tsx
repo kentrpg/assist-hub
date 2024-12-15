@@ -20,8 +20,8 @@ const Regist: React.FC = () => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, dirtyFields },
-    watch,
   } = useForm<Inputs>({
     mode: "onChange",
     defaultValues: {
@@ -32,7 +32,6 @@ const Regist: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const timeoutRef = useRef<NodeJS.Timeout>();
-
   const signUp = `${process.env.NEXT_PUBLIC_BASE_URL}/users/sign_up`;
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -49,17 +48,17 @@ const Regist: React.FC = () => {
           nickname: data.name,
         }),
       });
-      console.log(response);
+
       const result: SignInResponse = await response.json();
 
-      // if (!result.token) {
-      //   throw new Error("無效的登入 Token");
-      // }
+      response.ok && response.status === 201 && router.push("/auth/signin");
 
-      if (!response.ok) {
-        throw new Error(result.message || "登入失敗");
-      } else {
-        router.push("/auth/signin");
+      if (result.message === "用戶已存在") {
+        setError("email", { message: "此 email 已被註冊" });
+      } else if (Array.isArray(result.message)) {
+        setError("email", { message: result.message[0] });
+      } else if (result.message) {
+        setError("email", { message: result.message });
       }
     } catch (error) {
       console.error("登入錯誤:", error);

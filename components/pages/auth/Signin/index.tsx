@@ -1,91 +1,67 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Fragment } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { FaLine } from "react-icons/fa";
 
 import { useRouter } from "next/router";
 import Link from "next/link";
-import {
-  Container,
-  Title,
-  Form,
-  Label,
-  InputField,
-  InputWrapper,
-  ErrorMessage,
-  RememberWrapper,
-  TextMuted,
-  FooterLinks,
-} from "../Layout/styled";
-import LinkStyle from "@/components/ui/LinkStyle";
+import { Container, Title, Form, FooterLinks } from "../Layout/styled";
 import { LineButton, SubmitButton } from "@/components/ui/Button";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
-
-type SignInResponse = {
-  status: boolean;
-  token: string;
-  message?: string;
-};
-
-type Inputs = {
-  email: string;
-  password: string;
-};
+import FormField from "@/utils/react-hook-form/FormField";
+import { RegisterField } from "@/utils/react-hook-form/types";
+import { registerFields, SignInResponse, SignInInputs } from "./data";
+import LinkStyle from "@/components/ui/LinkStyle";
 
 const Signin: React.FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    watch,
-  } = useForm<Inputs>();
+    setError,
+    formState: { errors, dirtyFields },
+  } = useForm<SignInInputs>({
+    mode: "onChange",
+    defaultValues: {
+      password: "",
+    },
+  });
 
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const timeoutRef = useRef<NodeJS.Timeout>();
+  const signIn = `${process.env.NEXT_PUBLIC_BASE_URL}/users/sign_in`;
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<SignInInputs> = async (data) => {
     setLoading(true);
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/users/sign_in`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: data.email,
-            password: data.password,
-          }),
-        }
-      );
-      console.log(response);
+      const response = await fetch(signIn, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: data.email,
+          password: data.password,
+        }),
+      });
+
       const result: SignInResponse = await response.json();
 
-      if (!response.ok) {
-        throw new Error(result.message || "登入失敗");
-      }
-      /** QUESTION
-       * Index
-       * ❓ QUESTION: document.cookie 的「path=/」需要針對特定頁面設置嗎？
-       */
-      if (result.token) {
-        console.log(result.token);
-        sessionStorage.setItem("token", result.token);
-        document.cookie = `token=${result.token}; path=/`;
-
-        // const originalFetch = window.fetch; // 保留原始的 fetch 函數
-        // const bearerToken = `Bearer ${result.token}`;
-
-        // window.fetch = (input: RequestInfo | URL, options: RequestInit = {}) => {
-        //   options.headers = {
-        //     ...options.headers,
-        //     Authorization: bearerToken,
-        //   };
-        //   return originalFetch(input, options); // 使用原始的 fetch
-        // };
-
-        router.push("/user");
+      switch (response.status) {
+        case 200:
+          router.push("/auth/signin");
+          break;
+        case 401:
+          setError("password", {
+            message: result.message,
+          });
+          break;
+        case 404:
+          setError("email", {
+            message: "用戶不存在",
+          });
+          break;
+        default:
+          console.error(result);
       }
     } catch (error) {
       console.error("登入錯誤:", error);
@@ -104,55 +80,34 @@ const Signin: React.FC = () => {
   }, []);
 
   return (
-    <>
-      <Container>
-        <Title>登入</Title>
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <InputWrapper>
-            <InputField
-              type="email"
-              {...register("email", { required: "帳號是必填欄位" })}
-              data-has-value={!!watch("email")}
+    <Container>
+      <Title>登入</Title>
+      <Form onSubmit={handleSubmit(onSubmit)} noValidate>
+        {registerFields.map((field: RegisterField<SignInInputs>) => (
+          <Fragment key={field.name}>
+            <FormField
+              field={field}
+              register={register}
+              errors={errors}
+              dirtyFields={dirtyFields}
             />
-            <Label htmlFor="email">帳號（您的電子信箱）</Label>
-          </InputWrapper>
-          {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
-          <InputWrapper>
-            <InputField
-              type="password"
-              {...register("password", { required: "密碼是必填欄位" })}
-              data-has-value={!!watch("password")}
-            />
-            <Label htmlFor="password">密碼</Label>
-          </InputWrapper>
-          {errors.password && (
-            <ErrorMessage>{errors.password.message}</ErrorMessage>
-          )}
-          <RememberWrapper>
-            <TextMuted>
-              <input type="checkbox" id="remember-me" />
-              <label htmlFor="remember-me">記住我</label>
-            </TextMuted>
-            <LinkStyle as={Link} href="#">
-              忘記密碼
-            </LinkStyle>
-          </RememberWrapper>
-          <SubmitButton type="submit">
-            {loading ? <LoaderSpinner /> : "登入"}
-          </SubmitButton>
-          <LineButton as={Link} href="#">
-            <FaLine size={24} />
-            Line 登入
-          </LineButton>
-          <FooterLinks>
-            還沒有帳號嗎？
-            <LinkStyle as={Link} href="/auth/register">
-              立即註冊
-            </LinkStyle>
-          </FooterLinks>
-        </Form>
-      </Container>
-    </>
+          </Fragment>
+        ))}
+        <SubmitButton type="submit">
+          {loading ? <LoaderSpinner /> : "登入"}
+        </SubmitButton>
+        <LineButton as={Link} href="#">
+          <FaLine size={24} />
+          Line 登入
+        </LineButton>
+        <FooterLinks>
+          還沒有帳號嗎？
+          <LinkStyle as={Link} href="/auth/register">
+            立即註冊
+          </LinkStyle>
+        </FooterLinks>
+      </Form>
+    </Container>
   );
 };
 

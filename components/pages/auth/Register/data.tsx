@@ -1,12 +1,12 @@
 import { RegisterField } from "@/utils/react-hook-form/types";
 
-export type SignUpResponse = {
+export type RegistResponse = {
   status: boolean;
   token: string;
   message: string;
 };
 
-export type SignUpInputs = {
+export type RegistInputs = {
   [key: string]: string;
   name: string;
   email: string;
@@ -14,7 +14,7 @@ export type SignUpInputs = {
   passwordConfirm: string;
 };
 
-export const registerFields: RegisterField<SignUpInputs>[] = [
+export const registerFields: RegisterField<RegistInputs>[] = [
   {
     name: "name",
     label: "姓名",
@@ -78,7 +78,7 @@ export const registerFields: RegisterField<SignUpInputs>[] = [
       validate: {
         // NIST SP 800-63B 標準
         length: (value: string) => {
-          if (value.length > 64) return "密碼長度不得超過 64 個字元";
+          if (value.length > 64) return "密碼長度不得超過 64 個字符";
           return true;
         },
       },

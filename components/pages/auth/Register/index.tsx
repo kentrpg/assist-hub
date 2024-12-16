@@ -7,7 +7,7 @@ import { SubmitButton } from "@/components/ui/Button";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import FormField from "@/utils/react-hook-form/FormField";
 import { RegisterField } from "@/utils/react-hook-form/types";
-import { registerFields, SignUpResponse, SignUpInputs } from "./data";
+import { registerFields, RegistResponse, RegistInputs } from "./data";
 
 const Regist: React.FC = () => {
   const {
@@ -15,7 +15,7 @@ const Regist: React.FC = () => {
     handleSubmit,
     setError,
     formState: { errors, dirtyFields },
-  } = useForm<SignUpInputs>({
+  } = useForm<RegistInputs>({
     mode: "onChange",
     defaultValues: {
       password: "",
@@ -27,7 +27,7 @@ const Regist: React.FC = () => {
   const timeoutRef = useRef<NodeJS.Timeout>();
   const signUp = `${process.env.NEXT_PUBLIC_BASE_URL}/users/sign_up`;
 
-  const onSubmit: SubmitHandler<SignUpInputs> = async (data) => {
+  const onSubmit: SubmitHandler<RegistInputs> = async (data) => {
     setLoading(true);
     try {
       const response = await fetch(signUp, {
@@ -42,7 +42,7 @@ const Regist: React.FC = () => {
         }),
       });
 
-      const result: SignUpResponse = await response.json();
+      const result: RegistResponse = await response.json();
 
       response.ok && response.status === 201 && router.push("/auth/signin");
 
@@ -73,7 +73,7 @@ const Regist: React.FC = () => {
     <Container>
       <Title>註冊</Title>
       <Form onSubmit={handleSubmit(onSubmit)} noValidate>
-        {registerFields.map((field: RegisterField<SignUpInputs>) => (
+        {registerFields.map((field: RegisterField<RegistInputs>) => (
           <Fragment key={field.name}>
             <FormField
               field={field}

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const FooterWrapper = styled.footer`
   width: 100%;
-  background-color: ${({ theme }) => theme.colors.gray["200"]};
+  background-color: ${({ theme }) => theme.colors.gray["100"]};
   color: #333333;
   padding: 40px 0;
   color: ${({ theme }) => theme.colors.gray["300"]};

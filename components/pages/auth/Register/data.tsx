@@ -1,10 +1,12 @@
-export type SignInResponse = {
+import { RegisterField } from "@/utils/react-hook-form/types";
+
+export type SignUpResponse = {
   status: boolean;
   token: string;
-  message?: string;
+  message: string;
 };
 
-export type Inputs = {
+export type SignUpInputs = {
   [key: string]: string;
   name: string;
   email: string;
@@ -12,20 +14,7 @@ export type Inputs = {
   passwordConfirm: string;
 };
 
-export type RegisterField = {
-  name: string;
-  label: string;
-  type: string;
-  validation: Record<string, any>;
-  errorType: "default" | "password";
-};
-
-export type InputFieldProps = {
-  $isError?: boolean;
-  $isValid?: boolean;
-};
-
-export const registerFields: RegisterField[] = [
+export const registerFields: RegisterField<SignUpInputs>[] = [
   {
     name: "name",
     label: "姓名",
@@ -102,7 +91,7 @@ export const registerFields: RegisterField[] = [
     type: "password",
     validation: {
       required: "請輸入確認密碼",
-      validate: (value: string, formValues: Inputs) =>
+      validate: (value: string, formValues: Record<string, any>) =>
         value === formValues.password || "與上方密碼不一致",
     },
     errorType: "default",

@@ -23,6 +23,17 @@ const Regist: React.FC = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [showPasswords, setShowPasswords] = useState({
+    password: false,
+    passwordConfirm: false,
+  });
+  const togglePassword = (field: keyof typeof showPasswords) => {
+    setShowPasswords((prev) => ({
+      ...prev,
+      [field]: !prev[field],
+    }));
+  };
+
   const router = useRouter();
   const timeoutRef = useRef<NodeJS.Timeout>();
   const signUp = `${process.env.NEXT_PUBLIC_BASE_URL}/users/sign_up`;
@@ -80,6 +91,12 @@ const Regist: React.FC = () => {
               register={register}
               errors={errors}
               dirtyFields={dirtyFields}
+              showPassword={
+                showPasswords[field.name as keyof typeof showPasswords]
+              }
+              setShowPassword={() =>
+                togglePassword(field.name as keyof typeof showPasswords)
+              }
             />
           </Fragment>
         ))}

@@ -20,12 +20,6 @@ export const InputField = styled.input<InputFieldProps>`
   font-size: 16px;
   border: 1px solid #e9e5de;
   border-radius: 8px;
-  /* border-color: ${({ $isError, $isValid, theme }) =>
-    $isError
-      ? theme.colors.error
-      : $isValid
-      ? theme.colors.success
-      : theme.colors.border}; */
   outline: none;
 
   &:focus {
@@ -43,4 +37,21 @@ export const Label = styled.label`
   background-color: ${({ theme }) => theme.colors.white};
   transition: all 0.15s ease-in-out;
   pointer-events: none;
+`;
+
+export const PasswordInputField = styled(InputField)`
+  padding: 12px 40px 12px 12px;
+`;
+
+export const TogglePassword = styled.button`
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  svg {
+    vertical-align: top;
+  }
 `;

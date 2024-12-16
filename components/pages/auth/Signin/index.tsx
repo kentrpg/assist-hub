@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, Fragment } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { FaLine } from "react-icons/fa";
+import { IoMdEyeOff, IoMdEye } from "react-icons/io";
 
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -26,6 +27,8 @@ const Signin: React.FC = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
   const router = useRouter();
   const timeoutRef = useRef<NodeJS.Timeout>();
   const signIn = `${process.env.NEXT_PUBLIC_BASE_URL}/users/sign_in`;
@@ -90,6 +93,8 @@ const Signin: React.FC = () => {
               register={register}
               errors={errors}
               dirtyFields={dirtyFields}
+              showPassword={showPassword}
+              setShowPassword={setShowPassword}
             />
           </Fragment>
         ))}

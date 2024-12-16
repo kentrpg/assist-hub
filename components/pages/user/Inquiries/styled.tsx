@@ -11,7 +11,7 @@ export const InquiryContainer = styled.div`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
 `;
 
-export const InquiryTitle = styled.h4`
+export const InquiryTitle = styled.h5`
   font-size: 24px;
   color: #08204d;
   border-left: 5px #103f99 solid;
@@ -57,8 +57,8 @@ export const Tbody = styled.tbody`
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 1px; 
-    background-color: #ccc; 
+    height: 1px;
+    background-color: #ccc;
   }
   &:last-of-type::after {
     content: none;

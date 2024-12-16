@@ -56,7 +56,7 @@ export const Wrapper = styled.div`
   column-gap: 24px;
 `;
 
-export const ProfileTitile = styled.h4`
+export const ProfileTitile = styled.h5`
   font-size: 24px;
   padding-left: 14px;
   border-left: 5px solid #08204d;

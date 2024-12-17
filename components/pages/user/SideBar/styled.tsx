@@ -1,7 +1,8 @@
 import styled from "styled-components";
-interface ButtonProps {
+
+type ButtonProps = {
   $isActive?: boolean;
-}
+};
 
 export const SideBarContainer = styled.div`
   padding: 60px 33px;

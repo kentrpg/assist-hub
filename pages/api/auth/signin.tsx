@@ -1,20 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-// export type SignInResponse = {
-//   status: boolean;
-//   token: string;
-//   message: string;
-//   exp: number;
-// };
-
-type SignInResponseDev = {
-  status: number;
-  message?: string;
+export type SignInResponse = {
+  status: boolean | number;
+  message: string;
+  token?: string;
+  // TBD: token、exp 是六角 API 回傳的格式
+  // exp?: number;
 };
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<SignInResponseDev>
+  res: NextApiResponse<SignInResponse>
 ) {
   console.log(req.body);
   try {
@@ -27,10 +23,14 @@ export default async function handler(
       }
     );
 
-    const data: SignInResponseDev = await response.json();
+    const data: SignInResponse = await response.json();
     console.log(data);
     switch (response.status) {
       case 200:
+        res.setHeader(
+          "Set-Cookie",
+          `token=${data.token}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=86400`
+        );
         return res.status(200).json({
           status: 200,
           message: "登入成功",

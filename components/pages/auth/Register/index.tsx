@@ -7,7 +7,7 @@ import { SubmitButton } from "@/components/ui/Button";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import FormField from "@/utils/react-hook-form/FormField";
 import { RegisterField } from "@/utils/react-hook-form/types";
-import { registerFields, RegistResponse, RegistInputs } from "./data";
+import { registerFields, RegistInputs } from "./data";
 import { signUp } from "@/utils/api/auth/register";
 
 const Regist: React.FC = () => {
@@ -48,7 +48,7 @@ const Regist: React.FC = () => {
       });
 
       switch (response.status) {
-        case 200:
+        case 201:
           router.push("/auth/signin");
           break;
         case 400:

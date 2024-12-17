@@ -16,11 +16,7 @@ import {
 } from "./styled";
 
 import Avatar from "@/components/ui/Avatar";
-
-/** QUESTION
- * Header
- * 📋 TEST: 目前添加了 LogoutButton 用來測試 middleware 驗證
- */
+import { signOut } from "@/utils/api/auth/signout";
 
 const Header = () => {
   const isLoggedIn = process.env.NEXT_PUBLIC_IS_LOGGED_IN === "true";
@@ -28,9 +24,8 @@ const Header = () => {
 
   // ===測試 middleware 驗證===
   const router = useRouter();
-  const handleLogout = () => {
-    sessionStorage.removeItem("token");
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+  const handleLogout = async () => {
+    await signOut();
     router.push("/auth/signin");
   };
   // ===測試 middleware 驗證===

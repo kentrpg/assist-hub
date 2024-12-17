@@ -1,11 +1,15 @@
 import {
-  Button,
   SideBarContainer,
-  Tabs,
-  ButtonContent,
-  SideBarHeader,
-  ProfileImg,
+  Span,
+  Info,
   Email,
+  Name,
+  Tabs,
+  Tab,
+  Profile,
+  Basic,
+  Orders,
+  Inquiries,
 } from "./styled";
 import Image from "next/image";
 import { MdPerson, MdChecklist, MdOutlineAccessible } from "react-icons/md";
@@ -20,7 +24,7 @@ interface SideBarProps {
 const SideBar: React.FC<SideBarProps> = ({ setActiveTab, activeTab }) => {
   return (
     <SideBarContainer>
-      <ProfileImg>
+      <Profile>
         <Image
           src="/images/Avatar.png"
           alt="用戶頭像"
@@ -28,44 +32,39 @@ const SideBar: React.FC<SideBarProps> = ({ setActiveTab, activeTab }) => {
           height={60}
           priority
         />
-      </ProfileImg>
-      <SideBarHeader>
-        <span>王小姐</span>
+      </Profile>
+      <Info>
+        <Name>王小姐</Name>
         <Email>A0912345678@gmail.com</Email>
-      </SideBarHeader>
+      </Info>
       <Tabs>
-        {/* 基本資料按鈕 */}
-        <Button
-          $isActive={activeTab === "profile"} // 動態添加樣式
-          onClick={() => setActiveTab("profile")} // 更新狀態
+        <Tab
+          $isActive={activeTab === "profile"}
+          onClick={() => setActiveTab("profile")}
         >
-          <ButtonContent>
+          <Basic>
             <MdPerson size={24} />
-            <span>基本資料</span>
-          </ButtonContent>
-        </Button>
-
-        {/* 我的訂單按鈕 */}
-        <Button
+            <Span>基本資料</Span>
+          </Basic>
+        </Tab>
+        <Tab
           $isActive={activeTab === "orders"}
           onClick={() => setActiveTab("orders")}
         >
-          <ButtonContent>
+          <Orders>
             <MdChecklist size={24} />
-            <span>我的訂單</span>
-          </ButtonContent>
-        </Button>
-
-        {/* 詢問單按鈕 */}
-        <Button
+            <Span>我的訂單</Span>
+          </Orders>
+        </Tab>
+        <Tab
           $isActive={activeTab === "inquiries"}
           onClick={() => setActiveTab("inquiries")}
         >
-          <ButtonContent>
+          <Inquiries>
             <MdOutlineAccessible size={24} />
-            <span>詢問單</span>
-          </ButtonContent>
-        </Button>
+            <Span>詢問單</Span>
+          </Inquiries>
+        </Tab>
       </Tabs>
     </SideBarContainer>
   );

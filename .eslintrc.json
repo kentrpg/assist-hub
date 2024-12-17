@@ -3,6 +3,5 @@
   "rules": {
     "quotes": ["error", "double", { "avoidEscape": true }],
     "linebreak-style": ["error", "unix"],
-    "indent": ["error", 2]
   }
 }

@@ -9,7 +9,7 @@ type DeliveryOptionProps = {
 type StatusType = "租賃中" | "已結案";
 
 type StatusProps = {
-  status: StatusType;
+  $status: StatusType;
 };
 
 export const OrdersContainer = styled.div`
@@ -71,8 +71,8 @@ export const ListHeader = styled.div<DeliveryOptionProps>`
     $deliveryType === "宅配"
       ? "#fdefec"
       : $deliveryType === "自取"
-        ? "#FFF3D3"
-        : "#FFFFFF"};
+      ? "#FFF3D3"
+      : "#FFFFFF"};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -152,16 +152,19 @@ export const Status = styled.div<StatusProps>`
   font-size: 16px;
   font-weight: 500;
   border-radius: 6px;
-  /* color: #103f99;
-  outline: #103f99 solid 2px; */
-  color: ${({ status }) =>
-    status === "租賃中" ? "#103f99" : status === "已結案" ? "#B3B3B3" : "#000"};
-  outline: ${({ status }) =>
-    status === "租賃中"
+
+  color: ${({ $status }) =>
+    $status === "租賃中"
+      ? "#103f99"
+      : $status === "已結案"
+      ? "#B3B3B3"
+      : "#000"};
+  outline: ${({ $status }) =>
+    $status === "租賃中"
       ? "#103f99 solid 2px"
-      : status === "已結案"
-        ? "#B3B3B3 solid 2px"
-        : "none"};
+      : $status === "已結案"
+      ? "#B3B3B3 solid 2px"
+      : "none"};
 `;
 
 export const Table = styled.table`

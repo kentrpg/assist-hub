@@ -57,7 +57,7 @@ const Orders = () => {
             </ListHeader>
             <ListMain>
               <Finished>預計抵達日期 2025/01/21</Finished>
-              <Status status="租賃中">租賃中</Status>
+              <Status $status="租賃中">租賃中</Status>
             </ListMain>
             <Table>
               <Thead>
@@ -107,7 +107,7 @@ const Orders = () => {
             </ListHeader>
             <ListMain>
               <Finished>於2024/11/27完成取件</Finished>
-              <Status status="已結案">已結案</Status>
+              <Status $status="已結案">已結案</Status>
             </ListMain>
             <Table>
               <Thead>

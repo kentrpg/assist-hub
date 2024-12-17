@@ -11,7 +11,7 @@ export const InquiryContainer = styled.div`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
 `;
 
-export const InquiryTitle = styled.h5`
+export const Title = styled.h5`
   font-size: 24px;
   color: #08204d;
   border-left: 5px #103f99 solid;
@@ -25,25 +25,41 @@ export const Table = styled.table`
   border-radius: 5px;
   outline: 1px #888888 solid;
 `;
+
 export const Thead = styled.thead`
-  background-color: #cfd9eb;
+  background-color: #e7ecf5;
   padding: 10px 25px;
   font-size: 12px;
   color: #08204d;
+  box-shadow: 0px 1px 0px 0px #888888; /* 下方線條 */
 `;
-export const TableHeadTr = styled.tr`
+
+export const Tr = styled.tr`
   display: flex;
   column-gap: 16px;
 `;
-export const NumberHeader = styled.th`
+
+export const IdHeader = styled.th`
   min-width: 126px;
 `;
 
-export const ProductsHeader = styled.th`
+export const ProductHeader = styled.th`
   min-width: 290px;
 `;
 
-export const OthersHeader = styled.th`
+export const CreatedHeader = styled.th`
+  min-width: 90px;
+`;
+
+export const StatusHeader = styled.th`
+  min-width: 90px;
+`;
+
+export const InquiryHeader = styled.th`
+  min-width: 90px;
+`;
+
+export const SuggestHeader = styled.th`
   min-width: 90px;
 `;
 
@@ -65,29 +81,29 @@ export const Tbody = styled.tbody`
   }
 `;
 
-export const TableBodyTr = styled.tr`
-  display: flex;
-  column-gap: 16px;
-`;
-
-export const ProductId = styled.td`
+export const Id = styled.td`
   min-width: 126px;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
+
 export const Products = styled.td`
-  min-width: 290px;
+  max-width: 290px;
   display: flex;
+  column-gap: 25px;
 `;
 
-export const CreationDate = styled.td`
+export const Creatd = styled.td`
   min-width: 90px;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
+
 export const Status = styled.td<ButtonProps>`
+  font-size: 14px;
+  font-weight: 700;
   min-width: 90px;
   display: flex;
   justify-content: center;
@@ -95,13 +111,7 @@ export const Status = styled.td<ButtonProps>`
   color: ${({ $isSuggest }) => ($isSuggest ? "#2ECC71" : "#E74C3C")};
 `;
 
-export const InquiryLink = styled.td`
-  min-width: 90px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-export const SuggestionLink = styled.td`
+export const Link = styled.td`
   min-width: 90px;
   display: flex;
   justify-content: center;

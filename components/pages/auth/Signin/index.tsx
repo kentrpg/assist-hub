@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef, Fragment } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { FaLine } from "react-icons/fa";
-import { IoMdEyeOff, IoMdEye } from "react-icons/io";
 
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -10,8 +9,9 @@ import { LineButton, SubmitButton } from "@/components/ui/Button";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import FormField from "@/utils/react-hook-form/FormField";
 import { RegisterField } from "@/utils/react-hook-form/types";
-import { registerFields, SignInResponse, SignInInputs } from "./data";
+import { registerFields, SignInInputs } from "./data";
 import LinkStyle from "@/components/ui/LinkStyle";
+import { signIn } from "@/utils/api/auth/signin";
 
 const Signin: React.FC = () => {
   const {
@@ -31,31 +31,21 @@ const Signin: React.FC = () => {
 
   const router = useRouter();
   const timeoutRef = useRef<NodeJS.Timeout>();
-  const signIn = `${process.env.NEXT_PUBLIC_BASE_URL}/users/sign_in`;
 
   const onSubmit: SubmitHandler<SignInInputs> = async (data) => {
     setLoading(true);
     try {
-      const response = await fetch(signIn, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: data.email,
-          password: data.password,
-        }),
+      const response = await signIn({
+        email: data.email,
+        password: data.password,
       });
-
-      const result: SignInResponse = await response.json();
-
       switch (response.status) {
         case 200:
-          router.push("/auth/signin");
+          router.push("/user");
           break;
         case 401:
           setError("password", {
-            message: result.message,
+            message: response.data.message,
           });
           break;
         case 404:
@@ -64,7 +54,8 @@ const Signin: React.FC = () => {
           });
           break;
         default:
-          console.error(result);
+          setError("email", { message: "系統錯誤，請稍後再試" });
+          console.error(response.data);
       }
     } catch (error) {
       console.error("登入錯誤:", error);

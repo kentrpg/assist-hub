@@ -8,6 +8,7 @@ import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import FormField from "@/utils/react-hook-form/FormField";
 import { RegisterField } from "@/utils/react-hook-form/types";
 import { registerFields, RegistResponse, RegistInputs } from "./data";
+import { signUp } from "@/utils/api/auth/register";
 
 const Regist: React.FC = () => {
   const {
@@ -36,36 +37,29 @@ const Regist: React.FC = () => {
 
   const router = useRouter();
   const timeoutRef = useRef<NodeJS.Timeout>();
-  const signUp = `${process.env.NEXT_PUBLIC_BASE_URL}/users/sign_up`;
 
   const onSubmit: SubmitHandler<RegistInputs> = async (data) => {
     setLoading(true);
     try {
-      const response = await fetch(signUp, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: data.email,
-          password: data.password,
-          nickname: data.name,
-        }),
+      const response = await signUp({
+        email: data.email,
+        password: data.password,
+        nickname: data.name,
       });
 
-      const result: RegistResponse = await response.json();
-
-      response.ok && response.status === 201 && router.push("/auth/signin");
-
-      if (result.message === "用戶已存在") {
-        setError("email", { message: "此 email 已被註冊" });
-      } else if (Array.isArray(result.message)) {
-        setError("email", { message: result.message[0] });
-      } else if (result.message) {
-        setError("email", { message: result.message });
+      switch (response.status) {
+        case 200:
+          router.push("/auth/signin");
+          break;
+        case 400:
+          setError("email", { message: response.data.message || "請求錯誤" });
+          break;
+        default:
+          setError("email", { message: "系統錯誤，請稍後再試" });
+          break;
       }
     } catch (error) {
-      console.error("登入錯誤:", error);
+      console.error("註冊錯誤:", error);
     } finally {
       setLoading(false);
     }

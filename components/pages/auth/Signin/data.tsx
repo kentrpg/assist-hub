@@ -1,12 +1,5 @@
 import { RegisterField } from "@/utils/react-hook-form/types";
 
-export type SignInResponse = {
-  status: boolean;
-  token: string;
-  message: string;
-  exp: number;
-};
-
 export type SignInInputs = {
   [key: string]: string;
   email: string;

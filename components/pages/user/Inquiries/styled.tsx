@@ -58,7 +58,7 @@ export const Tbody = styled.tbody`
     bottom: 0;
     width: 100%;
     height: 1px;
-    background-color: #ccc;
+    background-color: #e9e5de;
   }
   &:last-of-type::after {
     content: none;

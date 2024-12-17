@@ -9,14 +9,14 @@ export const InputWrapper = styled.div`
   :not(:placeholder-shown) + label {
     top: 0;
     left: 12px;
-    font-size: 16px;
+    font-size: 14px;
     padding: 0 6.5px;
   }
 `;
 
 export const InputField = styled.input<InputFieldProps>`
   width: 100%;
-  padding: 16px 16px;
+  padding: 15px 16px;
   font-size: 16px;
   border: 1px solid #e9e5de;
   border-radius: 8px;
@@ -40,10 +40,10 @@ export const Label = styled.label`
 `;
 
 export const PasswordInputField = styled(InputField)`
-  padding: 12px 40px 12px 12px;
+  padding: 15px 40px 15px 16px;
 `;
 
-export const TogglePassword = styled.button`
+export const TogglePassword = styled.span`
   position: absolute;
   right: 16px;
   top: 50%;
@@ -53,5 +53,6 @@ export const TogglePassword = styled.button`
   padding: 0;
   svg {
     vertical-align: top;
+    color: ${({ theme }) => theme.colors.primary};
   }
 `;

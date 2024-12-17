@@ -22,10 +22,13 @@ export const FormError: React.FC<FormErrorProps> = ({
     case "password":
       return (
         <PasswordErrorMessage
-          $isError={!!errors.password}
-          $isValid={!errors.password && dirtyFields.password}
+          $isDefault={
+            dirtyFields.password === undefined ? true : !errors.password
+          }
         >
-          {validation?.required}
+          {dirtyFields.password === undefined
+            ? validation?.required
+            : errors.password?.message}
         </PasswordErrorMessage>
       );
     case "default":

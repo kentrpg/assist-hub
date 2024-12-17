@@ -2,22 +2,17 @@ import styled from "styled-components";
 
 export const ErrorMessage = styled.span`
   color: ${({ theme }) => theme.colors.error};
-  font-size: 14px;
+  font-size: 12px;
   margin: -8px 0 12px;
 `;
 
 export type InputFieldProps = {
-  $isError?: boolean;
-  $isValid?: boolean;
+  $isDefault?: boolean;
 };
 
 export const PasswordErrorMessage = styled.span<InputFieldProps>`
-  color: ${({ $isError, $isValid, theme }) =>
-    $isError
-      ? theme.colors.error
-      : $isValid
-      ? theme.colors.success
-      : theme.colors.textMuted};
+  color: ${({ $isDefault, theme }) =>
+    $isDefault ? theme.colors.textMuted : theme.colors.error};
   font-size: 14px;
   margin: -8px 0 12px;
 `;

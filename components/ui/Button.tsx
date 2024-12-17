@@ -10,13 +10,13 @@ const InputButton = styled.button`
 `;
 
 const SubmitButton = styled(InputButton)`
-  background-color: ${({ theme }) => theme.colors.secondary};
+  background-color: ${({ theme }) => theme.colors.primary};
   border: none;
   color: white;
   margin-top: 30px;
 
   &:hover {
-    background-color: #2563eb;
+    background-color: ${({ theme }) => theme.colors.textprimary};
   }
 `;
 
@@ -25,7 +25,7 @@ const LineButton = styled(InputButton)`
   align-items: center;
   justify-content: center;
   gap: 8px;
-  border: 1px solid ${({ theme }) => theme.colors.secondary};
+  border: 1px solid ${({ theme }) => theme.colors.primary};
   font-weight: normal;
   margin: 8px 0;
   transition: background-color 0.2s;
@@ -33,7 +33,7 @@ const LineButton = styled(InputButton)`
     color: #06c755;
   }
   &:hover {
-    background-color: #f5f5f5;
+    background-color: ${({ theme }) => theme.colors.primaryLight};
   }
 `;
 

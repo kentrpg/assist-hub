@@ -1,19 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-// export type RegistResponse = {
-//   status: boolean;
-//   token: string;
-//   message: string;
-// };
-
-type RegistResponseDev = {
+type RegistResponse = {
   status: number;
-  message?: string;
+  message: string;
+  token?: string; // TBD: token 是六角 API 回傳的格式
 };
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<RegistResponseDev>
+  res: NextApiResponse<RegistResponse>
 ) {
   console.log(req.body);
   try {
@@ -26,7 +21,7 @@ export default async function handler(
       }
     );
 
-    const data: RegistResponseDev = await response.json();
+    const data: RegistResponse = await response.json();
     console.log(data, response.status);
     switch (response.status) {
       case 201:
@@ -37,7 +32,7 @@ export default async function handler(
       case 400:
         return res.status(400).json({
           status: 400,
-          message: data.message || "用戶不存在",
+          message: data.message || "此電子信箱已有註冊過",
         });
       default:
         return res.status(response.status).json({

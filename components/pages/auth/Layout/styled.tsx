@@ -16,7 +16,7 @@ export const Container = styled(Container432)`
 `;
 
 export const Title = styled.h1`
-  margin-bottom: 16px;
+  margin-bottom: 26px;
 `;
 
 export const FooterLinks = styled.div`

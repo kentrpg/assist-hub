@@ -10,7 +10,6 @@ import { FormError } from "@/utils/react-hook-form/FormError";
 import { RegisterField } from "../types";
 
 import { IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
-// import { IoMdEyeOff, IoMdEye } from "react-icons/io";
 
 export type InputFieldProps = {
   $isError?: boolean;
@@ -40,7 +39,7 @@ const FormField = <T extends FieldValues>({
         {field.type === "password" ? (
           <>
             <TogglePassword
-              type="button"
+              role="button"
               aria-label={showPassword ? "隱藏密碼" : "顯示密碼"}
               onClick={() => setShowPassword?.(!showPassword)}
             >
@@ -49,7 +48,6 @@ const FormField = <T extends FieldValues>({
               ) : (
                 <IoEyeOffSharp size={24} />
               )}
-              {/* {showPassword ? <IoMdEye size={24} /> : <IoMdEyeOff size={24} />} */}
             </TogglePassword>
             <PasswordInputField
               type={showPassword ? "text" : "password"}

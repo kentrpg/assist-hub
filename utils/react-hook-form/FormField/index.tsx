@@ -11,11 +11,6 @@ import { RegisterField } from "../types";
 
 import { IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
 
-export type InputFieldProps = {
-  $isError?: boolean;
-  $isValid?: boolean;
-};
-
 export type FormFieldProps<T extends FieldValues> = {
   field: RegisterField<T>;
   register: UseFormRegister<T>;
@@ -52,8 +47,6 @@ const FormField = <T extends FieldValues>({
             <PasswordInputField
               type={showPassword ? "text" : "password"}
               placeholder=" "
-              $isError={!!errors[field.name]}
-              $isValid={!errors[field.name] && dirtyFields[field.name]}
               {...register(field.name, field.validation)}
             />
           </>
@@ -61,8 +54,6 @@ const FormField = <T extends FieldValues>({
           <InputField
             type={field.type}
             placeholder=" "
-            $isError={!!errors[field.name]}
-            $isValid={!errors[field.name] && dirtyFields[field.name]}
             {...register(field.name, field.validation)}
           />
         )}

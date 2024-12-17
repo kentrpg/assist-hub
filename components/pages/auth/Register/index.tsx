@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, Fragment } from "react";
+import { useState, Fragment } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
 
@@ -15,7 +15,7 @@ const Regist: React.FC = () => {
     register,
     handleSubmit,
     setError,
-    formState: { errors, dirtyFields },
+    formState: { errors, dirtyFields, isSubmitting },
   } = useForm<RegistInputs>({
     mode: "onChange",
     defaultValues: {
@@ -23,7 +23,6 @@ const Regist: React.FC = () => {
     },
   });
 
-  const [loading, setLoading] = useState(false);
   const [showPasswords, setShowPasswords] = useState({
     password: false,
     passwordConfirm: false,
@@ -36,10 +35,8 @@ const Regist: React.FC = () => {
   };
 
   const router = useRouter();
-  const timeoutRef = useRef<NodeJS.Timeout>();
 
   const onSubmit: SubmitHandler<RegistInputs> = async (data) => {
-    setLoading(true);
     try {
       const response = await signUp({
         email: data.email,
@@ -60,19 +57,8 @@ const Regist: React.FC = () => {
       }
     } catch (error) {
       console.error("註冊錯誤:", error);
-    } finally {
-      setLoading(false);
     }
   };
-
-  useEffect(() => {
-    const timeoutId = timeoutRef.current;
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, []);
 
   return (
     <Container>
@@ -94,8 +80,11 @@ const Regist: React.FC = () => {
             />
           </Fragment>
         ))}
-        <SubmitButton type="submit">
-          {loading ? <LoaderSpinner /> : "註冊帳號"}
+        <SubmitButton
+          type="submit"
+          disabled={isSubmitting || Object.keys(errors).length !== 0}
+        >
+          {isSubmitting ? <LoaderSpinner /> : "註冊帳號"}
         </SubmitButton>
       </Form>
     </Container>

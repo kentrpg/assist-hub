@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { InputFieldProps } from "./index";
 
 export const InputWrapper = styled.div`
   position: relative;
@@ -14,7 +13,7 @@ export const InputWrapper = styled.div`
   }
 `;
 
-export const InputField = styled.input<InputFieldProps>`
+export const InputField = styled.input`
   width: 100%;
   padding: 15px 16px;
   font-size: 16px;

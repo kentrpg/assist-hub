@@ -7,6 +7,10 @@ const InputButton = styled.button`
   font-weight: bold;
   font-size: 16px;
   padding: 12px;
+  &:disabled {
+    opacity: 0.65;
+    pointer-events: none;
+  }
 `;
 
 const SubmitButton = styled(InputButton)`

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, Fragment } from "react";
+import { useState, Fragment } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { FaLine } from "react-icons/fa";
 
@@ -18,7 +18,7 @@ const Signin: React.FC = () => {
     register,
     handleSubmit,
     setError,
-    formState: { errors, dirtyFields },
+    formState: { errors, dirtyFields, isSubmitting },
   } = useForm<SignInInputs>({
     mode: "onChange",
     defaultValues: {
@@ -26,14 +26,12 @@ const Signin: React.FC = () => {
     },
   });
 
-  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const router = useRouter();
-  const timeoutRef = useRef<NodeJS.Timeout>();
 
   const onSubmit: SubmitHandler<SignInInputs> = async (data) => {
-    setLoading(true);
+    console.log(data);
     try {
       const response = await signIn({
         email: data.email,
@@ -59,19 +57,8 @@ const Signin: React.FC = () => {
       }
     } catch (error) {
       console.error("登入錯誤:", error);
-    } finally {
-      setLoading(false);
     }
   };
-
-  useEffect(() => {
-    const timeoutId = timeoutRef.current;
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, []);
 
   return (
     <Container>
@@ -89,8 +76,11 @@ const Signin: React.FC = () => {
             />
           </Fragment>
         ))}
-        <SubmitButton type="submit">
-          {loading ? <LoaderSpinner /> : "登入"}
+        <SubmitButton
+          type="submit"
+          disabled={isSubmitting || Object.keys(errors).length !== 0}
+        >
+          {isSubmitting ? <LoaderSpinner /> : "登入"}
         </SubmitButton>
         <LineButton as={Link} href="#">
           <FaLine size={24} />

@@ -43,6 +43,7 @@ export const Title = styled.span`
   /* display: inline-block; */
   font-size: 20px;
   font-weight: bold;
+  color: ${({ theme }) => theme.colors.textprimary};
   /* margin-bottom: 16px; */
 `;
 
@@ -129,7 +130,6 @@ export const Checkbox = styled.div`
     height: 16px;
     border: 2px solid ${({ theme }) => theme.colors.textMuted};
     border-radius: 2px;
-    cursor: pointer;
     position: relative;
 
     &:checked {

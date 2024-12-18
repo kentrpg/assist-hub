@@ -6,6 +6,7 @@ const AvatarWrapper = styled.div`
   height: 32px;
   border-radius: 50%;
   overflow: hidden;
+  border: 1px solid ${({ theme }) => theme.colors.white};
 `;
 
 const DefaultAvatar = styled.div`

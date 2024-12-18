@@ -9,20 +9,24 @@ export const InputWrapper = styled.div`
     top: 0;
     left: 12px;
     font-size: 14px;
+    color: ${({ theme }) => theme.colors.textMuted};
     padding: 0 6.5px;
   }
 `;
 
 export const InputField = styled.input`
   width: 100%;
-  padding: 15px 16px;
+  padding: 14px 16px;
   font-size: 16px;
-  border: 1px solid #e9e5de;
+  border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 8px;
   outline: none;
+  transition: box-shadow 0.13s ease-out, border-color 0.1s ease-in-out;
 
   &:focus {
-    border-color: #1e3a8a;
+    border-color: ${({ theme }) => theme.colors.primary};
+    box-shadow: 0 0 0 1px ${({ theme }) => theme.colors.primary},
+      0 0 0 1000px ${({ theme }) => theme.colors.white} inset;
   }
 `;
 
@@ -39,7 +43,7 @@ export const Label = styled.label`
 `;
 
 export const PasswordInputField = styled(InputField)`
-  padding: 15px 40px 15px 16px;
+  padding: 14px 40px 14px 16px;
 `;
 
 export const TogglePassword = styled.span`
@@ -51,6 +55,7 @@ export const TogglePassword = styled.span`
   border: none;
   padding: 0;
   svg {
+    cursor: pointer;
     vertical-align: top;
     color: ${({ theme }) => theme.colors.primary};
   }

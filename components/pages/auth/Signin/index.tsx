@@ -1,6 +1,5 @@
 import { useState, Fragment } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { FaLine } from "react-icons/fa";
 
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -12,6 +11,7 @@ import { RegisterField } from "@/utils/react-hook-form/types";
 import { registerFields, SignInInputs } from "./data";
 import LinkStyle from "@/components/ui/LinkStyle";
 import { signIn } from "@/utils/api/auth/signin";
+import { StyledFaLine } from "@/utils/react-icons/IconColor";
 
 const Signin: React.FC = () => {
   const {
@@ -37,6 +37,7 @@ const Signin: React.FC = () => {
         email: data.email,
         password: data.password,
       });
+      console.log(response);
       switch (response.status) {
         case 200:
           router.push("/user");
@@ -83,7 +84,7 @@ const Signin: React.FC = () => {
           {isSubmitting ? <LoaderSpinner /> : "登入"}
         </SubmitButton>
         <LineButton as={Link} href="#">
-          <FaLine size={24} />
+          <StyledFaLine size={24} />
           Line 登入
         </LineButton>
         <FooterLinks>

@@ -12,7 +12,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<SignInResponse>
 ) {
-  console.log(req.body);
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/users/sign_in`,
@@ -24,7 +23,6 @@ export default async function handler(
     );
 
     const data: SignInResponse = await response.json();
-    console.log(data);
     switch (response.status) {
       case 200:
         res.setHeader(

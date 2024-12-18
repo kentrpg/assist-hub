@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const InputButton = styled.button`
   width: 100%;
-  background-color: white;
+  background-color: ${({ theme }) => theme.colors.white};
   border-radius: 38px;
   font-weight: bold;
   font-size: 16px;
@@ -16,7 +16,7 @@ const InputButton = styled.button`
 const SubmitButton = styled(InputButton)`
   background-color: ${({ theme }) => theme.colors.primary};
   border: none;
-  color: white;
+  color: ${({ theme }) => theme.colors.white};
   margin-top: 30px;
 
   &:hover {
@@ -33,9 +33,6 @@ const LineButton = styled(InputButton)`
   font-weight: normal;
   margin: 8px 0;
   transition: background-color 0.2s;
-  svg {
-    color: #06c755;
-  }
   &:hover {
     background-color: ${({ theme }) => theme.colors.primaryLight};
   }

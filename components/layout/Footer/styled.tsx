@@ -3,36 +3,59 @@ import Link from "next/link";
 
 export const FooterWrapper = styled.footer`
   width: 100%;
-  background-color: ${({ theme }) => theme.colors.gray["100"]};
-  color: #333333;
-  padding: 40px 0;
-  color: ${({ theme }) => theme.colors.gray["300"]};
+  height: 597px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex-shrink: 0;
+  background-image: url("/images/footer-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top;
+  padding-bottom: 50px;
 `;
 
 export const FooterContent = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
+  grid-template-columns: repeat(12, 1fr);
   color: ${({ theme }) => theme.colors.gray["300"]};
-  margin-bottom: 40px;
 `;
 
-export const Section = styled.div`
+const Section = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
 `;
 
-export const Title = styled.h3`
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 8px;
+export const CategoriesSection = styled(Section)`
+  grid-column: 1 / 5;
+`;
+
+export const ContactSection = styled(Section)`
+  grid-column: 6 / 9;
+`;
+
+export const NewsletterSection = styled(Section)`
+  grid-column: 10 / 13;
+`;
+
+export const Title = styled.span`
+  /* display: inline-block; */
+  font-size: 20px;
+  font-weight: bold;
+  /* margin-bottom: 16px; */
 `;
 
 export const LinkList = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  gap: 40px;
+
+  & > div {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
 `;
 
 export const FooterLink = styled(Link)`
@@ -43,35 +66,54 @@ export const FooterLink = styled(Link)`
   }
 `;
 
-export const ContactInfo = styled.div`
+export const ContactInfo = styled.ul`
   display: flex;
   flex-direction: column;
+  gap: 16px;
+`;
+
+export const SocialLinks = styled.li`
+  display: flex;
+  align-items: center;
   gap: 8px;
 `;
 
 export const Newsletter = styled.div`
-  display: flex;
-  gap: 8px;
+  position: relative;
+  margin-bottom: 10px;
 `;
 
 export const Input = styled.input`
-  padding: 8px 16px;
-  border-radius: 4px;
-  border: none;
-  flex: 1;
+  width: 100%;
+  padding: 12px 10px;
+  font-size: 14px;
+  border: 1px solid ${({ theme }) => theme.colors.gray["300"]};
+  border-radius: 5px;
+  background-color: ${({ theme }) => theme.colors.gray["100"]};
+  transition: box-shadow 0.13s ease-out, border-color 0.1s ease-in-out;
+
+  &:focus {
+    border-color: ${({ theme }) => theme.colors.primary};
+    box-shadow: 0 0 0 1px ${({ theme }) => theme.colors.primary},
+      0 0 0 1000px ${({ theme }) => theme.colors.gray["100"]} inset;
+  }
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.textMuted};
+  }
+
+  padding-right: 36px;
 `;
 
 export const SubscribeButton = styled.button`
-  background-color: white;
-  color: #3b82f6;
-  padding: 8px 16px;
-  border-radius: 4px;
-  border: none;
-  cursor: pointer;
-  transition: opacity 0.2s;
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
 
-  &:hover {
-    opacity: 0.9;
+  svg {
+    vertical-align: top;
+    color: ${({ theme }) => theme.colors.gray["300"]};
   }
 `;
 
@@ -81,20 +123,35 @@ export const Checkbox = styled.div`
   gap: 8px;
   margin-top: 8px;
 
-  input {
+  input[type="checkbox"] {
+    appearance: none;
     width: 16px;
     height: 16px;
+    border: 2px solid ${({ theme }) => theme.colors.textMuted};
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+
+    &:checked {
+      background-color: ${({ theme }) => theme.colors.textMuted};
+    }
+
+    &:checked::after {
+      content: "✔";
+      color: #fff;
+      font-size: 12px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
 `;
 
-export const SocialLinks = styled.div`
-  display: flex;
-  gap: 16px;
-  margin-top: 16px;
-`;
-
-export const Copyright = styled.div`
-  text-align: center;
-  padding-top: 24px;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+export const Copyright = styled.p`
+  text-align: right;
+  font-size: 12px;
+  font-weight: bold;
+  color: ${({ theme }) => theme.colors.textMuted};
+  margin-top: 40px;
 `;

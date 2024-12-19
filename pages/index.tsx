@@ -1,9 +1,14 @@
 export default function Home() {
   return (
-    <>
-      <div style={{ textAlign: "center", transform: "scale(0.5)" }}>
-        <img src="/images/chairman.svg" />
-      </div>
-    </>
+    <div
+      style={{ height: "100%", textAlign: "center", alignContent: "center" }}
+    >
+      <img
+        src="/images/chairman.svg"
+        style={{
+          verticalAlign: "middle",
+        }}
+      />
+    </div>
   );
 }

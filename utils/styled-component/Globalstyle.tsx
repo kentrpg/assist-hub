@@ -4,14 +4,10 @@ const GlobalStyle = createGlobalStyle`
   html, body {
     width: 100%;
     min-height: 100dvh;
+    margin: 0;
+    padding: 0;
   }
-
-  #__next {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-
+  
   *, *::before, *::after {
     box-sizing: border-box;
     border: none;

@@ -1,13 +1,15 @@
 import styled from "styled-components";
 
-export const Container1344 = styled.div`
-  max-width: 1344px;
+const Container = styled.div`
+  width: 100%;
   margin: 0 auto;
   padding: 0 24px;
 `;
 
-export const Container432 = styled.div`
+export const Container1344 = styled(Container)`
+  max-width: 1344px;
+`;
+
+export const Container432 = styled(Container)`
   max-width: 432px;
-  margin: 0 auto;
-  padding: 0 24px;
 `;

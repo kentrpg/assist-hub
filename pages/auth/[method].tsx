@@ -4,7 +4,7 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import Register from "@/components/pages/auth/Register";
 import Signin from "@/components/pages/auth/Signin";
-import { MainWrapper as Wrapper } from "@/styles/wrappers";
+import { MainWrapper } from "@/styles/wrappers";
 
 const allowedMethods = ["signin", "register"];
 
@@ -45,11 +45,11 @@ const Auth = ({ method }: { method: string }) => {
           content={`${method === "register" ? "註冊" : "登入"}頁面`}
         />
       </Head>
-      <Wrapper>
+      <MainWrapper>
         {method === "register" && <Register />}
         {method === "" && <Signin />}
         {method === "signin" && <Signin />}
-      </Wrapper>
+      </MainWrapper>
     </>
   );
 };

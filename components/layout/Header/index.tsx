@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import { MdShoppingCart, MdSearch } from "react-icons/md";
 import Avatar from "@/components/ui/Avatar";
 import Link from "next/link";
-import Image from "next/image";
 
 import {
   HeaderWrapper,
@@ -23,14 +22,27 @@ import {
 import { signOut } from "@/utils/api/auth/signout";
 
 const Header = () => {
-  const isLoggedIn = process.env.NEXT_PUBLIC_IS_LOGGED_IN === "true";
-  const avatarPath = process.env.NEXT_PUBLIC_AVATAR_IMAGE_PATH || "";
+  // const isLoggedIn = process.env.NEXT_PUBLIC_IS_LOGGED_IN === "true";
+  // const avatarPath = process.env.NEXT_PUBLIC_AVATAR_IMAGE_PATH || "";
 
   // ===測試 middleware 驗證===
   const router = useRouter();
+  // TBD:  API 相關的處理，將所有與 UI 相關的邏輯分離
   const handleLogout = async () => {
-    await signOut();
-    router.push("/auth/signin");
+    try {
+      const response = await signOut();
+      console.log(response);
+      switch (response.status) {
+        case 200:
+          router.push("/auth/signin");
+          break;
+        default:
+          console.error("登出失敗");
+      }
+    } catch (error) {
+      console.error("登出錯誤:", error);
+    }
+    // router.push("/auth/signin");
   };
   // ===測試 middleware 驗證===
 
@@ -39,7 +51,6 @@ const Header = () => {
       <Container>
         <Navbar>
           <LogoSection>
-            {/* next/image 會自動加上 style 透明背景🖕 */}
             <LogoImage
               src="/images/i_logo.png"
               alt="輔具租賃網"

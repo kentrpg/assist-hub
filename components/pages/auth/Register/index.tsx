@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
 
 import { Container, Title, Form } from "../Layout/styled";
-import { SubmitButton } from "@/components/ui/Button";
+import { SubmitButton } from "@/components/ui/Buttons";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import FormField from "@/utils/react-hook-form/FormField";
 import { RegisterField } from "@/utils/react-hook-form/types";
@@ -27,11 +27,17 @@ const Regist: React.FC = () => {
     password: false,
     passwordConfirm: false,
   });
+
   const togglePassword = (field: keyof typeof showPasswords) => {
-    setShowPasswords((prev) => ({
-      ...prev,
-      [field]: !prev[field],
-    }));
+    // TBD: useState set function 防呆是否正確
+    setShowPasswords((prev) => {
+      const newValue = !prev[field];
+      if (prev[field] === newValue) return prev;
+      return {
+        ...prev,
+        [field]: newValue,
+      };
+    });
   };
 
   const router = useRouter();
@@ -48,8 +54,8 @@ const Regist: React.FC = () => {
         case 201:
           router.push("/auth/signin");
           break;
-        case 400:
-          setError("email", { message: response.data.message || "請求錯誤" });
+        case 422:
+          setError("email", { message: response.message || "請求錯誤" });
           break;
         default:
           setError("email", { message: "系統錯誤，請稍後再試" });

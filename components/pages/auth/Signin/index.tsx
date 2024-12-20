@@ -4,12 +4,12 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { Container, Title, Form, FooterLinks } from "../Layout/styled";
-import { LineButton, SubmitButton } from "@/components/ui/Button";
+import { LineButton, SubmitButton } from "@/components/ui/Buttons";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import FormField from "@/utils/react-hook-form/FormField";
 import { RegisterField } from "@/utils/react-hook-form/types";
 import { registerFields, SignInInputs } from "./data";
-import LinkStyle from "@/components/ui/LinkStyle";
+import LinkStyle from "@/components/ui/BaseLink";
 import { signIn } from "@/utils/api/auth/signin";
 import { StyledFaLine } from "@/utils/react-icons/IconColor";
 
@@ -44,17 +44,11 @@ const Signin: React.FC = () => {
           break;
         case 401:
           setError("password", {
-            message: response.data.message,
-          });
-          break;
-        case 404:
-          setError("email", {
-            message: "用戶不存在",
+            message: response.message,
           });
           break;
         default:
           setError("email", { message: "系統錯誤，請稍後再試" });
-          console.error(response.data);
       }
     } catch (error) {
       console.error("登入錯誤:", error);

@@ -11,7 +11,7 @@ import {
   InputWrapper,
   ErrorMessage,
 } from "./styled";
-import { SubmitButton } from "@/components/ui/Button";
+import { SubmitButton } from "@/components/ui/Buttons";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 
 type SignInResponse = {
@@ -44,20 +44,17 @@ const Regist: React.FC = () => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setLoading(true);
     try {
-      const response = await fetch(
-        signUp,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: data.email,
-            password: data.password,
-            nickname: data.name
-          }),
-        }
-      );
+      const response = await fetch(signUp, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: data.email,
+          password: data.password,
+          nickname: data.name,
+        }),
+      });
       console.log(response);
       const result: SignInResponse = await response.json();
 
@@ -66,11 +63,10 @@ const Regist: React.FC = () => {
       } else {
         // router.push("/auth/signin");
         router.push({
-          pathname: '/auth/[method]',
-          query: { method: 'signin' },
+          pathname: "/auth/[method]",
+          query: { method: "signin" },
         });
       }
-
     } catch (error) {
       console.error("登入錯誤:", error);
     } finally {
@@ -111,32 +107,34 @@ const Regist: React.FC = () => {
           </InputWrapper>
           {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
 
-            <InputWrapper>
+          <InputWrapper>
             <InputField
               type="password"
               {...register("password", {
-              required: "密碼長度必須至少 8 個字符，並且包含 1 個大寫英文字母、1 個小寫英文字母、1 個數字和 1 個標點符號",
-              pattern: {
-                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[a-zA-Z\d!@#$%^&*(),.?":{}|<>]{8,}$/,
-                message:
-                "密碼長度必須至少 8 個字符，並且包含 1 個大寫英文字母、1 個小寫英文字母、1 個數字和 1 個標點符號",
-              },
-              onChange: (e) => {
-                const value = e.target.value;
-                const isValid =
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[a-zA-Z\d!@#$%^&*(),.?":{}|<>]{8,}$/.test(
-                  value
-                );
-                e.target.setCustomValidity(
-                isValid ? "" : "密碼格式不符合要求"
-                );
-              },
+                required:
+                  "密碼長度必須至少 8 個字符，並且包含 1 個大寫英文字母、1 個小寫英文字母、1 個數字和 1 個標點符號",
+                pattern: {
+                  value:
+                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[a-zA-Z\d!@#$%^&*(),.?":{}|<>]{8,}$/,
+                  message:
+                    "密碼長度必須至少 8 個字符，並且包含 1 個大寫英文字母、1 個小寫英文字母、1 個數字和 1 個標點符號",
+                },
+                onChange: (e) => {
+                  const value = e.target.value;
+                  const isValid =
+                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[a-zA-Z\d!@#$%^&*(),.?":{}|<>]{8,}$/.test(
+                      value
+                    );
+                  e.target.setCustomValidity(
+                    isValid ? "" : "密碼格式不符合要求"
+                  );
+                },
               })}
               data-has-value={!!watch("password")}
             />
             <Label htmlFor="password">密碼</Label>
-            </InputWrapper>
-          {(isDirty && errors.password) && (
+          </InputWrapper>
+          {isDirty && errors.password && (
             <ErrorMessage>{errors.password?.message}</ErrorMessage>
           )}
           <SubmitButton type="submit">

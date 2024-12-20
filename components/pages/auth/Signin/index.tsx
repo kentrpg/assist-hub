@@ -17,8 +17,8 @@ import {
   TextMuted,
   FooterLinks,
 } from "./styled";
-import LinkStyle from "@/components/ui/LinkStyle";
-import { LineButton, SubmitButton } from "@/components/ui/Button";
+import { LinkStyle } from "@/components/ui/LinkStyle";
+import { LineButton, SubmitButton } from "@/components/ui/Buttons";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 
 type SignInResponse = {

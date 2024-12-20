@@ -1,25 +1,24 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Container1344 as Container } from "@/styles/container";
 import {
-  CategoriesSection,
+  Categories,
   Checkbox,
   ContactInfo,
-  ContactSection,
+  Contact,
   Copyright,
-  FooterContent,
+  Content,
   FooterLink,
-  FooterWrapper,
+  Wrapper,
   Input,
-  LinkList,
+  CategoriesLink,
   Newsletter,
-  NewsletterSection,
+  InputWrapper,
   SocialLinks,
   SubscribeButton,
   Title,
 } from "./styled";
 import {
-  IconWrapper,
+  IconWhiteWrapper,
   StyledFaFacebook,
   StyledFaLine,
 } from "@/utils/react-icons/IconColor";
@@ -27,12 +26,12 @@ import { MdArrowForward } from "react-icons/md";
 
 const Footer = () => {
   return (
-    <FooterWrapper>
+    <Wrapper>
       <Container>
-        <FooterContent>
-          <CategoriesSection>
+        <Content>
+          <Categories>
             <Title>輔具分類</Title>
-            <LinkList>
+            <CategoriesLink>
               <div>
                 <FooterLink href="#">行動輔椅</FooterLink>
                 <FooterLink href="#">臥室寢具</FooterLink>
@@ -44,53 +43,54 @@ const Footer = () => {
                 <FooterLink href="#">居家照護</FooterLink>
                 <FooterLink href="#">輔具、護具</FooterLink>
               </div>
-            </LinkList>
-          </CategoriesSection>
-          <ContactSection as={"address"}>
+            </CategoriesLink>
+          </Categories>
+          <Contact as={"address"}>
             <Title>聯絡我們</Title>
             <ContactInfo>
               <li>營業時間：08:00-22:00（週一公休）</li>
               <li>電話：0912-345678</li>
               <li>地址：高雄市新興區</li>
               <SocialLinks>
-                <IconWrapper as={Link} href="https://line.me" target="_blank">
+                <IconWhiteWrapper
+                  as={Link}
+                  href="https://line.me"
+                  target="_blank"
+                >
                   <StyledFaLine size={24} />
-                </IconWrapper>
+                </IconWhiteWrapper>
 
-                <IconWrapper
+                <IconWhiteWrapper
                   as={Link}
                   href="https://facebook.com"
                   target="_blank"
                 >
                   <StyledFaFacebook size={24} />
-                  {/* <StyledFaFacebook size={24} /> */}
-                </IconWrapper>
+                </IconWhiteWrapper>
               </SocialLinks>
             </ContactInfo>
-          </ContactSection>
+          </Contact>
 
-          <NewsletterSection>
+          <Newsletter>
             <Title>訂閱電子報</Title>
-            <div>
-              <Newsletter>
-                <Input type="email" placeholder="輸入電子郵件" />
-                <SubscribeButton>
-                  <MdArrowForward size={24} />
-                </SubscribeButton>
-              </Newsletter>
-              <Checkbox>
-                <input type="checkbox" id="newsletter-consent" />
-                <label htmlFor="newsletter-consent">
-                  我想要了解最新的輔具資訊
-                </label>
-              </Checkbox>
-            </div>
-          </NewsletterSection>
-        </FooterContent>
+            <InputWrapper>
+              <Input type="email" placeholder="輸入電子郵件" />
+              <SubscribeButton>
+                <MdArrowForward size={24} />
+              </SubscribeButton>
+            </InputWrapper>
+            <Checkbox>
+              <input type="checkbox" id="newsletter-consent" />
+              <label htmlFor="newsletter-consent">
+                我想要了解最新的輔具資訊
+              </label>
+            </Checkbox>
+          </Newsletter>
+        </Content>
 
         <Copyright>Copyright ©2024</Copyright>
       </Container>
-    </FooterWrapper>
+    </Wrapper>
   );
 };
 

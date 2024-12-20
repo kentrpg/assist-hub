@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import Link from "next/link";
 
-export const FooterWrapper = styled.footer`
+export const Wrapper = styled.footer`
   width: 100%;
-  height: 597px;
+  height: 420px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -12,45 +12,38 @@ export const FooterWrapper = styled.footer`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top;
-  padding-bottom: 50px;
+  padding-bottom: 20px;
 `;
 
-export const FooterContent = styled.div`
+export const Content = styled.div`
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   color: ${({ theme }) => theme.colors.gray["300"]};
 `;
 
-const Section = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-`;
-
-export const CategoriesSection = styled(Section)`
+export const Categories = styled.div`
   grid-column: 1 / 5;
 `;
 
-export const ContactSection = styled(Section)`
+export const Contact = styled.div`
   grid-column: 6 / 9;
 `;
 
-export const NewsletterSection = styled(Section)`
+export const Newsletter = styled.div`
   grid-column: 10 / 13;
 `;
 
 export const Title = styled.span`
-  /* display: inline-block; */
+  display: inline-block;
   font-size: 20px;
   font-weight: bold;
   color: ${({ theme }) => theme.colors.textprimary};
-  /* margin-bottom: 16px; */
+  margin-bottom: 16px;
 `;
 
-export const LinkList = styled.div`
+export const CategoriesLink = styled.div`
   display: flex;
   gap: 40px;
-
   & > div {
     width: 50%;
     display: flex;
@@ -79,7 +72,7 @@ export const SocialLinks = styled.li`
   gap: 8px;
 `;
 
-export const Newsletter = styled.div`
+export const InputWrapper = styled.div`
   position: relative;
   margin-bottom: 10px;
 `;
@@ -114,7 +107,7 @@ export const SubscribeButton = styled.button`
 
   svg {
     vertical-align: top;
-    color: ${({ theme }) => theme.colors.gray["300"]};
+    color: ${({ theme }) => theme.colors.textMuted};
   }
 `;
 
@@ -153,5 +146,5 @@ export const Copyright = styled.p`
   font-size: 12px;
   font-weight: bold;
   color: ${({ theme }) => theme.colors.textMuted};
-  margin-top: 40px;
+  margin-top: 28px;
 `;

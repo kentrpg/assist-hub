@@ -33,7 +33,7 @@ export const LogoImage = styled.img`
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  color: ${({ theme }) => theme.colors.textprimary} !important;
+  color: ${({ theme }) => theme.colors.textprimary};
 `;
 
 export const LogoText = styled.span`

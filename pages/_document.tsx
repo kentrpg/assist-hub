@@ -1,17 +1,8 @@
-import Document, {
-  Html,
-  Head,
-  Main,
-  NextScript,
-  DocumentContext,
-  DocumentInitialProps,
-} from "next/document";
-import { ServerStyleSheet } from "styled-components";
+import Document, { Html, Head, Main, NextScript, DocumentContext, DocumentInitialProps } from 'next/document';
+import { ServerStyleSheet } from 'styled-components';
 
 export default class MyDocument extends Document {
-  static async getInitialProps(
-    ctx: DocumentContext
-  ): Promise<DocumentInitialProps> {
+  static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
     const sheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
 
@@ -40,8 +31,9 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="zh-Hant">
-        {/* 在這裡添加全域的 meta 標籤、字體或其他標籤 */}
-        <Head></Head>
+        <Head>
+          {/* 在這裡添加全域的 meta 標籤、字體或其他標籤 */}
+        </Head>
         <body>
           <Main />
           <NextScript />

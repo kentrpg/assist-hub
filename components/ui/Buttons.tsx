@@ -13,7 +13,7 @@ const InputButton = styled.button`
   }
 `;
 
-const SubmitButton = styled(InputButton)`
+export const AuthButton = styled(InputButton)`
   background-color: ${({ theme }) => theme.colors.primary};
   border: none;
   color: ${({ theme }) => theme.colors.white};
@@ -24,12 +24,13 @@ const SubmitButton = styled(InputButton)`
   }
 `;
 
-const LineButton = styled(InputButton)`
+export const LineButton = styled(InputButton)`
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  border: 1px solid ${({ theme }) => theme.colors.primary};
+  outline: 1px solid ${({ theme }) => theme.colors.primary};
+  /* border: 1px solid ${({ theme }) => theme.colors.primary}; */
   font-weight: normal;
   margin: 8px 0;
   transition: background-color 0.2s;
@@ -37,5 +38,3 @@ const LineButton = styled(InputButton)`
     background-color: ${({ theme }) => theme.colors.primaryLight};
   }
 `;
-
-export { SubmitButton, LineButton };

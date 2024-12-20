@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
 
 import { Container, Title, Form } from "../Layout/styled";
-import { SubmitButton } from "@/components/ui/Buttons";
+import { AuthButton } from "@/components/ui/buttons";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import FormField from "@/utils/react-hook-form/FormField";
 import { RegisterField } from "@/utils/react-hook-form/types";
@@ -86,12 +86,12 @@ const Regist: React.FC = () => {
             />
           </Fragment>
         ))}
-        <SubmitButton
+        <AuthButton
           type="submit"
           disabled={isSubmitting || Object.keys(errors).length !== 0}
         >
           {isSubmitting ? <LoaderSpinner /> : "註冊帳號"}
-        </SubmitButton>
+        </AuthButton>
       </Form>
     </Container>
   );

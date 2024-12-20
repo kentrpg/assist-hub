@@ -4,7 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { Container, Title, Form, FooterLinks } from "../Layout/styled";
-import { LineButton, SubmitButton } from "@/components/ui/Buttons";
+import { LineButton, AuthButton } from "@/components/ui/buttons";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import FormField from "@/utils/react-hook-form/FormField";
 import { RegisterField } from "@/utils/react-hook-form/types";
@@ -71,12 +71,12 @@ const Signin: React.FC = () => {
             />
           </Fragment>
         ))}
-        <SubmitButton
+        <AuthButton
           type="submit"
           disabled={isSubmitting || Object.keys(errors).length !== 0}
         >
           {isSubmitting ? <LoaderSpinner /> : "登入"}
-        </SubmitButton>
+        </AuthButton>
         <LineButton as={Link} href="#">
           <StyledFaLine size={24} />
           Line 登入

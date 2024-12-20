@@ -1,6 +1,6 @@
 import Header from "../Header";
 import Footer from "../Footer";
-import { LayoutWrapper } from "./styled";
+import { PageLayout, MainContent } from "./styled";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -8,10 +8,10 @@ type LayoutProps = {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <>
+    <PageLayout>
       <Header />
-      <LayoutWrapper>{children}</LayoutWrapper>
+      <MainContent>{children}</MainContent>
       <Footer />
-    </>
+    </PageLayout>
   );
 }

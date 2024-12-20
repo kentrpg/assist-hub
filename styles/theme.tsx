@@ -17,8 +17,8 @@ const colors = {
   border: "#E9E5DE",
   info: "#2F80ED",
   gray: {
-    100: "#B3B3B3",
-    200: "#E9E5DE",
+    100: "#E9E5DE",
+    200: "#B3B3B3",
     300: "#333333",
   },
 };

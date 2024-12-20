@@ -1,85 +1,96 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Container1344 as Container } from "@/styles/container";
 import {
+  Categories,
   Checkbox,
   ContactInfo,
+  Contact,
   Copyright,
-  FooterContent,
+  Content,
   FooterLink,
-  FooterWrapper,
+  Wrapper,
   Input,
-  LinkList,
+  CategoriesLink,
   Newsletter,
-  Section,
+  InputWrapper,
   SocialLinks,
   SubscribeButton,
   Title,
 } from "./styled";
+import {
+  IconWhiteWrapper,
+  StyledFaFacebook,
+  StyledFaLine,
+} from "@/utils/react-icons/IconColor";
+import { MdArrowForward } from "react-icons/md";
 
 const Footer = () => {
   return (
-    <FooterWrapper>
+    <Wrapper>
       <Container>
-        <FooterContent>
-          <Section>
+        <Content>
+          <Categories>
             <Title>輔具分類</Title>
-            <LinkList>
-              <FooterLink href="/categories/mobility">行動輔椅</FooterLink>
-              <FooterLink href="/categories/bathroom">如廁沐浴</FooterLink>
-              <FooterLink href="/categories/bedroom">臥室寢具</FooterLink>
-              <FooterLink href="/categories/living">居家照護</FooterLink>
-              <FooterLink href="/categories/breathing">呼吸照護</FooterLink>
-              <FooterLink href="/categories/accessories">輔具、護具</FooterLink>
-              <FooterLink href="/categories/transfer">拐杖步行</FooterLink>
-            </LinkList>
-          </Section>
-
-          <Section>
+            <CategoriesLink>
+              <div>
+                <FooterLink href="#">行動輔椅</FooterLink>
+                <FooterLink href="#">臥室寢具</FooterLink>
+                <FooterLink href="#">呼吸照護</FooterLink>
+                <FooterLink href="#">拐杖步行</FooterLink>
+              </div>
+              <div>
+                <FooterLink href="#">如廁沐浴</FooterLink>
+                <FooterLink href="#">居家照護</FooterLink>
+                <FooterLink href="#">輔具、護具</FooterLink>
+              </div>
+            </CategoriesLink>
+          </Categories>
+          <Contact as={"address"}>
             <Title>聯絡我們</Title>
             <ContactInfo>
-              <p>營業時間：08:00-22:00（週一公休）</p>
-              <p>電話：0912-345678</p>
-              <p>地址：高雄市新興區</p>
+              <li>營業時間：08:00-22:00（週一公休）</li>
+              <li>電話：0912-345678</li>
+              <li>地址：高雄市新興區</li>
               <SocialLinks>
-                <Link href="https://line.me" target="_blank">
-                  <Image
-                    src="/images/social/line-icon.png"
-                    alt="Line Icon"
-                    width={24}
-                    height={24}
-                  />
-                </Link>
-                <Link href="https://facebook.com" target="_blank">
-                  <Image
-                    src="/images/social/facebook-icon.png"
-                    alt="Facebook Icon"
-                    width={24}
-                    height={24}
-                  />
-                </Link>
+                <IconWhiteWrapper
+                  as={Link}
+                  href="https://line.me"
+                  target="_blank"
+                >
+                  <StyledFaLine size={24} />
+                </IconWhiteWrapper>
+
+                <IconWhiteWrapper
+                  as={Link}
+                  href="https://facebook.com"
+                  target="_blank"
+                >
+                  <StyledFaFacebook size={24} />
+                </IconWhiteWrapper>
               </SocialLinks>
             </ContactInfo>
-          </Section>
+          </Contact>
 
-          <Section>
+          <Newsletter>
             <Title>訂閱電子報</Title>
-            <Newsletter>
+            <InputWrapper>
               <Input type="email" placeholder="輸入電子郵件" />
-              <SubscribeButton>→</SubscribeButton>
-            </Newsletter>
+              <SubscribeButton>
+                <MdArrowForward size={24} />
+              </SubscribeButton>
+            </InputWrapper>
             <Checkbox>
               <input type="checkbox" id="newsletter-consent" />
               <label htmlFor="newsletter-consent">
                 我想要了解最新的輔具資訊
               </label>
             </Checkbox>
-          </Section>
-        </FooterContent>
+          </Newsletter>
+        </Content>
 
-        <Copyright>Copyright 2024</Copyright>
+        <Copyright>Copyright ©2024</Copyright>
       </Container>
-    </FooterWrapper>
+    </Wrapper>
   );
 };
 

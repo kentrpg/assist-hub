@@ -1,37 +1,48 @@
 import { useRouter } from "next/router";
-import { MdShoppingCart } from "react-icons/md";
+import { MdShoppingCart, MdSearch } from "react-icons/md";
+import Avatar from "@/components/ui/Avatar";
 import Link from "next/link";
 
 import {
   HeaderWrapper,
   Container,
   Navbar,
-  StyledLink,
-  Action,
-  LogoutButton,
-  SearchWrapper,
-  SearchIcon,
-  SearchInput,
   CartButton,
+  AccountButton,
+  HeaderActions,
+  LogoImage,
+  LogoSection,
+  LogoText,
+  LogoutButton,
+  NavLink,
+  NavLinks,
+  SearchButton,
 } from "./styled";
 
-import Avatar from "@/components/ui/Avatar";
-
-/** QUESTION
- * Header
- * 📋 TEST: 目前添加了 LogoutButton 用來測試 middleware 驗證
- */
+import { signOut } from "@/utils/api/auth/signout";
 
 const Header = () => {
-  const isLoggedIn = process.env.NEXT_PUBLIC_IS_LOGGED_IN === "true";
-  const avatarPath = process.env.NEXT_PUBLIC_AVATAR_IMAGE_PATH || "";
+  // const isLoggedIn = process.env.NEXT_PUBLIC_IS_LOGGED_IN === "true";
+  // const avatarPath = process.env.NEXT_PUBLIC_AVATAR_IMAGE_PATH || "";
 
   // ===測試 middleware 驗證===
   const router = useRouter();
-  const handleLogout = () => {
-    sessionStorage.removeItem("token");
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-    router.push("/auth/signin");
+  // TBD:  API 相關的處理，將所有與 UI 相關的邏輯分離
+  const handleLogout = async () => {
+    try {
+      const response = await signOut();
+      console.log(response);
+      switch (response.status) {
+        case 200:
+          router.push("/auth/signin");
+          break;
+        default:
+          console.error("登出失敗");
+      }
+    } catch (error) {
+      console.error("登出錯誤:", error);
+    }
+    // router.push("/auth/signin");
   };
   // ===測試 middleware 驗證===
 
@@ -39,29 +50,46 @@ const Header = () => {
     <HeaderWrapper>
       <Container>
         <Navbar>
-          <StyledLink href="/">首頁</StyledLink>
-          <StyledLink href="/products">所有輔具</StyledLink>
-          <StyledLink href="/faq">常見問題</StyledLink>
-          <StyledLink href="/inquiry">詢問單</StyledLink>
+          <LogoSection>
+            <LogoImage
+              src="/images/i_logo.png"
+              alt="輔具租賃網"
+              width={20}
+              height={20}
+            />
+            <LogoText>輔具租賃網</LogoText>
+          </LogoSection>
+          <NavLinks>
+            <NavLink as={Link} href="/products">
+              所有輔具
+            </NavLink>
+            <NavLink as={Link} href="/faq">
+              常見問題
+            </NavLink>
+            <NavLink as={Link} href="/inquiry">
+              詢問單
+            </NavLink>
+          </NavLinks>
         </Navbar>
 
-        <Action>
-          {/* // ===測試 middleware 驗證=== */}
+        <HeaderActions>
           <LogoutButton onClick={handleLogout}>登出</LogoutButton>
-          {/* // ===測試 middleware 驗證=== */}
-          <SearchWrapper>
-            <SearchIcon />
-            <SearchInput placeholder="電動輪椅" />
-          </SearchWrapper>
-
           <CartButton>
             <MdShoppingCart size={24} />
+            購物車
           </CartButton>
-
-          <Link href={isLoggedIn ? "/auth" : "/signin"}>
-            <Avatar isLoggedIn={isLoggedIn} imageSrc={avatarPath} />
-          </Link>
-        </Action>
+          <SearchButton>
+            <MdSearch size={24} />
+            搜尋輔具
+          </SearchButton>
+          <AccountButton>
+            <Avatar
+              isLoggedIn={false}
+              imageSrc="/images/avatar-placeholder.png"
+            />
+            我的帳戶
+          </AccountButton>
+        </HeaderActions>
       </Container>
     </HeaderWrapper>
   );

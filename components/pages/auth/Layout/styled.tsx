@@ -9,68 +9,6 @@ export const Form = styled.form`
   margin-top: -12px;
 `;
 
-export const Input = styled.input`
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 16px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 16px;
-`;
-
-export const InputWrapper = styled.div`
-  position: relative;
-  margin: 12px 0;
-
-  input:focus + label,
-  input[data-has-value="true"] + label {
-    top: 0;
-    left: 12px;
-    font-size: 16px;
-    padding: 0 6.5px;
-  }
-`;
-type InputFieldProps = {
-  isError?: boolean;
-  isValid?: boolean;
-};
-export const InputField = styled.input<InputFieldProps>`
-  width: 100%;
-  padding: 16px 16px;
-  font-size: 16px;
-  border: 1px solid #e9e5de;
-  border-radius: 8px;
-  outline: none;
-
-  &:focus {
-    border-color: #1e3a8a;
-  }
-`;
-
-export const Label = styled.label`
-  position: absolute;
-  top: 50%;
-  left: 22px;
-  transform: translateY(-50%);
-  font-size: 18px;
-  color: ${({ theme }) => theme.colors.black};
-  background-color: ${({ theme }) => theme.colors.white};
-  transition: all 0.15s ease-in-out;
-  pointer-events: none;
-`;
-
-export const ErrorMessage = styled.span`
-  color: ${({ theme }) => theme.colors.error};
-  font-size: 14px;
-  margin: -8px 0 12px;
-`;
-
-export const PasswordErrorMessage = styled.span`
-  color: ${({ theme }) => theme.colors.textMuted};
-  font-size: 14px;
-  margin: -8px 0 12px;
-`;
-
 export const Container = styled(Container432)`
   display: flex;
   flex-direction: column;
@@ -78,29 +16,7 @@ export const Container = styled(Container432)`
 `;
 
 export const Title = styled.h1`
-  margin-bottom: 16px;
-`;
-
-export const RememberWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 18px;
-`;
-
-export const TextMuted = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  font-size: 18px;
-  color: ${({ theme }) => theme.colors.muted};
-  input {
-    width: 18px;
-    height: 18px;
-    border-width: 2px; // 沒有作用
-    border-style: solid;
-    border-color: ${({ theme }) => theme.colors.muted};
-  }
+  margin-bottom: 26px;
 `;
 
 export const FooterLinks = styled.div`

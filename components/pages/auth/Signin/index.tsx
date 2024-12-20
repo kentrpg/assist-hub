@@ -2,7 +2,6 @@ import { useState, Fragment } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 import { useRouter } from "next/router";
-import { useRouter } from "next/router";
 import Link from "next/link";
 import { Container, Title, Form, FooterLinks } from "../Layout/styled";
 import { LineButton, AuthButton } from "@/components/ui/buttons";

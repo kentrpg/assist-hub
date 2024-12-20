@@ -3,12 +3,13 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
 
 import { Container, Title, Form } from "../Layout/styled";
-import { AuthButton } from "@/components/ui/buttons";
+
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import FormField from "@/utils/react-hook-form/FormField";
 import { RegisterField } from "@/utils/react-hook-form/types";
 import { registerFields, RegistInputs } from "./data";
 import { signUp } from "@/utils/api/auth/register";
+import { AuthButton } from "@/components/ui/buttons";
 
 const Regist: React.FC = () => {
   const {

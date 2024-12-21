@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { Container1344 } from "@/styles/container";
+import Link from "next/link";
 
-export const HeaderWrapper = styled.header`
+export const Wrapper = styled.header`
   width: 100%;
   background: ${({ theme }) => theme.colors.white};
 `;
@@ -23,20 +24,18 @@ export const Navbar = styled.nav`
   gap: 16px;
 `;
 
-export const LogoSection = styled.div`
+export const BrandGroup = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
 `;
 
-export const LogoImage = styled.img`
+export const Logo = styled.img`
   width: 20px;
   height: 20px;
-  border-radius: 50%;
-  color: ${({ theme }) => theme.colors.textprimary};
 `;
 
-export const LogoText = styled.span`
+export const Name = styled.span`
   font-size: 16px;
   color: ${({ theme }) => theme.colors.textprimary};
   margin-right: 30px;
@@ -48,7 +47,7 @@ export const NavLinks = styled.div`
   gap: 24px;
 `;
 
-export const NavLink = styled.a`
+export const NavLink = styled(Link)`
   font-size: 16px;
   text-decoration: none;
   color: ${({ theme }) => theme.colors.textprimary};
@@ -59,7 +58,7 @@ export const NavLink = styled.a`
   }
 `;
 
-export const HeaderActions = styled.div`
+export const ButtonGroup = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;

@@ -1,26 +1,28 @@
-import Link from "next/link";
 import { Container1344 as Container } from "@/styles/container";
 import {
   Categories,
-  Checkbox,
-  ContactInfo,
+  PrivacyConsent,
+  AddressInfo,
   Contact,
   Copyright,
   Content,
-  FooterLink,
+  CategoryLink,
   Wrapper,
-  Input,
-  CategoriesLink,
+  EmailField,
+  CategoryLinkList,
   Newsletter,
-  InputWrapper,
-  SocialLinks,
+  SubscriptionField,
+  SocialMediaLinks,
   SubscribeButton,
   Title,
+  CategoryLinks,
+  ConsentCheckbox,
+  ConsentLabel,
 } from "./styled";
 import {
-  IconWhiteWrapper,
-  StyledFaFacebook,
-  StyledFaLine,
+  IconWhiteWrapper as SocialIconLink,
+  FacebookIcon,
+  LineIcon,
 } from "@/utils/react-icons/IconColor";
 import { MdArrowForward } from "react-icons/md";
 
@@ -31,60 +33,54 @@ const Footer = () => {
         <Content>
           <Categories>
             <Title>輔具分類</Title>
-            <CategoriesLink>
-              <div>
-                <FooterLink href="#">行動輔椅</FooterLink>
-                <FooterLink href="#">臥室寢具</FooterLink>
-                <FooterLink href="#">呼吸照護</FooterLink>
-                <FooterLink href="#">拐杖步行</FooterLink>
-              </div>
-              <div>
-                <FooterLink href="#">如廁沐浴</FooterLink>
-                <FooterLink href="#">居家照護</FooterLink>
-                <FooterLink href="#">輔具、護具</FooterLink>
-              </div>
-            </CategoriesLink>
+            <CategoryLinkList>
+              <CategoryLinks>
+                <CategoryLink href="#">行動輔椅</CategoryLink>
+                <CategoryLink href="#">臥室寢具</CategoryLink>
+                <CategoryLink href="#">呼吸照護</CategoryLink>
+                <CategoryLink href="#">拐杖步行</CategoryLink>
+              </CategoryLinks>
+              <CategoryLinks>
+                <CategoryLink href="#">如廁沐浴</CategoryLink>
+                <CategoryLink href="#">居家照護</CategoryLink>
+                <CategoryLink href="#">輔具、護具</CategoryLink>
+              </CategoryLinks>
+            </CategoryLinkList>
           </Categories>
-          <Contact as={"address"}>
+          <Contact>
             <Title>聯絡我們</Title>
-            <ContactInfo>
-              <li>營業時間：08:00-22:00（週一公休）</li>
-              <li>電話：0912-345678</li>
-              <li>地址：高雄市新興區</li>
-              <SocialLinks>
-                <IconWhiteWrapper
-                  as={Link}
-                  href="https://line.me"
+            <AddressInfo>
+              <span>營業時間：08:00-22:00（週一公休）</span>
+              <span>電話：0912-345678</span>
+              <span>地址：高雄市新興區</span>
+              <SocialMediaLinks>
+                <SocialIconLink href="https://line.me" target="_blank">
+                  <LineIcon size={24} />
+                </SocialIconLink>
+                <SocialIconLink
+                  href="https://www.facebook.com/hexschool"
                   target="_blank"
                 >
-                  <StyledFaLine size={24} />
-                </IconWhiteWrapper>
-
-                <IconWhiteWrapper
-                  as={Link}
-                  href="https://facebook.com"
-                  target="_blank"
-                >
-                  <StyledFaFacebook size={24} />
-                </IconWhiteWrapper>
-              </SocialLinks>
-            </ContactInfo>
+                  <FacebookIcon size={24} />
+                </SocialIconLink>
+              </SocialMediaLinks>
+            </AddressInfo>
           </Contact>
 
           <Newsletter>
             <Title>訂閱電子報</Title>
-            <InputWrapper>
-              <Input type="email" placeholder="輸入電子郵件" />
+            <SubscriptionField>
+              <EmailField type="email" placeholder="輸入電子郵件" />
               <SubscribeButton>
                 <MdArrowForward size={24} />
               </SubscribeButton>
-            </InputWrapper>
-            <Checkbox>
-              <input type="checkbox" id="newsletter-consent" />
-              <label htmlFor="newsletter-consent">
+            </SubscriptionField>
+            <PrivacyConsent>
+              <ConsentCheckbox type="checkbox" id="newsletter-consent" />
+              <ConsentLabel htmlFor="newsletter-consent">
                 我想要了解最新的輔具資訊
-              </label>
-            </Checkbox>
+              </ConsentLabel>
+            </PrivacyConsent>
           </Newsletter>
         </Content>
 

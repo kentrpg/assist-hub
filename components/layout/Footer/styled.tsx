@@ -41,18 +41,19 @@ export const Title = styled.span`
   margin-bottom: 16px;
 `;
 
-export const CategoriesLink = styled.div`
+export const CategoryLinkList = styled.div`
   display: flex;
   gap: 40px;
-  & > div {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
 `;
 
-export const FooterLink = styled(Link)`
+export const CategoryLinks = styled.div`
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
+export const CategoryLink = styled(Link)`
   color: #333333;
   text-decoration: none;
   &:hover {
@@ -60,24 +61,25 @@ export const FooterLink = styled(Link)`
   }
 `;
 
-export const ContactInfo = styled.ul`
+export const AddressInfo = styled.address`
   display: flex;
   flex-direction: column;
   gap: 16px;
 `;
 
-export const SocialLinks = styled.li`
+export const SocialMediaLinks = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
 `;
 
-export const InputWrapper = styled.div`
+export const SubscriptionField = styled.div`
+  max-width: 260px;
   position: relative;
   margin-bottom: 10px;
 `;
 
-export const Input = styled.input`
+export const EmailField = styled.input`
   width: 100%;
   padding: 12px 10px;
   font-size: 14px;
@@ -111,34 +113,40 @@ export const SubscribeButton = styled.button`
   }
 `;
 
-export const Checkbox = styled.div`
+export const PrivacyConsent = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: 8px;
+`;
 
-  input[type="checkbox"] {
-    appearance: none;
-    width: 16px;
-    height: 16px;
-    border: 2px solid ${({ theme }) => theme.colors.textMuted};
-    border-radius: 2px;
-    position: relative;
+export const ConsentCheckbox = styled.input`
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid ${({ theme }) => theme.colors.textMuted};
+  border-radius: 2px;
+  position: relative;
 
-    &:checked {
-      background-color: ${({ theme }) => theme.colors.textMuted};
-    }
-
-    &:checked::after {
-      content: "✔";
-      color: #fff;
-      font-size: 12px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
+  &:checked {
+    /* color: ${({ theme }) => theme.colors.textMuted}; */
+    background-color: transparent;
   }
+
+  &:checked::after {
+    content: "✔";
+    color: ${({ theme }) => theme.colors.textMuted};
+    font-size: 12px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+`;
+
+export const ConsentLabel = styled.label`
+  font-size: 14px;
+  color: ${({ theme }) => theme.colors.gray["300"]};
+  user-select: none;
 `;
 
 export const Copyright = styled.p`

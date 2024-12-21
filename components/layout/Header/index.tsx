@@ -1,18 +1,17 @@
 import { useRouter } from "next/router";
 import { MdShoppingCart, MdSearch } from "react-icons/md";
 import Avatar from "@/components/ui/Avatar";
-import Link from "next/link";
 
 import {
-  HeaderWrapper,
+  Wrapper,
   Container,
   Navbar,
   CartButton,
   AccountButton,
-  HeaderActions,
-  LogoImage,
-  LogoSection,
-  LogoText,
+  ButtonGroup,
+  Logo,
+  BrandGroup,
+  Name,
   LogoutButton,
   NavLink,
   NavLinks,
@@ -22,12 +21,8 @@ import {
 import { signOut } from "@/utils/api/auth/signout";
 
 const Header = () => {
-  // const isLoggedIn = process.env.NEXT_PUBLIC_IS_LOGGED_IN === "true";
-  // const avatarPath = process.env.NEXT_PUBLIC_AVATAR_IMAGE_PATH || "";
-
   // ===測試 middleware 驗證===
   const router = useRouter();
-  // TBD:  API 相關的處理，將所有與 UI 相關的邏輯分離
   const handleLogout = async () => {
     try {
       const response = await signOut();
@@ -42,37 +37,29 @@ const Header = () => {
     } catch (error) {
       console.error("登出錯誤:", error);
     }
-    // router.push("/auth/signin");
   };
   // ===測試 middleware 驗證===
-
   return (
-    <HeaderWrapper>
+    <Wrapper>
       <Container>
         <Navbar>
-          <LogoSection>
-            <LogoImage
+          <BrandGroup>
+            <Logo
               src="/images/i_logo.png"
               alt="輔具租賃網"
               width={20}
               height={20}
             />
-            <LogoText>輔具租賃網</LogoText>
-          </LogoSection>
+            <Name>輔具租賃網</Name>
+          </BrandGroup>
           <NavLinks>
-            <NavLink as={Link} href="/products">
-              所有輔具
-            </NavLink>
-            <NavLink as={Link} href="/faq">
-              常見問題
-            </NavLink>
-            <NavLink as={Link} href="/inquiry">
-              詢問單
-            </NavLink>
+            <NavLink href="/products">所有輔具</NavLink>
+            <NavLink href="/faq">常見問題</NavLink>
+            <NavLink href="/inquiry">詢問單</NavLink>
           </NavLinks>
         </Navbar>
 
-        <HeaderActions>
+        <ButtonGroup>
           <LogoutButton onClick={handleLogout}>登出</LogoutButton>
           <CartButton>
             <MdShoppingCart size={24} />
@@ -89,9 +76,9 @@ const Header = () => {
             />
             我的帳戶
           </AccountButton>
-        </HeaderActions>
+        </ButtonGroup>
       </Container>
-    </HeaderWrapper>
+    </Wrapper>
   );
 };
 

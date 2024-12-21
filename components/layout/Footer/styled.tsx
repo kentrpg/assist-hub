@@ -117,7 +117,6 @@ export const PrivacyConsent = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: 8px;
 `;
 
 export const ConsentCheckbox = styled.input`

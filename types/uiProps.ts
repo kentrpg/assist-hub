@@ -27,8 +27,8 @@ export type ThemeColors =
 
 // Number 內所有 key 限定用於 CSS 樣式所需之數字屬性  
 export type Number = {
-  gap: number;
-  size: number;
-  fontSize: number;
-  borderRadius: number;
+  $gap: number;
+  $size: number;
+  $fontSize: number;
+  $borderRadius: number;
 };

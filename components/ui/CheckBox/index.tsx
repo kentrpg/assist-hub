@@ -34,8 +34,8 @@ export const CheckboxField: React.FC<CheckBoxProps> = ({
   const handleToggle = () => setChecked(!checked);
 
   return (
-    <Checkbox gap={gap}>
-      <CheckboxControl size={size}>
+    <Checkbox $gap={gap}>
+      <CheckboxControl $size={size}>
         <VisuallyHiddenInput
           type="checkbox"
           id="newsletter-consent"
@@ -43,16 +43,23 @@ export const CheckboxField: React.FC<CheckBoxProps> = ({
           onChange={handleToggle}
         />
         {checked ? (
-          <CheckedStateIcon size={size} checkboxIconColor={checkboxIconColor} />
+          <CheckedStateIcon
+            size={size}
+            $checkboxIconColor={checkboxIconColor}
+          />
         ) : (
           <UncheckedStateIcon
             size={size}
-            checkboxIconColor={checkboxIconColor}
+            $checkboxIconColor={checkboxIconColor}
           />
         )}
       </CheckboxControl>
       {label && (
-        <CheckboxLabel fontSize={fontSize} labelColor={labelColor} htmlFor={id}>
+        <CheckboxLabel
+          $fontSize={fontSize}
+          $labelColor={labelColor}
+          htmlFor={id}
+        >
           {label}
         </CheckboxLabel>
       )}

@@ -79,7 +79,7 @@ const Signin: React.FC = () => {
           {isSubmitting ? <LoaderSpinner /> : "登入"}
         </AuthButton>
         <LineButton>
-          <IconWrapper size={24} backgroundColor="white" borderRadius={4}>
+          <IconWrapper $size={24} $backgroundColor="white" $borderRadius={4}>
             <FaLine size={24} fill={theme.colors.lineLogo} />
           </IconWrapper>
           Line 登入

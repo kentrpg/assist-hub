@@ -55,18 +55,18 @@ const Footer = () => {
                 <IconLinkWrapper
                   href="https://line.me"
                   target="_blank"
-                  size={24}
-                  backgroundColor="white"
-                  borderRadius={4}
+                  $size={24}
+                  $backgroundColor="white"
+                  $borderRadius={4}
                 >
                   <FaLine size={24} fill={theme.colors.lineLogo} />
                 </IconLinkWrapper>
                 <IconLinkWrapper
                   href="https://www.facebook.com/hexschool"
                   target="_blank"
-                  size={24}
-                  backgroundColor="white"
-                  borderRadius={4}
+                  $size={24}
+                  $backgroundColor="white"
+                  $borderRadius={4}
                 >
                   <FaFacebookSquare size={24} fill={theme.colors.fbLogo} />
                 </IconLinkWrapper>

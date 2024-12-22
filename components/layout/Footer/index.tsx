@@ -7,7 +7,6 @@ import {
   Content,
   CategoryLink,
   Wrapper,
-  EmailField,
   CategoryLinkList,
   Newsletter,
   SubscriptionField,
@@ -18,12 +17,29 @@ import {
 } from "./styled";
 import { IconLinkWrapper } from "@/utils/react-icons/iconWrappers";
 import { MdArrowForward } from "react-icons/md";
-import { CheckboxField } from "@/components/ui/CheckBox";
+import CheckboxField from "@/components/ui/CheckBox";
 import { FaFacebookSquare, FaLine } from "react-icons/fa";
 import { useTheme } from "styled-components";
+import { useForm } from "react-hook-form";
+import { ErrorMessage as FormErrorMessage } from "@/utils/react-hook-form/FormError/styled";
+import InputField from "@/utils/react-hook-form/InputField";
 
-const Footer = () => {
+type NewsletterForm = {
+  email: string;
+};
+
+const Footer: React.FC = () => {
   const theme = useTheme();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<NewsletterForm>();
+
+  const onSubmit = (data: NewsletterForm) => {
+    console.log(data);
+  };
 
   return (
     <Wrapper>
@@ -76,12 +92,53 @@ const Footer = () => {
 
           <Newsletter>
             <Title>訂閱電子報</Title>
-            <SubscriptionField>
-              <EmailField type="email" placeholder="輸入電子郵件" />
-              <SubscribeButton>
-                <MdArrowForward size={24} fill={theme.colors.textMuted} />
-              </SubscribeButton>
-            </SubscriptionField>
+            <form onSubmit={handleSubmit(onSubmit)} noValidate>
+              <SubscriptionField>
+                <InputField
+                  name="email"
+                  type="tel"
+                  placeholder="輸入電子信箱"
+                  $color={{ color: "gray", scale: "300" }}
+                  $fontSize={14}
+                  $borderColor={{ color: "gray", scale: "300" }}
+                  $backgroundColor={{ color: "gray", scale: "100" }}
+                  $padding="8px 34px 8px 10px"
+                  register={register}
+                  required="請輸入電子信箱"
+                  validate={{
+                    domain: (value: string) => {
+                      const domainRegex =
+                        /@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+                      return (
+                        domainRegex.test(value) || "請輸入有效的電子郵件域名"
+                      );
+                    },
+                    local: (value: string) => {
+                      const beforeAtRegex =
+                        /^(?:[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:\\[\x01-\x09\x0b\x0c\x0e-\x7f]|[\x01-\x09\x0b\x0c\x0e-\x7f])*")@/;
+                      return (
+                        beforeAtRegex.test(value) ||
+                        "電子郵件地址 '@' 前方不應包含空白或非法字符"
+                      );
+                    },
+                    length: (value: string) => {
+                      if (value.length > 254)
+                        return "電子信箱長度不得超過 254 個字符";
+                      const localPart = value.split("@")[0];
+                      if (localPart.length > 64)
+                        return "@ 前方不得超過 64 個字符";
+                      return true;
+                    },
+                  }}
+                />
+                <SubscribeButton type="submit">
+                  <MdArrowForward size={24} fill={theme.colors.textMuted} />
+                </SubscribeButton>
+                {errors.email && (
+                  <FormErrorMessage>{errors.email.message}</FormErrorMessage>
+                )}
+              </SubscriptionField>
+            </form>
             <CheckboxField
               id="newsletter-consent"
               label="我想要了解最新的輔具資訊"
@@ -90,7 +147,7 @@ const Footer = () => {
               fontSize={16}
               size={21}
               checkboxIconColor="textMuted"
-              labelColor="gray['300']"
+              labelColor={{ color: "gray", scale: "300" }}
             />
           </Newsletter>
         </Content>

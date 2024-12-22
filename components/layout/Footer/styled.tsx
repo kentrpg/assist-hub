@@ -79,32 +79,10 @@ export const SubscriptionField = styled.div`
   margin-bottom: 10px;
 `;
 
-export const EmailField = styled.input`
-  width: 100%;
-  padding: 12px 10px;
-  font-size: 14px;
-  border: 1px solid ${({ theme }) => theme.colors.gray["300"]};
-  border-radius: 5px;
-  background-color: ${({ theme }) => theme.colors.gray["100"]};
-  transition: box-shadow 0.13s ease-out, border-color 0.1s ease-in-out;
-
-  &:focus {
-    border-color: ${({ theme }) => theme.colors.primary};
-    box-shadow: 0 0 0 1px ${({ theme }) => theme.colors.primary},
-      0 0 0 1000px ${({ theme }) => theme.colors.gray["100"]} inset;
-  }
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.textMuted};
-  }
-
-  padding-right: 36px;
-`;
-
 export const SubscribeButton = styled.button`
   position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
+  right: 11px;
+  top: 6.5px;
   background: none;
 
   svg {

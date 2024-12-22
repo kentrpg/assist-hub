@@ -21,7 +21,7 @@ export const Title = styled.h1`
 
 export const FooterLinks = styled.div`
   text-align: center;
-  font-size: 18px;
+  font-size: 16px;
   a {
     margin-left: 4px;
     text-decoration: underline;

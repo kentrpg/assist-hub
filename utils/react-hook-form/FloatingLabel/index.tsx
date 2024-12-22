@@ -1,7 +1,7 @@
 import { UseFormRegister, FieldErrors, FieldValues } from "react-hook-form";
 import {
-  InputWrapper,
-  InputField,
+  FloatingLabelWrapper,
+  FloatingLabel,
   Label,
   PasswordInputField,
   TogglePassword,
@@ -30,7 +30,7 @@ const FormField = <T extends FieldValues>({
 }: FormFieldProps<T>) => {
   return (
     <>
-      <InputWrapper>
+      <FloatingLabelWrapper>
         {field.type === "password" ? (
           <>
             <TogglePassword
@@ -51,14 +51,14 @@ const FormField = <T extends FieldValues>({
             />
           </>
         ) : (
-          <InputField
+          <FloatingLabel
             type={field.type}
             placeholder=" "
             {...register(field.name, field.validation)}
           />
         )}
         <Label htmlFor={String(field.name)}>{field.label}</Label>
-      </InputWrapper>
+      </FloatingLabelWrapper>
       <FormError
         name={field.name}
         errorType={field.errorType}

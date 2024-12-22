@@ -7,7 +7,7 @@ import {
   UncheckedStateIcon,
   CheckboxLabel,
 } from "./styled";
-import { ThemeColors } from "@/types/uiProps";
+import { ScaleColors, ThemeColors } from "@/types/uiProps";
 
 type CheckBoxProps = {
   id: string;
@@ -16,19 +16,19 @@ type CheckBoxProps = {
   defaultChecked: boolean;
   fontSize: number;
   size: number;
-  checkboxIconColor: ThemeColors;
-  labelColor: ThemeColors;
+  checkboxIconColor: ScaleColors | ThemeColors;
+  labelColor: ScaleColors | ThemeColors;
 };
 
-export const CheckboxField: React.FC<CheckBoxProps> = ({
+const CheckboxField: React.FC<CheckBoxProps> = ({
   id,
   label,
-  gap = 3,
-  defaultChecked = true,
-  fontSize = 16,
-  size = 20,
-  checkboxIconColor = "textMuted",
-  labelColor = "gray['300']",
+  gap,
+  defaultChecked,
+  fontSize,
+  size,
+  checkboxIconColor,
+  labelColor,
 }) => {
   const [checked, setChecked] = useState(defaultChecked);
   const handleToggle = () => setChecked(!checked);
@@ -38,7 +38,7 @@ export const CheckboxField: React.FC<CheckBoxProps> = ({
       <CheckboxControl $size={size}>
         <VisuallyHiddenInput
           type="checkbox"
-          id="newsletter-consent"
+          id={id}
           checked={checked}
           onChange={handleToggle}
         />
@@ -66,3 +66,5 @@ export const CheckboxField: React.FC<CheckBoxProps> = ({
     </Checkbox>
   );
 };
+
+export default CheckboxField;

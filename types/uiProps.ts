@@ -20,10 +20,13 @@ export type ThemeColors =
   | "success"
   | "border"
   | "info"
-  | "gray['100']"
-  | "gray['200']"
-  | "gray['300']"
+  | "gray"
   ;
+export type GrayKey = "100" | "200" | "300";
+export type ScaleColors = {
+  color: "gray";
+  scale: GrayKey;
+}
 
 // Number 內所有 key 限定用於 CSS 樣式所需之數字屬性  
 export type Number = {

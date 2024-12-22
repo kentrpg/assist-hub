@@ -1,4 +1,4 @@
-import { ThemeColors, Number } from "@/types/uiProps";
+import { ThemeColors, Number, ScaleColors } from "@/types/uiProps";
 import {
   MdCheckBox as MdCheckBoxIcon,
   MdCheckBoxOutlineBlank,
@@ -26,26 +26,32 @@ export const VisuallyHiddenInput = styled.input`
 `;
 
 export const CheckboxLabel = styled.label<
-  Pick<Number, "$fontSize"> & { $labelColor: ThemeColors }
+  Pick<Number, "$fontSize"> & { $labelColor: ScaleColors | ThemeColors }
 >`
   font-size: ${({ $fontSize }) => $fontSize}px;
-  color: ${({ $labelColor, theme }) => theme.colors[$labelColor]};
+  color: ${({ theme, $labelColor }) =>
+    typeof $labelColor === "string"
+      ? theme.colors[$labelColor]
+      : theme.colors[$labelColor.color][$labelColor.scale]};
   user-select: none;
 `;
 
-const baseCheckbox = css<{ $checkboxIconColor: ThemeColors }>`
+const baseCheckbox = css<{ $checkboxIconColor: ScaleColors | ThemeColors }>`
   position: absolute;
-  color: ${({ $checkboxIconColor, theme }) => theme.colors[$checkboxIconColor]};
+  color: ${({ theme, $checkboxIconColor }) =>
+    typeof $checkboxIconColor === "string"
+      ? theme.colors[$checkboxIconColor]
+      : theme.colors[$checkboxIconColor.color][$checkboxIconColor.scale]};
 `;
 
 export const CheckedStateIcon = styled(MdCheckBoxIcon)<{
-  $checkboxIconColor: ThemeColors;
+  $checkboxIconColor: ScaleColors | ThemeColors;
 }>`
   ${baseCheckbox};
 `;
 
 export const UncheckedStateIcon = styled(MdCheckBoxOutlineBlank)<{
-  $checkboxIconColor: ThemeColors;
+  $checkboxIconColor: ScaleColors | ThemeColors;
 }>`
   ${baseCheckbox};
 `;

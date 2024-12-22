@@ -44,16 +44,10 @@ export const registerFields: RegisterField<SignInInputs>[] = [
     type: "password",
     validation: {
       required: "請填寫密碼",
-      // pattern: {
-      //   value:
-      //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[a-zA-Z\d!@#$%^&*(),.?":{}|<>]{8,}$/,
-      //   message:
-      //     "密碼長度必須至少 8 個字符，並且包含 1 個大寫英文字母、1 個小寫英文字母和 1 個數字。",
-      // },
       validate: {
         notEmpty: (value: string) => {
           if (!value || value.trim() === "") {
-            return "請輸入正確姓名";
+            return "請正確填寫密碼";
           }
           return true;
         },

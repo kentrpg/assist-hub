@@ -1,7 +1,6 @@
 import { Container1344 as Container } from "@/styles/container";
 import {
   Categories,
-  PrivacyConsent,
   AddressInfo,
   Contact,
   Copyright,
@@ -16,17 +15,16 @@ import {
   SubscribeButton,
   Title,
   CategoryLinks,
-  ConsentCheckbox,
-  ConsentLabel,
 } from "./styled";
-import {
-  IconWhiteWrapper as SocialIconLink,
-  FacebookIcon,
-  LineIcon,
-} from "@/utils/react-icons/IconColor";
+import { IconLinkWrapper } from "@/utils/react-icons/iconWrappers";
 import { MdArrowForward } from "react-icons/md";
+import { CheckboxField } from "@/components/ui/CheckBox";
+import { FaFacebookSquare, FaLine } from "react-icons/fa";
+import { useTheme } from "styled-components";
 
 const Footer = () => {
+  const theme = useTheme();
+
   return (
     <Wrapper>
       <Container>
@@ -54,15 +52,24 @@ const Footer = () => {
               <span>電話：0912-345678</span>
               <span>地址：高雄市新興區</span>
               <SocialMediaLinks>
-                <SocialIconLink href="https://line.me" target="_blank">
-                  <LineIcon size={24} />
-                </SocialIconLink>
-                <SocialIconLink
+                <IconLinkWrapper
+                  href="https://line.me"
+                  target="_blank"
+                  size={24}
+                  backgroundColor="white"
+                  borderRadius={4}
+                >
+                  <FaLine size={24} fill={theme.colors.lineLogo} />
+                </IconLinkWrapper>
+                <IconLinkWrapper
                   href="https://www.facebook.com/hexschool"
                   target="_blank"
+                  size={24}
+                  backgroundColor="white"
+                  borderRadius={4}
                 >
-                  <FacebookIcon size={24} />
-                </SocialIconLink>
+                  <FaFacebookSquare size={24} fill={theme.colors.fbLogo} />
+                </IconLinkWrapper>
               </SocialMediaLinks>
             </AddressInfo>
           </Contact>
@@ -72,15 +79,19 @@ const Footer = () => {
             <SubscriptionField>
               <EmailField type="email" placeholder="輸入電子郵件" />
               <SubscribeButton>
-                <MdArrowForward size={24} />
+                <MdArrowForward size={24} fill={theme.colors.textMuted} />
               </SubscribeButton>
             </SubscriptionField>
-            <PrivacyConsent>
-              <ConsentCheckbox type="checkbox" id="newsletter-consent" />
-              <ConsentLabel htmlFor="newsletter-consent">
-                我想要了解最新的輔具資訊
-              </ConsentLabel>
-            </PrivacyConsent>
+            <CheckboxField
+              id="newsletter-consent"
+              label="我想要了解最新的輔具資訊"
+              gap={3}
+              defaultChecked={false}
+              fontSize={16}
+              size={21}
+              checkboxIconColor="textMuted"
+              labelColor="gray['300']"
+            />
           </Newsletter>
         </Content>
 

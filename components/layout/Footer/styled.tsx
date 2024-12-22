@@ -54,7 +54,7 @@ export const CategoryLinks = styled.div`
 `;
 
 export const CategoryLink = styled(Link)`
-  color: #333333;
+  color: ${({ theme }) => theme.colors.gray["300"]};
   text-decoration: none;
   &:hover {
     text-decoration: underline;
@@ -111,42 +111,6 @@ export const SubscribeButton = styled.button`
     vertical-align: top;
     color: ${({ theme }) => theme.colors.textMuted};
   }
-`;
-
-export const PrivacyConsent = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`;
-
-export const ConsentCheckbox = styled.input`
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  border: 2px solid ${({ theme }) => theme.colors.textMuted};
-  border-radius: 2px;
-  position: relative;
-
-  &:checked {
-    /* color: ${({ theme }) => theme.colors.textMuted}; */
-    background-color: transparent;
-  }
-
-  &:checked::after {
-    content: "✔";
-    color: ${({ theme }) => theme.colors.textMuted};
-    font-size: 12px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-`;
-
-export const ConsentLabel = styled.label`
-  font-size: 14px;
-  color: ${({ theme }) => theme.colors.gray["300"]};
-  user-select: none;
 `;
 
 export const Copyright = styled.p`

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const InputWrapper = styled.div`
+export const FloatingLabelWrapper = styled.div`
   position: relative;
   margin: 12px 0;
 
@@ -14,7 +14,7 @@ export const InputWrapper = styled.div`
   }
 `;
 
-export const InputField = styled.input`
+export const FloatingLabel = styled.input`
   width: 100%;
   padding: 14px 16px;
   font-size: 16px;
@@ -42,7 +42,7 @@ export const Label = styled.label`
   pointer-events: none;
 `;
 
-export const PasswordInputField = styled(InputField)`
+export const PasswordInputField = styled(FloatingLabel)`
   padding: 14px 40px 14px 16px;
 `;
 

@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { Container, Title, Form } from "../Layout/styled";
 
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
-import FormField from "@/utils/react-hook-form/FormField";
+import FormField from "@/utils/react-hook-form/FloatingLabel";
 import { RegisterField } from "@/utils/react-hook-form/types";
 import { registerFields, RegistInputs } from "./data";
 import { signUp } from "@/utils/api/auth/register";

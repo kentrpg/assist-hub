@@ -1,7 +1,8 @@
+import Link from "next/link";
 import styled from "styled-components";
 
-const LinkStyle = styled.div`
-  font-size: 18px;
+const LinkStyle = styled(Link)`
+  font-size: 16px;
   color: ${({ theme }) => theme.colors.info};
 `;
 

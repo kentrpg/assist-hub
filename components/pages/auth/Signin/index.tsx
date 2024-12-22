@@ -2,16 +2,19 @@ import { useState, Fragment } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 import { useRouter } from "next/router";
-import Link from "next/link";
 import { Container, Title, Form, FooterLinks } from "../Layout/styled";
 import { LineButton, AuthButton } from "@/components/ui/buttons";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
-import FormField from "@/utils/react-hook-form/FormField";
+import FormField from "@/utils/react-hook-form/FloatingLabel";
 import { RegisterField } from "@/utils/react-hook-form/types";
 import { registerFields, SignInInputs } from "./data";
 import LinkStyle from "@/components/ui/BaseLink";
 import { signIn } from "@/utils/api/auth/signin";
-import { StyledFaLine } from "@/utils/react-icons/IconColor";
+import { IconWrapper } from "@/utils/react-icons/iconWrappers";
+import { FaLine } from "react-icons/fa";
+import { useTheme } from "styled-components";
+import CheckboxField from "@/components/ui/CheckBox";
+import { ForgotPasswordLink, Remember } from "./styled";
 
 const Signin: React.FC = () => {
   const {
@@ -27,8 +30,8 @@ const Signin: React.FC = () => {
   });
 
   const [showPassword, setShowPassword] = useState(false);
-
   const router = useRouter();
+  const theme = useTheme();
 
   const onSubmit: SubmitHandler<SignInInputs> = async (data) => {
     console.log(data);
@@ -71,21 +74,34 @@ const Signin: React.FC = () => {
             />
           </Fragment>
         ))}
+        <Remember>
+          <CheckboxField
+            id="remember"
+            label="記住我"
+            gap={8}
+            defaultChecked={false}
+            fontSize={16}
+            size={21}
+            checkboxIconColor="textMuted"
+            labelColor="textMuted"
+          />
+          <ForgotPasswordLink>忘記密碼</ForgotPasswordLink>
+        </Remember>
         <AuthButton
           type="submit"
           disabled={isSubmitting || Object.keys(errors).length !== 0}
         >
           {isSubmitting ? <LoaderSpinner /> : "登入"}
         </AuthButton>
-        <LineButton as={Link} href="#">
-          <StyledFaLine size={24} />
+        <LineButton>
+          <IconWrapper $size={24} $backgroundColor="white" $borderRadius={4}>
+            <FaLine size={24} fill={theme.colors.lineLogo} />
+          </IconWrapper>
           Line 登入
         </LineButton>
         <FooterLinks>
           還沒有帳號嗎？
-          <LinkStyle as={Link} href="/auth/register">
-            立即註冊
-          </LinkStyle>
+          <LinkStyle href="/auth/register">立即註冊</LinkStyle>
         </FooterLinks>
       </Form>
     </Container>

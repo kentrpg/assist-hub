@@ -1,4 +1,37 @@
-// TBD: 命名要改為只有使用 $isDefault 的 input 元件
-export type InputField = {
+export type IsDefault = {
   $isDefault?: boolean;
+};
+
+export type ThemeColors =
+  | "primary"
+  | "primaryBg"
+  | "primaryLight"
+  | "textprimary"
+  | "secondary"
+  | "seccondaryLight"
+  | "secondaryBg"
+  | "accent"
+  | "accentLight"
+  | "textsecondary"
+  | "textMuted"
+  | "white"
+  | "black"
+  | "error"
+  | "success"
+  | "border"
+  | "info"
+  | "gray"
+  ;
+export type GrayKey = "100" | "200" | "300";
+export type ScaleColors = {
+  color: "gray";
+  scale: GrayKey;
+}
+
+// Number 內所有 key 限定用於 CSS 樣式所需之數字屬性  
+export type Number = {
+  $gap: number;
+  $size: number;
+  $fontSize: number;
+  $borderRadius: number;
 };

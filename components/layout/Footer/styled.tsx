@@ -54,7 +54,7 @@ export const CategoryLinks = styled.div`
 `;
 
 export const CategoryLink = styled(Link)`
-  color: #333333;
+  color: ${({ theme }) => theme.colors.gray["300"]};
   text-decoration: none;
   &:hover {
     text-decoration: underline;
@@ -79,74 +79,16 @@ export const SubscriptionField = styled.div`
   margin-bottom: 10px;
 `;
 
-export const EmailField = styled.input`
-  width: 100%;
-  padding: 12px 10px;
-  font-size: 14px;
-  border: 1px solid ${({ theme }) => theme.colors.gray["300"]};
-  border-radius: 5px;
-  background-color: ${({ theme }) => theme.colors.gray["100"]};
-  transition: box-shadow 0.13s ease-out, border-color 0.1s ease-in-out;
-
-  &:focus {
-    border-color: ${({ theme }) => theme.colors.primary};
-    box-shadow: 0 0 0 1px ${({ theme }) => theme.colors.primary},
-      0 0 0 1000px ${({ theme }) => theme.colors.gray["100"]} inset;
-  }
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.textMuted};
-  }
-
-  padding-right: 36px;
-`;
-
 export const SubscribeButton = styled.button`
   position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
+  right: 11px;
+  top: 6.5px;
   background: none;
 
   svg {
     vertical-align: top;
     color: ${({ theme }) => theme.colors.textMuted};
   }
-`;
-
-export const PrivacyConsent = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`;
-
-export const ConsentCheckbox = styled.input`
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  border: 2px solid ${({ theme }) => theme.colors.textMuted};
-  border-radius: 2px;
-  position: relative;
-
-  &:checked {
-    /* color: ${({ theme }) => theme.colors.textMuted}; */
-    background-color: transparent;
-  }
-
-  &:checked::after {
-    content: "✔";
-    color: ${({ theme }) => theme.colors.textMuted};
-    font-size: 12px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-`;
-
-export const ConsentLabel = styled.label`
-  font-size: 14px;
-  color: ${({ theme }) => theme.colors.gray["300"]};
-  user-select: none;
 `;
 
 export const Copyright = styled.p`

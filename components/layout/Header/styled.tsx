@@ -11,7 +11,8 @@ export const Container = styled(Container1344)`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 24px;
+  padding-top: 16px;
+  padding-bottom: 16px;
 `;
 
 export const Navbar = styled.nav`

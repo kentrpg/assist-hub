@@ -17,7 +17,7 @@ import {
 } from "./styled";
 import { IconLinkWrapper } from "@/utils/react-icons/iconWrappers";
 import { MdArrowForward } from "react-icons/md";
-import CheckboxField from "@/components/ui/CheckBox";
+import Checkbox from "@/components/ui/Checkbox";
 import { FaFacebookSquare, FaLine } from "react-icons/fa";
 import { useTheme } from "styled-components";
 import { useForm } from "react-hook-form";
@@ -139,15 +139,16 @@ const Footer: React.FC = () => {
                 )}
               </SubscriptionField>
             </form>
-            <CheckboxField
+            <Checkbox
               id="newsletter-consent"
               label="我想要了解最新的輔具資訊"
-              gap={3}
+              $gap={10}
               defaultChecked={false}
-              fontSize={16}
-              size={21}
-              checkboxIconColor="textMuted"
-              labelColor={{ color: "gray", scale: "300" }}
+              $fontSize={14}
+              size={24}
+              $checkedIconColor="textMuted"
+              $uncheckedIconColor="textMuted"
+              $labelColor={{ color: "gray", scale: "300" }}
             />
           </Newsletter>
         </Content>

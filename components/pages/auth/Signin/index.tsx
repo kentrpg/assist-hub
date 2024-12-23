@@ -13,7 +13,7 @@ import { signIn } from "@/utils/api/auth/signin";
 import { IconWrapper } from "@/utils/react-icons/iconWrappers";
 import { FaLine } from "react-icons/fa";
 import { useTheme } from "styled-components";
-import CheckboxField from "@/components/ui/CheckBox";
+import Checkbox from "@/components/ui/Checkbox";
 import { ForgotPasswordLink, Remember } from "./styled";
 
 const Signin: React.FC = () => {
@@ -75,15 +75,16 @@ const Signin: React.FC = () => {
           </Fragment>
         ))}
         <Remember>
-          <CheckboxField
+          <Checkbox
             id="remember"
             label="記住我"
-            gap={8}
+            $gap={8}
             defaultChecked={false}
-            fontSize={16}
-            size={21}
-            checkboxIconColor="textMuted"
-            labelColor="textMuted"
+            $fontSize={16}
+            size={24}
+            $checkedIconColor="textMuted"
+            $uncheckedIconColor="textMuted"
+            $labelColor="textMuted"
           />
           <ForgotPasswordLink>忘記密碼</ForgotPasswordLink>
         </Remember>

@@ -1,3 +1,5 @@
+import { DefaultTheme } from "styled-components";
+
 export type IsDefault = {
   $isDefault?: boolean;
 };
@@ -22,7 +24,7 @@ export type ThemeColors =
   | "info"
   | "gray"
   ;
-export type GrayKey = "100" | "200" | "300";
+type GrayKey = "100" | "200" | "300";
 export type ScaleColors = {
   color: "gray";
   scale: GrayKey;

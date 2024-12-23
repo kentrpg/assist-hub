@@ -5,7 +5,7 @@ import {
 } from "react-icons/md";
 import styled, { css } from "styled-components";
 
-export const Checkbox = styled.div<Pick<Number, "$gap">>`
+export const CheckboxField = styled.div<Pick<Number, "$gap">>`
   display: flex;
   align-items: center;
   gap: ${({ $gap }) => $gap}px;
@@ -36,22 +36,21 @@ export const CheckboxLabel = styled.label<
   user-select: none;
 `;
 
-const baseCheckbox = css<{ $checkboxIconColor: ScaleColors | ThemeColors }>`
+const baseCheckbox = ($iconColor: ScaleColors | ThemeColors) => css`
   position: absolute;
-  color: ${({ theme, $checkboxIconColor }) =>
-    typeof $checkboxIconColor === "string"
-      ? theme.colors[$checkboxIconColor]
-      : theme.colors[$checkboxIconColor.color][$checkboxIconColor.scale]};
+  color: ${typeof $iconColor === "string"
+    ? ({ theme }) => theme.colors[$iconColor]
+    : ({ theme }) => theme.colors[$iconColor.color][$iconColor.scale]};
 `;
 
 export const CheckedStateIcon = styled(MdCheckBoxIcon)<{
-  $checkboxIconColor: ScaleColors | ThemeColors;
+  $checkedIconColor: ScaleColors | ThemeColors;
 }>`
-  ${baseCheckbox};
+  ${({ $checkedIconColor }) => baseCheckbox($checkedIconColor)}
 `;
 
 export const UncheckedStateIcon = styled(MdCheckBoxOutlineBlank)<{
-  $checkboxIconColor: ScaleColors | ThemeColors;
+  $uncheckedIconColor: ScaleColors | ThemeColors;
 }>`
-  ${baseCheckbox};
+  ${({ $uncheckedIconColor }) => baseCheckbox($uncheckedIconColor)}
 `;

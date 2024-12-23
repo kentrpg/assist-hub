@@ -1,6 +1,10 @@
 import { createGlobalStyle } from "styled-components";
 
-const GlobalStyle = createGlobalStyle`
+type GlobalStyleProps = {
+  fontFamily: string;
+};
+
+const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
   html, body {
     width: 100%;
     min-height: 100dvh;
@@ -18,6 +22,8 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     line-height: 1.5;
+    font-family: ${({ fontFamily }) =>
+      fontFamily}, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   }
 
   ol, ul {
@@ -54,6 +60,16 @@ const GlobalStyle = createGlobalStyle`
 
   h1, h2, h3, h4, h5, h6, div, span, p {
     cursor: default;
+  }
+
+  input,
+  button,
+  p,
+  span,
+  a,
+  textarea,
+  select {
+    font-family: ${({ fontFamily }) => fontFamily}, sans-serif;
   }
   
   /* a, label, button, select, textarea {

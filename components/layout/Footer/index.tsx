@@ -64,7 +64,7 @@ const Footer: React.FC = () => {
           <Contact>
             <Title>聯絡我們</Title>
             <AddressInfo>
-              <span>營業時間：08:00-22:00（週一公休）</span>
+              <span>營業時間：08:00-22:00</span>
               <span>電話：0912-345678</span>
               <span>地址：高雄市新興區</span>
               <SocialMediaLinks>

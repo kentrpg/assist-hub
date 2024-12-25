@@ -27,7 +27,7 @@ const FormField = <T extends FieldValues>({
   dirtyFields,
   showPassword,
   setShowPassword,
-}: FormFieldProps<T>) => {
+}: FormFieldProps<T>): JSX.Element => {
   return (
     <>
       <FloatingLabelWrapper>

@@ -21,7 +21,7 @@ export const FormError = <T extends FieldValues>({
   switch (errorType) {
     case "password":
       const isPasswordInvalid = Boolean(errors[name]?.message);
-      const isInitialState = !isPasswordInvalid && !dirtyFields.password;
+      const isInitialState = !isPasswordInvalid && !dirtyFields[name];
 
       if (isPasswordInvalid || isInitialState) {
         return (

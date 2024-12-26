@@ -1,34 +1,15 @@
+import { Mobile, Tablet, Desktop } from "@/styles/container";
 import {
   buttonScale,
   buttonShadow,
   buttonShadowTransition,
 } from "@/styles/effect";
+import { H5, H6 } from "@/styles/typography";
 import styled from "styled-components";
 
 export const Header = styled.header`
   position: relative;
-  margin-bottom: 70px;
-`;
-
-export const BackButton = styled.button`
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.white};
-  transition: ${buttonShadowTransition};
-
-  &:hover {
-    box-shadow: ${buttonShadow};
-  }
-
-  &:active {
-    transform: ${buttonScale};
-  }
+  margin-bottom: 40px;
 `;
 
 export const Title = styled.h1`
@@ -36,20 +17,24 @@ export const Title = styled.h1`
 `;
 
 export const InfoWrapper = styled.div`
+  padding: 30px 0;
+`;
+
+export const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  background-color: ${({ theme }) => theme.colors.secondaryBg || "#f9f9f9"};
+  background-color: ${({ theme }) => theme.colors.secondaryBg};
   border-radius: 10px;
   padding: 20px 24px;
-  margin-bottom: 60px;
 `;
 
 export const InfoRow = styled.div`
   display: flex;
   gap: 20px;
-  @media (max-width: 576px) {
-    flex-direction: column;
+  flex-direction: column;
+  @media (${Mobile}) {
+    flex-direction: row;
   }
 `;
 
@@ -57,7 +42,7 @@ export const InfoCol = styled.div`
   display: flex;
   align-items: center;
   flex: 1 1 auto;
-
+  // TBD: 需要補設計 flex+max-width 方式需要針對六種行動評估都測試出合適的 max-width 避免空白空間過大
   &:first-child {
     flex-shrink: 0;
     max-width: 211px;
@@ -91,19 +76,32 @@ export const InquiryActions = styled.div`
 `;
 
 export const Assistive = styled.div`
+  padding: 30px 0;
+`;
+
+export const SubTitle = styled.h2`
+  font-size: 24px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.textprimary};
   margin-bottom: 40px;
 `;
 
 export const AssistiveWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   gap: 24px;
+  margin-bottom: 40px;
+  @media (${Tablet}) {
+    flex-direction: row;
+  }
 `;
 
 export const AssistiveDeviceCard = styled.div`
-  flex: 1;
-  border: 1px solid #ddd;
-  background: #fff;
-  border-radius: 8px;
+  flex: 0 0 calc((100% - 2 * 24px) / 3);
+  text-align: left;
+  border: 1px solid transparent;
+  background: ${({ theme }) => theme.colors.white};
+  border-radius: 10px;
   padding: 20px;
 
   &:nth-child(1) {
@@ -118,13 +116,113 @@ export const AssistiveDeviceCard = styled.div`
     background: ${({ theme }) => theme.colors.seccondaryLight};
     border-color: ${({ theme }) => theme.colors.secondary};
   }
+  @media (${Tablet}) {
+    text-align: center;
+  }
+  @media (${Desktop}) {
+    text-align: left;
+  }
 `;
 
-export const SubTitle = styled.h2`
-  font-size: 24px;
-  font-weight: 500;
+export const Info = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  margin-bottom: 16px;
+  @media (${Tablet}) {
+    flex-direction: column;
+  }
+  @media (${Desktop}) {
+    flex-direction: row;
+  }
+`;
+
+export const DeviceInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  @media (${Desktop}) {
+    flex-shrink: 0;
+  }
+`;
+
+export const TextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const DeviceTitle = styled.h3`
+  ${H6}
   color: ${({ theme }) => theme.colors.textprimary};
-  margin-bottom: 40px;
+  margin-bottom: 4px;
+`;
+
+export const DeviceSubtitle = styled.p`
+  font-size: 14px;
+  color: ${({ theme }) => theme.colors.textsecondary};
+`;
+
+export const Price = styled.p`
+  ${H5}
+  color: ${({ theme }) => theme.colors.textprimary};
+`;
+
+export const PriceUnit = styled.span`
+  font-size: 12px;
+  color: ${({ theme }) => theme.colors.textsecondary};
+  margin-left: 4px;
+`;
+
+export const ImageWrapper = styled.div`
+  font-size: 0;
+`;
+export const DeviceImage = styled.img`
+  height: auto;
+  width: 100%;
+  max-width: 160px;
+  display: inline-block;
+  object-fit: contain;
+`;
+
+export const Feature = styled.div`
+  border-top: 1px solid ${({ theme }) => theme.colors.textMuted};
+  padding: 16px 0;
+`;
+
+export const FeatureTitle = styled.h4`
+  font-size: 16px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.textsecondary};
+  margin-bottom: 16px;
+`;
+
+export const FeatureList = styled.ul`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  gap: 20px;
+  @media (${Tablet}) {
+    flex-direction: column;
+    justify-content: center;
+  }
+  @media (${Desktop}) {
+    align-items: start;
+  }
+`;
+
+export const FeatureItem = styled.li`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 400;
+  color: ${({ theme }) => theme.colors.textsecondary};
+  @media (${Tablet}) {
+    gap: 16px;
+  }
 `;
 
 export const ShareButton = styled.button`

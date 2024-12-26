@@ -1,39 +1,40 @@
-import { DefaultTheme } from "styled-components";
+import { colors } from "@/styles/theme";
 
 export type IsDefault = {
   $isDefault?: boolean;
 };
 
-export type ThemeColors =
-  | "primary"
-  | "primaryBg"
-  | "primaryLight"
-  | "textprimary"
-  | "secondary"
-  | "seccondaryLight"
-  | "secondaryBg"
-  | "accent"
-  | "accentLight"
-  | "textsecondary"
-  | "textMuted"
-  | "white"
-  | "black"
-  | "error"
-  | "success"
-  | "border"
-  | "info"
-  | "gray"
-  ;
-type GrayKey = "100" | "200" | "300";
+export type ColorsType = keyof typeof colors;
+
+export type NestedColorValue = {
+  key: ColorsType;
+  nested?: string;
+};
+
+export type GrayKey = keyof typeof colors.gray;
 export type ScaleColors = {
-  color: "gray";
-  scale: GrayKey;
+  color: ColorsType;
+  scale?: GrayKey;
 }
 
-// Number 內所有 key 限定用於 CSS 樣式所需之數字屬性  
-export type Number = {
+// styled component prop
+
+export type Gap = {
   $gap: number;
-  $size: number;
-  $fontSize: number;
-  $borderRadius: number;
 };
+
+export type Size = {
+  $size: number;
+}
+
+export type FontSize = {
+  $fontSize: number;
+}
+
+export type BorderRadius = {
+  $borderRadius: number;
+}
+
+export type Padding = {
+  $padding: string;
+}

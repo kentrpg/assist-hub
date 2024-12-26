@@ -2,6 +2,7 @@ import {
   Header,
   BackButton,
   Title,
+  SubTitle,
   InfoWrapper,
   InfoRow,
   InfoCol,
@@ -15,7 +16,6 @@ import {
 } from "./styled";
 import { Container1116 as Container } from "@/styles/container";
 import { MdArrowBack, MdOutlineShare } from "react-icons/md";
-import { SubTitle } from "../user/Profile/Form/styled";
 
 const InquiryPage = () => {
   return (

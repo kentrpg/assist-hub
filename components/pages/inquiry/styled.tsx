@@ -1,3 +1,8 @@
+import {
+  buttonScale,
+  buttonShadow,
+  buttonShadowTransition,
+} from "@/styles/effect";
 import styled from "styled-components";
 
 export const Header = styled.header`
@@ -15,14 +20,14 @@ export const BackButton = styled.button`
   border-radius: 50%;
   background-color: ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.white};
-  transition: box-shadow 0.2s ease-in-out;
+  transition: ${buttonShadowTransition};
 
   &:hover {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: ${buttonShadow};
   }
 
   &:active {
-    transform: scale(0.9);
+    transform: ${buttonScale};
   }
 `;
 
@@ -43,23 +48,32 @@ export const InfoWrapper = styled.div`
 export const InfoRow = styled.div`
   display: flex;
   gap: 20px;
+  @media (max-width: 576px) {
+    flex-direction: column;
+  }
 `;
 
 export const InfoCol = styled.div`
   display: flex;
   align-items: center;
-  flex: 0 0 auto;
+  flex: 1 1 auto;
+
+  &:first-child {
+    flex-shrink: 0;
+    max-width: 211px;
+  }
 
   &:last-child {
     flex-grow: 1;
-    /* min-width: 120px; */
+    word-break: break-word;
   }
 `;
 
 export const InfoLabel = styled.span`
+  min-width: 64px;
   font-size: 14px;
   font-weight: bold;
-  color: ${({ theme }) => theme.colors.textprimary || "#1d4ed8"};
+  color: ${({ theme }) => theme.colors.textprimary};
   white-space: nowrap;
   margin-right: 16px;
 `;
@@ -77,13 +91,12 @@ export const InquiryActions = styled.div`
 `;
 
 export const Assistive = styled.div`
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 `;
 
 export const AssistiveWrapper = styled.div`
   display: flex;
   gap: 24px;
-  margin-bottom: 40px;
 `;
 
 export const AssistiveDeviceCard = styled.div`
@@ -111,6 +124,7 @@ export const SubTitle = styled.h2`
   font-size: 24px;
   font-weight: 500;
   color: ${({ theme }) => theme.colors.textprimary};
+  margin-bottom: 40px;
 `;
 
 export const ShareButton = styled.button`
@@ -124,15 +138,14 @@ export const ShareButton = styled.button`
   color: ${({ theme }) => theme.colors.white};
   background-color: ${({ theme }) => theme.colors.primary};
   border-radius: 30px;
-  transition: all 0.2s ease-in-out;
+  transition: ${buttonShadowTransition};
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.primaryHover || "#003da5"};
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: ${buttonShadow};
   }
 
   &:active {
-    background-color: ${({ theme }) => theme.colors.primaryActive || "#002a7c"};
-    transform: scale(0.95);
+    transform: ${buttonScale};
   }
 `;

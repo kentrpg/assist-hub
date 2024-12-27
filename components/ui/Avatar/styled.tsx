@@ -1,9 +1,10 @@
+import { RoundedFull } from "@/styles/borderRadius";
 import styled from "styled-components";
 
 export const AvatarWrapper = styled.div`
   width: 32px;
   height: 32px;
-  border-radius: 50%;
+  ${RoundedFull};
   overflow: hidden;
   border: 1px solid ${({ theme }) => theme.colors.white};
 `;

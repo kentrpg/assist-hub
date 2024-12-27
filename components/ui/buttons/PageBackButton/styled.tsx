@@ -1,7 +1,8 @@
+import { RoundedFull } from "@/styles/borderRadius";
 import {
-  buttonScale,
-  buttonShadow,
-  buttonShadowTransition,
+  ButtonScale,
+  ButtonShadow,
+  ButtonShadowTransition,
 } from "@/styles/effect";
 import styled from "styled-components";
 
@@ -12,16 +13,16 @@ export const NavigateBackButton = styled.button`
   justify-content: center;
   width: 40px;
   height: 40px;
-  border-radius: 50%;
+  ${RoundedFull};
   background-color: ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.white};
-  transition: ${buttonShadowTransition};
+  ${ButtonShadowTransition};
 
   &:hover {
-    box-shadow: ${buttonShadow};
+    ${ButtonShadow};
   }
 
   &:active {
-    transform: ${buttonScale};
+    transform: ${ButtonScale};
   }
 `;

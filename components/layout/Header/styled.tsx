@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { Container1344 } from "@/styles/container";
 import Link from "next/link";
+import { NavBarShadow } from "@/styles/effect";
+import { ButtonRadius } from "@/styles/borderRadius";
 
 export const Wrapper = styled.header`
   width: 100%;
@@ -19,9 +21,9 @@ export const Navbar = styled.nav`
   display: flex;
   align-items: center;
   background: ${({ theme }) => theme.colors.white};
-  border-radius: 9999px;
+  ${ButtonRadius};
   padding: 15px 50px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  ${NavBarShadow};
   gap: 16px;
 `;
 
@@ -55,7 +57,7 @@ export const NavLink = styled(Link)`
   transition: color 0.2s;
 
   &:hover {
-    color: #0f172a;
+    color: ${({ theme }) => theme.colors.primary};
   }
 `;
 
@@ -71,7 +73,7 @@ const Button = styled.button`
   gap: 8px;
   padding: 13px 60px;
   border: none;
-  border-radius: 9999px;
+  ${ButtonRadius};
   font-size: 16px;
   color: ${({ theme }) => theme.colors.white};
   transition: opacity 0.2s;
@@ -83,15 +85,15 @@ const Button = styled.button`
 `;
 
 export const CartButton = styled(Button)`
-  background-color: ${({ theme }) => theme.colors.secondary}; /* 黃色 */
+  background-color: ${({ theme }) => theme.colors.secondary};
 `;
 
 export const SearchButton = styled(Button)`
-  background-color: ${({ theme }) => theme.colors.accent}; /* 橙色 */
+  background-color: ${({ theme }) => theme.colors.accent};
 `;
 
 export const AccountButton = styled(Button)`
-  background-color: ${({ theme }) => theme.colors.primary}; /* 藍色 */
+  background-color: ${({ theme }) => theme.colors.primary};
 `;
 
 export const LogoutButton = styled(Button)`

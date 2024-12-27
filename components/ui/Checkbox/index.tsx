@@ -7,7 +7,7 @@ import {
   UncheckedStateIcon,
   CheckboxLabel,
 } from "./styled";
-import { ScaleColors, ThemeColors } from "@/types/uiProps";
+import { ColorsType } from "@/types/uiProps";
 
 type CheckboxProps = {
   id: string;
@@ -16,21 +16,21 @@ type CheckboxProps = {
   defaultChecked: boolean;
   $fontSize: number;
   size: number;
-  $checkedIconColor: ScaleColors | ThemeColors;
-  $uncheckedIconColor: ScaleColors | ThemeColors;
-  $labelColor: ScaleColors | ThemeColors;
+  $checkedIconColor: ColorsType;
+  $uncheckedIconColor: ColorsType;
+  $labelColor: ColorsType;
 };
 
 const Checkbox: React.FC<CheckboxProps> = ({
   id,
   label,
-  $gap,
-  defaultChecked,
-  $fontSize,
-  size,
-  $checkedIconColor,
-  $uncheckedIconColor,
-  $labelColor,
+  $gap = 8,
+  defaultChecked = false,
+  $fontSize = 16,
+  size = 24,
+  $checkedIconColor = "textMuted",
+  $uncheckedIconColor = "textMuted",
+  $labelColor = "textMuted",
 }) => {
   const [checked, setChecked] = useState(defaultChecked);
   const handleToggle = () => setChecked(!checked);

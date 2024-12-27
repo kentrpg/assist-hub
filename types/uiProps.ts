@@ -6,17 +6,6 @@ export type IsDefault = {
 
 export type ColorsType = keyof typeof colors;
 
-export type NestedColorValue = {
-  key: ColorsType;
-  nested?: string;
-};
-
-export type GrayKey = keyof typeof colors.gray;
-export type ScaleColors = {
-  color: ColorsType;
-  scale?: GrayKey;
-}
-
 // styled component prop
 
 export type Gap = {

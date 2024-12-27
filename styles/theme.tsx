@@ -18,11 +18,9 @@ export const colors = {
   info: "#2F80ED",
   lineLogo: "#06c755",
   fbLogo: "#3b579d",
-  gray: {
-    100: "#E9E5DE",
-    200: "#B3B3B3",
-    300: "#333333",
-  },
+  grey100: "#E9E5DE",
+  grey200: "#B3B3B3",
+  grey300: "#333333",
 };
 
 const theme = {

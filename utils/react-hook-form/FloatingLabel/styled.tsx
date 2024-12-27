@@ -1,3 +1,9 @@
+import { FloatingLabelRadius } from "@/styles/borderRadius";
+import {
+  FloatingLabelShadow,
+  FloatingLabelTransition,
+  InputFieldTransition,
+} from "@/styles/effect";
 import styled from "styled-components";
 
 export const FloatingLabelWrapper = styled.div`
@@ -16,17 +22,16 @@ export const FloatingLabelWrapper = styled.div`
 
 export const FloatingLabel = styled.input`
   width: 100%;
-  padding: 14px 16px;
   font-size: 16px;
   border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 8px;
+  ${FloatingLabelRadius};
   outline: none;
-  transition: box-shadow 0.13s ease-out, border-color 0.1s ease-in-out;
+  ${InputFieldTransition};
+  padding: 11px 16px;
 
   &:focus {
     border-color: ${({ theme }) => theme.colors.primary};
-    box-shadow: 0 0 0 1px ${({ theme }) => theme.colors.primary},
-      0 0 0 1000px ${({ theme }) => theme.colors.white} inset;
+    ${FloatingLabelShadow};
   }
 `;
 
@@ -38,12 +43,12 @@ export const Label = styled.label`
   font-size: 18px;
   color: ${({ theme }) => theme.colors.black};
   background-color: ${({ theme }) => theme.colors.white};
-  transition: all 0.15s ease-in-out;
+  ${FloatingLabelTransition}
   pointer-events: none;
 `;
 
 export const PasswordInputField = styled(FloatingLabel)`
-  padding: 14px 40px 14px 16px;
+  padding: 11px 40px 11px 16px;
 `;
 
 export const TogglePassword = styled.span`

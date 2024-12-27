@@ -1,8 +1,9 @@
+import { ButtonRadius, CardRadius } from "@/styles/borderRadius";
 import { Mobile, Tablet, Desktop } from "@/styles/container";
 import {
-  buttonScale,
-  buttonShadow,
-  buttonShadowTransition,
+  ButtonScale,
+  ButtonShadow,
+  ButtonShadowTransition,
 } from "@/styles/effect";
 import { H5, H6 } from "@/styles/typography";
 import styled from "styled-components";
@@ -25,7 +26,7 @@ export const InfoContainer = styled.div`
   flex-direction: column;
   gap: 20px;
   background-color: ${({ theme }) => theme.colors.secondaryBg};
-  border-radius: 10px;
+  ${CardRadius};
   padding: 20px 24px;
 `;
 
@@ -57,7 +58,7 @@ export const InfoCol = styled.div`
 export const InfoLabel = styled.span`
   min-width: 64px;
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 700;
   color: ${({ theme }) => theme.colors.textprimary};
   white-space: nowrap;
   margin-right: 16px;
@@ -101,9 +102,9 @@ export const AssistiveDeviceCard = styled.div`
   text-align: left;
   border: 1px solid transparent;
   background: ${({ theme }) => theme.colors.white};
-  border-radius: 10px;
+  ${CardRadius};
   padding: 20px;
-
+  // TBD: 需要補成 123 的餘數設計
   &:nth-child(1) {
     background: ${({ theme }) => theme.colors.accentLight};
     border-color: ${({ theme }) => theme.colors.accent};
@@ -153,7 +154,7 @@ export const TextWrapper = styled.div`
 `;
 
 export const DeviceTitle = styled.h3`
-  ${H6}
+  ${H6};
   color: ${({ theme }) => theme.colors.textprimary};
   margin-bottom: 4px;
 `;
@@ -164,7 +165,7 @@ export const DeviceSubtitle = styled.p`
 `;
 
 export const Price = styled.p`
-  ${H5}
+  ${H5};
   color: ${({ theme }) => theme.colors.textprimary};
 `;
 
@@ -200,9 +201,10 @@ export const FeatureTitle = styled.h4`
 export const FeatureList = styled.ul`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: start;
-  gap: 20px;
+  gap: 16px;
   @media (${Tablet}) {
     flex-direction: column;
     justify-content: center;
@@ -235,15 +237,14 @@ export const ShareButton = styled.button`
   font-weight: 500;
   color: ${({ theme }) => theme.colors.white};
   background-color: ${({ theme }) => theme.colors.primary};
-  border-radius: 30px;
-  transition: ${buttonShadowTransition};
+  ${ButtonRadius};
+  ${ButtonShadowTransition};
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.primaryHover || "#003da5"};
-    box-shadow: ${buttonShadow};
+    ${ButtonShadow};
   }
 
   &:active {
-    transform: ${buttonScale};
+    transform: ${ButtonScale};
   }
 `;

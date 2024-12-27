@@ -1,17 +1,21 @@
-import { ThemeColors, Number, ScaleColors } from "@/types/uiProps";
+import { Size, Gap, FontSize, ColorsType } from "@/types/uiProps";
 import {
   MdCheckBox as MdCheckBoxIcon,
   MdCheckBoxOutlineBlank,
 } from "react-icons/md";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
-export const CheckboxField = styled.div<Pick<Number, "$gap">>`
+export type CheckboxLabelProps = FontSize & {
+  $labelColor: ColorsType;
+};
+
+export const CheckboxField = styled.div<Gap>`
   display: flex;
   align-items: center;
   gap: ${({ $gap }) => $gap}px;
 `;
 
-export const CheckboxControl = styled.div<Pick<Number, "$size">>`
+export const CheckboxControl = styled.div<Size>`
   position: relative;
   width: ${({ $size }) => $size}px;
   height: ${({ $size }) => $size}px;
@@ -25,32 +29,22 @@ export const VisuallyHiddenInput = styled.input`
   z-index: 1;
 `;
 
-export const CheckboxLabel = styled.label<
-  Pick<Number, "$fontSize"> & { $labelColor: ScaleColors | ThemeColors }
->`
+export const CheckboxLabel = styled.label<CheckboxLabelProps>`
   font-size: ${({ $fontSize }) => $fontSize}px;
-  color: ${({ theme, $labelColor }) =>
-    typeof $labelColor === "string"
-      ? theme.colors[$labelColor]
-      : theme.colors[$labelColor.color][$labelColor.scale]};
-  user-select: none;
-`;
-
-const baseCheckbox = ($iconColor: ScaleColors | ThemeColors) => css`
-  position: absolute;
-  color: ${typeof $iconColor === "string"
-    ? ({ theme }) => theme.colors[$iconColor]
-    : ({ theme }) => theme.colors[$iconColor.color][$iconColor.scale]};
+  color: ${({ theme, $labelColor }) => theme.colors[$labelColor]};
 `;
 
 export const CheckedStateIcon = styled(MdCheckBoxIcon)<{
-  $checkedIconColor: ScaleColors | ThemeColors;
+  $checkedIconColor: ColorsType;
 }>`
-  ${({ $checkedIconColor }) => baseCheckbox($checkedIconColor)}
+  position: absolute;
+  color: ${({ theme, $checkedIconColor }) => theme.colors[$checkedIconColor]};
 `;
 
 export const UncheckedStateIcon = styled(MdCheckBoxOutlineBlank)<{
-  $uncheckedIconColor: ScaleColors | ThemeColors;
+  $uncheckedIconColor: ColorsType;
 }>`
-  ${({ $uncheckedIconColor }) => baseCheckbox($uncheckedIconColor)}
+  position: absolute;
+  color: ${({ theme, $uncheckedIconColor }) =>
+    theme.colors[$uncheckedIconColor]};
 `;

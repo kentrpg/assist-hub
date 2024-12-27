@@ -1,6 +1,8 @@
+const img =
+  "https://www.karma.com.tw/wp-content/uploads/2018/08/TW-KM-8520X-1050x960-front.png";
 import React from "react";
 import {
-  OrderList,
+  Item,
   Header,
   Major,
   Type,
@@ -24,7 +26,9 @@ import {
   QuantityrHeader,
   Quantity,
   Rent,
-} from "../List/styled";
+  Col,
+  ColGroup,
+} from "../ListItem/styled";
 import {
   BackToOrders,
   DepositHeader,
@@ -41,19 +45,18 @@ import {
   Delivery,
   P,
   Row,
+  Container,
 } from "./styled";
-import { OrdersContainer } from "../styled";
 import { MdArrowBack } from "react-icons/md";
 import { Order } from "../data";
-
-const img =
-  "https://www.karma.com.tw/wp-content/uploads/2018/08/TW-KM-8520X-1050x960-front.png";
+import Progress from "./Progress";
 
 type DetailsProps = {
   order: Order;
+  onBack: () => void;
 };
 
-const Details = ({ order }: DetailsProps) => {
+const Details = ({ order, onBack }: DetailsProps) => {
   const {
     deliveryType,
     orderId,
@@ -65,19 +68,24 @@ const Details = ({ order }: DetailsProps) => {
     deposit,
     deliveryFee,
     description,
+    period,
+    payment,
+    name,
+    email,
+    phone,
   } = order;
 
   const totalPrice = (quantity * rent + deposit + deliveryFee).toLocaleString();
 
   return (
-    <OrdersContainer>
+    <Container>
       <BackToOrders>
-        <Icon>
+        <Icon onClick={onBack}>
           <MdArrowBack size={16} color="White" />
         </Icon>
-        <Title>全部訂單</Title>
+        <Title onClick={onBack}>全部訂單</Title>
       </BackToOrders>
-      <OrderList>
+      <Item>
         <Header $deliveryType={deliveryType}>
           <Major>
             <Type>{deliveryType}</Type>
@@ -92,7 +100,15 @@ const Details = ({ order }: DetailsProps) => {
           <Finished>{finishedDate}</Finished>
           <Status $status={status}>{status}</Status>
         </Main>
+        {deliveryType === "宅配" && <Progress />}
         <Table>
+          <ColGroup>
+            <Col style={{ width: "40%" }} />
+            <Col style={{ width: "12.5%" }} />
+            <Col style={{ width: "12.5%" }} />
+            <Col style={{ width: "12.5%" }} />
+            <Col style={{ width: "12.5%" }} />
+          </ColGroup>
           <Thead>
             <Tr>
               <NameHeader>輔具名稱</NameHeader>
@@ -111,7 +127,7 @@ const Details = ({ order }: DetailsProps) => {
                   <Feature>{description}</Feature>
                 </Description>
               </Product>
-              <Quantity>X{quantity}</Quantity>
+              <Quantity>x{quantity}</Quantity>
               <Rent>{rent.toLocaleString()}元</Rent>
               <Deposit>{deposit}元</Deposit>
               <Fee>{deliveryFee}元</Fee>
@@ -123,36 +139,32 @@ const Details = ({ order }: DetailsProps) => {
             <Span>租賃資訊</Span>
             <Rental>
               <Row>
-                <P type="title">租賃日期</P>
-                <P type="content">2024/11/28 到 2024/12/28</P>
+                <P $type="title">租賃日期</P>
+                <P $type="content">2024/11/28 到 2024/12/28</P>
               </Row>
               <Row>
-                <P type="title">租賃期約</P>
-                <P type="content">一個月</P>
+                <P $type="title">租賃期約</P>
+                <P $type="content">{period}個月</P>
               </Row>
               <Row>
-                <P type="title">付款方式</P>
-                <P type="content">Line Pay</P>
+                <P $type="title">付款方式</P>
+                <P $type="content">{payment}</P>
               </Row>
             </Rental>
           </Detail>
           <Detail>
             <Span>取貨資訊</Span>
             <Row>
-              <P type="title">姓名</P>
-              <P type="content">王小姐</P>
+              <P $type="title">姓名</P>
+              <P $type="content">{name}</P>
             </Row>
             <Row>
-              <P type="title">手機號碼</P>
-              <P type="content">0912-345678</P>
+              <P $type="title">手機號碼</P>
+              <P $type="content">{phone}</P>
             </Row>
             <Row>
-              <P type="title">電子信箱</P>
-              <P type="content">A12345678@gmail.com</P>
-            </Row>
-            <Row>
-              <P type="title">運送地址</P>
-              <P type="content">高雄市新興區民生一路</P>
+              <P $type="title">電子信箱</P>
+              <P $type="content">{email}</P>
             </Row>
           </Detail>
           <Remark>
@@ -160,8 +172,8 @@ const Details = ({ order }: DetailsProps) => {
             <Delivery></Delivery>
           </Remark>
         </Footer>
-      </OrderList>
-    </OrdersContainer>
+      </Item>
+    </Container>
   );
 };
 

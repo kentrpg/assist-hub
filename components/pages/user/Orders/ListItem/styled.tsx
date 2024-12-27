@@ -1,18 +1,14 @@
 import styled from "styled-components";
 
-type DeliveryType = "自取" | "宅配";
-
 type DeliveryOptionProps = {
-  $deliveryType: DeliveryType;
+  $deliveryType: "自取" | "宅配";
 };
-
-type StatusType = "租賃中" | "已結案";
 
 type StatusProps = {
-  $status: StatusType;
+  $status: "租賃中" | "已結案";
 };
 
-export const OrderList = styled.div`
+export const Item = styled.div`
   border-radius: 5px;
   outline: 1px solid #888888;
 `;
@@ -95,7 +91,8 @@ export const Main = styled.div`
 `;
 
 export const Finished = styled.span`
-  min-width: 165px;
+  max-width: 165px;
+  width: 100%;
   font-weight: 400;
   font-size: 14px;
 `;
@@ -122,94 +119,108 @@ export const Status = styled.div<StatusProps>`
 
 export const Table = styled.table`
   width: 100%;
+  border-collapse: collapse; /* 確保邊框不重疊 */
+`;
+
+export const ColGroup = styled.colgroup``;
+
+export const Col = styled.col`
+  width: auto;
 `;
 
 export const Thead = styled.thead`
-  padding: 10px 24px;
-  display: flex;
-  column-gap: 24px;
-  position: relative;
-  &::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 1px;
-    background-color: #e9e5de;
-  }
+  background-color: #e9e5de;
 `;
 
+export const Tbody = styled.tbody``;
+
 export const Tr = styled.tr`
-  display: flex;
-  column-gap: 24px;
-  align-items: center;
+  border-bottom: 1px solid #e9e5de;
 `;
 
 export const NameHeader = styled.th`
-  display: flex;
-  min-width: 360px;
+  text-align: left;
+  padding: 10px 24px;
   font-size: 12px;
   font-weight: 400;
+  color: #08204d;
+  white-space: nowrap;
 `;
 
 export const QuantityrHeader = styled.th`
-  min-width: 90px;
-  color: #103f99;
+  text-align: center;
+  padding: 10px 0px;
   font-size: 12px;
   font-weight: 400;
+  color: #08204d;
+  white-space: nowrap;
 `;
+
 export const RentHeader = styled.th`
-  min-width: 90px;
-  color: #103f99;
+  text-align: center;
+  padding: 10px 0px;
   font-size: 12px;
   font-weight: 400;
+  color: #08204d;
+  white-space: nowrap;
 `;
 
 export const OthersHeader = styled.th`
-  min-width: 90px;
-  color: #103f99;
+  text-align: center;
+  padding: 10px 0px;
   font-size: 12px;
   font-weight: 400;
-`;
-
-export const Tbody = styled.tbody`
-  padding: 24px 24px;
-  display: flex;
-  column-gap: 24px;
+  color: #08204d;
+  white-space: nowrap;
 `;
 
 export const Product = styled.td`
-  max-width: 360px;
   display: flex;
-  column-gap: 24px;
   align-items: center;
+  padding: 24px 24px;
+  font-size: 14px;
+  font-weight: 400;
+  column-gap: 24px;
 `;
 
 export const Quantity = styled.td`
-  min-width: 90px;
-  color: #000000;
-  font-size: 12px;
-  font-weight: 400;
   text-align: center;
+  font-size: 14px;
+  font-weight: 400;
 `;
+
 export const Rent = styled.td`
-  min-width: 90px;
-  color: #000000;
-  font-size: 12px;
-  font-weight: 400;
   text-align: center;
+  font-size: 14px;
+  font-weight: 400;
 `;
+
 export const Others = styled.td`
-  min-width: 90px;
-  color: #000000;
-  font-size: 12px;
-  font-weight: 400;
   text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+`;
+
+export const BtnContainer = styled.td`
+  text-align: center;
+  padding-right: 24px;
+`;
+
+export const DetailsBtn = styled.button`
+  padding: 13px 34px;
+  white-space: nowrap;
+  background-color: #103f99;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  height: 50px;
+  cursor: pointer;
+  border-radius: 30px;
 `;
 
 export const Description = styled.div`
-  min-width: 270px;
+  max-width: 270px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   row-gap: 6px;
@@ -223,16 +234,4 @@ export const Name = styled.span`
 export const Feature = styled.p`
   font-weight: 400;
   font-size: 12px;
-`;
-
-export const BtnContainer = styled.td``;
-
-export const DetailsBtn = styled.button`
-  min-width: 132px;
-  height: 50px;
-  border-radius: 30px;
-  outline: 1px solid #103f99;
-  font-size: 16px;
-  font-weight: 700;
-  color: #103f99;
 `;

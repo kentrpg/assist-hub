@@ -1,5 +1,21 @@
 import styled from "styled-components";
 
+export type PProps = {
+  $type: "title" | "content";
+};
+
+export const Container = styled.div`
+  max-width: 1002px;
+  padding: 48px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+  border-radius: 10px;
+  outline: 1px solid #888888;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+`;
+
 export const BackToOrders = styled.div`
   display: flex;
   align-items: center;
@@ -7,7 +23,7 @@ export const BackToOrders = styled.div`
   padding: 6px 0px;
 `;
 
-export const Icon = styled.div`
+export const Icon = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,40 +33,41 @@ export const Icon = styled.div`
   border-radius: 50%;
 `;
 
-export const Title = styled.div`
+export const Title = styled.button`
   font-size: 16px;
   font-weight: 400;
   color: #103f99;
+  background-color: #fff;
 `;
 
 export const DepositHeader = styled.th`
-  min-width: 90px;
-  color: #103f99;
+  text-align: center;
+  padding: 10px 0px;
   font-size: 12px;
   font-weight: 400;
+  color: #08204d;
+  white-space: nowrap;
 `;
 
 export const FeeHeader = styled.th`
-  min-width: 90px;
-  color: #103f99;
+  text-align: center;
+  padding: 10px 0px;
   font-size: 12px;
   font-weight: 400;
+  color: #08204d;
+  white-space: nowrap;
 `;
 
 export const Deposit = styled.th`
-  min-width: 90px;
-  color: #000000;
-  font-size: 12px;
-  font-weight: 400;
   text-align: center;
+  font-size: 14px;
+  font-weight: 400;
 `;
 
 export const Fee = styled.th`
-  min-width: 90px;
-  color: #000000;
-  font-size: 12px;
-  font-weight: 400;
   text-align: center;
+  font-size: 14px;
+  font-weight: 400;
 `;
 
 export const Footer = styled.div`
@@ -60,7 +77,8 @@ export const Footer = styled.div`
 
 export const Detail = styled.div`
   position: relative;
-  min-width: 328px;
+  max-width: 328px;
+  width: 100%;
   padding: 24px;
   display: flex;
   flex-direction: column;
@@ -82,8 +100,10 @@ export const Span = styled.span`
   font-weight: 500;
   color: #08204d;
 `;
+
 export const Remark = styled.div`
-  min-width: 250px;
+  max-width: 250px;
+  width: 100%;
   padding: 24px;
 `;
 
@@ -101,10 +121,13 @@ export const Delivery = styled.div`
 
 export const Row = styled.div`
   display: flex;
-  justify-content: space-between;
+  column-gap: 30px;
 `;
 
-export const P = styled.p<{ type: "title" | "content" }>`
+export const P = styled.p<PProps>`
   font-size: 14px;
-  color: ${({ type }) => (type === "title" ? "#08204D" : "#000000")};
+  color: ${({ $type }) => ($type === "title" ? "#08204D" : "#000000")};
+  font-weight: ${({ $type }) => ($type === "title" ? "400" : "500")};
+  max-width: ${({ $type }) => ($type === "title" ? "60px" : "190px")};
+  width: 100%;
 `;

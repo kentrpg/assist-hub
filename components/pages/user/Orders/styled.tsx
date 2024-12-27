@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export const OrdersContainer = styled.div`
+type TabProps = {
+  $active: boolean;
+};
+
+export const Container = styled.div`
   max-width: 1002px;
   padding: 48px;
   flex: 1;
@@ -10,6 +14,13 @@ export const OrdersContainer = styled.div`
   border-radius: 10px;
   outline: 1px solid #888888;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+`;
+
+export const List = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
 `;
 
 export const Header = styled.div`
@@ -29,20 +40,31 @@ export const Tabs = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  & > *:not(:last-child) {
+    position: relative;
+  }
+  & > *:not(:last-child)::after {
+    content: "";
+    width: 1px;
+    height: 21px;
+    background-color: #e9e5de;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 `;
 
-export const Tab = styled.button`
+export const Tab = styled.button<TabProps>`
   min-width: 86px;
-  height: 21px;
   font-size: 14px;
   font-weight: 700;
-  color: #08204d;
-  background-color: #fff;
-`;
+  color: ${({ $active }) => ($active ? "#08204d" : "#888888")};
+  background-color: white;
+  transition: all 0.3s ease;
 
-export const OrderLists = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  row-gap: 24px;
+  &:hover {
+    cursor: pointer;
+    color: #08204d;
+  }
 `;

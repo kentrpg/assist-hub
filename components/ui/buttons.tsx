@@ -32,7 +32,7 @@ export const LineButton = styled(InputButton)`
   justify-content: center;
   gap: 8px;
   outline: 1px solid ${({ theme }) => theme.colors.primary};
-  margin: 8px 0;
+  margin-top: 8px;
   transition: background-color 0.2s;
   &:hover {
     background-color: ${({ theme }) => theme.colors.primaryLight};

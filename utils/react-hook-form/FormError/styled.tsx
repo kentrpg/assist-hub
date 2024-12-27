@@ -4,12 +4,12 @@ import styled from "styled-components";
 export const ErrorMessage = styled.span`
   color: ${({ theme }) => theme.colors.error};
   font-size: 12px;
-  margin: -8px 0 0;
+  margin-top: 4px;
 `;
 
 export const PasswordErrorMessage = styled.span<IsDefault>`
   color: ${({ $isDefault, theme }) =>
     $isDefault ? theme.colors.textMuted : theme.colors.error};
-  font-size: 14px;
-  margin: -8px 0 0;
+  font-size: 12px;
+  margin-top: 4px;
 `;

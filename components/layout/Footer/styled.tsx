@@ -18,7 +18,7 @@ export const Wrapper = styled.footer`
 export const Content = styled.div`
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  color: ${({ theme }) => theme.colors.gray["300"]};
+  color: ${({ theme }) => theme.colors.grey300};
 `;
 
 export const Categories = styled.div`
@@ -36,7 +36,7 @@ export const Newsletter = styled.div`
 export const Title = styled.span`
   display: inline-block;
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 700;
   color: ${({ theme }) => theme.colors.textprimary};
   margin-bottom: 16px;
 `;
@@ -54,7 +54,7 @@ export const CategoryLinks = styled.div`
 `;
 
 export const CategoryLink = styled(Link)`
-  color: ${({ theme }) => theme.colors.gray["300"]};
+  color: ${({ theme }) => theme.colors.grey300};
   text-decoration: none;
   &:hover {
     text-decoration: underline;
@@ -94,7 +94,7 @@ export const SubscribeButton = styled.button`
 export const Copyright = styled.p`
   text-align: right;
   font-size: 12px;
-  font-weight: bold;
+  font-weight: 700;
   color: ${({ theme }) => theme.colors.textMuted};
   margin-top: 28px;
 `;

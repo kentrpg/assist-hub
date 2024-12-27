@@ -4,14 +4,14 @@ import { ThemeProvider } from "styled-components";
 import theme from "@/styles/theme";
 import Layout from "@/components/layout/Layout";
 import Head from "next/head";
-import { Noto_Sans_TC } from "next/font/google";
+// import { Noto_Sans_TC } from "next/font/google";
 
-// Regular 400、Medium 500、Bold 700
-const notoSansTC = Noto_Sans_TC({
-  subsets: ["latin"],
-  preload: true,
-  weight: ["400", "500", "700"],
-});
+// // Regular 400、Medium 500、Bold 700
+// const notoSansTC = Noto_Sans_TC({
+//   subsets: ["latin"],
+//   preload: true,
+//   weight: ["400", "500", "700"],
+// });
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -23,8 +23,8 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
 
       <ThemeProvider theme={theme}>
-        <GlobalStyle fontFamily={notoSansTC.style.fontFamily} />
-        <Layout className={notoSansTC.className}>
+        <GlobalStyle />
+        <Layout>
           <Component {...pageProps} />
         </Layout>
       </ThemeProvider>

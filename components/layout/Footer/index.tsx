@@ -17,7 +17,7 @@ import {
 } from "./styled";
 import { IconLinkWrapper } from "@/utils/react-icons/iconWrappers";
 import { MdArrowForward } from "react-icons/md";
-import CheckboxField from "@/components/ui/CheckBox";
+import Checkbox from "@/components/ui/Checkbox";
 import { FaFacebookSquare, FaLine } from "react-icons/fa";
 import { useTheme } from "styled-components";
 import { useForm } from "react-hook-form";
@@ -82,7 +82,7 @@ const Footer: React.FC = () => {
                   target="_blank"
                   $size={24}
                   $backgroundColor="white"
-                  $borderRadius={4}
+                  $borderRadius={2}
                 >
                   <FaFacebookSquare size={24} fill={theme.colors.fbLogo} />
                 </IconLinkWrapper>
@@ -98,11 +98,11 @@ const Footer: React.FC = () => {
                   name="email"
                   type="tel"
                   placeholder="輸入電子信箱"
-                  $color={{ color: "gray", scale: "300" }}
+                  $color="grey300"
                   $fontSize={14}
-                  $borderColor={{ color: "gray", scale: "300" }}
-                  $backgroundColor={{ color: "gray", scale: "100" }}
-                  $padding="8px 34px 8px 10px"
+                  $borderColor="grey300"
+                  $backgroundColor="grey100"
+                  $padding="7px 34px 7px 10px"
                   register={register}
                   required="請輸入電子信箱"
                   validate={{
@@ -139,15 +139,16 @@ const Footer: React.FC = () => {
                 )}
               </SubscriptionField>
             </form>
-            <CheckboxField
+            <Checkbox
               id="newsletter-consent"
               label="我想要了解最新的輔具資訊"
-              gap={3}
+              $gap={10}
               defaultChecked={false}
-              fontSize={16}
-              size={21}
-              checkboxIconColor="textMuted"
-              labelColor={{ color: "gray", scale: "300" }}
+              $fontSize={14}
+              size={24}
+              $checkedIconColor="textMuted"
+              $uncheckedIconColor="textMuted"
+              $labelColor="grey300"
             />
           </Newsletter>
         </Content>

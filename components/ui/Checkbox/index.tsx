@@ -1,40 +1,42 @@
 import { useState } from "react";
 import {
-  Checkbox,
+  CheckboxField,
   CheckboxControl,
   VisuallyHiddenInput,
   CheckedStateIcon,
   UncheckedStateIcon,
   CheckboxLabel,
 } from "./styled";
-import { ScaleColors, ThemeColors } from "@/types/uiProps";
+import { ColorsType } from "@/types/uiProps";
 
-type CheckBoxProps = {
+type CheckboxProps = {
   id: string;
   label: string;
-  gap: number;
+  $gap: number;
   defaultChecked: boolean;
-  fontSize: number;
+  $fontSize: number;
   size: number;
-  checkboxIconColor: ScaleColors | ThemeColors;
-  labelColor: ScaleColors | ThemeColors;
+  $checkedIconColor: ColorsType;
+  $uncheckedIconColor: ColorsType;
+  $labelColor: ColorsType;
 };
 
-const CheckboxField: React.FC<CheckBoxProps> = ({
+const Checkbox: React.FC<CheckboxProps> = ({
   id,
   label,
-  gap,
-  defaultChecked,
-  fontSize,
-  size,
-  checkboxIconColor,
-  labelColor,
+  $gap = 8,
+  defaultChecked = false,
+  $fontSize = 16,
+  size = 24,
+  $checkedIconColor = "textMuted",
+  $uncheckedIconColor = "textMuted",
+  $labelColor = "textMuted",
 }) => {
   const [checked, setChecked] = useState(defaultChecked);
   const handleToggle = () => setChecked(!checked);
 
   return (
-    <Checkbox $gap={gap}>
+    <CheckboxField $gap={$gap}>
       <CheckboxControl $size={size}>
         <VisuallyHiddenInput
           type="checkbox"
@@ -43,28 +45,25 @@ const CheckboxField: React.FC<CheckBoxProps> = ({
           onChange={handleToggle}
         />
         {checked ? (
-          <CheckedStateIcon
-            size={size}
-            $checkboxIconColor={checkboxIconColor}
-          />
+          <CheckedStateIcon size={size} $checkedIconColor={$checkedIconColor} />
         ) : (
           <UncheckedStateIcon
             size={size}
-            $checkboxIconColor={checkboxIconColor}
+            $uncheckedIconColor={$uncheckedIconColor}
           />
         )}
       </CheckboxControl>
       {label && (
         <CheckboxLabel
-          $fontSize={fontSize}
-          $labelColor={labelColor}
+          $fontSize={$fontSize}
+          $labelColor={$labelColor}
           htmlFor={id}
         >
           {label}
         </CheckboxLabel>
       )}
-    </Checkbox>
+    </CheckboxField>
   );
 };
 
-export default CheckboxField;
+export default Checkbox;

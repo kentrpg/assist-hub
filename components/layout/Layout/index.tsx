@@ -4,7 +4,6 @@ import { PageLayout, MainContent } from "./styled";
 
 type LayoutProps = {
   children: React.ReactNode;
-  className: string;
 };
 
 export default function Layout({ children }: LayoutProps) {

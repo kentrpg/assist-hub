@@ -1,38 +1,37 @@
 import styled from "styled-components";
-import { Number, ScaleColors, ThemeColors } from "@/types/uiProps";
+import { ColorsType, FontSize, Padding } from "@/types/uiProps";
+import {
+  InputFieldCleanAutofill,
+  InputFieldShadow,
+  InputFieldTransition,
+} from "@/styles/effect";
+import { InputRadius } from "@/styles/borderRadius";
 
-export const InputField = styled.input<
-  Pick<Number, "$fontSize"> & {
-    $color: ScaleColors | ThemeColors;
-    $borderColor: ScaleColors | ThemeColors;
-    $backgroundColor: ScaleColors | ThemeColors;
-    $padding: string;
-  }
->`
+type InputFieldProps = FontSize &
+  Padding & {
+    $color: ColorsType;
+    $borderColor: ColorsType;
+    $backgroundColor: ColorsType;
+  };
+
+export const InputField = styled.input<InputFieldProps>`
   width: 100%;
   font-size: ${({ $fontSize }) => $fontSize}px;
-  line-height: 1.5;
-  border: 1px solid
-    ${({ theme, $borderColor }) =>
-      typeof $borderColor === "string"
-        ? theme.colors[$borderColor]
-        : theme.colors[$borderColor.color][$borderColor.scale]};
-  border-radius: 5px;
+  border: 1px solid ${({ theme, $borderColor }) => theme.colors[$borderColor]};
+  ${InputRadius};
   background-color: ${({ theme, $backgroundColor }) =>
-    typeof $backgroundColor === "string"
-      ? theme.colors[$backgroundColor]
-      : theme.colors[$backgroundColor.color][$backgroundColor.scale]};
-  color: ${({ theme, $color }) =>
-    typeof $color === "string"
-      ? theme.colors[$color]
-      : theme.colors[$color.color][$color.scale]};
-  transition: box-shadow 0.13s ease-out, border-color 0.1s ease-in-out;
+    theme.colors[$backgroundColor]};
+  color: ${({ theme, $color }) => theme.colors[$color]};
+  ${InputFieldTransition}
   padding: ${({ $padding }) => $padding};
+
+  &:-webkit-autofill {
+    ${InputFieldCleanAutofill}
+  }
 
   &:focus {
     border-color: ${({ theme }) => theme.colors.primary};
-    box-shadow: 0 0 0 1px ${({ theme }) => theme.colors.primary},
-      0 0 0 1000px ${({ theme }) => theme.colors.gray["100"]} inset;
+    ${InputFieldShadow}
   }
 
   &::placeholder {

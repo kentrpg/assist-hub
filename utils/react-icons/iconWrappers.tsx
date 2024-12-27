@@ -1,11 +1,9 @@
 import styled, { css } from "styled-components";
 import Link from "next/link";
-import { ThemeColors, Number } from "@/types/uiProps";
+import { BorderRadius, ColorsType, Size } from "@/types/uiProps";
 
-const iconBackground = css<
-  Pick<Number, "$size"> &
-    Pick<Number, "$borderRadius"> & { $backgroundColor: ThemeColors }
->`
+type IconBackground = Size & BorderRadius & { $backgroundColor: ColorsType };
+const iconBackground = css<IconBackground>`
   width: ${({ $size }) => $size - 4}px;
   height: ${({ $size }) => $size - 4}px;
   display: inline-flex;
@@ -17,17 +15,11 @@ const iconBackground = css<
   overflow: hidden;
 `;
 
-export const IconWrapper = styled.span<
-  Pick<Number, "$size"> &
-    Pick<Number, "$borderRadius"> & { $backgroundColor: ThemeColors }
->`
+export const IconWrapper = styled.span<IconBackground>`
   ${iconBackground}
 `;
 
-export const IconLinkWrapper = styled(Link)<
-  Pick<Number, "$size"> &
-    Pick<Number, "$borderRadius"> & { $backgroundColor: ThemeColors }
->`
+export const IconLinkWrapper = styled(Link)<IconBackground>`
   ${iconBackground}
   &:hover {
     opacity: 0.8;

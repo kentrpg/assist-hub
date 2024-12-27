@@ -1,14 +1,14 @@
-import { ScaleColors, ThemeColors } from "@/types/uiProps";
+import { ColorsType } from "@/types/uiProps";
 import { FieldValues, Path, UseFormRegister } from "react-hook-form";
 
 export type InputField<T extends FieldValues> = {
   name: Path<T>;
   type: "email" | "password" | "text" | "tel";
   placeholder: string;
-  $color: ScaleColors | ThemeColors;
+  $color: ColorsType;
   $fontSize: number;
-  $borderColor: ScaleColors | ThemeColors;
-  $backgroundColor: ScaleColors | ThemeColors;
+  $borderColor: ColorsType;
+  $backgroundColor: ColorsType;
   $padding: string;
   register: UseFormRegister<T>;
   required: string;

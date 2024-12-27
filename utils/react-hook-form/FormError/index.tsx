@@ -1,37 +1,41 @@
-import { ErrorType } from "../types";
+import { FieldErrors, FieldValues, Path } from "react-hook-form";
 import { ErrorMessage, PasswordErrorMessage } from "./styled";
 
-export type FormErrorProps = {
-  name: string;
-  errorType: ErrorType;
-  errors: Record<string, any>;
-  dirtyFields: Record<string, any>;
+export type FormErrorProps<T extends FieldValues> = {
+  name: Path<T>;
+  errorType: "password" | "default";
+  errors: FieldErrors<T>;
+  dirtyFields: Partial<Record<keyof T, boolean>>;
   validation?: {
     required?: string;
   };
 };
 
-export const FormError: React.FC<FormErrorProps> = ({
+export const FormError = <T extends FieldValues>({
   name,
   errorType,
   errors,
   dirtyFields,
   validation,
-}) => {
+}: FormErrorProps<T>) => {
   switch (errorType) {
     case "password":
-      return (
-        <PasswordErrorMessage
-          $isDefault={errors.password === undefined ? true : !errors.password}
-        >
-          {errors.password === undefined && dirtyFields.password === undefined
-            ? validation?.required
-            : errors.password?.message}
-        </PasswordErrorMessage>
-      );
+      const isPasswordInvalid = Boolean(errors[name]?.message);
+      const isInitialState = !isPasswordInvalid && !dirtyFields[name];
+
+      if (isPasswordInvalid || isInitialState) {
+        return (
+          <PasswordErrorMessage $isDefault={!isPasswordInvalid}>
+            {isPasswordInvalid
+              ? String(errors[name]?.message)
+              : validation?.required}
+          </PasswordErrorMessage>
+        );
+      }
+      return null;
     case "default":
       return errors[name] ? (
-        <ErrorMessage>{errors[name]?.message}</ErrorMessage>
+        <ErrorMessage>{String(errors[name].message)}</ErrorMessage>
       ) : null;
     default:
       return null;

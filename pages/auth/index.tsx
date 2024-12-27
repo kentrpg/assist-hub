@@ -1,4 +1,3 @@
-import React from "react";
 import Signin from "@/components/pages/auth/Signin";
 import { MainWrapper } from "@/styles/wrappers";
 

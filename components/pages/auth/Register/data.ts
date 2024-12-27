@@ -91,7 +91,7 @@ export const registerFields: RegisterField<RegistInputs>[] = [
     type: "password",
     validation: {
       required: "請輸入確認密碼",
-      validate: (value: string, formValues: Record<string, any>) =>
+      validate: (value: string, formValues: { password: string }) =>
         value === formValues.password || "與上方密碼不一致",
     },
     errorType: "default",

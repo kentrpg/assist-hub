@@ -1,29 +1,22 @@
+import { CleanAutofill } from "@/styles/effect";
+import { FontFamily, NotoSansTC } from "@/styles/typography";
 import { createGlobalStyle } from "styled-components";
 
-type GlobalStyleProps = {
-  fontFamily: string;
-};
-
-const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
+const GlobalStyle = createGlobalStyle`
   html, body {
     width: 100%;
     min-height: 100dvh;
-    margin: 0;
-    padding: 0;
   }
   
   *, *::before, *::after {
     box-sizing: border-box;
-    border: none;
-    outline: none;
-    padding: 0;
     margin: 0;
+    padding: 0;
   }
-
+  
   body {
+    ${FontFamily};
     line-height: 1.5;
-    font-family: ${({ fontFamily }) =>
-      fontFamily}, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   }
 
   ol, ul {
@@ -36,26 +29,28 @@ const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
   }
 
   input {
-    border-radius: 0;
     &[type="search"] {
       appearance: none;
       border-radius: 0;
     }
 
     &:-webkit-autofill {
-      box-shadow: 0 0 0px 1000px ${({ theme }) => theme.colors.white} inset;
+      ${CleanAutofill};
     }
   }
 
-  a {
-    display: inline-block;
-    text-decoration: none;
-    color: ${({ theme }) => theme.colors.black};
-    appearance: none;
+  button, input {
+    border: none;
+    outline: none;
+    border-radius: 0;
+    line-height: inherit;
   }
-  
-  a, button, input {
+
+  a, label, button, select, textarea {
     cursor: pointer;
+    & * {
+      cursor: pointer;
+    }
   }
 
   h1, h2, h3, h4, h5, h6, div, span, p {
@@ -69,15 +64,15 @@ const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
   a,
   textarea,
   select {
-    font-family: ${({ fontFamily }) => fontFamily}, sans-serif;
+    ${NotoSansTC};
   }
-  
-  /* a, label, button, select, textarea {
-    cursor: pointer;
-    & * {
-      cursor: pointer;
-    }
-  } */
+
+  a {
+    display: inline-block;
+    text-decoration: none;
+    color: ${({ theme }) => theme.colors.black};
+    appearance: none;
+  }
 
   h1 {
     font-size: 40px;

@@ -1,7 +1,4 @@
 import styled from "styled-components";
-interface ButtonProps {
-  $isSuggest?: boolean;
-}
 
 export const InquiryContainer = styled.div`
   flex: 1;
@@ -40,80 +37,31 @@ export const Tr = styled.tr`
 `;
 
 export const IdHeader = styled.th`
-  min-width: 126px;
+  max-width: 126px;
+  width: 100%;
 `;
 
 export const ProductHeader = styled.th`
-  min-width: 290px;
+  max-width: 290px;
+  width: 100%;
 `;
 
 export const CreatedHeader = styled.th`
-  min-width: 90px;
+  max-width: 90px;
+  width: 100%;
 `;
 
 export const StatusHeader = styled.th`
-  min-width: 90px;
+  max-width: 90px;
+  width: 100%;
 `;
 
 export const InquiryHeader = styled.th`
-  min-width: 90px;
+  max-width: 90px;
+  width: 100%;
 `;
 
 export const SuggestHeader = styled.th`
-  min-width: 90px;
-`;
-
-export const Tbody = styled.tbody`
-  padding: 24px 25px;
-  position: relative;
-
-  &::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 1px;
-    background-color: #e9e5de;
-  }
-  &:last-of-type::after {
-    content: none;
-  }
-`;
-
-export const Id = styled.td`
-  min-width: 126px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const Products = styled.td`
-  max-width: 290px;
-  display: flex;
-  column-gap: 25px;
-`;
-
-export const Creatd = styled.td`
-  min-width: 90px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const Status = styled.td<ButtonProps>`
-  font-size: 14px;
-  font-weight: 700;
-  min-width: 90px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: ${({ $isSuggest }) => ($isSuggest ? "#2ECC71" : "#E74C3C")};
-`;
-
-export const Link = styled.td`
-  min-width: 90px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  max-width: 90px;
+  width: 100%;
 `;

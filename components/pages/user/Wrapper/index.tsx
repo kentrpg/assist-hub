@@ -1,12 +1,12 @@
 import { ReactNode } from "react";
-import { MainWrapper } from "@/styles/wrappers";
+import { Container } from "./styled";
 
-interface WrapperProps {
+type WrapperProps = {
   children: ReactNode;
-}
+};
 
 const Wrapper = ({ children }: WrapperProps) => {
-  return <MainWrapper>{children}</MainWrapper>;
+  return <Container>{children}</Container>;
 };
 
 export default Wrapper;

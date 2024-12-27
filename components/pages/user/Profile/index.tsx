@@ -1,13 +1,13 @@
 import Form from "./Form";
-import { ProfileContainer, Titile } from "./styled";
+import { Container, Titile } from "./styled";
 
 const Profile = () => {
   return (
     <>
-      <ProfileContainer>
+      <Container>
         <Titile>基本資料</Titile>
         <Form></Form>
-      </ProfileContainer>
+      </Container>
     </>
   );
 };

@@ -71,7 +71,7 @@ export const InfoValue = styled.span`
   padding: 12px 2px 12px 16px;
 `;
 
-export const InquiryActions = styled.div`
+export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
 `;
@@ -87,9 +87,10 @@ export const SubTitle = styled.h2`
   margin-bottom: 40px;
 `;
 
-export const AssistiveWrapper = styled.div`
+export const CardGroup = styled.div`
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   gap: 24px;
   margin-bottom: 40px;
   @media (${Tablet}) {
@@ -97,23 +98,22 @@ export const AssistiveWrapper = styled.div`
   }
 `;
 
-export const AssistiveDeviceCard = styled.div`
+export const Card = styled.div`
   flex: 0 0 calc((100% - 2 * 24px) / 3);
   text-align: left;
   border: 1px solid transparent;
   background: ${({ theme }) => theme.colors.white};
   ${CardRadius};
   padding: 20px;
-  // TBD: 需要補成 123 的餘數設計
-  &:nth-child(1) {
+  &:nth-child(3n+1) {
     background: ${({ theme }) => theme.colors.accentLight};
     border-color: ${({ theme }) => theme.colors.accent};
   }
-  &:nth-child(2) {
+  &:nth-child(3n+2) {
     background: ${({ theme }) => theme.colors.primaryLight};
     border-color: ${({ theme }) => theme.colors.primary};
   }
-  &:nth-child(3) {
+  &:nth-child(3n+3) {
     background: ${({ theme }) => theme.colors.seccondaryLight};
     border-color: ${({ theme }) => theme.colors.secondary};
   }
@@ -125,11 +125,10 @@ export const AssistiveDeviceCard = styled.div`
   }
 `;
 
-export const Info = styled.div`
+export const CardContent = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: stretch;
   margin-bottom: 16px;
   @media (${Tablet}) {
     flex-direction: column;
@@ -139,7 +138,7 @@ export const Info = styled.div`
   }
 `;
 
-export const DeviceInfo = styled.div`
+export const DetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -148,18 +147,18 @@ export const DeviceInfo = styled.div`
   }
 `;
 
-export const TextWrapper = styled.div`
+export const Details = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-export const DeviceTitle = styled.h3`
+export const Name = styled.h3`
   ${H6};
   color: ${({ theme }) => theme.colors.textprimary};
   margin-bottom: 4px;
 `;
 
-export const DeviceSubtitle = styled.p`
+export const Description = styled.p`
   font-size: 14px;
   color: ${({ theme }) => theme.colors.textsecondary};
 `;
@@ -178,7 +177,7 @@ export const PriceUnit = styled.span`
 export const ImageWrapper = styled.div`
   font-size: 0;
 `;
-export const DeviceImage = styled.img`
+export const Image = styled.img`
   height: auto;
   width: 100%;
   max-width: 160px;
@@ -186,7 +185,7 @@ export const DeviceImage = styled.img`
   object-fit: contain;
 `;
 
-export const Feature = styled.div`
+export const Features = styled.div`
   border-top: 1px solid ${({ theme }) => theme.colors.textMuted};
   padding: 16px 0;
 `;
@@ -198,7 +197,7 @@ export const FeatureTitle = styled.h4`
   margin-bottom: 16px;
 `;
 
-export const FeatureList = styled.ul`
+export const FeatureGroup = styled.ul`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -214,7 +213,7 @@ export const FeatureList = styled.ul`
   }
 `;
 
-export const FeatureItem = styled.li`
+export const Feature = styled.li`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -245,6 +244,6 @@ export const ShareButton = styled.button`
   }
 
   &:active {
-    transform: ${ButtonScale};
+    ${ButtonScale};
   }
 `;

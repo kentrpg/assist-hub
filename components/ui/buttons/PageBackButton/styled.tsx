@@ -23,6 +23,6 @@ export const NavigateBackButton = styled.button`
   }
 
   &:active {
-    transform: ${ButtonScale};
+    ${ButtonScale};
   }
 `;

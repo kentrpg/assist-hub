@@ -43,7 +43,7 @@ export const Label = styled.label`
   font-size: 18px;
   color: ${({ theme }) => theme.colors.black};
   background-color: ${({ theme }) => theme.colors.white};
-  ${FloatingLabelTransition}
+  ${FloatingLabelTransition};
   pointer-events: none;
 `;
 

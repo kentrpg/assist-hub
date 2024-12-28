@@ -37,4 +37,4 @@ export const FloatingLabelTransition = css`
   transition: all 0.15s ease-in-out;
 `;
 
-export const ButtonScale = "scale(0.9)";
+export const ButtonScale = css`transform: scale(0.9)`;

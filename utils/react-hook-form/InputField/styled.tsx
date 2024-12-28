@@ -22,16 +22,16 @@ export const InputField = styled.input<InputFieldProps>`
   background-color: ${({ theme, $backgroundColor }) =>
     theme.colors[$backgroundColor]};
   color: ${({ theme, $color }) => theme.colors[$color]};
-  ${InputFieldTransition}
+  ${InputFieldTransition};
   padding: ${({ $padding }) => $padding};
 
   &:-webkit-autofill {
-    ${InputFieldCleanAutofill}
+    ${InputFieldCleanAutofill};
   }
 
   &:focus {
     border-color: ${({ theme }) => theme.colors.primary};
-    ${InputFieldShadow}
+    ${InputFieldShadow};
   }
 
   &::placeholder {

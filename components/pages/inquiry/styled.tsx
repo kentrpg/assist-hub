@@ -1,5 +1,5 @@
 import { ButtonRadius, CardRadius } from "@/styles/borderRadius";
-import { Mobile, Tablet, Desktop } from "@/styles/container";
+import { Desktop, Mobile, Tablet } from "@/styles/container";
 import {
   ButtonScale,
   ButtonShadow,
@@ -105,15 +105,15 @@ export const Card = styled.div`
   background: ${({ theme }) => theme.colors.white};
   ${CardRadius};
   padding: 20px;
-  &:nth-child(3n+1) {
+  &:nth-child(3n + 1) {
     background: ${({ theme }) => theme.colors.accentLight};
     border-color: ${({ theme }) => theme.colors.accent};
   }
-  &:nth-child(3n+2) {
+  &:nth-child(3n + 2) {
     background: ${({ theme }) => theme.colors.primaryLight};
     border-color: ${({ theme }) => theme.colors.primary};
   }
-  &:nth-child(3n+3) {
+  &:nth-child(3n + 3) {
     background: ${({ theme }) => theme.colors.seccondaryLight};
     border-color: ${({ theme }) => theme.colors.secondary};
   }
@@ -125,10 +125,17 @@ export const Card = styled.div`
   }
 `;
 
+export const FlexFullHeight = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
 export const CardContent = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex-grow: 1;
   margin-bottom: 16px;
   @media (${Tablet}) {
     flex-direction: column;
@@ -142,9 +149,9 @@ export const DetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  @media (${Desktop}) {
+  /* @media (${Desktop}) {
     flex-shrink: 0;
-  }
+  } */
 `;
 
 export const Details = styled.div`
@@ -180,8 +187,7 @@ export const ImageWrapper = styled.div`
 export const Image = styled.img`
   height: auto;
   width: 100%;
-  max-width: 160px;
-  display: inline-block;
+  min-width: 135px;
   object-fit: contain;
 `;
 

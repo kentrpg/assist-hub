@@ -37,7 +37,7 @@ export const Title = styled.span`
   display: inline-block;
   font-size: 20px;
   font-weight: 700;
-  color: ${({ theme }) => theme.colors.textprimary};
+  color: ${({ theme }) => theme.colors.textPrimary};
   margin-bottom: 16px;
 `;
 

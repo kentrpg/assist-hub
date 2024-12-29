@@ -7,7 +7,6 @@ import {
   Content,
   CategoryLink,
   Wrapper,
-  CategoryLinkList,
   Newsletter,
   SubscriptionField,
   SocialMediaLinks,
@@ -46,19 +45,15 @@ const Footer: React.FC = () => {
         <Content>
           <Categories>
             <Title>輔具分類</Title>
-            <CategoryLinkList>
-              <CategoryLinks>
-                <CategoryLink href="#">行動輔椅</CategoryLink>
-                <CategoryLink href="#">臥室寢具</CategoryLink>
-                <CategoryLink href="#">呼吸照護</CategoryLink>
-                <CategoryLink href="#">拐杖步行</CategoryLink>
-              </CategoryLinks>
-              <CategoryLinks>
-                <CategoryLink href="#">如廁沐浴</CategoryLink>
-                <CategoryLink href="#">居家照護</CategoryLink>
-                <CategoryLink href="#">輔具、護具</CategoryLink>
-              </CategoryLinks>
-            </CategoryLinkList>
+            <CategoryLinks>
+              <CategoryLink href="#">行動輔椅</CategoryLink>
+              <CategoryLink href="#">臥室寢具</CategoryLink>
+              <CategoryLink href="#">呼吸照護</CategoryLink>
+              <CategoryLink href="#">拐杖步行</CategoryLink>
+              <CategoryLink href="#">如廁沐浴</CategoryLink>
+              <CategoryLink href="#">居家照護</CategoryLink>
+              <CategoryLink href="#">輔具、護具</CategoryLink>
+            </CategoryLinks>
           </Categories>
           <Contact>
             <Title>聯絡我們</Title>
@@ -88,7 +83,6 @@ const Footer: React.FC = () => {
               </SocialMediaLinks>
             </AddressInfo>
           </Contact>
-
           <Newsletter>
             <Title>訂閱電子報</Title>
             <form onSubmit={handleSubmit(onSubmit)} noValidate>

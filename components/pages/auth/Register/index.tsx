@@ -2,14 +2,13 @@ import { useState, Fragment } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
 
-import { Container, Title, Form } from "../Layout/styled";
+import { Container, Title, Form, Button } from "../Layout/styled";
 
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import FormField from "@/utils/react-hook-form/FloatingLabel";
 import { RegisterField } from "@/utils/react-hook-form/types";
 import { registerFields, RegistInputs } from "./data";
 import { signUp } from "@/utils/api/auth/register";
-import { AuthButton } from "@/components/ui/buttons";
 
 const Regist: React.FC = () => {
   const {
@@ -87,12 +86,12 @@ const Regist: React.FC = () => {
             />
           </Fragment>
         ))}
-        <AuthButton
+        <Button
           type="submit"
           disabled={isSubmitting || Object.keys(errors).length !== 0}
         >
           {isSubmitting ? <LoaderSpinner /> : "註冊帳號"}
-        </AuthButton>
+        </Button>
       </Form>
     </Container>
   );

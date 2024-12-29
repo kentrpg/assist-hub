@@ -8,7 +8,7 @@ import styled from "styled-components";
 
 export const FloatingLabelWrapper = styled.div`
   position: relative;
-  margin: 12px 0;
+  margin-top: 12px;
 
   input:focus + label,
   :not(:placeholder-shown) + label {
@@ -43,25 +43,10 @@ export const Label = styled.label`
   font-size: 18px;
   color: ${({ theme }) => theme.colors.black};
   background-color: ${({ theme }) => theme.colors.white};
-  ${FloatingLabelTransition}
+  ${FloatingLabelTransition};
   pointer-events: none;
 `;
 
 export const PasswordInputField = styled(FloatingLabel)`
   padding: 11px 40px 11px 16px;
-`;
-
-export const TogglePassword = styled.span`
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  padding: 0;
-  svg {
-    cursor: pointer;
-    vertical-align: top;
-    color: ${({ theme }) => theme.colors.primary};
-  }
 `;

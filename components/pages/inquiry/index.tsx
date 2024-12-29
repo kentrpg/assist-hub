@@ -7,39 +7,41 @@ import {
   InfoCol,
   InfoLabel,
   InfoValue,
-  InquiryActions,
-  ShareButton,
   Assistive,
-  AssistiveWrapper,
-  AssistiveDeviceCard,
-  DeviceImage,
+  CardGroup,
+  Card,
+  Image,
   Price,
-  DeviceSubtitle,
-  DeviceTitle,
+  Description,
+  Name,
+  Features,
   Feature,
-  FeatureItem,
-  FeatureList,
+  FeatureGroup,
   PriceUnit,
-  DeviceInfo,
+  DetailsWrapper,
   FeatureTitle,
-  Info,
-  TextWrapper,
+  CardContent,
+  Details,
   InfoWrapper,
   ImageWrapper,
+  FlexFullHeight,
 } from "./styled";
-import { MdOutlineShare } from "react-icons/md";
 import { Container1116 as Container } from "@/styles/container";
 import { CheckIcon } from "@/utils/react-icons/CheckIcon";
-import PageBackButton from "@/components/ui/buttons/PageBackButton";
+import { FlexAlignCenter } from "@/styles/flex";
+import { MdArrowBack, MdOutlineShare } from "react-icons/md";
+import { PageBackButton } from "@/components/ui/circulars";
+import { PrimaryIconButton } from "@/components/ui/buttons";
 
 const InquiryPage = () => {
   return (
     <Container>
       <Header>
-        <PageBackButton />
+        <PageBackButton>
+          <MdArrowBack size={20} />
+        </PageBackButton>
         <Title>詢問單</Title>
       </Header>
-
       <InfoWrapper>
         <InfoContainer>
           <InfoRow>
@@ -68,119 +70,125 @@ const InquiryPage = () => {
       </InfoWrapper>
       <Assistive>
         <SubTitle>您選擇的詢問輔具</SubTitle>
-        <AssistiveWrapper>
-          <AssistiveDeviceCard>
-            <Info>
-              <DeviceInfo>
-                <TextWrapper>
-                  <DeviceTitle>電動輪椅</DeviceTitle>
-                  <DeviceSubtitle>輕量化鋁合金金屬設計</DeviceSubtitle>
-                </TextWrapper>
-                <Price>
-                  2,000元
-                  <PriceUnit>/月</PriceUnit>
-                </Price>
-              </DeviceInfo>
-              <ImageWrapper>
-                <DeviceImage src="/images/device1.png" alt="電動輪椅" />
-              </ImageWrapper>
-            </Info>
-            <Feature>
-              <FeatureTitle>輔具特色</FeatureTitle>
-              <FeatureList>
-                <FeatureItem>
-                  {/* <MdCheck size={24} /> */}
-                  {/* // TBD: react-icons 在 styled 內設置 width、height、color 做法可以嗎 */}
-                  <CheckIcon />
-                  支撐性高
-                </FeatureItem>
-                <FeatureItem>
-                  <CheckIcon />
-                  輕量化設計
-                </FeatureItem>
-                <FeatureItem>
-                  <CheckIcon />
-                  S曲面型坐墊
-                </FeatureItem>
-              </FeatureList>
-            </Feature>
-          </AssistiveDeviceCard>
-          <AssistiveDeviceCard>
-            <Info>
-              <DeviceInfo>
-                <TextWrapper>
-                  <DeviceTitle>腋下拐</DeviceTitle>
-                  <DeviceSubtitle>輕量化鋁合金金屬設計</DeviceSubtitle>
-                </TextWrapper>
-                <Price>
-                  1,000元
-                  <PriceUnit>/月</PriceUnit>
-                </Price>
-              </DeviceInfo>
-              <ImageWrapper>
-                <DeviceImage src="/images/device2.png" alt="電動輪椅" />
-              </ImageWrapper>
-            </Info>
-            <Feature>
-              <FeatureTitle>輔具特色</FeatureTitle>
-              <FeatureList>
-                <FeatureItem>
-                  <CheckIcon />
-                  支撐性高
-                </FeatureItem>
-                <FeatureItem>
-                  <CheckIcon />
-                  輕量化設計
-                </FeatureItem>
-                <FeatureItem>
-                  <CheckIcon />
-                  可調節適合高度
-                </FeatureItem>
-              </FeatureList>
-            </Feature>
-          </AssistiveDeviceCard>
-          <AssistiveDeviceCard>
-            <Info>
-              <DeviceInfo>
-                <TextWrapper>
-                  <DeviceTitle>電動輪椅</DeviceTitle>
-                  <DeviceSubtitle>輕量化鋁合金金屬設計</DeviceSubtitle>
-                </TextWrapper>
-                <Price>
-                  2,000元
-                  <PriceUnit>/月</PriceUnit>
-                </Price>
-              </DeviceInfo>
-              <ImageWrapper>
-                <DeviceImage src="/images/device3.png" alt="電動輪椅" />
-              </ImageWrapper>
-            </Info>
-            <Feature>
-              <FeatureTitle>輔具特色</FeatureTitle>
-              <FeatureList>
-                <FeatureItem>
-                  <CheckIcon />
-                  支撐性高
-                </FeatureItem>
-                <FeatureItem>
-                  <CheckIcon />
-                  輕量化設計
-                </FeatureItem>
-                <FeatureItem>
-                  <CheckIcon />
-                  S曲面型坐墊
-                </FeatureItem>
-              </FeatureList>
-            </Feature>
-          </AssistiveDeviceCard>
-        </AssistiveWrapper>
+        <CardGroup>
+          <Card>
+            <FlexFullHeight>
+              <CardContent>
+                <DetailsWrapper>
+                  <Details>
+                    <Name>電動輪椅</Name>
+                    <Description>輕量化鋁合金金屬設計</Description>
+                  </Details>
+                  <Price>
+                    2,000元
+                    <PriceUnit>/月</PriceUnit>
+                  </Price>
+                </DetailsWrapper>
+                <ImageWrapper>
+                  <Image src="/images/device1.png" alt="電動輪椅" />
+                </ImageWrapper>
+              </CardContent>
+              <Features>
+                <FeatureTitle>輔具特色</FeatureTitle>
+                <FeatureGroup>
+                  <Feature>
+                    {/* <MdCheck size={24} /> */}
+                    {/* // TBD: react-icons 在 styled 內設置 width、height、color 做法可以嗎 */}
+                    <CheckIcon />
+                    支撐性高
+                  </Feature>
+                  <Feature>
+                    <CheckIcon />
+                    輕量化設計
+                  </Feature>
+                  <Feature>
+                    <CheckIcon />
+                    S曲面型坐墊
+                  </Feature>
+                </FeatureGroup>
+              </Features>
+            </FlexFullHeight>
+          </Card>
+          <Card>
+            <FlexFullHeight>
+              <CardContent>
+                <DetailsWrapper>
+                  <Details>
+                    <Name>腋下拐</Name>
+                    <Description>輕量化鋁合金金屬設計</Description>
+                  </Details>
+                  <Price>
+                    1,000元
+                    <PriceUnit>/月</PriceUnit>
+                  </Price>
+                </DetailsWrapper>
+                <ImageWrapper>
+                  <Image src="/images/device2.png" alt="電動輪椅" />
+                </ImageWrapper>
+              </CardContent>
+              <Features>
+                <FeatureTitle>輔具特色</FeatureTitle>
+                <FeatureGroup>
+                  <Feature>
+                    <CheckIcon />
+                    支撐性高
+                  </Feature>
+                  <Feature>
+                    <CheckIcon />
+                    輕量化設計
+                  </Feature>
+                  <Feature>
+                    <CheckIcon />
+                    可調節適合高度
+                  </Feature>
+                </FeatureGroup>
+              </Features>
+            </FlexFullHeight>
+          </Card>
+          <Card>
+            <FlexFullHeight>
+              <CardContent>
+                <DetailsWrapper>
+                  <Details>
+                    <Name>電動輪椅</Name>
+                    <Description>輕量化鋁合金金屬設計</Description>
+                  </Details>
+                  <Price>
+                    2,000元
+                    <PriceUnit>/月</PriceUnit>
+                  </Price>
+                </DetailsWrapper>
+                <ImageWrapper>
+                  <Image src="/images/device3.png" alt="電動輪椅" />
+                </ImageWrapper>
+              </CardContent>
+              <Features>
+                <FeatureTitle>輔具特色</FeatureTitle>
+                <FeatureGroup>
+                  <Feature>
+                    <CheckIcon />
+                    支撐性高
+                  </Feature>
+                  <Feature>
+                    <CheckIcon />
+                    輕量化設計
+                  </Feature>
+                  <Feature>
+                    <CheckIcon />
+                    S曲面型坐墊
+                  </Feature>
+                </FeatureGroup>
+              </Features>
+            </FlexFullHeight>
+          </Card>
+        </CardGroup>
       </Assistive>
-      <InquiryActions>
-        <ShareButton>
+      <FlexAlignCenter>
+        <PrimaryIconButton>
           <MdOutlineShare size={28} />
           分享詢問單
-        </ShareButton>
-      </InquiryActions>
+        </PrimaryIconButton>
+      </FlexAlignCenter>
     </Container>
   );
 };

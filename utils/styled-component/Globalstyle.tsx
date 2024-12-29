@@ -34,6 +34,10 @@ const GlobalStyle = createGlobalStyle`
       border-radius: 0;
     }
 
+    &[type="checkbox"] {
+      cursor: pointer;
+    }
+
     &:-webkit-autofill {
       ${CleanAutofill};
     }

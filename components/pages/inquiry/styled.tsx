@@ -1,10 +1,5 @@
-import { ButtonRadius, CardRadius } from "@/styles/borderRadius";
-import { Mobile, Tablet, Desktop } from "@/styles/container";
-import {
-  ButtonScale,
-  ButtonShadow,
-  ButtonShadowTransition,
-} from "@/styles/effect";
+import { CardRadius } from "@/styles/borderRadius";
+import { Desktop, Mobile, Tablet } from "@/styles/container";
 import { H5, H6 } from "@/styles/typography";
 import styled from "styled-components";
 
@@ -59,7 +54,7 @@ export const InfoLabel = styled.span`
   min-width: 64px;
   font-size: 14px;
   font-weight: 700;
-  color: ${({ theme }) => theme.colors.textprimary};
+  color: ${({ theme }) => theme.colors.textPrimary};
   white-space: nowrap;
   margin-right: 16px;
 `;
@@ -71,11 +66,6 @@ export const InfoValue = styled.span`
   padding: 12px 2px 12px 16px;
 `;
 
-export const InquiryActions = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
 export const Assistive = styled.div`
   padding: 30px 0;
 `;
@@ -83,13 +73,14 @@ export const Assistive = styled.div`
 export const SubTitle = styled.h2`
   font-size: 24px;
   font-weight: 500;
-  color: ${({ theme }) => theme.colors.textprimary};
+  color: ${({ theme }) => theme.colors.textPrimary};
   margin-bottom: 40px;
 `;
 
-export const AssistiveWrapper = styled.div`
+export const CardGroup = styled.div`
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   gap: 24px;
   margin-bottom: 40px;
   @media (${Tablet}) {
@@ -97,23 +88,22 @@ export const AssistiveWrapper = styled.div`
   }
 `;
 
-export const AssistiveDeviceCard = styled.div`
+export const Card = styled.div`
   flex: 0 0 calc((100% - 2 * 24px) / 3);
   text-align: left;
   border: 1px solid transparent;
   background: ${({ theme }) => theme.colors.white};
   ${CardRadius};
   padding: 20px;
-  // TBD: 需要補成 123 的餘數設計
-  &:nth-child(1) {
+  &:nth-child(3n + 1) {
     background: ${({ theme }) => theme.colors.accentLight};
     border-color: ${({ theme }) => theme.colors.accent};
   }
-  &:nth-child(2) {
+  &:nth-child(3n + 2) {
     background: ${({ theme }) => theme.colors.primaryLight};
     border-color: ${({ theme }) => theme.colors.primary};
   }
-  &:nth-child(3) {
+  &:nth-child(3n + 3) {
     background: ${({ theme }) => theme.colors.seccondaryLight};
     border-color: ${({ theme }) => theme.colors.secondary};
   }
@@ -125,11 +115,17 @@ export const AssistiveDeviceCard = styled.div`
   }
 `;
 
-export const Info = styled.div`
+export const FlexFullHeight = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const CardContent = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: stretch;
+  flex-grow: 1;
   margin-bottom: 16px;
   @media (${Tablet}) {
     flex-direction: column;
@@ -139,54 +135,50 @@ export const Info = styled.div`
   }
 `;
 
-export const DeviceInfo = styled.div`
+export const DetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  @media (${Desktop}) {
-    flex-shrink: 0;
-  }
 `;
 
-export const TextWrapper = styled.div`
+export const Details = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-export const DeviceTitle = styled.h3`
+export const Name = styled.h3`
   ${H6};
-  color: ${({ theme }) => theme.colors.textprimary};
+  color: ${({ theme }) => theme.colors.textPrimary};
   margin-bottom: 4px;
 `;
 
-export const DeviceSubtitle = styled.p`
+export const Description = styled.p`
   font-size: 14px;
-  color: ${({ theme }) => theme.colors.textsecondary};
+  color: ${({ theme }) => theme.colors.textSecondary};
 `;
 
 export const Price = styled.p`
   ${H5};
-  color: ${({ theme }) => theme.colors.textprimary};
+  color: ${({ theme }) => theme.colors.textPrimary};
 `;
 
 export const PriceUnit = styled.span`
   font-size: 12px;
-  color: ${({ theme }) => theme.colors.textsecondary};
+  color: ${({ theme }) => theme.colors.textSecondary};
   margin-left: 4px;
 `;
 
 export const ImageWrapper = styled.div`
   font-size: 0;
 `;
-export const DeviceImage = styled.img`
+export const Image = styled.img`
   height: auto;
   width: 100%;
-  max-width: 160px;
-  display: inline-block;
+  min-width: 135px;
   object-fit: contain;
 `;
 
-export const Feature = styled.div`
+export const Features = styled.div`
   border-top: 1px solid ${({ theme }) => theme.colors.textMuted};
   padding: 16px 0;
 `;
@@ -194,11 +186,11 @@ export const Feature = styled.div`
 export const FeatureTitle = styled.h4`
   font-size: 16px;
   font-weight: 500;
-  color: ${({ theme }) => theme.colors.textsecondary};
+  color: ${({ theme }) => theme.colors.textSecondary};
   margin-bottom: 16px;
 `;
 
-export const FeatureList = styled.ul`
+export const FeatureGroup = styled.ul`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -214,37 +206,15 @@ export const FeatureList = styled.ul`
   }
 `;
 
-export const FeatureItem = styled.li`
+export const Feature = styled.li`
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
   font-size: 14px;
   font-weight: 400;
-  color: ${({ theme }) => theme.colors.textsecondary};
+  color: ${({ theme }) => theme.colors.textSecondary};
   @media (${Tablet}) {
     gap: 16px;
-  }
-`;
-
-export const ShareButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 10px 20px;
-  font-size: 18px;
-  font-weight: 500;
-  color: ${({ theme }) => theme.colors.white};
-  background-color: ${({ theme }) => theme.colors.primary};
-  ${ButtonRadius};
-  ${ButtonShadowTransition};
-
-  &:hover {
-    ${ButtonShadow};
-  }
-
-  &:active {
-    transform: ${ButtonScale};
   }
 `;

@@ -4,12 +4,10 @@ import {
   FloatingLabel,
   Label,
   PasswordInputField,
-  TogglePassword,
 } from "./styled";
 import { FormError } from "@/utils/react-hook-form/FormError";
 import { RegisterField } from "../types";
-
-import { IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
+import PasswordButton from "@/components/ui/buttons/PasswordButton";
 
 export type FormFieldProps<T extends FieldValues> = {
   field: RegisterField<T>;
@@ -33,17 +31,10 @@ const FormField = <T extends FieldValues>({
       <FloatingLabelWrapper>
         {field.type === "password" ? (
           <>
-            <TogglePassword
-              role="button"
-              aria-label={showPassword ? "隱藏密碼" : "顯示密碼"}
-              onClick={() => setShowPassword?.(!showPassword)}
-            >
-              {showPassword ? (
-                <IoEyeSharp size={24} />
-              ) : (
-                <IoEyeOffSharp size={24} />
-              )}
-            </TogglePassword>
+            <PasswordButton
+              showPassword={showPassword}
+              setShowPassword={setShowPassword}
+            />
             <PasswordInputField
               type={showPassword ? "text" : "password"}
               placeholder=" "

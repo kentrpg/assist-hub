@@ -11,18 +11,17 @@ import {
   Newsletter,
   SubscriptionField,
   SocialMediaLinks,
-  SubscribeButton,
   Title,
   CategoryLinks,
 } from "./styled";
 import { IconLinkWrapper } from "@/utils/react-icons/iconWrappers";
-import { MdArrowForward } from "react-icons/md";
 import Checkbox from "@/components/ui/Checkbox";
 import { FaFacebookSquare, FaLine } from "react-icons/fa";
 import { useTheme } from "styled-components";
 import { useForm } from "react-hook-form";
 import { ErrorMessage as FormErrorMessage } from "@/utils/react-hook-form/FormError/styled";
 import InputField from "@/utils/react-hook-form/InputField";
+import ForwardButton from "@/components/ui/buttons/ForwardButton";
 
 type NewsletterForm = {
   email: string;
@@ -131,9 +130,7 @@ const Footer: React.FC = () => {
                     },
                   }}
                 />
-                <SubscribeButton type="submit">
-                  <MdArrowForward size={24} fill={theme.colors.textMuted} />
-                </SubscribeButton>
+                <ForwardButton />
                 {errors.email && (
                   <FormErrorMessage>{errors.email.message}</FormErrorMessage>
                 )}

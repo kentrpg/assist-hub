@@ -37,7 +37,7 @@ export const Title = styled.span`
   display: inline-block;
   font-size: 20px;
   font-weight: 700;
-  color: ${({ theme }) => theme.colors.textprimary};
+  color: ${({ theme }) => theme.colors.textPrimary};
   margin-bottom: 16px;
 `;
 
@@ -77,18 +77,6 @@ export const SubscriptionField = styled.div`
   max-width: 260px;
   position: relative;
   margin-bottom: 10px;
-`;
-
-export const SubscribeButton = styled.button`
-  position: absolute;
-  right: 11px;
-  top: 6.5px;
-  background: none;
-
-  svg {
-    vertical-align: top;
-    color: ${({ theme }) => theme.colors.textMuted};
-  }
 `;
 
 export const Copyright = styled.p`

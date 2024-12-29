@@ -2,8 +2,6 @@ import { useState, Fragment } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 import { useRouter } from "next/router";
-import { Container, Title, Form, FooterLinks } from "../Layout/styled";
-import { LineButton, AuthButton } from "@/components/ui/buttons";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import FormField from "@/utils/react-hook-form/FloatingLabel";
 import { RegisterField } from "@/utils/react-hook-form/types";
@@ -14,6 +12,14 @@ import { IconWrapper } from "@/utils/react-icons/iconWrappers";
 import { FaLine } from "react-icons/fa";
 import { useTheme } from "styled-components";
 import Checkbox from "@/components/ui/Checkbox";
+import {
+  Container,
+  Title,
+  Form,
+  FooterLinks,
+  Button,
+  OutlineButton,
+} from "../Layout/styled";
 import { ForgotPasswordLink, Remember } from "./styled";
 
 const Signin: React.FC = () => {
@@ -88,18 +94,18 @@ const Signin: React.FC = () => {
           />
           <ForgotPasswordLink>忘記密碼</ForgotPasswordLink>
         </Remember>
-        <AuthButton
+        <Button
           type="submit"
           disabled={isSubmitting || Object.keys(errors).length !== 0}
         >
           {isSubmitting ? <LoaderSpinner /> : "登入"}
-        </AuthButton>
-        <LineButton>
-          <IconWrapper $size={24} $backgroundColor="white" $borderRadius={4}>
-            <FaLine size={24} fill={theme.colors.lineLogo} />
+        </Button>
+        <OutlineButton type="button">
+          <IconWrapper $size={32} $backgroundColor="white" $borderRadius={4}>
+            <FaLine size={32} fill={theme.colors.lineLogo} />
           </IconWrapper>
           Line 登入
-        </LineButton>
+        </OutlineButton>
         <FooterLinks>
           還沒有帳號嗎？
           <LinkStyle href="/auth/register">立即註冊</LinkStyle>

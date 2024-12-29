@@ -1,3 +1,7 @@
+import {
+  PrimaryButton,
+  OutlineButton as BorderButton,
+} from "@/components/ui/buttons";
 import { Container432 } from "@/styles/container";
 import styled from "styled-components";
 
@@ -27,4 +31,12 @@ export const FooterLinks = styled.div`
     text-decoration: underline;
     text-underline-offset: 3px;
   }
+`;
+
+export const Button = styled(PrimaryButton)`
+  margin-top: 30px;
+`;
+
+export const OutlineButton = styled(BorderButton)`
+  margin-top: 8px;
 `;

@@ -79,18 +79,6 @@ export const SubscriptionField = styled.div`
   margin-bottom: 10px;
 `;
 
-export const SubscribeButton = styled.button`
-  position: absolute;
-  right: 11px;
-  top: 6.5px;
-  background: none;
-
-  svg {
-    vertical-align: top;
-    color: ${({ theme }) => theme.colors.textMuted};
-  }
-`;
-
 export const Copyright = styled.p`
   text-align: right;
   font-size: 12px;

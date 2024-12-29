@@ -7,8 +7,6 @@ import {
   InfoCol,
   InfoLabel,
   InfoValue,
-  ButtonWrapper,
-  ShareButton,
   Assistive,
   CardGroup,
   Card,
@@ -28,19 +26,22 @@ import {
   ImageWrapper,
   FlexFullHeight,
 } from "./styled";
-import { MdOutlineShare } from "react-icons/md";
 import { Container1116 as Container } from "@/styles/container";
 import { CheckIcon } from "@/utils/react-icons/CheckIcon";
-import PageBackButton from "@/components/ui/buttons/PageBackButton";
+import { FlexAlignCenter } from "@/styles/flex";
+import { MdArrowBack, MdOutlineShare } from "react-icons/md";
+import { PageBackButton } from "@/components/ui/circulars";
+import { PrimaryIconButton } from "@/components/ui/buttons";
 
 const InquiryPage = () => {
   return (
     <Container>
       <Header>
-        <PageBackButton />
+        <PageBackButton>
+          <MdArrowBack size={20} />
+        </PageBackButton>
         <Title>詢問單</Title>
       </Header>
-
       <InfoWrapper>
         <InfoContainer>
           <InfoRow>
@@ -182,12 +183,12 @@ const InquiryPage = () => {
           </Card>
         </CardGroup>
       </Assistive>
-      <ButtonWrapper>
-        <ShareButton>
+      <FlexAlignCenter>
+        <PrimaryIconButton>
           <MdOutlineShare size={28} />
           分享詢問單
-        </ShareButton>
-      </ButtonWrapper>
+        </PrimaryIconButton>
+      </FlexAlignCenter>
     </Container>
   );
 };

@@ -1,7 +1,9 @@
 import { ButtonRadius } from "@/styles/borderRadius";
 import { ButtonDisabled, ButtonHoverTransition } from "@/styles/effect";
+import { HstackLayout } from "@/styles/flex";
 import styled, { css } from "styled-components";
 
+// Button size variants for responsive design
 export const buttonSizes = {
   small: css`
     padding: 5.5px 12px;
@@ -17,6 +19,23 @@ export const buttonSizes = {
   `,
 };
 
+// Button gap size variants for responsive design
+export const buttonGapSizes = {
+  small: css`
+    ${buttonSizes.small};
+    gap: 6px;
+  `,
+  medium: css`
+    ${buttonSizes.medium};
+    gap: 8px;
+  `,
+  large: css`
+    ${buttonSizes.large};
+    gap: 12px;
+  `,
+};
+
+// Button color variants extended from BaseButton
 const buttonVariants = {
   primary: css`
     background-color: ${({ theme }) => theme.colors.primary};
@@ -44,7 +63,7 @@ const buttonVariants = {
   `,
   accentSecondary: css`
     background-color: ${({ theme }) => theme.colors.secondary};
-    color: ${({ theme }) => theme.colors.textsecondary};
+    color: ${({ theme }) => theme.colors.textSecondary};
     line-height: 28px;
     &:hover {
       background-color: ${({ theme }) => theme.colors.secondaryHover};
@@ -58,7 +77,6 @@ const BaseButton = styled.button`
   ${ButtonRadius};
   ${buttonSizes.large};
   font-weight: 500;
-  line-height: 1.5;
   ${ButtonHoverTransition};
 
   &:hover {
@@ -70,29 +88,14 @@ const BaseButton = styled.button`
   }
 `;
 
-export const OutlineButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background-color: ${({ theme }) => theme.colors.white};
+export const OutlineButton = styled(BaseButton)`
+  ${HstackLayout};
   outline: 1px solid ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.textsecondary};
-  ${ButtonRadius};
-  ${buttonSizes.large};
-  font-weight: 500;
-  ${ButtonHoverTransition};
+  color: ${({ theme }) => theme.colors.textSecondary};
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.primaryLight};
   }
-`;
-
-const IconButton = styled(BaseButton)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
 `;
 
 export const CtaButton = styled(BaseButton)`
@@ -107,7 +110,8 @@ export const PrimaryButton = styled(BaseButton)`
   ${buttonVariants.primary};
 `;
 
-export const PrimaryIconButton = styled(IconButton)`
+export const PrimaryIconButton = styled(BaseButton)`
+  ${HstackLayout}
   ${buttonVariants.primary};
 `;
 
@@ -115,7 +119,8 @@ export const SecondaryButton = styled(BaseButton)`
   ${buttonVariants.secondary};
 `;
 
-export const SecondaryIconButton = styled(IconButton)`
+export const SecondaryIconButton = styled(BaseButton)`
+  ${HstackLayout}
   ${buttonVariants.secondary};
 `;
 
@@ -123,6 +128,7 @@ export const AccentButton = styled(BaseButton)`
   ${buttonVariants.accent};
 `;
 
-export const AccentIconButton = styled(IconButton)`
+export const AccentIconButton = styled(BaseButton)`
+  ${HstackLayout}
   ${buttonVariants.accent};
 `;

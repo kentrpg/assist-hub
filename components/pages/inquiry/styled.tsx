@@ -1,10 +1,5 @@
-import { ButtonRadius, CardRadius } from "@/styles/borderRadius";
+import { CardRadius } from "@/styles/borderRadius";
 import { Desktop, Mobile, Tablet } from "@/styles/container";
-import {
-  ButtonScale,
-  ButtonShadow,
-  ButtonShadowTransition,
-} from "@/styles/effect";
 import { H5, H6 } from "@/styles/typography";
 import styled from "styled-components";
 
@@ -59,7 +54,7 @@ export const InfoLabel = styled.span`
   min-width: 64px;
   font-size: 14px;
   font-weight: 700;
-  color: ${({ theme }) => theme.colors.textprimary};
+  color: ${({ theme }) => theme.colors.textPrimary};
   white-space: nowrap;
   margin-right: 16px;
 `;
@@ -71,11 +66,6 @@ export const InfoValue = styled.span`
   padding: 12px 2px 12px 16px;
 `;
 
-export const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
 export const Assistive = styled.div`
   padding: 30px 0;
 `;
@@ -83,7 +73,7 @@ export const Assistive = styled.div`
 export const SubTitle = styled.h2`
   font-size: 24px;
   font-weight: 500;
-  color: ${({ theme }) => theme.colors.textprimary};
+  color: ${({ theme }) => theme.colors.textPrimary};
   margin-bottom: 40px;
 `;
 
@@ -149,9 +139,6 @@ export const DetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* @media (${Desktop}) {
-    flex-shrink: 0;
-  } */
 `;
 
 export const Details = styled.div`
@@ -161,23 +148,23 @@ export const Details = styled.div`
 
 export const Name = styled.h3`
   ${H6};
-  color: ${({ theme }) => theme.colors.textprimary};
+  color: ${({ theme }) => theme.colors.textPrimary};
   margin-bottom: 4px;
 `;
 
 export const Description = styled.p`
   font-size: 14px;
-  color: ${({ theme }) => theme.colors.textsecondary};
+  color: ${({ theme }) => theme.colors.textSecondary};
 `;
 
 export const Price = styled.p`
   ${H5};
-  color: ${({ theme }) => theme.colors.textprimary};
+  color: ${({ theme }) => theme.colors.textPrimary};
 `;
 
 export const PriceUnit = styled.span`
   font-size: 12px;
-  color: ${({ theme }) => theme.colors.textsecondary};
+  color: ${({ theme }) => theme.colors.textSecondary};
   margin-left: 4px;
 `;
 
@@ -199,7 +186,7 @@ export const Features = styled.div`
 export const FeatureTitle = styled.h4`
   font-size: 16px;
   font-weight: 500;
-  color: ${({ theme }) => theme.colors.textsecondary};
+  color: ${({ theme }) => theme.colors.textSecondary};
   margin-bottom: 16px;
 `;
 
@@ -226,30 +213,8 @@ export const Feature = styled.li`
   gap: 6px;
   font-size: 14px;
   font-weight: 400;
-  color: ${({ theme }) => theme.colors.textsecondary};
+  color: ${({ theme }) => theme.colors.textSecondary};
   @media (${Tablet}) {
     gap: 16px;
-  }
-`;
-
-export const ShareButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 10px 20px;
-  font-size: 18px;
-  font-weight: 500;
-  color: ${({ theme }) => theme.colors.white};
-  background-color: ${({ theme }) => theme.colors.primary};
-  ${ButtonRadius};
-  ${ButtonShadowTransition};
-
-  &:hover {
-    ${ButtonShadow};
-  }
-
-  &:active {
-    ${ButtonScale};
   }
 `;

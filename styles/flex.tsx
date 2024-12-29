@@ -1,15 +1,26 @@
 import styled, { css } from "styled-components";
 
-const flexBase = css`
-  display: flex;
-`;
-
 export const FlexAlignCenter = styled.div`
-  ${flexBase};
+  display: flex;
   justify-content: center;
 `;
 
 export const FlexAlignEnd = styled.div`
-  ${flexBase};
+  display: flex;
   justify-content: end;
+`;
+
+export const HstackLayout = css`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+`;
+
+export const VstackLayout = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;

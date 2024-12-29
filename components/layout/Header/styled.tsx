@@ -40,7 +40,7 @@ export const Logo = styled.img`
 
 export const Name = styled.span`
   font-size: 16px;
-  color: ${({ theme }) => theme.colors.textprimary};
+  color: ${({ theme }) => theme.colors.textPrimary};
   margin-right: 30px;
 `;
 
@@ -53,7 +53,7 @@ export const NavLinks = styled.div`
 export const NavLink = styled(Link)`
   font-size: 16px;
   text-decoration: none;
-  color: ${({ theme }) => theme.colors.textprimary};
+  color: ${({ theme }) => theme.colors.textPrimary};
   transition: color 0.2s;
 
   &:hover {

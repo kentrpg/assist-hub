@@ -43,7 +43,7 @@ const Address: FC<FormHooks> = ({ register }) => {
             {...register("address")}
           />
           <IconWrapper>
-            <MdLocalShipping size={24} />
+            <MdLocalShipping size={24} color="#103F99" />
           </IconWrapper>
         </Located>
       </AddressDetails>

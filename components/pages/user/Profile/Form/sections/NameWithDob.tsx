@@ -22,7 +22,7 @@ const NameWithDob: React.FC<FormHooks> = ({ register, errors }) => (
         {...register("name", { required: "請輸入姓名" })}
       />
       <IconWrapper>
-        <MdPerson size={24} />
+        <MdPerson size={24} color="#103F99" />
       </IconWrapper>
       {errors?.name && <Error>{errors.name.message}</Error>}
     </NameField>

@@ -1,11 +1,14 @@
 import styled from "styled-components";
 
 export const InquiryContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   flex: 1;
   padding: 48px;
   border-radius: 10px;
-  outline: 1px #888888 solid;
+  border: 1px solid #888888;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+  row-gap: 24px;
 `;
 
 export const Title = styled.h5`
@@ -13,55 +16,30 @@ export const Title = styled.h5`
   color: #08204d;
   border-left: 5px #103f99 solid;
   padding: 0px 14px;
-  margin-bottom: 24px;
 `;
 
-export const Table = styled.table`
-  display: flex;
-  flex-direction: column;
+export const GridContainer = styled.div`
+  display: grid;
+  grid-template-rows: auto auto;
+  border: 1px solid #888888;
   border-radius: 5px;
-  outline: 1px #888888 solid;
+  overflow: hidden;
 `;
 
-export const Thead = styled.thead`
+export const HeaderRow = styled.div`
+  display: grid;
+  gap: 16px;
+  font-size: 12px;
+  white-space: nowrap;
+  grid-template-columns:
+    minmax(60px, 1fr) minmax(250px, 3fr) minmax(80px, 1fr)
+    minmax(60px, 1fr) minmax(60px, 1fr) minmax(60px, 1fr);
   background-color: #e7ecf5;
   padding: 10px 25px;
-  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
   color: #08204d;
-  box-shadow: 0px 1px 0px 0px #888888; /* 下方線條 */
+  border-bottom: 1px solid #888888;
 `;
 
-export const Tr = styled.tr`
-  display: flex;
-  column-gap: 16px;
-`;
-
-export const IdHeader = styled.th`
-  max-width: 126px;
-  width: 100%;
-`;
-
-export const ProductHeader = styled.th`
-  max-width: 290px;
-  width: 100%;
-`;
-
-export const CreatedHeader = styled.th`
-  max-width: 90px;
-  width: 100%;
-`;
-
-export const StatusHeader = styled.th`
-  max-width: 90px;
-  width: 100%;
-`;
-
-export const InquiryHeader = styled.th`
-  max-width: 90px;
-  width: 100%;
-`;
-
-export const SuggestHeader = styled.th`
-  max-width: 90px;
-  width: 100%;
-`;
+export const Grid = styled.div``;

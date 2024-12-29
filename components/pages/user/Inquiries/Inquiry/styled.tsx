@@ -4,79 +4,56 @@ type StatusProps = {
   $isSuggest?: boolean;
 };
 
-export const Tbody = styled.tbody`
-  padding: 24px 25px;
-  position: relative;
-
-  &::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 1px;
-    background-color: #e9e5de;
-  }
-  &:last-of-type::after {
-    content: none;
+export const ContentRow = styled.div`
+  display: grid;
+  gap: 16px;
+  font-size: 14px;
+  font-weight: 400;
+  white-space: nowrap;
+  grid-template-columns:
+    minmax(60px, 1fr) minmax(250px, 3fr) minmax(80px, 1fr)
+    minmax(60px, 1fr) minmax(60px, 1fr) minmax(60px, 1fr);
+  align-items: center;
+  text-align: center;
+  padding: 10px 25px;
+  border-bottom: 1px solid #e9e5de;
+  &:last-of-type {
+    border-bottom: none;
   }
 `;
 
-export const Icon = styled.td`
+export const Grid = styled.div<StatusProps>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: ${({ $isSuggest }) =>
+    $isSuggest === undefined ? "400" : $isSuggest ? "400" : "700"};
+  color: ${({ $isSuggest }) =>
+    $isSuggest === undefined ? "#000000" : $isSuggest ? "#2ECC71" : "#E74C3C"};
+`;
+
+export const ProductImages = styled.div`
   display: flex;
   align-items: center;
+  gap: 12px;
+  img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+`;
+
+export const Icon = styled.button`
+  display: flex;
   justify-content: center;
+  align-items: center;
+  background-color: #103f99;
   width: 30px;
   height: 30px;
-  background-color: #103f99;
   border-radius: 50%;
-`;
-
-export const Tr = styled.tr`
-  display: flex;
-  column-gap: 16px;
-`;
-
-export const Id = styled.td`
-  max-width: 126px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const Products = styled.td`
-  max-width: 290px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  column-gap: 25px;
-`;
-
-export const Creatd = styled.td`
-  max-width: 90px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const Status = styled.td<StatusProps>`
-  white-space: nowrap;
-  font-size: 14px;
-  font-weight: 700;
-  max-width: 90px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: ${({ $isSuggest }) => ($isSuggest ? "#2ECC71" : "#E74C3C")};
-`;
-
-export const Link = styled.td`
-  max-width: 90px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  cursor: pointer;
+  &:hover {
+    background-color: #0d2d73;
+  }
 `;

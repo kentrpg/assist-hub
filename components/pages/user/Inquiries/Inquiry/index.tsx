@@ -1,41 +1,38 @@
 import React from "react";
-import { Tbody, Tr, Id, Products, Creatd, Status, Link, Icon } from "./styled";
-import { MdFileOpen } from "react-icons/md";
+import { ProductImages, ContentRow, Icon, Grid } from "./styled";
 import { InquiryData } from "../data";
+import { MdFileOpen } from "react-icons/md";
 
 type InquiryRowProps = {
   inquiry: InquiryData;
 };
 
 const Inquiry: React.FC<InquiryRowProps> = ({ inquiry }) => {
+  const { id, products, createdDate, isSuggest, status } = inquiry;
+
   return (
-    <Tbody>
-      <Tr>
-        <Id>{inquiry.id}</Id>
-        <Products>
-          {inquiry.products.map((product, index) => (
-            <img
-              key={index}
-              width={80}
-              height={80}
-              className="InquiryItemImage"
-              src={product}
-              alt={`Product ${index + 1}`}
-            />
+    <ContentRow key={id}>
+      <Grid>{id}</Grid>
+      <Grid>
+        <ProductImages>
+          {products.map((product, index) => (
+            <img key={index} src={product} alt={`Product ${index + 1}`} />
           ))}
-        </Products>
-        <Creatd>{inquiry.createdDate}</Creatd>
-        <Status $isSuggest={inquiry.isSuggest}>
-          <span>{inquiry.status}</span>
-        </Status>
+        </ProductImages>
+      </Grid>
+      <Grid>{createdDate}</Grid>
+      <Grid $isSuggest={isSuggest}>{status}</Grid>
+      <Grid>
         <Icon>
-          <MdFileOpen size={20} color="white" />
+          <MdFileOpen size={20} color="#FFFFFF" />
         </Icon>
+      </Grid>
+      <Grid>
         <Icon>
-          <MdFileOpen size={20} color="white" />
+          <MdFileOpen size={20} color="#FFFFFF" />
         </Icon>
-      </Tr>
-    </Tbody>
+      </Grid>
+    </ContentRow>
   );
 };
 

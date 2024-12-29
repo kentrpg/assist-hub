@@ -2,8 +2,8 @@ export type InquiryData = {
   id: string;
   products: string[];
   createdDate: string;
-  status: string;
   isSuggest: boolean;
+  status: string;
 };
 
 export const inquiries: InquiryData[] = [
@@ -15,8 +15,8 @@ export const inquiries: InquiryData[] = [
       "https://shoplineimg.com/5aa0e7330e64fed450000634/5e9530a47692440039880802/800x.jpg?",
     ],
     createdDate: "2024/10/04",
-    status: "店家已評估",
     isSuggest: true,
+    status: "已回覆",
   },
   {
     id: "KDO694",
@@ -26,8 +26,8 @@ export const inquiries: InquiryData[] = [
       "https://shoplineimg.com/5aa0e7330e64fed450000634/5e9530a47692440039880802/800x.jpg?",
     ],
     createdDate: "2024/10/04",
-    status: "店家評估中",
     isSuggest: false,
+    status: "未回覆",
   },
   {
     id: "NKD836",
@@ -37,7 +37,7 @@ export const inquiries: InquiryData[] = [
       "https://shoplineimg.com/5aa0e7330e64fed450000634/5e9530a47692440039880802/800x.jpg?",
     ],
     createdDate: "2024/10/04",
-    status: "店家評估中",
     isSuggest: false,
+    status: "未回覆",
   },
 ];

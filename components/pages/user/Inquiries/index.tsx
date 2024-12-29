@@ -2,38 +2,35 @@ import React from "react";
 import {
   InquiryContainer,
   Title,
-  Table,
-  Thead,
-  Tr,
-  IdHeader,
-  ProductHeader,
-  CreatedHeader,
-  StatusHeader,
-  InquiryHeader,
-  SuggestHeader,
+  GridContainer,
+  HeaderRow,
+  Grid,
 } from "./styled";
-import { inquiries } from "./data";
 import Inquiry from "./Inquiry";
+import { inquiries } from "./data";
+import Empty from "./Empty";
 
 const Inquiries: React.FC = () => {
   return (
     <InquiryContainer>
       <Title>詢問單</Title>
-      <Table>
-        <Thead>
-          <Tr>
-            <IdHeader>單號</IdHeader>
-            <ProductHeader>詢問輔具</ProductHeader>
-            <CreatedHeader>建立日期</CreatedHeader>
-            <StatusHeader>狀態</StatusHeader>
-            <InquiryHeader>詢問單</InquiryHeader>
-            <SuggestHeader>建議單</SuggestHeader>
-          </Tr>
-        </Thead>
-        {inquiries.map((inquiry) => (
-          <Inquiry key={inquiry.id} inquiry={inquiry} />
-        ))}
-      </Table>
+      {inquiries.length === 0 ? (
+        <Empty />
+      ) : (
+        <GridContainer>
+          <HeaderRow>
+            <Grid>單號</Grid>
+            <Grid>詢問的輔具</Grid>
+            <Grid>建立日期</Grid>
+            <Grid>詢問狀態</Grid>
+            <Grid>詢問單</Grid>
+            <Grid>建議單</Grid>
+          </HeaderRow>
+          {inquiries.map((inquiry) => (
+            <Inquiry key={inquiry.id} inquiry={inquiry} />
+          ))}
+        </GridContainer>
+      )}
     </InquiryContainer>
   );
 };

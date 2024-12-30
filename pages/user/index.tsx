@@ -1,7 +1,14 @@
-import UserPageLayout from "@/components/pages/user/UserPageLayout";
+import { GetServerSideProps } from "next";
 
-const User = () => {
-  return <UserPageLayout initialTab="profile" />;
+export const getServerSideProps: GetServerSideProps = async () => {
+  return {
+    redirect: {
+      destination: "/user/profile",
+      permanent: false,
+    },
+  };
 };
+
+const User = () => null;
 
 export default User;

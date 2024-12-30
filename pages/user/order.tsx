@@ -1,7 +1,7 @@
 import UserPageLayout from "@/components/pages/user/UserPageLayout";
 
-const PurChase = () => {
+const Order = () => {
   return <UserPageLayout initialTab="order" />;
 };
 
-export default PurChase;
+export default Order;

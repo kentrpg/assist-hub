@@ -6,7 +6,7 @@ export const colors = {
   textPrimary: "#08204D",
   secondary: "#FFC123",
   secondaryHover: "#B28F12",
-  seccondaryLight: "#FFF3D3",
+  secondaryLight: "#FFF3D3",
   secondaryBg: "#F9F8F6",
   accent: "#EC6340",
   accentHover: "#A5452D",

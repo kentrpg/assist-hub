@@ -101,8 +101,8 @@ const Signin: React.FC = () => {
           {isSubmitting ? <LoaderSpinner /> : "登入"}
         </Button>
         <OutlineButton type="button">
-          <IconWrapper $size={32} $backgroundColor="white" $borderRadius={4}>
-            <FaLine size={32} fill={theme.colors.lineLogo} />
+          <IconWrapper $size={31} $backgroundColor="white" $borderRadius={5}>
+            <FaLine size={31} fill={theme.colors.lineLogo} />
           </IconWrapper>
           Line 登入
         </OutlineButton>

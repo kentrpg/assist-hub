@@ -11,7 +11,6 @@ import {
   SearchButton,
   AccountButton,
   Logo,
-  LogoWrapperDesktop,
   NavLink,
   NavLinks,
   ButtonText,
@@ -26,6 +25,7 @@ import { OutlineButton } from "@/components/ui/buttons";
 import { useState } from "react";
 import { useBreakpoint } from "@/hooks/useBreakpoint";
 import { breakpoints } from "@/styles/container";
+import { ImageLink as LogoWrapperDesktop } from "@/components/ui/images";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);

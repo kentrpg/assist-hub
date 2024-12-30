@@ -1,35 +1,29 @@
-import type { ColorsType } from "@/types/uiProps";
 import {
-  CardWrapper,
+  Card,
   Number,
   Title,
   Description,
   Image,
-  ImageWrapper,
   Divider,
   NumberGroup,
 } from "./styled";
 import { useBreakpoint } from "@/hooks/useBreakpoint";
 import { breakpoints } from "@/styles/container";
-
-export type InquiryStepCardProps = {
-  step: "01" | "02" | "03";
-  title: string;
-  imgSrc: string;
-  $bgColor: ColorsType;
-};
+import type { InquiryStepCardProps } from "@/components/pages/inquiry/data";
+import { ImageWrapper } from "@/components/ui/images";
 
 const InquiryStepCard: React.FC<InquiryStepCardProps> = ({
   step,
   title,
   imgSrc,
-  $bgColor,
+  $color,
 }) => {
   const isTablet = useBreakpoint(breakpoints.sm);
 
   return (
-    <CardWrapper $bgColor={$bgColor}>
+    <Card $color={$color}>
       <Description>
+        {/* TBD: 待確認使用條件渲染替代 css display: none 是否合適 */}
         {isTablet && (
           <NumberGroup>
             <Number>{step}</Number>
@@ -39,9 +33,9 @@ const InquiryStepCard: React.FC<InquiryStepCardProps> = ({
         <Title>{title}</Title>
       </Description>
       <ImageWrapper>
-        <Image src={imgSrc} alt={`Step ${step}`} />
+        <Image src={`/images/${imgSrc}`} alt={`Step ${step}`} />
       </ImageWrapper>
-    </CardWrapper>
+    </Card>
   );
 };
 

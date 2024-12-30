@@ -1,14 +1,14 @@
 import { ButtonRadius } from "@/styles/borderRadius";
 import { Desktop, Mobile, Tablet } from "@/styles/container";
 import { H1, H2, H3, H4, H5, H6 } from "@/styles/typography";
-import type { ColorsType } from "@/types/uiProps";
+import type { Color } from "@/types/uiProps";
 import styled from "styled-components";
 
-export const CardWrapper = styled.div<{ $bgColor: ColorsType }>`
+export const Card = styled.div<Color>`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme, $bgColor }) => theme.colors[$bgColor]};
+  background-color: ${({ theme, $color }) => theme.colors[$color]};
   ${ButtonRadius};
   padding: 12px 26px;
 
@@ -26,6 +26,7 @@ export const CardWrapper = styled.div<{ $bgColor: ColorsType }>`
 `;
 
 export const NumberGroup = styled.div`
+  /* TBD: 待確認 NumberGroup 條件渲染 */
   /* display: none; */
   /* @media (${Mobile}) {
     display: flex;
@@ -89,15 +90,11 @@ export const Image = styled.img`
 
   @media (${Mobile}) {
     max-width: 200px;
-    max-height: inherit;
+    max-height: 250px;
   }
   @media (${Tablet}) {
     max-width: 100%;
     height: 100%;
     width: auto;
   }
-`;
-
-export const ImageWrapper = styled.div`
-  font-size: 0;
 `;

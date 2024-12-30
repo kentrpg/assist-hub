@@ -2,7 +2,7 @@ import { Container912 as Container } from "@/styles/container";
 import { InquiryStep, Title, TitleDescription, TitleGroup } from "./styled";
 import { AccentButton } from "@/components/ui/buttons";
 import { FlexAlignCenter } from "@/styles/flex";
-import { steps } from "./data";
+import { inquiryStepCards } from "./data";
 import InquiryStepCard from "@/components/ui/cards/InquiryStepCard";
 
 const NotFound = () => {
@@ -13,14 +13,14 @@ const NotFound = () => {
         <TitleDescription>建立詢問單，我們幫您搞定！</TitleDescription>
       </TitleGroup>
       <InquiryStep>
-        {steps.map(({ step, title, imgSrc, $bgColor }) => (
+        {inquiryStepCards.map(({ step, title, imgSrc, $color }) => (
           // TBD: 問題 key 需要加入 prop type 避免沒有填入 key 嗎？
           <InquiryStepCard
             key={step}
             step={step}
             title={title}
             imgSrc={imgSrc}
-            $bgColor={$bgColor}
+            $color={$color}
           />
         ))}
       </InquiryStep>

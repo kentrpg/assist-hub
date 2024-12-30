@@ -8,6 +8,10 @@ export type ColorsType = keyof typeof colors;
 
 // styled component prop
 
+export type Color = {
+  $color: ColorsType;
+}
+
 export type Gap = {
   $gap: number;
 };

@@ -40,7 +40,6 @@ const buttonVariants = {
   primary: css`
     background-color: ${({ theme }) => theme.colors.primary};
     color: ${({ theme }) => theme.colors.white};
-    line-height: 28px;
     &:hover {
       background-color: ${({ theme }) => theme.colors.primaryHover};
     }
@@ -48,7 +47,6 @@ const buttonVariants = {
   secondary: css`
     background-color: ${({ theme }) => theme.colors.secondary};
     color: ${({ theme }) => theme.colors.white};
-    line-height: 28px;
     &:hover {
       background-color: ${({ theme }) => theme.colors.secondaryHover};
     }
@@ -56,7 +54,6 @@ const buttonVariants = {
   accent: css`
     background-color: ${({ theme }) => theme.colors.accent};
     color: ${({ theme }) => theme.colors.white};
-    line-height: 28px;
     &:hover {
       background-color: ${({ theme }) => theme.colors.accentHover};
     }
@@ -64,7 +61,6 @@ const buttonVariants = {
   accentSecondary: css`
     background-color: ${({ theme }) => theme.colors.secondary};
     color: ${({ theme }) => theme.colors.textSecondary};
-    line-height: 28px;
     &:hover {
       background-color: ${({ theme }) => theme.colors.secondaryHover};
     }

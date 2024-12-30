@@ -9,29 +9,16 @@ import {
   InfoValue,
   Assistive,
   CardGroup,
-  Card,
-  Image,
-  Price,
-  Description,
-  Name,
-  Features,
-  Feature,
-  FeatureGroup,
-  PriceUnit,
-  DetailsWrapper,
-  FeatureTitle,
-  CardContent,
-  Details,
   InfoWrapper,
-  ImageWrapper,
-  FlexFullHeight,
 } from "./styled";
 import { Container1116 as Container } from "@/styles/container";
-import { CheckIcon } from "@/utils/react-icons/CheckIcon";
 import { FlexAlignCenter } from "@/styles/flex";
 import { MdArrowBack, MdOutlineShare } from "react-icons/md";
 import { PageBackButton } from "@/components/ui/circulars";
 import { PrimaryIconButton } from "@/components/ui/buttons";
+
+import { inquiryCardColors, inquiryCards } from "./data";
+import InquiryCard from "@/components/ui/cards/InquiryCard";
 
 const Inquiry = () => {
   return (
@@ -71,121 +58,24 @@ const Inquiry = () => {
       <Assistive>
         <SubTitle>您選擇的詢問輔具</SubTitle>
         <CardGroup>
-          <Card>
-            <FlexFullHeight>
-              <CardContent>
-                <DetailsWrapper>
-                  <Details>
-                    <Name>電動輪椅</Name>
-                    <Description>輕量化鋁合金金屬設計</Description>
-                  </Details>
-                  <Price>
-                    2,000元
-                    <PriceUnit>/月</PriceUnit>
-                  </Price>
-                </DetailsWrapper>
-                <ImageWrapper>
-                  <Image src="/images/device1.png" alt="電動輪椅" />
-                </ImageWrapper>
-              </CardContent>
-              <Features>
-                <FeatureTitle>輔具特色</FeatureTitle>
-                <FeatureGroup>
-                  <Feature>
-                    {/* <MdCheck size={24} /> */}
-                    {/* // TBD: react-icons 在 styled 內設置 width、height、color 做法可以嗎 */}
-                    <CheckIcon />
-                    支撐性高
-                  </Feature>
-                  <Feature>
-                    <CheckIcon />
-                    輕量化設計
-                  </Feature>
-                  <Feature>
-                    <CheckIcon />
-                    S曲面型坐墊
-                  </Feature>
-                </FeatureGroup>
-              </Features>
-            </FlexFullHeight>
-          </Card>
-          <Card>
-            <FlexFullHeight>
-              <CardContent>
-                <DetailsWrapper>
-                  <Details>
-                    <Name>腋下拐</Name>
-                    <Description>輕量化鋁合金金屬設計</Description>
-                  </Details>
-                  <Price>
-                    1,000元
-                    <PriceUnit>/月</PriceUnit>
-                  </Price>
-                </DetailsWrapper>
-                <ImageWrapper>
-                  <Image src="/images/device2.png" alt="電動輪椅" />
-                </ImageWrapper>
-              </CardContent>
-              <Features>
-                <FeatureTitle>輔具特色</FeatureTitle>
-                <FeatureGroup>
-                  <Feature>
-                    <CheckIcon />
-                    支撐性高
-                  </Feature>
-                  <Feature>
-                    <CheckIcon />
-                    輕量化設計
-                  </Feature>
-                  <Feature>
-                    <CheckIcon />
-                    可調節適合高度
-                  </Feature>
-                </FeatureGroup>
-              </Features>
-            </FlexFullHeight>
-          </Card>
-          <Card>
-            <FlexFullHeight>
-              <CardContent>
-                <DetailsWrapper>
-                  <Details>
-                    <Name>電動輪椅</Name>
-                    <Description>輕量化鋁合金金屬設計</Description>
-                  </Details>
-                  <Price>
-                    2,000元
-                    <PriceUnit>/月</PriceUnit>
-                  </Price>
-                </DetailsWrapper>
-                <ImageWrapper>
-                  <Image src="/images/device3.png" alt="電動輪椅" />
-                </ImageWrapper>
-              </CardContent>
-              <Features>
-                <FeatureTitle>輔具特色</FeatureTitle>
-                <FeatureGroup>
-                  <Feature>
-                    <CheckIcon />
-                    支撐性高
-                  </Feature>
-                  <Feature>
-                    <CheckIcon />
-                    輕量化設計
-                  </Feature>
-                  <Feature>
-                    <CheckIcon />
-                    S曲面型坐墊
-                  </Feature>
-                </FeatureGroup>
-              </Features>
-            </FlexFullHeight>
-          </Card>
+          {inquiryCards.map(
+            ({ id, name, description, price, imgSrc, features }, index) => (
+              <InquiryCard
+                id={id}
+                color={inquiryCardColors[index]}
+                price={price}
+                imgSrc={`/images/${imgSrc}`}
+                name={name}
+                description={description}
+                features={features}
+              ></InquiryCard>
+            )
+          )}
         </CardGroup>
       </Assistive>
       <FlexAlignCenter>
         <PrimaryIconButton>
-          <MdOutlineShare size={28} />
+          <MdOutlineShare size={27} />
           分享詢問單
         </PrimaryIconButton>
       </FlexAlignCenter>

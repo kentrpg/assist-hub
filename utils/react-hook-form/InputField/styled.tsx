@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ColorsType, FontSize, Padding } from "@/types/uiProps";
+import { ColorsType, FontSize, Padding, Color } from "@/types/uiProps";
 import {
   InputFieldCleanAutofill,
   InputFieldShadow,
@@ -8,8 +8,8 @@ import {
 import { InputRadius } from "@/styles/borderRadius";
 
 type InputFieldProps = FontSize &
-  Padding & {
-    $color: ColorsType;
+  Padding &
+  Color & {
     $borderColor: ColorsType;
     $backgroundColor: ColorsType;
   };

@@ -53,10 +53,6 @@ export const Navbar = styled.nav<{ $menuOpen: boolean }>`
   }
 `;
 
-export const LogoWrapperDesktop = styled(Link)`
-  font-size: 0;
-`;
-
 export const LogoWrapperMobile = styled.div`
   font-size: 0;
   display: block;

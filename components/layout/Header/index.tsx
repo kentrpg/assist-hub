@@ -25,10 +25,11 @@ import { signOut } from "@/utils/api/auth/signout";
 import { OutlineButton } from "@/components/ui/buttons";
 import { useState } from "react";
 import { useBreakpoint } from "@/hooks/useBreakpoint";
+import { breakpoints } from "@/styles/container";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const isTablet = useBreakpoint(768);
+  const isTablet = useBreakpoint(breakpoints.md);
 
   const toggleMenu = () => {
     setMenuOpen((prevState) => !prevState);
@@ -93,7 +94,7 @@ const Header = () => {
         </LogoWrapperMobile> */}
         <Navbar $menuOpen={menuOpen}>
           {isTablet && (
-            <LogoWrapperDesktop>
+            <LogoWrapperDesktop href="/">
               <Logo
                 src="/images/logo.png"
                 alt="輔具租賃網"

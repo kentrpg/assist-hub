@@ -53,7 +53,7 @@ export const Navbar = styled.nav<{ $menuOpen: boolean }>`
   }
 `;
 
-export const LogoWrapperDesktop = styled.div`
+export const LogoWrapperDesktop = styled(Link)`
   font-size: 0;
 `;
 

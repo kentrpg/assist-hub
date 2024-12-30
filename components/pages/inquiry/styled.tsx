@@ -10,6 +10,7 @@ export const Header = styled.header`
 
 export const Title = styled.h1`
   text-align: center;
+  color: ${({ theme }) => theme.colors.textPrimary};
 `;
 
 export const InfoWrapper = styled.div`
@@ -139,6 +140,7 @@ export const DetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  flex-grow: 1;
 `;
 
 export const Details = styled.div`
@@ -216,5 +218,28 @@ export const Feature = styled.li`
   color: ${({ theme }) => theme.colors.textSecondary};
   @media (${Tablet}) {
     gap: 16px;
+  }
+`;
+
+// for not-found page
+export const TitleGroup = styled.div`
+  text-align: center;
+  padding: 20px 0 12px;
+`;
+
+export const TitleDescription = styled.p`
+  font-size: 18px;
+  margin-top: 12px;
+`;
+
+export const InquiryStep = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  gap: 16px;
+  padding: 30px 0;
+
+  @media (${Mobile}) {
+    padding: 60px 0;
   }
 `;

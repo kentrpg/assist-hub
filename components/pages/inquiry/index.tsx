@@ -33,7 +33,7 @@ import { MdArrowBack, MdOutlineShare } from "react-icons/md";
 import { PageBackButton } from "@/components/ui/circulars";
 import { PrimaryIconButton } from "@/components/ui/buttons";
 
-const InquiryPage = () => {
+const Inquiry = () => {
   return (
     <Container>
       <Header>
@@ -193,4 +193,4 @@ const InquiryPage = () => {
   );
 };
 
-export default InquiryPage;
+export default Inquiry;

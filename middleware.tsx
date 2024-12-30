@@ -10,6 +10,36 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   console.log(pathname);
 
+  if (pathname.startsWith("/inquiry")) {
+    const token = request.cookies.get("token");
+    console.log(token);
+    if (!token) {
+      return NextResponse.redirect(new URL("/inquiry404", request.url));
+    }
+
+    try {
+      console.log(token.value);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL_5XCAMP}/check`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: token.value,
+          },
+        }
+      );
+
+      if (response.status !== 200) {
+        return NextResponse.redirect(new URL("/inquiry404", request.url));
+      }
+
+      return NextResponse.next();
+    } catch (error) {
+      console.log(error);
+      return NextResponse.redirect(new URL("/inquiry404", request.url));
+    }
+  }
+
   if (pathname.startsWith("/user")) {
     const token = request.cookies.get("token");
     console.log(token);
@@ -43,5 +73,6 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
+  // matcher: ["/user", "/inquiry"],
   matcher: ["/user"],
 };

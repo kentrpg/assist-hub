@@ -80,6 +80,35 @@ export const inquiryCards: BaseInquiryCard[] = [
   }
 ];
 
+// for inquiryInfo section
+export type InquiryInfoProps = {
+  orderId: string;
+  createdDate: string;
+  actionAssessment: string;
+  additionalDescription: string;
+};
+
+export const inquiryInfoMapping: InquiryInfoProps = {
+  "orderId": "單號",
+  "createdDate": "建立日期",
+  "actionAssessment": "行動評估",
+  "additionalDescription": "補充說明"
+}
+
+export const inquiryInfo: InquiryInfoProps = {
+  "orderId": "AKC833",
+  "createdDate": "2024/10/04",
+  "actionAssessment": "具平地跑跳能力",
+  "additionalDescription": "騎機車不慎摔傷，有撞到腳踝，有時候走路會痛。" 
+};
+
+export type InquiryDetailProps = {
+  data: InquiryInfoProps;
+  mapping: Record<keyof InquiryInfoProps, string>;
+};
+
+// for InquiryStep page
+
 export type InquiryStepCardProps = {
   step: "01" | "02" | "03";
   title: string;

@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import Link from "next/link";
+import { Mobile, Tablet } from "@/styles/container";
+
+// TBD: 待評估響應式移除 Newsletter 區塊是否合理，否則背景高度要改為 520px
 
 export const Wrapper = styled.footer`
+  /* height: 520px; */
   width: 100%;
   height: 420px;
   display: flex;
@@ -13,24 +17,62 @@ export const Wrapper = styled.footer`
   background-size: cover;
   background-position: top;
   padding-bottom: 20px;
+
+  /* @media (${Mobile}) {
+    height: 420px;
+  } */
 `;
 
 export const Content = styled.div`
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr;
+  gap: 20px;
   color: ${({ theme }) => theme.colors.grey300};
+  @media (${Tablet}) {
+    gap: 16px;
+    grid-template-columns: repeat(12, 1fr);
+  }
 `;
 
 export const Categories = styled.div`
-  grid-column: 1 / 5;
+  grid-column: 1 / 3;
+  grid-row: 1 / 2;
+  @media (${Mobile}) {
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
+  }
+  @media (${Tablet}) {
+    grid-column: 1 / 5;
+  }
 `;
 
 export const Contact = styled.div`
-  grid-column: 6 / 9;
+  grid-column: 1 / 3;
+  grid-row: 2 / 3;
+  @media (${Mobile}) {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+  }
+  @media (${Tablet}) {
+    grid-column: 6 / 9;
+    grid-row: 1 / 3;
+  }
 `;
 
 export const Newsletter = styled.div`
-  grid-column: 10 / 13;
+  display: none;
+  grid-column: 1 / 3;
+  grid-row: 3 / 3;
+  @media (${Mobile}) {
+    display: block;
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+  }
+  @media (${Tablet}) {
+    grid-column: 10 / 13;
+    grid-row: 1 / 3;
+  }
 `;
 
 export const Title = styled.span`
@@ -38,33 +80,47 @@ export const Title = styled.span`
   font-size: 20px;
   font-weight: 700;
   color: ${({ theme }) => theme.colors.textPrimary};
-  margin-bottom: 16px;
-`;
-
-export const CategoryLinkList = styled.div`
-  display: flex;
-  gap: 40px;
+  margin-bottom: 4px;
+  @media (${Mobile}) {
+    margin-bottom: 10px;
+  }
 `;
 
 export const CategoryLinks = styled.div`
-  width: 50%;
   display: flex;
-  flex-direction: column;
-  gap: 16px;
+  flex-wrap: wrap;
+  flex-direction: row;
+  column-gap: 8px;
+  row-gap: 6px;
+  @media (${Mobile}) {
+    gap: 10px;
+    flex-direction: column;
+  }
+  @media (${Tablet}) {
+    gap: 16px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: auto;
+  }
 `;
 
 export const CategoryLink = styled(Link)`
   color: ${({ theme }) => theme.colors.grey300};
-  text-decoration: none;
   &:hover {
-    text-decoration: underline;
+    color: ${({ theme }) => theme.colors.primary};
   }
 `;
 
 export const AddressInfo = styled.address`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
+  @media (${Mobile}) {
+    gap: 10px;
+  }
+  @media (${Tablet}) {
+    gap: 16px;
+  }
 `;
 
 export const SocialMediaLinks = styled.div`
@@ -76,13 +132,24 @@ export const SocialMediaLinks = styled.div`
 export const SubscriptionField = styled.div`
   max-width: 260px;
   position: relative;
-  margin-bottom: 10px;
+  /* margin-bottom: 8px; */
+  @media (${Mobile}) {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  @media (${Tablet}) {
+    margin-bottom: 16px;
+  }
 `;
 
 export const Copyright = styled.p`
-  text-align: right;
+  text-align: left;
   font-size: 12px;
   font-weight: 700;
   color: ${({ theme }) => theme.colors.textMuted};
-  margin-top: 28px;
+  margin-top: 20px;
+  @media (${Mobile}) {
+    margin-top: 28px;
+    text-align: right;
+  }
 `;

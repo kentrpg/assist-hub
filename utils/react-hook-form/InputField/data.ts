@@ -1,11 +1,10 @@
-import { ColorsType } from "@/types/uiProps";
+import { ColorsType, type Color } from "@/types/uiProps";
 import { FieldValues, Path, UseFormRegister } from "react-hook-form";
 
-export type InputField<T extends FieldValues> = {
+export type InputField<T extends FieldValues> = Color & {
   name: Path<T>;
   type: "email" | "password" | "text" | "tel";
   placeholder: string;
-  $color: ColorsType;
   $fontSize: number;
   $borderColor: ColorsType;
   $backgroundColor: ColorsType;
@@ -17,4 +16,4 @@ export type InputField<T extends FieldValues> = {
     local?: (value: string) => string | boolean;
     length?: (value: string) => string | boolean;
   };
-}
+};

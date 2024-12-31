@@ -19,7 +19,7 @@ export const buttonSizes = {
   `,
 };
 
-// Button gap size variants for responsive design
+// Button gap size variants for icon button responsive design
 export const buttonGapSizes = {
   small: css`
     ${buttonSizes.small};
@@ -40,15 +40,13 @@ const buttonVariants = {
   primary: css`
     background-color: ${({ theme }) => theme.colors.primary};
     color: ${({ theme }) => theme.colors.white};
-    line-height: 28px;
     &:hover {
       background-color: ${({ theme }) => theme.colors.primaryHover};
     }
   `,
   secondary: css`
     background-color: ${({ theme }) => theme.colors.secondary};
-    color: ${({ theme }) => theme.colors.white};
-    line-height: 28px;
+    color: ${({ theme }) => theme.colors.textSecondary};
     &:hover {
       background-color: ${({ theme }) => theme.colors.secondaryHover};
     }
@@ -56,7 +54,6 @@ const buttonVariants = {
   accent: css`
     background-color: ${({ theme }) => theme.colors.accent};
     color: ${({ theme }) => theme.colors.white};
-    line-height: 28px;
     &:hover {
       background-color: ${({ theme }) => theme.colors.accentHover};
     }
@@ -64,7 +61,6 @@ const buttonVariants = {
   accentSecondary: css`
     background-color: ${({ theme }) => theme.colors.secondary};
     color: ${({ theme }) => theme.colors.textSecondary};
-    line-height: 28px;
     &:hover {
       background-color: ${({ theme }) => theme.colors.secondaryHover};
     }
@@ -112,6 +108,7 @@ export const PrimaryButton = styled(BaseButton)`
 
 export const PrimaryIconButton = styled(BaseButton)`
   ${HstackLayout}
+  ${buttonGapSizes.large};
   ${buttonVariants.primary};
 `;
 
@@ -121,6 +118,7 @@ export const SecondaryButton = styled(BaseButton)`
 
 export const SecondaryIconButton = styled(BaseButton)`
   ${HstackLayout}
+  ${buttonGapSizes.large};
   ${buttonVariants.secondary};
 `;
 
@@ -130,5 +128,6 @@ export const AccentButton = styled(BaseButton)`
 
 export const AccentIconButton = styled(BaseButton)`
   ${HstackLayout}
+  ${buttonGapSizes.large};
   ${buttonVariants.accent};
 `;

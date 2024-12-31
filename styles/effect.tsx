@@ -8,8 +8,12 @@ export const UserContainerShadow = css`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
-// Input
+// Link
+export const NavLinkHover = css`
+  transition: color 0.2s;
+`;
 
+// Input
 export const CleanAutofill = css`
   box-shadow: 0 0 0 1000px ${({ theme }) => theme.colors.white} inset;
 `;
@@ -37,7 +41,6 @@ export const FloatingLabelTransition = css`
 `;
 
 // Button
-
 export const ButtonScaleDown = css`
   transform: scale(0.9);
 `;

@@ -1,16 +1,16 @@
 import styled from "styled-components";
 
-const breakpoints = {
-  sm: "576px",
-  md: "768px",
-  l: "1024px",
-  xl: "1344px",
+export const breakpoints = {
+  sm: 576,
+  md: 768,
+  l: 1024,
+  xl: 1344,
 };
 
-export const ExtraLarge = `min-width: ${breakpoints.xl}`;
-export const Desktop = `min-width: ${breakpoints.l}`;
-export const Tablet = `min-width: ${breakpoints.md}`;
-export const Mobile = `min-width: ${breakpoints.sm}`;
+export const ExtraLarge = `min-width: ${breakpoints.xl}px`;
+export const Desktop = `min-width: ${breakpoints.l}px`;
+export const Tablet = `min-width: ${breakpoints.md}px`;
+export const Mobile = `min-width: ${breakpoints.sm}px`;
 
 const Container = styled.div`
   width: 100%;
@@ -30,6 +30,10 @@ export const Container1344 = styled(Container)`
 
 export const Container1116 = styled(Container)`
   max-width: 1116px;
+`;
+
+export const Container912 = styled(Container)`
+  max-width: 912px;
 `;
 
 export const Container432 = styled(Container)`

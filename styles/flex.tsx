@@ -15,7 +15,6 @@ export const HstackLayout = css`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 8px;
 `;
 
 export const VstackLayout = css`

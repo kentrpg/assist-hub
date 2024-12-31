@@ -6,7 +6,17 @@ export type IsDefault = {
 
 export type ColorsType = keyof typeof colors;
 
+// for boolean status
+
+export type IsActive = {
+  $isActive: boolean;
+};
+
 // styled component prop
+
+export type Color = {
+  $color: ColorsType;
+}
 
 export type Gap = {
   $gap: number;

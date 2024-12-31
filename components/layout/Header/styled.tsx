@@ -116,8 +116,8 @@ export const ActionButtonGroup = styled.div`
 const BaseButton = css`
   font-size: 16px;
   font-weight: 700;
-  padding: 13px;
   color: ${({ theme }) => theme.colors.white};
+  padding: 13px;
   @media (${Desktop}) {
     padding: 14px 27px;
   }

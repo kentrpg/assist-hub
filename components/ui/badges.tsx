@@ -6,7 +6,7 @@ const Badge = styled.span`
   justify-content: center;
   background-color: ${({ theme }) => theme.colors.white};
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 400;
   border-radius: 5px;
   white-space: nowrap;
   padding: 3px 8px;
@@ -19,6 +19,7 @@ export const PriceBadge = styled(Badge)`
 `;
 
 export const FeatureBadge = styled(Badge)`
+  gap: 4px;
   border: 1px solid ${({ theme }) => theme.colors.textMuted};
   color: ${({ theme }) => theme.colors.textMuted};
 `;

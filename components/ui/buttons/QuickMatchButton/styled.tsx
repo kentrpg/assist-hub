@@ -5,7 +5,7 @@ import {
   QuickMatchButtonTransition,
 } from "@/styles/effect";
 import styled from "styled-components";
-import { circularSizes } from "../../circulars";
+import { circularSizes } from "@/components/ui/circulars";
 import { VstackLayout } from "@/styles/flex";
 
 export const QuickMatchButtonStyle = styled.button`

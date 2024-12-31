@@ -1,3 +1,4 @@
+import { AccentButton } from "@/components/ui/buttons";
 import { Mobile, Tablet } from "@/styles/container";
 import styled from "styled-components";
 
@@ -13,6 +14,10 @@ export const Title = styled.h1`
 
 export const Assistive = styled.div`
   padding: 30px 0;
+`;
+
+export const ActionAssessment = styled.div`
+  margin-bottom: 40px;
 `;
 
 export const SubTitle = styled.h2`
@@ -31,6 +36,10 @@ export const CardGroup = styled.div`
   @media (${Tablet}) {
     flex-direction: row;
   }
+`;
+
+export const DraftSubmitButton = styled(AccentButton)`
+  padding: 10px 40px;
 `;
 
 // for not-found page

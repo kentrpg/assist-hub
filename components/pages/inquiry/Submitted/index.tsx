@@ -1,20 +1,16 @@
-import { Header, Title, SubTitle, Assistive, CardGroup } from "./styled";
+import { Header, Title, SubTitle, Assistive, CardGroup } from "../styled";
 import { Container1116 as Container } from "@/styles/container";
 import { FlexAlignCenter } from "@/styles/flex";
 import { MdArrowBack, MdOutlineShare } from "react-icons/md";
 import { PageBackButton } from "@/components/ui/circulars";
 import { PrimaryIconButton } from "@/components/ui/buttons";
 
-import {
-  inquiryCardColors,
-  inquiryCards,
-  inquiryInfo,
-  inquiryInfoMapping,
-} from "./data";
+import { inquiryCardColors, submittedInquiry, inquiryInfo } from "../data";
 import InquiryCard from "@/components/ui/cards/InquiryCard";
-import InquiryDetail from "@/components/pages/inquiry/Details";
+import InquiryDetail from "@/components/ui/Detail";
+import { inquiryInfoMapping } from "@/components/ui/Detail/data";
 
-const Inquiry = () => {
+const SubmittedInquiry = () => {
   return (
     <Container>
       <Header>
@@ -27,7 +23,7 @@ const Inquiry = () => {
       <Assistive>
         <SubTitle>您選擇的詢問輔具</SubTitle>
         <CardGroup>
-          {inquiryCards.map(
+          {submittedInquiry.map(
             ({ id, name, description, price, imgSrc, features }, index) => (
               <InquiryCard
                 id={id}
@@ -52,4 +48,4 @@ const Inquiry = () => {
   );
 };
 
-export default Inquiry;
+export default SubmittedInquiry;

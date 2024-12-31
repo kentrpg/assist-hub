@@ -1,5 +1,5 @@
 import { type InquiryCardProps } from "@/components/pages/inquiry/data";
-import { CheckIcon } from "@/utils/react-icons/CheckIcon";
+import { InquiryCheck } from "@/utils/react-icons/CheckIcon";
 import {
   Card,
   CardContent,
@@ -51,7 +51,7 @@ const InquiryCard = ({
               <Feature key={featureId}>
                 {/* <MdCheck size={24} /> */
                 /* TBD: react-icons 在 styled 內設置 width、height、color 做法可以嗎 */}
-                <CheckIcon />
+                <InquiryCheck />
                 {text}
               </Feature>
             ))}

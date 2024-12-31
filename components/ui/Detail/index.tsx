@@ -21,8 +21,8 @@ const InquiryDetail = ({ data, mapping }: InquiryDetailProps) => {
             <Value>{data.actionAssessment}</Value>
           </Field>
           <Field>
-            <Label>{mapping.additionalDescription}</Label>
-            <Value>{data.additionalDescription}</Value>
+            <Label>{mapping.description}</Label>
+            <Value>{data.description}</Value>
           </Field>
         </Group>
       </Card>

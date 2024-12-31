@@ -1,10 +1,10 @@
 import { MainWrapper } from "@/styles/wrappers";
-import Inquiry from "@/components/pages/inquiry";
+import SubmittedInquiry from "@/components/pages/inquiry/Submitted";
 
 const InquiryPage = () => {
   return (
     <MainWrapper>
-      <Inquiry />
+      <SubmittedInquiry />
     </MainWrapper>
   );
 };

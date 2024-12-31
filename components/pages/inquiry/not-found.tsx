@@ -1,6 +1,11 @@
 import { Container912 as Container } from "@/styles/container";
-import { InquiryStep, Title, TitleDescription, TitleGroup } from "./styled";
-import { AccentButton } from "@/components/ui/buttons";
+import {
+  DraftSubmitButton,
+  InquiryStep,
+  Title,
+  TitleDescription,
+  TitleGroup,
+} from "./styled";
 import { FlexAlignCenter } from "@/styles/flex";
 import { inquiryStepCards } from "./data";
 import InquiryStepCard from "@/components/ui/cards/InquiryStepCard";
@@ -25,7 +30,7 @@ const NotFound = () => {
         ))}
       </InquiryStep>
       <FlexAlignCenter>
-        <AccentButton>建立詢問單</AccentButton>
+        <DraftSubmitButton>建立詢問單</DraftSubmitButton>
       </FlexAlignCenter>
     </Container>
   );

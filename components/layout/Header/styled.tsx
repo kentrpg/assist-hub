@@ -116,8 +116,8 @@ export const ActionButtonGroup = styled.div`
 const BaseButton = css`
   font-size: 16px;
   font-weight: 700;
-  line-height: 1.5;
   padding: 13px;
+  color: ${({ theme }) => theme.colors.white};
   @media (${Desktop}) {
     padding: 14px 27px;
   }
@@ -140,6 +140,7 @@ export const AccountButton = styled(PrimaryIconButton)`
 
 export const ButtonText = styled.span`
   display: none;
+  color: ${({ theme }) => theme.colors.white};
   @media (${Desktop}) {
     display: block;
   }

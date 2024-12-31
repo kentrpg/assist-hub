@@ -6,7 +6,6 @@ import styled from "styled-components";
 
 export const Card = styled.div<Color>`
   flex: 0 0 calc((100% - 2 * 24px) / 3);
-  text-align: left;
   border: 1px solid transparent;
   ${CardRadius};
   background: ${({ theme, $color }) =>

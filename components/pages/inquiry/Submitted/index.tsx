@@ -26,7 +26,7 @@ const SubmittedInquiry = () => {
           {submittedInquiry.map(
             ({ id, name, description, price, imgSrc, features }, index) => (
               <InquiryCard
-                id={id}
+                key={id}
                 $color={inquiryCardColors[index]}
                 price={price}
                 imgSrc={`/images/${imgSrc}`}

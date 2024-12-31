@@ -18,7 +18,6 @@ import Tabs from "./Tabs";
 
 const DraftInquiry = () => {
   const cardSlots = Array.from({ length: 3 - draftInquiry.length });
-  console.log(cardSlots);
 
   return (
     <Container>
@@ -34,7 +33,7 @@ const DraftInquiry = () => {
           {draftInquiry.map(
             ({ id, name, description, price, imgSrc, features }, index) => (
               <InquiryCard
-                id={id}
+                key={id}
                 $color={inquiryCardColors[index]}
                 price={price}
                 imgSrc={`/images/${imgSrc}`}
@@ -45,7 +44,7 @@ const DraftInquiry = () => {
             )
           )}
           {cardSlots.map((_, index) => (
-            <DashedCard id={`empty-${index}`} />
+            <DashedCard key={`empty-${index}`} />
           ))}
         </CardGroup>
       </Assistive>

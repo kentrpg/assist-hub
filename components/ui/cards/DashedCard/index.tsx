@@ -2,9 +2,9 @@ import { MdAdd } from "react-icons/md";
 import { SecondaryIconButton } from "@/components/ui/buttons";
 import { YellowDashedCard } from "./styled";
 
-const DashedCard: React.FC<{ id: string }> = ({ id }) => {
+const DashedCard: React.FC = () => {
   return (
-    <YellowDashedCard key={id}>
+    <YellowDashedCard>
       <SecondaryIconButton>
         <MdAdd size={27} />
         新增輔具

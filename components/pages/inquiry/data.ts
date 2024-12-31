@@ -17,7 +17,7 @@ type BaseInquiryCard = {
   features: Feature[];
 };
 
-export type InquiryCardProps = BaseInquiryCard & Color;
+export type InquiryCardProps = Omit<BaseInquiryCard, 'id'> & Color;
 
 export const draftInquiry: BaseInquiryCard[] = [
   {

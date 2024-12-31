@@ -19,7 +19,6 @@ import {
 import { ImageWrapper } from "@/components/ui/images";
 
 const InquiryCard = ({
-  id,
   $color,
   name,
   description,
@@ -28,7 +27,7 @@ const InquiryCard = ({
   features,
 }: InquiryCardProps) => {
   return (
-    <Card key={id} $color={$color}>
+    <Card $color={$color}>
       <FlexFullHeight>
         <CardContent>
           <DetailsWrapper>

@@ -17,7 +17,7 @@ export const ProgressBar = styled.div`
   row-gap: 24px;
   align-items: center;
   width: 100%;
-  padding: 24px 0px;
+  padding: 24px 24px;
   position: relative;
   &::after {
     content: "";

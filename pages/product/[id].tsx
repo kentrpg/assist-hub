@@ -1,10 +1,10 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import React from "react";
-import Product from "@/components/pages/Product/index";
-import { ProductPageProps } from "@/components/pages/Product/data";
+import ProductDetail from "@/components/pages/product/ProductDetail/";
+import { ProductPageProps } from "@/components/pages/product/ProductDetail/data";
 
-const API_URL = "http://localhost:4000/products";
+const API_URL = `${process.env.NEXT_PUBLIC_JSONSERVER_URL}/products`;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const response = await fetch(`${API_URL}`);
@@ -13,8 +13,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const paths = data.data.map((product: { id: number }) => ({
     params: { id: product.id.toString() },
   }));
-
-  paths.push({ params: { id: "1" } });
 
   return {
     paths,
@@ -46,7 +44,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ product }) => {
     return <div>Loading...</div>;
   }
 
-  return <Product product={product} />;
+  return <ProductDetail product={product} />;
 };
 
 export default ProductPage;

@@ -1,14 +1,11 @@
-import { GetServerSideProps } from "next";
+import ProductAll from "@/components/pages/product/ProductAll";
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  return {
-    redirect: {
-      destination: "/product/1",
-      permanent: false,
-    },
-  };
+const Product = () => {
+  return (
+    <>
+      <ProductAll></ProductAll>
+    </>
+  );
 };
 
-const ProductIndex = () => null;
-
-export default ProductIndex;
+export default Product;

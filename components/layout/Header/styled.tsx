@@ -192,8 +192,7 @@ export const HamburgerSvg = styled.svg<{ $menuOpen: boolean }>`
     stroke-dashoffset: 0%;
   }
 
-  ${({ $menuOpen }) =>
-    $menuOpen &&
+  ${({ $menuOpen }) => $menuOpen &&
     `
     .top {
       transform: rotate(45deg);

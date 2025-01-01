@@ -32,6 +32,10 @@ export const Container1116 = styled(Container)`
   max-width: 1116px;
 `;
 
+export const Container1021 = styled(Container)`
+  max-width: 1021px;
+`;
+
 export const Container912 = styled(Container)`
   max-width: 912px;
 `;

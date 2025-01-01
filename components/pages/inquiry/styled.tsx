@@ -1,5 +1,5 @@
 import { AccentButton } from "@/components/ui/buttons";
-import { Mobile, Tablet } from "@/styles/container";
+import { Tablet } from "@/styles/container";
 import styled from "styled-components";
 
 export const Header = styled.header`
@@ -40,26 +40,4 @@ export const CardGroup = styled.div`
 
 export const DraftSubmitButton = styled(AccentButton)`
   padding: 10px 40px;
-`;
-
-// for not-found page
-export const TitleGroup = styled.div`
-  text-align: center;
-  padding: 20px 0 12px;
-`;
-
-export const TitleDescription = styled.p`
-  font-size: 18px;
-  margin-top: 12px;
-`;
-
-export const InquiryStep = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 30px 0;
-
-  @media (${Mobile}) {
-    padding: 60px 0;
-  }
 `;

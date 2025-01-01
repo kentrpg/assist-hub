@@ -1,22 +1,21 @@
 import { Container912 as Container } from "@/styles/container";
+import { Button, InquiryStep } from "./styled";
 import {
-  DraftSubmitButton,
-  InquiryStep,
-  Title,
-  TitleDescription,
-  TitleGroup,
-} from "./styled";
+  PageTitle as Title,
+  PageTitleDescription as Description,
+  PageTitleGroup as Group,
+} from "@/components/ui/titles";
 import { FlexAlignCenter } from "@/styles/flex";
-import { inquiryStepCards } from "./data";
+import { inquiryStepCards } from "../data";
 import InquiryStepCard from "@/components/ui/cards/InquiryStepCard";
 
 const NotFound = () => {
   return (
     <Container>
-      <TitleGroup>
+      <Group>
         <Title>還找不到合適的輔具？</Title>
-        <TitleDescription>建立詢問單，我們幫您搞定！</TitleDescription>
-      </TitleGroup>
+        <Description>建立詢問單，我們幫您搞定！</Description>
+      </Group>
       <InquiryStep>
         {inquiryStepCards.map(({ step, title, imgSrc, $color }) => (
           // TBD: 問題 key 需要加入 prop type 避免沒有填入 key 嗎？
@@ -30,7 +29,7 @@ const NotFound = () => {
         ))}
       </InquiryStep>
       <FlexAlignCenter>
-        <DraftSubmitButton>建立詢問單</DraftSubmitButton>
+        <Button>建立詢問單</Button>
       </FlexAlignCenter>
     </Container>
   );

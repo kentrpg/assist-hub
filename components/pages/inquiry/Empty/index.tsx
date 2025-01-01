@@ -1,13 +1,17 @@
 import { Container1116 as Container } from "@/styles/container";
-import { Title, TitleDescription, TitleGroup } from "../styled";
+import {
+  PageTitle as Title,
+  PageTitleDescription as Description,
+  PageTitleGroup as Group,
+} from "@/components/ui/titles";
 import { FlexAlignCenter } from "@/styles/flex";
 import { MdArrowForward } from "react-icons/md";
 import {
-  StepContainer,
-  StepItem,
-  StepNumber,
-  StepImage,
-  StepContent,
+  Step,
+  Card,
+  Number,
+  Image,
+  StepGroup,
   StepTitle,
   StepDescription,
   Button,
@@ -18,24 +22,24 @@ import { InquiryStepCircle } from "@/components/ui/circulars";
 const InquiryEmpty = () => {
   return (
     <Container>
-      <TitleGroup>
+      <Group>
         <Title>詢問單教學</Title>
-        <TitleDescription>簡單4個步驟，讓專業店家幫您找</TitleDescription>
-      </TitleGroup>
-      <StepContainer>
+        <Description>簡單4個步驟，讓專業店家幫您找</Description>
+      </Group>
+      <Step>
         {AddInquirySteps.map((step, index) => (
-          <StepItem key={step.id}>
-            <StepNumber>
+          <Card key={step.id}>
+            <Number>
               <InquiryStepCircle>{index + 1}</InquiryStepCircle>
-            </StepNumber>
-            <StepImage src={step.imgSrc} alt={step.title} />
-            <StepContent>
+            </Number>
+            <Image src={step.imgSrc} alt={step.title} />
+            <StepGroup>
               <StepTitle>{step.title}</StepTitle>
               <StepDescription>{step.description}</StepDescription>
-            </StepContent>
-          </StepItem>
+            </StepGroup>
+          </Card>
         ))}
-      </StepContainer>
+      </Step>
       <FlexAlignCenter>
         <Button>
           瀏覽輔具

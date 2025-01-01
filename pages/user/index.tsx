@@ -1,10 +1,10 @@
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   return {
     redirect: {
       destination: "/user/profile",
-      permanent: false,
+      permanent: false, 
     },
   };
 };

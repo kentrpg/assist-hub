@@ -10,9 +10,9 @@ export const inquiries: InquiryData[] = [
   {
     id: "AKC833",
     products: [
-      "https://shoplineimg.com/5aa0e7330e64fed450000634/5e9530a47692440039880802/800x.jpg?",
-      "https://shoplineimg.com/5aa0e7330e64fed450000634/5e9530a47692440039880802/800x.jpg?",
-      "https://shoplineimg.com/5aa0e7330e64fed450000634/5e9530a47692440039880802/800x.jpg?",
+      "/images/wheelChair.svg",
+      "/images/wheelChair.svg",
+      "/images/wheelChair.svg",
     ],
     createdDate: "2024/10/04",
     isSuggest: true,
@@ -21,9 +21,9 @@ export const inquiries: InquiryData[] = [
   {
     id: "KDO694",
     products: [
-      "https://shoplineimg.com/5aa0e7330e64fed450000634/5e9530a47692440039880802/800x.jpg?",
-      "https://shoplineimg.com/5aa0e7330e64fed450000634/5e9530a47692440039880802/800x.jpg?",
-      "https://shoplineimg.com/5aa0e7330e64fed450000634/5e9530a47692440039880802/800x.jpg?",
+      "/images/wheelChair.svg",
+      "/images/wheelChair.svg",
+      "/images/wheelChair.svg",
     ],
     createdDate: "2024/10/04",
     isSuggest: false,
@@ -32,9 +32,9 @@ export const inquiries: InquiryData[] = [
   {
     id: "NKD836",
     products: [
-      "https://shoplineimg.com/5aa0e7330e64fed450000634/5e9530a47692440039880802/800x.jpg?",
-      "https://shoplineimg.com/5aa0e7330e64fed450000634/5e9530a47692440039880802/800x.jpg?",
-      "https://shoplineimg.com/5aa0e7330e64fed450000634/5e9530a47692440039880802/800x.jpg?",
+      "/images/wheelChair.svg",
+      "/images/wheelChair.svg",
+      "/images/wheelChair.svg",
     ],
     createdDate: "2024/10/04",
     isSuggest: false,

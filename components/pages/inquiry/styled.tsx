@@ -1,4 +1,4 @@
-import { AccentButton } from "@/components/ui/buttons";
+import { AccentButton as AccentButtonStyle, buttonSizes } from "@/components/ui/buttons";
 import { Tablet } from "@/styles/container";
 import styled from "styled-components";
 
@@ -38,6 +38,6 @@ export const CardGroup = styled.div`
   }
 `;
 
-export const DraftSubmitButton = styled(AccentButton)`
-  padding: 10px 40px;
+export const AccentButton = styled(AccentButtonStyle)`
+  ${buttonSizes.xlarge};
 `;

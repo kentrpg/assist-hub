@@ -21,12 +21,13 @@ import {
 
 import { PageBackButton } from "@/components/ui/circulars";
 import { MdArrowBack, MdShoppingCart } from "react-icons/md";
-import InquiryDetail from "@/components/ui/Detail";
-import { suggestInfoMapping } from "@/components/ui/Detail/data";
+import InquiryDetail from "@/components/ui/InquiryDetail";
+import { suggestInfoMapping } from "@/components/ui/InquiryDetail/data";
 import { suggestInfo, assistiveRecommendations } from "./data";
 import { FeatureBadge, PriceBadge } from "@/components/ui/badges";
 import { SuggestCheck } from "@/utils/react-icons/CheckIcon";
 import { FlexAlignCenter } from "@/styles/flex";
+import useFormatCurrency from "@/hooks/useFormatCurrency";
 
 const Suggest = () => {
   return (
@@ -46,7 +47,8 @@ const Suggest = () => {
               <Card key={id}>
                 <ImageWrapper>
                   <Image src={`/images/${imgSrc}`} alt={name} />
-                  <PriceBadge>{price}</PriceBadge>
+                  {/* TBD: 確認 useFormatCurrency() 使用方式 */}
+                  <PriceBadge>{useFormatCurrency(price)}/ 月</PriceBadge>
                 </ImageWrapper>
                 <Info>
                   <Name>{name}</Name>

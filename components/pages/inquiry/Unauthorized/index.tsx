@@ -1,5 +1,5 @@
 import { Container912 as Container } from "@/styles/container";
-import { Button, InquiryStep } from "./styled";
+import { InquiryStep } from "./styled";
 import {
   PageTitle as Title,
   PageTitleDescription as Description,
@@ -8,6 +8,7 @@ import {
 import { FlexAlignCenter } from "@/styles/flex";
 import { inquiryStepCards } from "../data";
 import InquiryStepCard from "@/components/ui/cards/InquiryStepCard";
+import { AccentButton } from "../styled";
 
 const NotFound = () => {
   return (
@@ -29,7 +30,7 @@ const NotFound = () => {
         ))}
       </InquiryStep>
       <FlexAlignCenter>
-        <Button>建立詢問單</Button>
+        <AccentButton>建立詢問單</AccentButton>
       </FlexAlignCenter>
     </Container>
   );

@@ -9,15 +9,14 @@ import { MdArrowForward } from "react-icons/md";
 import {
   Step,
   Card,
-  Number,
   Image,
   StepGroup,
   StepTitle,
   StepDescription,
-  Button,
 } from "./styled";
 import { AddInquirySteps } from "./data";
 import { InquiryStepCircle } from "@/components/ui/circulars";
+import { PrimaryIconButton } from "@/components/ui/buttons";
 
 const InquiryEmpty = () => {
   return (
@@ -29,9 +28,7 @@ const InquiryEmpty = () => {
       <Step>
         {AddInquirySteps.map((step, index) => (
           <Card key={step.id}>
-            <Number>
-              <InquiryStepCircle>{index + 1}</InquiryStepCircle>
-            </Number>
+            <InquiryStepCircle>{index + 1}</InquiryStepCircle>
             <Image src={step.imgSrc} alt={step.title} />
             <StepGroup>
               <StepTitle>{step.title}</StepTitle>
@@ -41,10 +38,10 @@ const InquiryEmpty = () => {
         ))}
       </Step>
       <FlexAlignCenter>
-        <Button>
+        <PrimaryIconButton>
           瀏覽輔具
           <MdArrowForward size={27} />
-        </Button>
+        </PrimaryIconButton>
       </FlexAlignCenter>
     </Container>
   );

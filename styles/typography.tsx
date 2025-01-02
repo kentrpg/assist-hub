@@ -39,14 +39,20 @@ export const H4 = css`
   font-weight: 500;
 `;
 export const H5 = css`
+  // @usage inquiry/styled.tsx -> Price component
   font-size: 24px;
   font-weight: 500;
-  // @usage inquiry/styled.tsx -> Price component
-  @media (${Tablet}) {
+  /* @media (${Tablet}) {
     ${H3};
-  }
+  } */
 `;
 export const H6 = css`
   font-size: 20px;
   font-weight: 700;
+`;
+
+export const Title5 = css`
+  font-size: 24px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.textPrimary};
 `;

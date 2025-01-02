@@ -50,15 +50,15 @@ const GlobalStyle = createGlobalStyle`
     line-height: inherit;
   }
 
+  h1, h2, h3, h4, h5, h6, div, span, p {
+    cursor: default;
+  }
+
   a, label, button, select, textarea {
     cursor: pointer;
     & * {
       cursor: pointer;
     }
-  }
-
-  h1, h2, h3, h4, h5, h6, div, span, p {
-    cursor: default;
   }
 
   input,

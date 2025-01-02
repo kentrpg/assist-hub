@@ -1,4 +1,3 @@
-import { buttonSizes, AccentButton } from "@/components/ui/buttons";
 import { Mobile } from "@/styles/container";
 import styled from "styled-components";
 
@@ -11,8 +10,4 @@ export const InquiryStep = styled.div`
   @media (${Mobile}) {
     padding: 60px 0;
   }
-`;
-
-export const Button = styled(AccentButton)`
-  ${buttonSizes.xlarge};
 `;

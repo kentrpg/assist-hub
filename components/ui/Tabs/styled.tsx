@@ -1,4 +1,5 @@
-import { Desktop, Mobile, Tablet } from "@/styles/container";
+import { Desktop, Tablet } from "@/styles/container";
+import { VstackLayout } from "@/styles/flex";
 import type { IsActive } from "@/types/uiProps";
 import styled from "styled-components";
 
@@ -51,10 +52,7 @@ export const TabContent = styled.div`
 `;
 
 export const Group = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  ${VstackLayout};
   gap: 48px;
 `;
 

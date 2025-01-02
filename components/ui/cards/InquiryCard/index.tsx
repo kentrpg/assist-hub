@@ -17,6 +17,7 @@ import {
   PriceUnit,
 } from "./styled";
 import { ImageWrapper } from "@/components/ui/images";
+import useFormatCurrency from "@/hooks/useFormatCurrency";
 
 const InquiryCard = ({
   $color,
@@ -36,7 +37,8 @@ const InquiryCard = ({
               <Description>{description}</Description>
             </Details>
             <Price>
-              {price}元<PriceUnit>/月</PriceUnit>
+              {useFormatCurrency(price)}
+              <PriceUnit>/月</PriceUnit>
             </Price>
           </DetailsWrapper>
           <ImageWrapper>
@@ -46,12 +48,12 @@ const InquiryCard = ({
         <Features>
           <FeatureTitle>輔具特色</FeatureTitle>
           <FeatureGroup>
-            {features.map(({ id: featureId, text }) => (
-              <Feature key={featureId}>
+            {features.map((feature, index) => (
+              <Feature key={index}>
                 {/* <MdCheck size={24} /> */
                 /* TBD: react-icons 在 styled 內設置 width、height、color 做法可以嗎 */}
                 <InquiryCheck />
-                {text}
+                {feature}
               </Feature>
             ))}
           </FeatureGroup>

@@ -6,7 +6,7 @@ import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import FormField from "@/utils/react-hook-form/FloatingLabel";
 import { RegisterField } from "@/utils/react-hook-form/types";
 import { registerFields, SignInInputs } from "./data";
-import LinkStyle from "@/components/ui/BaseLink";
+import Link from "@/components/ui/BaseLink";
 import { signIn } from "@/utils/api/auth/signin";
 import { IconWrapper } from "@/utils/react-icons/iconWrappers";
 import { FaLine } from "react-icons/fa";
@@ -108,7 +108,7 @@ const Signin: React.FC = () => {
         </OutlineButton>
         <FooterLinks>
           還沒有帳號嗎？
-          <LinkStyle href="/auth/register">立即註冊</LinkStyle>
+          <Link href="/auth/register">立即註冊</Link>
         </FooterLinks>
       </Form>
     </Container>

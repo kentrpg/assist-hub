@@ -1,12 +1,7 @@
-import type { InquiryInfoProps } from "@/components/ui/Detail/data";
+import type { InquiryInfoProps } from "@/components/ui/InquiryDetail/data";
 import type { Color, ColorsType } from "@/types/uiProps";
 
 export const inquiryCardColors: ColorsType[] = ["accent", "primary", "secondary", "secondary", "accent", "primary", "primary", "secondary", "accent"];
-
-export type Feature = {
-  id: string;
-  text: string;
-};
 
 type BaseInquiryCard = {
   id: string;
@@ -14,10 +9,10 @@ type BaseInquiryCard = {
   description: string;
   price: number;
   imgSrc: string;
-  features: Feature[];
+  features: string[];
 };
 
-export type InquiryCardProps = Omit<BaseInquiryCard, 'id'> & Color;
+export type InquiryCardProps = Omit<BaseInquiryCard, "id"> & Color;
 
 export const draftInquiry: BaseInquiryCard[] = [
   {
@@ -26,23 +21,15 @@ export const draftInquiry: BaseInquiryCard[] = [
     description: "輕量化鋁合金金屬設計",
     price: 2000,
     imgSrc: "device1.png",
-    features: [
-      { id: "1-1", text: "支撐性高" },
-      { id: "1-2", text: "輕量化設計" },
-      { id: "1-3", text: "S曲面型坐墊" }
-    ]
+    features: ["支撐性高", "輕量化設計", "S曲面型坐墊"],
   },
   {
-    id: "2", 
+    id: "2",
     name: "腋下拐",
     description: "輕量化鋁合金金屬設計",
-    price: 1000,
+    price: 1889.87,
     imgSrc: "device2.png",
-    features: [
-      { id: "2-1", text: "支撐性高" },
-      { id: "2-2", text: "輕量化設計" },
-      { id: "2-3", text: "可調節適合高度" },
-    ]
+    features: ["支撐性高", "輕量化設計", "可調節適合高度"],
   }
 ];
 
@@ -53,23 +40,15 @@ export const submittedInquiry: BaseInquiryCard[] = [
     description: "輕量化鋁合金金屬設計",
     price: 2000,
     imgSrc: "device1.png",
-    features: [
-      { id: "1-1", text: "支撐性高" },
-      { id: "1-2", text: "輕量化設計" },
-      { id: "1-3", text: "S曲面型坐墊" }
-    ]
+    features: ["支撐性高", "輕量化設計", "S曲面型坐墊"],
   },
   {
-    id: "2", 
+    id: "2",
     name: "腋下拐",
     description: "輕量化鋁合金金屬設計",
     price: 1000,
     imgSrc: "device2.png",
-    features: [
-      { id: "2-1", text: "支撐性高" },
-      { id: "2-2", text: "輕量化設計" },
-      { id: "2-3", text: "可調節適合高度" },
-    ]
+    features: ["支撐性高", "輕量化設計", "可調節適合高度"],
   },
   {
     id: "3",
@@ -77,10 +56,7 @@ export const submittedInquiry: BaseInquiryCard[] = [
     description: "輕量化鋁合金金屬設計",
     price: 2000,
     imgSrc: "device3.png",
-    features: [
-      { id: "3-1", text: "支撐性高" },
-      { id: "3-2", text: "輕量化設計" },
-    ]
+    features: ["支撐性高", "輕量化設計"],
   },
   {
     id: "4",
@@ -88,11 +64,7 @@ export const submittedInquiry: BaseInquiryCard[] = [
     description: "輕量化鋁合金金屬設計",
     price: 2000,
     imgSrc: "device3.png",
-    features: [
-      { id: "4-1", text: "支撐性高" },
-      { id: "4-2", text: "輕量化設計" },
-      { id: "4-3", text: "S曲面型坐墊" }
-    ]
+    features: ["支撐性高", "輕量化設計", "S曲面型坐墊"],
   },
   {
     id: "5",
@@ -100,11 +72,7 @@ export const submittedInquiry: BaseInquiryCard[] = [
     description: "輕量化鋁合金金屬設計輕量化鋁合金金屬設計輕量化鋁合金金屬設計",
     price: 2000,
     imgSrc: "device3.png",
-    features: [
-      { id: "5-1", text: "支撐性高" },
-      { id: "5-2", text: "輕量化設計" },
-      { id: "5-3", text: "S曲面型坐墊" }
-    ]
+    features: ["支撐性高", "輕量化設計", "S曲面型坐墊"],
   }
 ];
 
@@ -113,7 +81,7 @@ export const inquiryInfo: InquiryInfoProps = {
   "orderId": "AKC833",
   "createdDate": "2024/10/04",
   "actionAssessment": "具平地跑跳能力",
-  "description": "騎機車不慎摔傷，有撞到腳踝，有時候走路會痛。" 
+  "description": "騎機車不慎摔傷，有撞到腳踝，有時候走路會痛。"
 };
 
 export type InquiryDetailProps = {

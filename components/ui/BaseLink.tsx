@@ -1,9 +1,9 @@
-import Link from "next/link";
+import NextLink from "next/link";
 import styled from "styled-components";
 
-const LinkStyle = styled(Link)`
+const BaseLink = styled(NextLink)`
   font-size: 16px;
   color: ${({ theme }) => theme.colors.info};
 `;
 
-export default LinkStyle;
+export default BaseLink;

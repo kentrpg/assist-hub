@@ -1,28 +1,33 @@
 import { buttonSizes, SecondaryButton } from "@/components/ui/buttons";
 import { Desktop, Mobile, Tablet } from "@/styles/container";
-import { HstackLayout } from "@/styles/flex";
 import { H6 } from "@/styles/typography";
 import styled from "styled-components";
 import { PageTitleDescription } from "@/components/ui/titles";
 
 export const Description = styled(PageTitleDescription)`
-  color: ${({ theme }) => theme.colors.textPrimary};
+  display: none;
+  color: ${({ theme }) => theme.colors.textSecondary};
+  @media (${Mobile}) {
+    display: block;
+  }
 `;
 
 export const List = styled.div`
-  flex: 1 1 auto;
-  ${HstackLayout};
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
   gap: 20px;
   padding: 20px 0 30px 0;
   @media (${Mobile}) {
     flex-direction: row;
-    gap: 30px;
   }
   @media (${Tablet}) {
-    gap: 45px;
+    gap: 25px;
     padding: 60px 0;
+  }
+  @media (${Desktop}) {
+    gap: 45px;
   }
 `;
 
@@ -66,7 +71,12 @@ export const Text = styled.p`
   font-size: 16px;
   font-weight: 500;
   color: ${({ theme }) => theme.colors.textPrimary};
+  @media (${Mobile}) {
+  }
   @media (${Tablet}) {
+    font-size: 18px;
+  }
+  @media (${Desktop}) {
     ${H6};
   }
 `;

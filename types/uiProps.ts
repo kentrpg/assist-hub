@@ -7,9 +7,13 @@ export type IsDefault = {
 export type ColorsType = keyof typeof colors;
 
 // for boolean status
-
+// TBD: 對於相同 boolean status 的 component，是否可以用同一個 prop name？
 export type IsActive = {
   $isActive: boolean;
+};
+
+export type IsCompleted = {
+  $completed: boolean;
 };
 
 // styled component prop

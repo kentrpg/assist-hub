@@ -1,15 +1,4 @@
-import React, { useState } from "react";
-import {
-  TabsContainer,
-  TabsMenu,
-  TabButton,
-  TabContent,
-  Image,
-  Description,
-  Group,
-} from "./styled";
-
-const tabsData = [
+export const tabsData = [
   {
     id: "1",
     label: "具平地跑跳能力",
@@ -48,36 +37,3 @@ const tabsData = [
     description: "適合多樣化行動限制的解決方案。",
   },
 ];
-
-const Tabs = () => {
-  const [activeTab, setActiveTab] = useState("2");
-
-  return (
-    <TabsContainer>
-      <TabsMenu>
-        {tabsData.map((tab) => (
-          <TabButton
-            key={tab.id}
-            $isActive={tab.id === activeTab}
-            onClick={() => setActiveTab(tab.id)}
-          >
-            {tab.label}
-          </TabButton>
-        ))}
-      </TabsMenu>
-      <TabContent>
-        {tabsData.map(
-          (tab) =>
-            tab.id === activeTab && (
-              <Group key={tab.id}>
-                <Image src={tab.imgSrc} alt={tab.label} />
-                <Description>{tab.description}</Description>
-              </Group>
-            )
-        )}
-      </TabContent>
-    </TabsContainer>
-  );
-};
-
-export default Tabs;

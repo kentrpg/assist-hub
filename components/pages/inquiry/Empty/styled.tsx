@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { buttonSizes, PrimaryIconButton } from "@/components/ui/buttons";
 import { Desktop, Mobile, Tablet } from "@/styles/container";
 
 export const Step = styled.div`
@@ -22,11 +21,6 @@ export const Card = styled.div`
   @media (${Mobile}) {
     flex-direction: column;
   }
-`;
-
-export const Number = styled.div`
-  width: 40px;
-  height: 40px;
 `;
 
 export const Image = styled.img`
@@ -65,8 +59,4 @@ export const StepTitle = styled.h3`
 export const StepDescription = styled.p`
   font-size: 14px;
   color: ${({ theme }) => theme.colors.textSecondary};
-`;
-
-export const Button = styled(PrimaryIconButton)`
-  ${buttonSizes.xlarge};
 `;

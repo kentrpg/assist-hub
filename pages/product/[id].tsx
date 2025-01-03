@@ -1,8 +1,8 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import React from "react";
-import ProductDetail from "@/components/pages/product/ProductDetail/";
-import { ProductPageProps } from "@/components/pages/product/ProductDetail/data";
+import Single from "@/components/pages/product/Single";
+import { ProductPageProps } from "@/components/pages/product/Single/data";
 
 const API_URL = `${process.env.NEXT_PUBLIC_JSONSERVER_URL}/products`;
 
@@ -10,8 +10,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const response = await fetch(`${API_URL}`);
   const data = await response.json();
 
-  const paths = data.data.map((product: { id: number }) => ({
-    params: { id: product.id.toString() },
+  const paths = data.data.map((product: { id: string }) => ({
+    params: { id: product.id },
   }));
 
   return {
@@ -25,7 +25,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const response = await fetch(`${API_URL}?id=${id}`);
   const data = await response.json();
 
-  const product = data.data.find((p: { id: number }) => p.id === Number(id));
+  const product = data.data.find((p: { id: string }) => p.id === id);
 
   if (!product) {
     return {
@@ -44,7 +44,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ product }) => {
     return <div>Loading...</div>;
   }
 
-  return <ProductDetail product={product} />;
+  return <Single product={product} />;
 };
 
 export default ProductPage;

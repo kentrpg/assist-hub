@@ -1,52 +1,51 @@
 import React from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { items, carouselItems } from "./data";
+import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
 import { ProductItem } from "./data";
 import {
   ComparisonContainer,
-  Header,
   GridContainer,
+  ComparisonHeader,
   Row,
   Cell,
-  Item,
-  Image,
+  ComparisonItem,
+  ComparisonImage,
   Button,
   Container,
   Info,
   Span,
   Feature,
+  RecommendedContainer,
+  RecommendedHeader,
+  CarouselItem,
+  CarouselImage,
+  CarouselInfo,
+  CarouselTitle,
+  CarouselPrice,
 } from "./styled";
 import { MdShoppingCart, MdCheck } from "react-icons/md";
+import { sliderSettings } from "./data";
+
+const CustomPrevArrow = ({ onClick }: { onClick?: () => void }) => (
+  <div className="slick-prev" onClick={onClick}>
+    <MdArrowBackIosNew size={40} color="#103F99" />
+  </div>
+);
+
+const CustomNextArrow = ({ onClick }: { onClick?: () => void }) => (
+  <div className="slick-next" onClick={onClick}>
+    <MdArrowForwardIos size={40} color="#103F99" />
+  </div>
+);
 
 type ProductDetailsProps = {
   product: ProductItem;
 };
 
-const Product: React.FC<ProductDetailsProps> = ({ product }) => {
-  const items = [
-    {
-      name: "手動輪椅",
-      price: "$2,000",
-      material: "鋁合金",
-      features: ["摺疊設計", "可調節"],
-    },
-    {
-      name: "手動輪椅",
-      price: "$1,200",
-      material: "鋁合金",
-      features: ["摺疊設計", "可調節"],
-    },
-    {
-      name: "高級輪椅",
-      price: "$1,500",
-      material: "複合材料",
-      features: ["摺疊設計", "可調節"],
-    },
-    {
-      name: "電動輪椅",
-      price: "$5,000",
-      material: "碳纖維",
-      features: ["摺疊設計", "可調節"],
-    },
-  ];
+const Single: React.FC<ProductDetailsProps> = ({ product }) => {
   return (
     <Container>
       <Info>
@@ -71,20 +70,20 @@ const Product: React.FC<ProductDetailsProps> = ({ product }) => {
           <p>產地: {product.info.origin}</p>
         </div>
       </Info>
-      
-      <Header>相同類型輔具比較</Header>
+
       <ComparisonContainer>
+        <ComparisonHeader>相同類型輔具比較</ComparisonHeader>
         <GridContainer>
           <Row>
-            <Cell>輔具圖片</Cell>
+            <Cell></Cell>
             {items.map((item, index) => (
-              <Item key={index}>
-                <Image src="/images/wheelChair.svg" alt={item.name} />
+              <ComparisonItem key={index}>
+                <ComparisonImage src="/images/wheelChair.svg" alt={item.name} />
                 <Button>
                   <MdShoppingCart size={24} />
                   加入購物車
                 </Button>
-              </Item>
+              </ComparisonItem>
             ))}
           </Row>
           <Row $bg>
@@ -114,7 +113,7 @@ const Product: React.FC<ProductDetailsProps> = ({ product }) => {
           <Row>
             <Cell>特色</Cell>
             {items.map((item, index) => (
-              <Cell $border key={index}>
+              <Cell $border $feature key={index}>
                 <Feature>
                   {item.features.map((feature, i) => (
                     <Span key={i}>
@@ -127,8 +126,33 @@ const Product: React.FC<ProductDetailsProps> = ({ product }) => {
           </Row>
         </GridContainer>
       </ComparisonContainer>
+      <RecommendedContainer>
+        <RecommendedHeader>其他人也買</RecommendedHeader>
+        <Slider
+          {...sliderSettings}
+          prevArrow={<CustomPrevArrow />}
+          nextArrow={<CustomNextArrow />}
+        >
+          {carouselItems.map((item, index) => (
+            <CarouselItem key={index}>
+              <CarouselImage>
+                <img
+                  src="/images/wheelChair.svg"
+                  width={260}
+                  height={190}
+                  alt={item.name}
+                />
+              </CarouselImage>
+              <CarouselInfo>
+                <CarouselTitle>{item.name}</CarouselTitle>
+                <CarouselPrice>{item.price}</CarouselPrice>
+              </CarouselInfo>
+            </CarouselItem>
+          ))}
+        </Slider>
+      </RecommendedContainer>
     </Container>
   );
 };
 
-export default Product;
+export default Single;

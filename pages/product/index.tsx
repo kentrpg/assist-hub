@@ -1,9 +1,9 @@
-import ProductAll from "@/components/pages/product/ProductAll";
+import All from "@/components/pages/product/All";
 
 const Product = () => {
   return (
     <>
-      <ProductAll></ProductAll>
+      <All></All>
     </>
   );
 };

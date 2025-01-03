@@ -5,9 +5,10 @@ import {
   SubTitle,
   DobField,
   Input,
+  Error,
   IconWrapper,
-} from "../styled";
-import { MdCake } from "react-icons/md";
+} from "./styled";
+import { MdPerson } from "react-icons/md";
 import { FormHooks } from "../data";
 
 const NameWithDob: React.FC<FormHooks> = ({ register, errors }) => (
@@ -21,19 +22,21 @@ const NameWithDob: React.FC<FormHooks> = ({ register, errors }) => (
         {...register("name", { required: "請輸入姓名" })}
       />
       <IconWrapper>
-        <MdCake size={24} />
+        <MdPerson size={24} color="#103F99" />
       </IconWrapper>
-      {errors?.name && <p style={{ color: "red" }}>{errors.name.message}</p>}
+      {errors?.name && <Error>{errors.name.message}</Error>}
     </NameField>
     <DobField>
-      <SubTitle htmlFor="dob">出生年月日</SubTitle>
+      <SubTitle $Isdisabled={true} htmlFor="dob">
+        出生年月日
+      </SubTitle>
       <Input
         disabled={true}
         type="date"
         id="dob"
         {...register("dob", { required: "請輸入出生年月日" })}
       />
-      {errors?.dob && <p style={{ color: "red" }}>{errors.dob.message}</p>}
+      {/* {errors?.dob && <Error>{errors.dob.message}</Error>} */}
     </DobField>
   </Wrapper>
 );

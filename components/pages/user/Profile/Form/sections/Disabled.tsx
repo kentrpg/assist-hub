@@ -1,12 +1,10 @@
 import { FC } from "react";
 import {
-  Container,
   SubTitle,
-  SaveBtn,
   SelectCheckbox,
   DisabilityField,
   DisabilitySelection,
-} from "../styled";
+} from "./styled";
 import { FormHooks } from "../data";
 
 const Disable: FC<FormHooks> = ({ register }) => {

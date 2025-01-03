@@ -7,7 +7,7 @@ import EmailWithPw from "./sections/EmailWithPw";
 import Contact from "./sections/Contact";
 import Address from "./sections/Address";
 import Identity from "./sections/Identity";
-import Disable from "./sections/Disable";
+import Disabled from "./sections/Disabled";
 
 const Form = () => {
   const {
@@ -25,7 +25,7 @@ const Form = () => {
       <Contact register={register} errors={errors}></Contact>
       <Address register={register}></Address>
       <Identity register={register}></Identity>
-      <Disable register={register}></Disable>
+      <Disabled register={register}></Disabled>
       <SaveBtn>儲存編輯</SaveBtn>
     </Container>
   );

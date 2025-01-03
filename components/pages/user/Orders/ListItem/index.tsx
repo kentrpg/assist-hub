@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  OrderList,
+  Item,
   Header,
   Major,
   Type,
@@ -28,6 +28,8 @@ import {
   Quantity,
   Rent,
   Others,
+  Col,
+  ColGroup,
 } from "./styled";
 
 import { Order } from "../data";
@@ -40,7 +42,7 @@ type ListProps = {
   onViewDetails: () => void;
 };
 
-const List = ({ order, onViewDetails }: ListProps) => {
+const ListItem = ({ order, onViewDetails }: ListProps) => {
   const {
     deliveryType,
     orderId,
@@ -57,7 +59,7 @@ const List = ({ order, onViewDetails }: ListProps) => {
   const totalPrice = (quantity * rent + deposit + deliveryFee).toLocaleString();
 
   return (
-    <OrderList>
+    <Item>
       <Header $deliveryType={deliveryType}>
         <Major>
           <Type>{deliveryType}</Type>
@@ -73,12 +75,20 @@ const List = ({ order, onViewDetails }: ListProps) => {
         <Status $status={status}>{status}</Status>
       </Main>
       <Table>
+        <ColGroup>
+          <Col style={{ width: "40%" }} />
+          <Col style={{ width: "15%" }} />
+          <Col style={{ width: "15%" }} />
+          <Col style={{ width: "15%" }} />
+          <Col style={{ width: "15%" }} />
+        </ColGroup>
         <Thead>
           <Tr>
             <NameHeader>輔具名稱</NameHeader>
             <QuantityrHeader>數量</QuantityrHeader>
             <RentHeader>租金</RentHeader>
             <OthersHeader>其他費用</OthersHeader>
+            <th></th>
           </Tr>
         </Thead>
         <Tbody>
@@ -90,7 +100,7 @@ const List = ({ order, onViewDetails }: ListProps) => {
                 <Feature>{description}</Feature>
               </Description>
             </Product>
-            <Quantity>X{quantity}</Quantity>
+            <Quantity>x{quantity}</Quantity>
             <Rent>{rent.toLocaleString()}元</Rent>
             <Others>{deposit + deliveryFee}元</Others>
             <BtnContainer>
@@ -99,8 +109,8 @@ const List = ({ order, onViewDetails }: ListProps) => {
           </Tr>
         </Tbody>
       </Table>
-    </OrderList>
+    </Item>
   );
 };
 
-export default List;
+export default ListItem;

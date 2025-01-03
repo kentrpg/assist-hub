@@ -4,7 +4,8 @@ import {
   SubTitle,
   GenderSelection,
   SelectCheckbox,
-} from "../styled";
+  Error,
+} from "./styled";
 import { FormHooks } from "../data";
 
 const Gender: FC<FormHooks> = ({ register, errors }) => (
@@ -30,7 +31,7 @@ const Gender: FC<FormHooks> = ({ register, errors }) => (
         <label htmlFor="female">女生</label>
       </SelectCheckbox>
     </GenderSelection>
-    {errors?.gender && <p style={{ color: "red" }}>請選擇性別</p>}
+    {errors?.gender && <Error>請選擇性別</Error>}
   </StyledGenderField>
 );
 

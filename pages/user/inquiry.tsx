@@ -1,7 +1,12 @@
-import UserPageLayout from "@/components/pages/user/UserPageLayout";
+import UserPage from "@/components/pages/user/UserPage";
+import { MainWrapper } from "@/styles/wrappers";
 
 const Inquiry = () => {
-  return <UserPageLayout initialTab="inquiry" />;
+  return (
+    <MainWrapper>
+      <UserPage initialTab="inquiry" />;
+    </MainWrapper>
+  );
 };
 
 export default Inquiry;

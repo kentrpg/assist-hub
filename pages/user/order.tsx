@@ -1,7 +1,12 @@
-import UserPageLayout from "@/components/pages/user/UserPageLayout";
+import UserPage from "@/components/pages/user/UserPage";
+import { MainWrapper } from "@/styles/wrappers";
 
 const Order = () => {
-  return <UserPageLayout initialTab="order" />;
+  return (
+    <MainWrapper>
+      <UserPage initialTab="order" />;
+    </MainWrapper>
+  );
 };
 
 export default Order;

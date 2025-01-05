@@ -38,6 +38,7 @@ export const sliderSettings = {
         slidesToShow: 4,
         slidesToScroll: 1,
         centerMode: true,
+        arrows: false,
       },
     },
     {
@@ -46,6 +47,7 @@ export const sliderSettings = {
         slidesToShow: 3,
         slidesToScroll: 1,
         centerMode: true,
+        arrows: false,
       },
     },
     {
@@ -54,14 +56,16 @@ export const sliderSettings = {
         slidesToShow: 2,
         slidesToScroll: 1,
         centerMode: true,
+        arrows: false,
       },
     },
     {
-      breakpoint: 640,
+      breakpoint: 560,
       settings: {
         slidesToShow: 1,
         slidesToScroll: 1,
         centerMode: true,
+        arrows: false,
       },
     },
   ],

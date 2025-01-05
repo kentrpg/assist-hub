@@ -1,5 +1,12 @@
-import styled from "styled-components";
-import { Container1344 } from "@/styles/container";
+import styled, { css } from "styled-components";
+import {
+  Container1344,
+  ExtraLarge,
+  Desktop,
+  Tablet,
+  Mobile,
+} from "@/styles/container";
+// import { c } from "@/styles/theme";
 
 type CellProps = {
   $border?: boolean;
@@ -19,19 +26,91 @@ export const Container = styled(Container1344)`
   align-items: center;
 `;
 
-export const Info = styled.div`
+export const InfoContainer = styled.div`
+  display: flex;
+  width: 100%;
+  row-gap: 24px;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  @media (min-width: 800px) {
+    flex-direction: row;
+    column-gap: 24px;
+  }
+`;
+
+export const InfoImages = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
+  row-gap: 15px;
+  padding-right: 0px;
+  @media (${ExtraLarge}) {
+    padding-right: 90px;
+  }
 `;
+
+export const Thumbnail = styled.div`
+  display: flex;
+  column-gap: 12px;
+  img {
+    width: 50px;
+    height: 50px;
+    @media (${Mobile}) {
+      width: 78px;
+      height: 78px;
+    }
+  }
+`;
+
+export const InfoImage = styled.img`
+  width: 100%;
+  object-fit: cover;
+`;
+
+export const Detail = styled.div`
+  padding: 0px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  @media (min-width: 800px) {
+    max-width: 546px;
+    padding: 24px;
+  }
+`;
+
+export const Title = styled.h3`
+  color: #08204d;
+  font-size: 32px;
+  font-weight: 500;
+`;
+
+export const Tags = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+`;
+
+export const RentBtn = styled.button`
+  padding: 10px 0px;
+  width: 100%;
+  color: #ffffff;
+  border-radius: 30px;
+  background-color: #103f99;
+`;
+
+export const InquiryIcon = styled.div`
+  background-image: "/images/accessible.png";
+`;
+
+export const InquiryBtn = styled.button``;
 
 export const ComparisonContainer = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 16px;
   width: 100%;
-  max-width: 1200px;
   padding: 36px 48px;
   overflow-x: auto;
   @media (max-width: 945px) {
@@ -39,8 +118,9 @@ export const ComparisonContainer = styled.div`
   }
 `;
 
-export const ComparisonHeader = styled.h1`
+export const ComparisonHeader = styled.h5`
   position: sticky;
+  color: #08204d;
   left: 50%;
   transform: translateX(-50%);
   width: max-content;
@@ -112,13 +192,18 @@ export const ComparisonItem = styled.div`
   border-left: 1px solid #e9e5de;
 `;
 
-export const ComparisonImage = styled.img`
+export const ComparisonImg = styled.img`
   width: 100%;
-  max-width: 200px;
-  max-height: 200px;
+  max-width: 100px;
+  max-height: 100px;
+
+  @media (${Tablet}) {
+    max-width: 200px;
+    max-height: 200px;
+  }
 `;
 
-export const Button = styled.button`
+export const ComparisonBtn = styled.button`
   background-color: #103f99;
   display: flex;
   column-gap: 8px;
@@ -129,30 +214,25 @@ export const Button = styled.button`
   border-radius: 30px;
 `;
 
-export const Span = styled.span`
-  display: flex;
-  column-gap: 4px;
-  padding: 3px 8px;
-  color: #888888;
-  font-size: 12px;
-  font-weight: 400;
-  border-radius: 5px;
-  border: 1px solid #888888;
-`;
-
 export const RecommendedContainer = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 16px;
-  padding-top: 36px;
+  padding: 36px 0px;
 
   .slick-slider {
-    max-width: 1200px;
+    max-width: 1344px;
     width: 100%;
     display: flex;
+    flex-direction: column;
+    row-gap: 16px;
     justify-content: center;
     align-items: center;
     padding: 0px 48px;
+    @media (max-width: 1440px) {
+      max-width: 1200px;
+      padding: 0px 48px;
+    }
     @media (max-width: 1296px) {
       max-width: 1000px;
       padding: 0px 48px;
@@ -170,16 +250,17 @@ export const RecommendedContainer = styled.div`
       padding: 0px 24px;
     }
     @media (max-width: 640px) {
-      max-width: 400px;
+      max-width: 460px;
       padding: 0px 24px;
     }
-    @media (max-width: 500px) {
-      max-width: 300px;
+    @media (max-width: 560px) {
+      max-width: 340px;
       padding: 0px 24px;
     }
   }
 
   .slick-list {
+    width: 100%;
     padding: 0 48px;
     overflow: hidden;
     margin: 0;
@@ -196,6 +277,7 @@ export const RecommendedContainer = styled.div`
     box-sizing: border-box;
     display: flex;
     align-items: center;
+    justify-content: center;
   }
 
   .slick-slide img {
@@ -226,11 +308,13 @@ export const RecommendedContainer = styled.div`
   }
 
   .slick-dots {
+    position: static;
     display: flex !important;
     justify-content: center;
     align-items: center;
     column-gap: 8px;
     bottom: -16px;
+    padding: 16px 0px;
   }
 
   .slick-dots li {
@@ -259,7 +343,7 @@ export const RecommendedContainer = styled.div`
   }
 `;
 
-export const RecommendedHeader = styled.div`
+export const RecommendedHeader = styled.h5`
   font-size: 24px;
   padding: 12px 0px;
   font-weight: 500;
@@ -274,7 +358,7 @@ export const CarouselItem = styled.div`
   background-color: #f9f8f6;
 `;
 
-export const CarouselImage = styled.div`
+export const CarouselImg = styled.div`
   padding: 20px;
 `;
 

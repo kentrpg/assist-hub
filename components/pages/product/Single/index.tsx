@@ -2,31 +2,43 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { items, carouselItems } from "./data";
-import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
-import { ProductItem } from "./data";
+import { items, carouselItems, ProductItem } from "./data";
 import {
+  MdArrowBackIosNew,
+  MdArrowForwardIos,
+  MdShoppingCart,
+  MdCheck,
+} from "react-icons/md";
+import { FeatureBadge } from "@/components/ui/badges";
+import {
+  InfoContainer,
   ComparisonContainer,
   GridContainer,
   ComparisonHeader,
   Row,
   Cell,
   ComparisonItem,
-  ComparisonImage,
-  Button,
+  ComparisonImg,
   Container,
-  Info,
-  Span,
   Feature,
   RecommendedContainer,
   RecommendedHeader,
   CarouselItem,
-  CarouselImage,
+  CarouselImg,
   CarouselInfo,
   CarouselTitle,
   CarouselPrice,
+  Title,
+  Tags,
+  Detail,
+  InfoImage,
+  InfoImages,
+  Thumbnail,
+  RentBtn,
+  InquiryBtn,
+  InquiryIcon,
+  ComparisonBtn,
 } from "./styled";
-import { MdShoppingCart, MdCheck } from "react-icons/md";
 import { sliderSettings } from "./data";
 
 const CustomPrevArrow = ({ onClick }: { onClick?: () => void }) => (
@@ -48,29 +60,51 @@ type ProductDetailsProps = {
 const Single: React.FC<ProductDetailsProps> = ({ product }) => {
   return (
     <Container>
-      <Info>
-        <h1>商品名稱: {product.name}</h1>
-        <img src={product.image} alt={product.name} width={200} height={200} />
-        <p>商品描述: {product.description}</p>
-        <p>租金: ${product.rent}/月</p>
-        <p>押金: ${product.deposit}元</p>
-        <p>運費: ${product.fee}元</p>
-        <p>
-          Tags:
-          {product.feature.map((tag, index) => (
-            <span key={index} style={{ marginRight: "8px", color: "red" }}>
-              {tag}
-            </span>
-          ))}
-        </p>
-        <div>
-          <h2>商品資訊:</h2>
-          <p>材料: {product.info.material}</p>
-          <p>載重: {product.info.load}</p>
-          <p>產地: {product.info.origin}</p>
-        </div>
-      </Info>
-
+      {/* 商品資訊 */}
+      <InfoContainer>
+        <InfoImages>
+          <InfoImage src="/images/infoMain.png" alt={product.name} />
+          <Thumbnail>
+            <img src="/images/info1.png" alt="" />
+            <img src="/images/info2.png" alt="" />
+            <img src="/images/info3.png" alt="" />
+            <img src="/images/info4.png" alt="" />
+          </Thumbnail>
+        </InfoImages>
+        <Detail>
+          <Title>{product.name}</Title>
+          <Tags>
+            {product.feature.map((tag, index) => (
+              <FeatureBadge key={index}>
+                <MdCheck size={16} />
+                {tag}
+              </FeatureBadge>
+            ))}
+          </Tags>
+          <div>
+            <p>租金: ${product.rent}/月</p>
+            <p>押金: ${product.deposit}元</p>
+          </div>
+          <div>
+            <h5>商品描述:</h5>
+            <p> {product.description}</p>
+          </div>
+          <div>
+            <h2>商品資訊:</h2>
+            <p>材料: {product.info.material}</p>
+            <p>載重: {product.info.load}</p>
+            <p>產地: {product.info.origin}</p>
+          </div>
+          <div>
+            <RentBtn>
+              立即租賃
+              <InquiryIcon />
+            </RentBtn>
+            <InquiryBtn></InquiryBtn>
+          </div>
+        </Detail>
+      </InfoContainer>
+      {/* 比較商品 */}
       <ComparisonContainer>
         <ComparisonHeader>相同類型輔具比較</ComparisonHeader>
         <GridContainer>
@@ -78,11 +112,11 @@ const Single: React.FC<ProductDetailsProps> = ({ product }) => {
             <Cell></Cell>
             {items.map((item, index) => (
               <ComparisonItem key={index}>
-                <ComparisonImage src="/images/wheelChair.svg" alt={item.name} />
-                <Button>
+                <ComparisonImg src="/images/wheelChair.svg" alt={item.name} />
+                <ComparisonBtn>
                   <MdShoppingCart size={24} />
                   加入購物車
-                </Button>
+                </ComparisonBtn>
               </ComparisonItem>
             ))}
           </Row>
@@ -116,9 +150,9 @@ const Single: React.FC<ProductDetailsProps> = ({ product }) => {
               <Cell $border $feature key={index}>
                 <Feature>
                   {item.features.map((feature, i) => (
-                    <Span key={i}>
+                    <FeatureBadge key={i}>
                       <MdCheck size={16} /> {feature}
-                    </Span>
+                    </FeatureBadge>
                   ))}
                 </Feature>
               </Cell>
@@ -126,6 +160,7 @@ const Single: React.FC<ProductDetailsProps> = ({ product }) => {
           </Row>
         </GridContainer>
       </ComparisonContainer>
+      {/* 輪播 */}
       <RecommendedContainer>
         <RecommendedHeader>其他人也買</RecommendedHeader>
         <Slider
@@ -135,14 +170,14 @@ const Single: React.FC<ProductDetailsProps> = ({ product }) => {
         >
           {carouselItems.map((item, index) => (
             <CarouselItem key={index}>
-              <CarouselImage>
+              <CarouselImg>
                 <img
                   src="/images/wheelChair.svg"
                   width={260}
                   height={190}
                   alt={item.name}
                 />
-              </CarouselImage>
+              </CarouselImg>
               <CarouselInfo>
                 <CarouselTitle>{item.name}</CarouselTitle>
                 <CarouselPrice>{item.price}</CarouselPrice>

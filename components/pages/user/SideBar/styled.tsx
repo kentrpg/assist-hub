@@ -5,7 +5,8 @@ type ButtonProps = {
 };
 
 export const SideBarContainer = styled.div`
-  min-width: 270px;
+  max-width: 270px;
+  width: 100% ;
   padding: 60px 33px;
   display: flex;
   flex-direction: column;

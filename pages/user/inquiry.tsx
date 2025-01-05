@@ -1,11 +1,11 @@
 import UserPage from "@/components/pages/user/UserPage";
-import { MainWrapper } from "@/styles/wrappers";
+import { Wrapper100 } from "@/styles/wrappers";
 
 const Inquiry = () => {
   return (
-    <MainWrapper>
+    <Wrapper100>
       <UserPage initialTab="inquiry" />;
-    </MainWrapper>
+    </Wrapper100>
   );
 };
 

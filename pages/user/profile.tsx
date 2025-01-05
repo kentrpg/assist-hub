@@ -1,11 +1,11 @@
 import UserPage from "@/components/pages/user/UserPage";
-import { MainWrapper } from "@/styles/wrappers";
+import { Wrapper100 } from "@/styles/wrappers";
 
 const Profile = () => {
   return (
-    <MainWrapper>
+    <Wrapper100>
       <UserPage initialTab="profile" />;
-    </MainWrapper>
+    </Wrapper100>
   );
 };
 

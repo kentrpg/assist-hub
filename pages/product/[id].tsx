@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import Single from "@/components/pages/product/Single";
 import { ProductPageProps } from "@/components/pages/product/Single/data";
+import { MainWrapper } from "@/styles/wrappers";
 
 const API_URL = `${process.env.NEXT_PUBLIC_JSONSERVER_URL}/products`;
 
@@ -44,7 +45,11 @@ const ProductPage: React.FC<ProductPageProps> = ({ product }) => {
     return <div>Loading...</div>;
   }
 
-  return <Single product={product} />;
+  return (
+    <MainWrapper>
+      <Single product={product} />
+    </MainWrapper>
+  );
 };
 
 export default ProductPage;

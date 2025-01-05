@@ -1,18 +1,24 @@
+import { Tablet } from "@/styles/container";
+import { CheckboxLabelFontSize } from "@/styles/typography";
 import { Size, Gap, FontSize, ColorsType } from "@/types/uiProps";
 import {
-  MdCheckBox as MdCheckBoxIcon,
+  MdCheckBox,
   MdCheckBoxOutlineBlank,
 } from "react-icons/md";
 import styled from "styled-components";
 
 export type CheckboxLabelProps = FontSize & {
   $labelColor: ColorsType;
+  required?: boolean;
 };
 
 export const CheckboxField = styled.div<Gap>`
   display: flex;
   align-items: center;
-  gap: ${({ $gap }) => $gap}px;
+  gap: 6px;
+  @media (${Tablet}) {
+    gap: ${({ $gap }) => $gap}px;
+  }
 `;
 
 export const CheckboxControl = styled.div<Size>`
@@ -30,11 +36,18 @@ export const VisuallyHiddenInput = styled.input`
 `;
 
 export const CheckboxLabel = styled.label<CheckboxLabelProps>`
-  font-size: ${({ $fontSize }) => $fontSize}px;
   color: ${({ theme, $labelColor }) => theme.colors[$labelColor]};
+  ${({ theme, required }) =>
+    required &&
+    `&::after {
+      content: '*';
+      color: ${theme.colors.error};
+    }
+  `}
+  ${CheckboxLabelFontSize};
 `;
 
-export const CheckedStateIcon = styled(MdCheckBoxIcon)<{
+export const CheckedStateIcon = styled(MdCheckBox)<{
   $checkedIconColor: ColorsType;
 }>`
   position: absolute;

@@ -26,11 +26,6 @@ export const FooterLinks = styled.div`
   text-align: center;
   font-size: 16px;
   margin-top: 8px;
-  a {
-    margin-left: 4px;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
 `;
 
 export const Button = styled(PrimaryButton)`

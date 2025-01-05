@@ -132,7 +132,6 @@ const Footer: React.FC = () => {
             </form>
             <Checkbox
               id="newsletter-consent"
-              label="我想要了解最新的輔具資訊"
               $gap={10}
               defaultChecked={false}
               $fontSize={14}
@@ -140,7 +139,9 @@ const Footer: React.FC = () => {
               $checkedIconColor="textMuted"
               $uncheckedIconColor="textMuted"
               $labelColor="grey300"
-            />
+            >
+              我想要了解最新的輔具資訊
+            </Checkbox>
           </Newsletter>
         </Content>
 

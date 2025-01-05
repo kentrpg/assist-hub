@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, ReactNode } from "react";
 import {
   CheckboxField,
   CheckboxControl,
@@ -11,14 +11,16 @@ import { ColorsType } from "@/types/uiProps";
 
 type CheckboxProps = {
   id: string;
-  label: string;
+  label?: string;
   $gap: number;
   defaultChecked: boolean;
-  $fontSize: number;
+  $fontSize?: number;
   size: number;
   $checkedIconColor: ColorsType;
   $uncheckedIconColor: ColorsType;
   $labelColor: ColorsType;
+  children?: ReactNode;
+  required?: boolean,
 };
 
 const Checkbox: React.FC<CheckboxProps> = ({
@@ -31,6 +33,8 @@ const Checkbox: React.FC<CheckboxProps> = ({
   $checkedIconColor = "textMuted",
   $uncheckedIconColor = "textMuted",
   $labelColor = "textMuted",
+  children,
+  required = false,
 }) => {
   const [checked, setChecked] = useState(defaultChecked);
   const handleToggle = () => setChecked(!checked);
@@ -53,15 +57,16 @@ const Checkbox: React.FC<CheckboxProps> = ({
           />
         )}
       </CheckboxControl>
-      {label && (
+      {children ? (
         <CheckboxLabel
           $fontSize={$fontSize}
           $labelColor={$labelColor}
           htmlFor={id}
+          required={required}
         >
-          {label}
+          {children}
         </CheckboxLabel>
-      )}
+      ) : null}
     </CheckboxField>
   );
 };

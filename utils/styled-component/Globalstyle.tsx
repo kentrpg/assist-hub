@@ -1,5 +1,5 @@
 import { CleanAutofill } from "@/styles/effect";
-import { FontFamily, NotoSansTC } from "@/styles/typography";
+import { FontFamily, NotoSansTC } from "@/fonts";
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`

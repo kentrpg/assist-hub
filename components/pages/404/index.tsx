@@ -1,4 +1,5 @@
-import { Button, Container, ImageWrapper, Image, Content, Title, Text } from "./styled";
+import { ImageWrapper } from "@/components/ui/images";
+import { Button, Container, Image, Content, Title, Text } from "./styled";
 
 const NotFound = () => {
   return (

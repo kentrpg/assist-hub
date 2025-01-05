@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { PrimaryButton, buttonSizes } from "@/components/ui/buttons";
 import { H5 } from "@/styles/typography";
 import { Container1021, Mobile, Tablet } from "@/styles/container";
-import { ImageWrapper as Wrapper } from "@/components/ui/images";
 
 export const Container = styled(Container1021)`
   display: flex;
@@ -16,10 +15,6 @@ export const Container = styled(Container1021)`
   @media (${Tablet}) {
     gap: 32px;
   }
-`;
-
-export const ImageWrapper = styled(Wrapper)`
-  text-align: center;
 `;
 
 export const Image = styled.img`

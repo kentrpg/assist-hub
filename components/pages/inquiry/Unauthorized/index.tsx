@@ -19,7 +19,6 @@ const NotFound = () => {
       </Group>
       <InquiryStep>
         {inquiryStepCards.map(({ step, title, imgSrc, $color }) => (
-          // TBD: 問題 key 需要加入 prop type 避免沒有填入 key 嗎？
           <InquiryStepCard
             key={step}
             step={step}

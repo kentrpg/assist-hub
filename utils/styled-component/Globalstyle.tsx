@@ -34,7 +34,7 @@ const GlobalStyle = createGlobalStyle`
       border-radius: 0;
     }
 
-    &[type="checkbox"] {
+    &[type="checkbox"], &[type="radio"] {
       cursor: pointer;
     }
 

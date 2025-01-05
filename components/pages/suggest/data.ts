@@ -1,4 +1,4 @@
-import type { InquiryInfoProps } from "@/components/ui/InquiryDetail/data";
+import type { InquiryInfoProps } from "@/components/pages/inquiry/Summary/data";
 
 export const suggestInfo: InquiryInfoProps = {
   "orderId": "AKC833",

@@ -21,7 +21,6 @@ export const H4 = css`
   }
 `;
 export const H5 = css`
-  // @usage inquiry/styled.tsx -> Price component
   font-size: 24px;
   font-weight: 500;
 `;

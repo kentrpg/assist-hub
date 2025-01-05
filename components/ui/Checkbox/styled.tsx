@@ -1,16 +1,12 @@
 import { Tablet } from "@/styles/container";
 import { CheckboxLabelFontSize } from "@/styles/typography";
-import { Size, Gap, FontSize, ColorsType } from "@/types/uiProps";
-import {
-  MdCheckBox,
-  MdCheckBoxOutlineBlank,
-} from "react-icons/md";
+import { Size, Gap, FontSize, Color } from "@/types/uiProps";
 import styled from "styled-components";
 
-export type CheckboxLabelProps = FontSize & {
-  $labelColor: ColorsType;
-  required?: boolean;
-};
+type CheckboxTextProps = FontSize &
+  Color & {
+    $isRequired?: boolean;
+  };
 
 export const CheckboxField = styled.div<Gap>`
   display: flex;
@@ -21,13 +17,17 @@ export const CheckboxField = styled.div<Gap>`
   }
 `;
 
-export const CheckboxControl = styled.div<Size>`
+export const CheckboxControl = styled.div<Size & Color>`
   position: relative;
   width: ${({ $size }) => $size}px;
   height: ${({ $size }) => $size}px;
+
+  svg {
+    color: ${({ theme, $color }) => theme.colors[$color]};
+  }
 `;
 
-export const VisuallyHiddenInput = styled.input`
+export const AccessibleInput = styled.input`
   position: absolute;
   width: 100%;
   height: 100%;
@@ -35,29 +35,14 @@ export const VisuallyHiddenInput = styled.input`
   z-index: 1;
 `;
 
-export const CheckboxLabel = styled.label<CheckboxLabelProps>`
-  color: ${({ theme, $labelColor }) => theme.colors[$labelColor]};
-  ${({ theme, required }) =>
-    required &&
+export const CheckboxText = styled.label<CheckboxTextProps>`
+  color: ${({ theme, $color }) => theme.colors[$color]};
+  ${({ theme, $isRequired }) =>
+    $isRequired &&
     `&::after {
       content: '*';
       color: ${theme.colors.error};
     }
   `}
   ${CheckboxLabelFontSize};
-`;
-
-export const CheckedStateIcon = styled(MdCheckBox)<{
-  $checkedIconColor: ColorsType;
-}>`
-  position: absolute;
-  color: ${({ theme, $checkedIconColor }) => theme.colors[$checkedIconColor]};
-`;
-
-export const UncheckedStateIcon = styled(MdCheckBoxOutlineBlank)<{
-  $uncheckedIconColor: ColorsType;
-}>`
-  position: absolute;
-  color: ${({ theme, $uncheckedIconColor }) =>
-    theme.colors[$uncheckedIconColor]};
 `;

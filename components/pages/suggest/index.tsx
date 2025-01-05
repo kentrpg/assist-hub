@@ -21,8 +21,8 @@ import {
 
 import { PageBackButton } from "@/components/ui/circulars";
 import { MdArrowBack, MdShoppingCart } from "react-icons/md";
-import InquiryDetail from "@/components/ui/InquiryDetail";
-import { suggestInfoMapping } from "@/components/ui/InquiryDetail/data";
+import InquiryDetail from "@/components/pages/inquiry/Summary";
+import { suggestInfoMapping } from "@/components/pages/inquiry/Summary/data";
 import { suggestInfo, assistiveRecommendations } from "./data";
 import { FeatureBadge, PriceBadge } from "@/components/ui/badges";
 import { SuggestCheck } from "@/utils/react-icons/CheckIcon";

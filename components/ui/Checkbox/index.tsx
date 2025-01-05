@@ -1,72 +1,126 @@
-import { useState, ReactNode } from "react";
+import { ReactNode } from "react";
 import {
   CheckboxField,
   CheckboxControl,
-  VisuallyHiddenInput,
-  CheckedStateIcon,
-  UncheckedStateIcon,
-  CheckboxLabel,
+  AccessibleInput,
+  CheckboxText,
 } from "./styled";
 import { ColorsType } from "@/types/uiProps";
+import { IconType } from "react-icons";
+import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
+import { PickupMethodValue } from "@/components/pages/cart/Checkout/data";
 
-type CheckboxProps = {
+type BaseCheckboxProps = {
   id: string;
-  label?: string;
   $gap: number;
   defaultChecked: boolean;
   $fontSize?: number;
-  size: number;
+  size?: number;
+  type?: "checkbox" | "radio";
+  $selectedIcon?: IconType;
+  $defaultIcon?: IconType;
   $checkedIconColor: ColorsType;
   $uncheckedIconColor: ColorsType;
   $labelColor: ColorsType;
   children?: ReactNode;
-  required?: boolean,
+  required?: boolean;
 };
 
-const Checkbox: React.FC<CheckboxProps> = ({
+type RadioProps = BaseCheckboxProps & {
+  type: "radio";
+  name: "pickupMethod";
+  value: string;
+  onChange: (value: PickupMethodValue) => void;
+};
+
+type CheckboxProps = BaseCheckboxProps & {
+  type?: "checkbox";
+  name?: string;
+  value?: boolean | string;
+  onChange: (value: boolean) => void;
+};
+
+type Props = RadioProps | CheckboxProps;
+
+const Checkbox: React.FC<Props> = ({
   id,
-  label,
   $gap = 8,
   defaultChecked = false,
   $fontSize = 16,
   size = 24,
+  value = "",
+  type = "checkbox",
+  name = "",
+  $selectedIcon = MdCheckBox,
+  $defaultIcon = MdCheckBoxOutlineBlank,
   $checkedIconColor = "textMuted",
   $uncheckedIconColor = "textMuted",
   $labelColor = "textMuted",
   children,
   required = false,
+  onChange,
 }) => {
-  const [checked, setChecked] = useState(defaultChecked);
-  const handleToggle = () => setChecked(!checked);
+  const handleChange = () => {
+    if (!onChange) return;
+
+    if (type === "radio") {
+      (onChange as RadioProps["onChange"])(value as PickupMethodValue);
+    } else {
+      (onChange as CheckboxProps["onChange"])(!defaultChecked);
+    }
+  };
+
+  const SelectedIcon = $selectedIcon;
+  const DefaultIcon = $defaultIcon;
 
   return (
     <CheckboxField $gap={$gap}>
-      <CheckboxControl $size={size}>
-        <VisuallyHiddenInput
-          type="checkbox"
-          id={id}
-          checked={checked}
-          onChange={handleToggle}
-        />
-        {checked ? (
-          <CheckedStateIcon size={size} $checkedIconColor={$checkedIconColor} />
+      <CheckboxControl
+        $size={size}
+        $color={defaultChecked ? $checkedIconColor : $uncheckedIconColor}
+      >
+        {type === "radio" ? (
+          <>
+            <AccessibleInput
+              type={type}
+              value={value as string}
+              id={id}
+              checked={defaultChecked}
+              onChange={handleChange}
+              name={name}
+            />
+            {defaultChecked ? (
+              <SelectedIcon size={size} />
+            ) : (
+              <DefaultIcon size={size} />
+            )}
+          </>
         ) : (
-          <UncheckedStateIcon
-            size={size}
-            $uncheckedIconColor={$uncheckedIconColor}
-          />
+          <>
+            <AccessibleInput
+              type={type}
+              id={id}
+              checked={defaultChecked}
+              onChange={handleChange}
+            />
+            {defaultChecked ? (
+              <SelectedIcon size={size} />
+            ) : (
+              <DefaultIcon size={size} />
+            )}
+          </>
         )}
       </CheckboxControl>
-      {children ? (
-        <CheckboxLabel
+      {children && (
+        <CheckboxText
           $fontSize={$fontSize}
-          $labelColor={$labelColor}
+          $color={$labelColor}
           htmlFor={id}
-          required={required}
+          $isRequired={required}
         >
           {children}
-        </CheckboxLabel>
-      ) : null}
+        </CheckboxText>
+      )}
     </CheckboxField>
   );
 };

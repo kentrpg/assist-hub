@@ -7,8 +7,8 @@ import { PrimaryIconButton } from "@/components/ui/buttons";
 
 import { inquiryCardColors, submittedInquiry, inquiryInfo } from "../data";
 import InquiryCard from "@/components/ui/cards/InquiryCard";
-import InquiryDetail from "@/components/ui/InquiryDetail";
-import { inquiryInfoMapping } from "@/components/ui/InquiryDetail/data";
+import InquiryDetail from "@/components/pages/inquiry/Summary";
+import { inquiryInfoMapping } from "@/components/pages/inquiry/Summary/data";
 
 const SubmittedInquiry = () => {
   return (

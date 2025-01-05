@@ -23,7 +23,7 @@ export const CircularNmberStyle = styled.div<IsCompleted>`
 
 export const Number = styled(CartStepCompleted)<IsCompleted>`
   background-color: ${({ $completed, theme }) =>
-  $completed ? theme.colors.primary : "#9CA3AF"};
+    $completed ? theme.colors.primary : "#9CA3AF"};
   ${circularSizes.xsmall};
   @media (${Mobile}) {
     ${circularSizes.small};

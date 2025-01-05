@@ -1,4 +1,4 @@
-import type { InquiryInfoProps } from "@/components/ui/InquiryDetail/data";
+import type { InquiryInfoProps } from "@/components/pages/inquiry/Summary/data";
 import type { Color, ColorsType } from "@/types/uiProps";
 
 export const inquiryCardColors: ColorsType[] = ["accent", "primary", "secondary", "secondary", "accent", "primary", "primary", "secondary", "accent"];

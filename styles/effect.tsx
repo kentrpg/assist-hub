@@ -75,3 +75,11 @@ export const ButtonDisabled = css`
   pointer-events: none;
   /* cursor: not-allowed; */
 `;
+
+export const OutlineColorTransition = css`
+  transition: outline-color 0.15s ease;
+`;
+
+export const ColorTransition = css`
+  transition: color 0.15s ease;
+`;

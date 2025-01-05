@@ -1,6 +1,6 @@
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import { Container1164 as Container } from "@/styles/container";
-import { Title } from "../styled";
+import { Title } from "../ProductCard/styled";
 import { Context, SuccessIcon, Description, Mark, Group, SecondaryButton, PrimaryButton } from "./styled";
 
 const Successful = () => {

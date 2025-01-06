@@ -38,6 +38,7 @@ import {
   InquiryBtn,
   InquiryIcon,
   ComparisonBtn,
+  ImageWrapper,
 } from "./styled";
 import { sliderSettings } from "./data";
 
@@ -63,7 +64,9 @@ const Single: React.FC<ProductDetailsProps> = ({ product }) => {
       {/* 商品資訊 */}
       <InfoContainer>
         <InfoImages>
-          <InfoImage src="/images/infoMain.png" alt={product.name} />
+          <ImageWrapper>
+            <InfoImage src="/images/infoMain.png" alt={product.name} />
+          </ImageWrapper>
           <Thumbnail>
             <img src="/images/info1.png" alt="" />
             <img src="/images/info2.png" alt="" />
@@ -91,7 +94,7 @@ const Single: React.FC<ProductDetailsProps> = ({ product }) => {
           </div>
           <div>
             <h2>商品資訊:</h2>
-            <p>材料: {product.info.material}</p>
+            <p>材質: {product.info.material}</p>
             <p>載重: {product.info.load}</p>
             <p>產地: {product.info.origin}</p>
           </div>

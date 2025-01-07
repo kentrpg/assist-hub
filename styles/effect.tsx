@@ -22,11 +22,20 @@ export const InputFieldTransition = css`
   transition: box-shadow 0.13s ease-out, border-color 0.1s ease-in-out;
 `;
 
-export const InputFieldCleanAutofill = css`
-  box-shadow: 0 0 0 1000px ${({ theme }) => theme.colors.grey100} inset;
+export const InputFieldAutofill = css`
+  box-shadow: 0 0 0 1000px ${({ theme }) => theme.colors.secondaryBg} inset;
 `;
 
 export const InputFieldShadow = css`
+  box-shadow: 0 0 0 1px ${({ theme }) => theme.colors.primary},
+    0 0 0 1000px ${({ theme }) => theme.colors.secondaryBg} inset;
+`;
+
+export const FooterAutofill = css`
+  box-shadow: 0 0 0 1000px ${({ theme }) => theme.colors.grey100} inset;
+`;
+
+export const FooterShadow = css`
   box-shadow: 0 0 0 1px ${({ theme }) => theme.colors.primary},
     0 0 0 1000px ${({ theme }) => theme.colors.grey100} inset;
 `;
@@ -82,4 +91,8 @@ export const OutlineColorTransition = css`
 
 export const ColorTransition = css`
   transition: color 0.15s ease;
+`;
+
+export const CheckoutImageShadow = css`
+  /* 其他樣式 */
 `;

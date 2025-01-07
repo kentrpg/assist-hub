@@ -11,7 +11,7 @@ import { signIn } from "@/utils/api/auth/signin";
 import { IconWrapper } from "@/utils/react-icons/iconWrappers";
 import { FaLine } from "react-icons/fa";
 import { useTheme } from "styled-components";
-import Checkbox from "@/components/ui/Checkbox";
+import CheckboxField from "@/utils/react-hook-form/CheckboxField";
 import {
   Container,
   Title,
@@ -25,6 +25,7 @@ import { ForgotPasswordLink, Remember } from "./styled";
 const Signin: React.FC = () => {
   const {
     register,
+    control,
     handleSubmit,
     setError,
     formState: { errors, dirtyFields, isSubmitting },
@@ -81,18 +82,18 @@ const Signin: React.FC = () => {
           </Fragment>
         ))}
         <Remember>
-          <Checkbox
+          <CheckboxField
             id="remember"
+            control={control}
+            field={{ name: "remember" }}
             $gap={8}
-            defaultChecked={false}
             $fontSize={16}
-            size={24}
-            $checkedIconColor="textMuted"
-            $uncheckedIconColor="textMuted"
+            $checkedColor="textMuted"
+            $uncheckedColor="textMuted"
             $labelColor="textMuted"
           >
             記住我
-          </Checkbox>
+          </CheckboxField>
           <ForgotPasswordLink>忘記密碼</ForgotPasswordLink>
         </Remember>
         <Button

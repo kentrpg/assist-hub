@@ -14,16 +14,18 @@ import {
   CategoryLinks,
 } from "./styled";
 import { IconLinkWrapper } from "@/utils/react-icons/iconWrappers";
-import Checkbox from "@/components/ui/Checkbox";
+import CheckboxField from "@/utils/react-hook-form/CheckboxField";
 import { FaFacebookSquare, FaLine } from "react-icons/fa";
 import { useTheme } from "styled-components";
 import { useForm } from "react-hook-form";
 import { ErrorMessage as FormErrorMessage } from "@/utils/react-hook-form/FormError/styled";
 import InputField from "@/utils/react-hook-form/InputField";
 import ForwardButton from "@/components/ui/buttons/ForwardButton";
+import { FooterAutofill, FooterShadow } from "@/styles/effect";
 
 type NewsletterForm = {
   email: string;
+  isSubscribed: boolean;
 };
 
 const Footer: React.FC = () => {
@@ -31,9 +33,15 @@ const Footer: React.FC = () => {
 
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
-  } = useForm<NewsletterForm>();
+  } = useForm<NewsletterForm>({
+    defaultValues: {
+      email: "",
+      isSubscribed: false,
+    },
+  });
 
   const onSubmit = (data: NewsletterForm) => {
     console.log(data);
@@ -95,20 +103,20 @@ const Footer: React.FC = () => {
                   $fontSize={14}
                   $borderColor="grey300"
                   $backgroundColor="grey100"
+                  $autofill={FooterAutofill}
+                  $shadow={FooterShadow}
                   $padding="7px 34px 7px 10px"
                   register={register}
                   required="請輸入電子信箱"
                   validate={{
                     domain: (value: string) => {
-                      const domainRegex =
-                        /@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+                      const domainRegex = /@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
                       return (
                         domainRegex.test(value) || "請輸入有效的電子郵件域名"
                       );
                     },
                     local: (value: string) => {
-                      const beforeAtRegex =
-                        /^(?:[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:\\[\x01-\x09\x0b\x0c\x0e-\x7f]|[\x01-\x09\x0b\x0c\x0e-\x7f])*")@/;
+                      const beforeAtRegex = /^(?:[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:\\[\x01-\x09\x0b\x0c\x0e-\x7f]|[\x01-\x09\x0b\x0c\x0e-\x7f])*")@/;
                       return (
                         beforeAtRegex.test(value) ||
                         "電子郵件地址 '@' 前方不應包含空白或非法字符"
@@ -126,22 +134,24 @@ const Footer: React.FC = () => {
                 />
                 <ForwardButton />
                 {errors.email && (
-                  <FormErrorMessage>{errors.email.message}</FormErrorMessage>
+                  <FormErrorMessage $margin="4px">
+                    {errors.email.message}
+                  </FormErrorMessage>
                 )}
               </SubscriptionField>
             </form>
-            <Checkbox
+            <CheckboxField
               id="newsletter-consent"
+              control={control}
+              field={{ name: "isSubscribed" }}
               $gap={10}
-              defaultChecked={false}
               $fontSize={14}
-              size={24}
-              $checkedIconColor="textMuted"
-              $uncheckedIconColor="textMuted"
+              $checkedColor="textMuted"
+              $uncheckedColor="textMuted"
               $labelColor="grey300"
             >
               我想要了解最新的輔具資訊
-            </Checkbox>
+            </CheckboxField>
           </Newsletter>
         </Content>
 

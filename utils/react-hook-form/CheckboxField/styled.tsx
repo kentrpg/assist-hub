@@ -8,7 +8,7 @@ type CheckboxTextProps = FontSize &
     $isRequired?: boolean;
   };
 
-export const CheckboxField = styled.div<Gap>`
+export const CheckboxGroup = styled.div<Gap>`
   display: flex;
   align-items: center;
   gap: 6px;
@@ -45,4 +45,9 @@ export const CheckboxText = styled.label<CheckboxTextProps>`
     }
   `}
   ${CheckboxLabelFontSize};
+
+  a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
 `;

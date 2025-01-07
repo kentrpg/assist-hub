@@ -1,4 +1,5 @@
 import { colors } from "@/styles/theme";
+import { css } from "styled-components";
 
 export type IsDefault = {
   $isDefault?: boolean;
@@ -16,6 +17,14 @@ export type IsCompleted = {
 };
 
 // styled component prop
+
+export type Autofill = {
+  $autofill?: ReturnType<typeof css>;
+};
+
+export type Shadow = {
+  $shadow?: ReturnType<typeof css>;
+};
 
 export type Color = {
   $color: ColorsType;
@@ -35,6 +44,10 @@ export type FontSize = {
 
 export type BorderRadius = {
   $borderRadius: number;
+}
+
+export type Margin = {
+  $margin: string;
 }
 
 export type Padding = {

@@ -1,7 +1,7 @@
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import { Container1164 as Container } from "@/styles/container";
 import {
-  FormGrid,
+  ShippingInfo,
   FieldGroup,
   Label,
   OrderForm,
@@ -9,7 +9,6 @@ import {
   ProductCard,
   ProductInfos,
   Title,
-  StoreInfo,
   PickupInfoItem,
   CheckboxItem,
   TotalCost,
@@ -44,14 +43,15 @@ import {
   pickupRadios,
   errorMessages,
   checkboxData,
-  recipientInputFields,
+  storePickupInputFields,
 } from "./data";
-import { useForm } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import InputField from "@/utils/react-hook-form/InputField";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import RadioField from "@/utils/react-hook-form/RadioField";
 import { ErrorMessageField } from "@/utils/react-hook-form/ErrorMessageField";
 import { FieldInputLabelMapping } from "@/utils/react-hook-form/InputField/data";
+import Address from "./Address";
 
 const Checkout = (props: {
   data: any;
@@ -67,17 +67,20 @@ const Checkout = (props: {
     summaryData,
   } = props;
 
-  const {
-    register,
-    control,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<CheckoutFormData>({
+  const methods = useForm<CheckoutFormData>({
     mode: "onChange",
     defaultValues: defaultFormValues,
     criteriaMode: "all",
     reValidateMode: "onChange",
   });
+
+  const {
+    register,
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors, isSubmitting },
+  } = methods;
 
   const onSubmit = (data: CheckoutFormData) => {
     console.log("Form submitted:", data);
@@ -95,134 +98,136 @@ const Checkout = (props: {
   return (
     <Container>
       <Breadcrumb />
-      <OrderForm onSubmit={handleSubmit(onSubmit)} noValidate>
-        <Shipping>
-          <Title>訂購資訊</Title>
-          <FormGrid>
-            <StoreInfo>
-              <PickupMethod>
-                <PickupLabel>取貨方式</PickupLabel>
-                <PickupRadio>
-                  {pickupRadios.map((radioProps) => (
-                    <RadioField
-                      key={radioProps.id}
-                      {...radioProps}
-                      control={control}
-                    >
-                      {radioProps.children}
-                    </RadioField>
-                  ))}
-                </PickupRadio>
-              </PickupMethod>
-              {renderError("pickupMethod")}
-              <PickupInfo>
-                {storeInfoDisplay.map(({ label, value }) => (
-                  <PickupInfoItem key={label}>
-                    {label}：{value}
-                  </PickupInfoItem>
+      <FormProvider {...methods}>
+        <OrderForm onSubmit={handleSubmit(onSubmit)} noValidate>
+          <Shipping>
+            <Title>訂購資訊</Title>
+            <PickupMethod>
+              <PickupLabel>取貨方式</PickupLabel>
+              <PickupRadio>
+                {pickupRadios.map((radioProps) => (
+                  <RadioField
+                    key={radioProps.id}
+                    {...radioProps}
+                    control={control}
+                  >
+                    {radioProps.children}
+                  </RadioField>
                 ))}
-              </PickupInfo>
-            </StoreInfo>
+              </PickupRadio>
+            </PickupMethod>
+            {renderError("pickupMethod")}
+            <ShippingInfo>
+              {watch("pickupMethod") === "store" && (
+                <PickupInfo>
+                  {storeInfoDisplay.map(({ label, value }) => (
+                    <PickupInfoItem key={label}>
+                      {label}：{value}
+                    </PickupInfoItem>
+                  ))}
+                </PickupInfo>
+              )}
+              <Recipient>
+                {storePickupInputFields.map((fieldProps) => (
+                  <FieldGroup key={fieldProps.name}>
+                    <Label htmlFor={fieldProps.name} required>
+                      {
+                        FieldInputLabelMapping[
+                          fieldProps.name as keyof typeof FieldInputLabelMapping
+                        ]
+                      }
+                    </Label>
+                    <InputField {...fieldProps} register={register} />
+                    {renderError(fieldProps.name as keyof CheckoutFormData)}
+                  </FieldGroup>
+                ))}
+                {watch("pickupMethod") === "delivery" && <Address />}
+              </Recipient>
+            </ShippingInfo>
+          </Shipping>
 
-            <Recipient>
-              {recipientInputFields.map((fieldProps) => (
-                <FieldGroup key={fieldProps.name}>
-                  <Label htmlFor={fieldProps.name} required>
-                    {
-                      FieldInputLabelMapping[
-                        fieldProps.name as keyof typeof FieldInputLabelMapping
-                      ]
-                    }
-                  </Label>
-                  <InputField {...fieldProps} register={register} />
-                  {renderError(fieldProps.name as keyof CheckoutFormData)}
-                </FieldGroup>
+          <Payment>
+            <Title>付款方式</Title>
+            <PaymentOptions>
+              {paymentMethods.map(({ id, value, icon }) => (
+                <PaymentOption
+                  key={id}
+                  value={value}
+                  register={register}
+                  field={{
+                    name: "paymentMethod",
+                    validation: {
+                      required: "請選擇付款方式",
+                    },
+                  }}
+                >
+                  {icon}
+                </PaymentOption>
               ))}
-            </Recipient>
-          </FormGrid>
-        </Shipping>
+            </PaymentOptions>
+            {renderError("paymentMethod")}
+          </Payment>
 
-        <Payment>
-          <Title>付款方式</Title>
-          <PaymentOptions>
-            {paymentMethods.map(({ id, value, icon }) => (
-              <PaymentOption
-                key={id}
-                value={value}
-                register={register}
-                field={{
-                  name: "paymentMethod",
-                  validation: {
-                    required: "請選擇付款方式",
-                  },
-                }}
-              >
-                {icon}
-              </PaymentOption>
-            ))}
-          </PaymentOptions>
-          {renderError("paymentMethod")}
-        </Payment>
-
-        <Summary>
-          <Title>訂單檢視</Title>
-          <ProductCard>
-            <ImageWrapper>
-              <CheckoutImage
-                src={`/images/${summaryData.image.src}`}
-                alt={summaryData.image.alt}
-                width={summaryData.image.width}
-                height={summaryData.image.height}
-              />
-            </ImageWrapper>
-            <ProductInfos>
-              <ProductInfo>
-                <ProductTitle>{summaryData.title}</ProductTitle>
-              </ProductInfo>
-              {summaryData.details.map(({ label, value }) => (
-                <ProductInfo key={label}>
-                  <ProductLabel>{label}</ProductLabel>
-                  <ProductValue>{value}</ProductValue>
+          <Summary>
+            <Title>訂單檢視</Title>
+            <ProductCard>
+              <ImageWrapper>
+                <CheckoutImage
+                  src={`/images/${summaryData.image.src}`}
+                  alt={summaryData.image.alt}
+                  width={summaryData.image.width}
+                  height={summaryData.image.height}
+                />
+              </ImageWrapper>
+              <ProductInfos>
+                <ProductInfo>
+                  <ProductTitle>{summaryData.title}</ProductTitle>
                 </ProductInfo>
-              ))}
-            </ProductInfos>
-          </ProductCard>
+                {summaryData.details.map(({ label, value }) => (
+                  <ProductInfo key={label}>
+                    <ProductLabel>{label}</ProductLabel>
+                    <ProductValue>{value}</ProductValue>
+                  </ProductInfo>
+                ))}
+              </ProductInfos>
+            </ProductCard>
 
-          <Costs>
-            {costsData.map(({ label, value }: LabeledValue) => (
-              <Cost key={label}>
-                <span>{label}</span>
-                <span>{value}</span>
-              </Cost>
-            ))}
-          </Costs>
-          <TotalCost>
-            <span>{amountData.label}</span>
-            <span>{amountData.value}</span>
-          </TotalCost>
-
-          <Term>
-            <CheckboxList>
-              {checkboxData.map((checkboxProps) => (
-                <CheckboxItem key={checkboxProps.id}>
-                  <CheckboxField {...checkboxProps} control={control}>
-                    {checkboxProps.children}
-                  </CheckboxField>
-                  {renderError(checkboxProps.field.name)}
-                </CheckboxItem>
+            <Costs>
+              {costsData.map(({ label, value }: LabeledValue) => (
+                <Cost key={label}>
+                  <span>{label}</span>
+                  <span>{value}</span>
+                </Cost>
               ))}
-            </CheckboxList>
-            <CheckoutAction>
-              <AccentButton
-                type="submit"
-                disabled={isSubmitting || Object.keys(errors).length !== 0}
-              >
-                {isSubmitting ? <LoaderSpinner /> : "送出訂單"}
-              </AccentButton>
-            </CheckoutAction>
-          </Term>
-        </Summary>
-      </OrderForm>
+            </Costs>
+            <TotalCost>
+              <span>{amountData.label}</span>
+              <span>{amountData.value}</span>
+            </TotalCost>
+
+            <Term>
+              <CheckboxList>
+                {checkboxData.map((checkboxProps) => (
+                  <CheckboxItem key={checkboxProps.id}>
+                    <CheckboxField {...checkboxProps} control={control}>
+                      {checkboxProps.children}
+                    </CheckboxField>
+                    {renderError(checkboxProps.field.name)}
+                  </CheckboxItem>
+                ))}
+              </CheckboxList>
+              <CheckoutAction>
+                <AccentButton
+                  type="submit"
+                  disabled={isSubmitting || Object.keys(errors).length !== 0}
+                >
+                  {isSubmitting ? <LoaderSpinner /> : "送出訂單"}
+                </AccentButton>
+              </CheckoutAction>
+            </Term>
+          </Summary>
+        </OrderForm>
+      </FormProvider>
     </Container>
   );
 };

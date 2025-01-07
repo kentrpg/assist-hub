@@ -4,7 +4,7 @@ import { ColorsType } from "@/types/uiProps";
 import { MdRadioButtonChecked, MdRadioButtonUnchecked } from "react-icons/md";
 import { FieldValues, useController, Control } from "react-hook-form";
 import { BaseField } from "@/utils/react-hook-form/types";
-import { RadioSize } from "@/styles/iconSize";
+import { RadioSize } from "@/constants/iconSize";
 
 export type BaseRadioType<T extends FieldValues> = {
   id: string;

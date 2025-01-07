@@ -5,10 +5,7 @@ import { ErrorMessageProps } from "@/utils/react-hook-form/ErrorMessageField";
 import { InfoLink } from "@/utils/link";
 import { BaseCheckboxType } from "@/utils/react-hook-form/CheckboxField";
 import { FieldValues, Path } from "react-hook-form";
-import {
-  InputFieldAutofill,
-  InputFieldShadow,
-} from "@/styles/effect";
+import { InputFieldAutofill, InputFieldShadow } from "@/styles/effect";
 import {
   Autofill,
   Color,
@@ -166,6 +163,10 @@ export type CheckoutFormData = {
   name: string;
   phone: string;
   email: string;
+  zipCode?: string;
+  city?: string;
+  district?: string;
+  address?: string;
   agreeRentalRules: boolean;
   agreeTermsPrivacy: boolean;
 };
@@ -178,6 +179,10 @@ export const defaultFormValues: CheckoutFormData = {
   name: "",
   phone: "",
   email: "",
+  zipCode: "",
+  city: "",
+  district: "",
+  address: "",
   agreeRentalRules: false,
   agreeTermsPrivacy: false,
 };
@@ -238,7 +243,7 @@ export type BaseInputFieldType<T extends FieldValues> = Padding &
   };
 
 // 在適當位置加入以下資料結構
-export const recipientInputFields: BaseInputFieldType<CheckoutFormData>[] = [
+export const storePickupInputFields: BaseInputFieldType<CheckoutFormData>[] = [
   {
     name: "name",
     type: "text",

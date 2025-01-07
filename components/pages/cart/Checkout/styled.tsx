@@ -37,7 +37,7 @@ const Section = css`
 
 export const Shipping = styled.section`
   ${Section};
-  gap: 20px;
+  gap: 16px;
   grid-column: 1 / -1;
   grid-row: auto;
 
@@ -82,13 +82,9 @@ export const SectionTitle = styled.h2`
   margin-bottom: 20px;
 `;
 
-export const FormGrid = styled.div`
+export const ShippingInfo = styled.div`
   display: grid;
-  gap: 20px;
-`;
-
-export const StoreInfo = styled.div`
-  ${CardRadius};
+  gap: 16px;
 `;
 
 export const PickupMethod = styled.div`
@@ -108,7 +104,7 @@ export const PickupRadio = styled.div`
 `;
 
 export const PickupInfo = styled.ul`
-  margin-top: 6px;
+  /* margin-top: 6px; */
 `;
 
 export const PickupInfoItem = styled.li`
@@ -135,6 +131,10 @@ export const FieldGroup = styled.div`
   }
   @media (${Mobile}) {
     flex: 1 1 calc(50% - 8px);
+  }
+
+  &:last-child {
+    flex: 1 1 100%;
   }
 `;
 

@@ -9,7 +9,7 @@ import {
 import { MainWrapper } from "@/styles/wrappers";
 
 export const getStaticProps: GetStaticProps = async () => {
-  const filePath = path.join(process.cwd(), "utils/api/dev/GET_orders.json");
+  const filePath = path.join(process.cwd(), "mock/GET_orders.json");
   const { data } = JSON.parse(await fs.readFile(filePath, "utf8"));
 
   const storeInfoDisplay: LabeledValue[] = [

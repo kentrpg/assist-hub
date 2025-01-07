@@ -50,8 +50,9 @@ export const Tabs = styled.div`
 export const Tab = styled.button<ButtonProps>`
   display: flex;
   justify-content: center;
+  column-gap: 10px;
   font-size: 14px;
-  padding: 10px 0px;
+  padding: 10px 57px;
   background-color: ${({ $isActive }) => ($isActive ? "#103f99" : "white")};
   border-radius: 10px;
   color: ${({ $isActive }) => ($isActive ? "white" : "black")};
@@ -60,20 +61,10 @@ export const Tab = styled.button<ButtonProps>`
   }
 `;
 
-export const Basic = styled.div`
+export const Wrapper = styled.div`
   display: flex;
   align-items: center;
   column-gap: 10px;
-`;
-
-export const Orders = styled.div`
-  display: flex;
-  align-items: center;
-  column-gap: 10px;
-`;
-
-export const Inquiries = styled.div`
-  display: flex;
-  align-items: center;
-  column-gap: 10px;
+  max-width: 90px;
+  width: 100%;
 `;

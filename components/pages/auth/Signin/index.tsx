@@ -6,12 +6,12 @@ import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import FormField from "@/utils/react-hook-form/FloatingLabel";
 import { RegisterField } from "@/utils/react-hook-form/types";
 import { registerFields, SignInInputs } from "./data";
-import LinkStyle from "@/components/ui/BaseLink";
+import { UnderlineLink } from "@/utils/link";
 import { signIn } from "@/utils/api/auth/signin";
 import { IconWrapper } from "@/utils/react-icons/iconWrappers";
 import { FaLine } from "react-icons/fa";
 import { useTheme } from "styled-components";
-import Checkbox from "@/components/ui/Checkbox";
+import CheckboxField from "@/utils/react-hook-form/CheckboxField";
 import {
   Container,
   Title,
@@ -25,6 +25,7 @@ import { ForgotPasswordLink, Remember } from "./styled";
 const Signin: React.FC = () => {
   const {
     register,
+    control,
     handleSubmit,
     setError,
     formState: { errors, dirtyFields, isSubmitting },
@@ -81,17 +82,18 @@ const Signin: React.FC = () => {
           </Fragment>
         ))}
         <Remember>
-          <Checkbox
+          <CheckboxField
             id="remember"
-            label="記住我"
+            control={control}
+            field={{ name: "remember" }}
             $gap={8}
-            defaultChecked={false}
             $fontSize={16}
-            size={24}
-            $checkedIconColor="textMuted"
-            $uncheckedIconColor="textMuted"
+            $checkedColor="textMuted"
+            $uncheckedColor="textMuted"
             $labelColor="textMuted"
-          />
+          >
+            記住我
+          </CheckboxField>
           <ForgotPasswordLink>忘記密碼</ForgotPasswordLink>
         </Remember>
         <Button
@@ -108,7 +110,7 @@ const Signin: React.FC = () => {
         </OutlineButton>
         <FooterLinks>
           還沒有帳號嗎？
-          <LinkStyle href="/auth/register">立即註冊</LinkStyle>
+          <UnderlineLink href="/auth/register">立即註冊</UnderlineLink>
         </FooterLinks>
       </Form>
     </Container>

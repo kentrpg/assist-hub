@@ -1,4 +1,7 @@
-import { AccentIconButton, buttonGapSizes } from "@/components/ui/buttons";
+import {
+  AccentIconButton,
+  buttonGapSizes,
+} from "@/components/ui/buttons/Layout";
 import { InputRadius } from "@/styles/borderRadius";
 import { Tablet, Mobile } from "@/styles/container";
 import { H6 } from "@/styles/typography";

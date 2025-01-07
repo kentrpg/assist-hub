@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import {
   SideBarContainer,
   Span,
@@ -9,25 +10,25 @@ import {
   Profile,
 } from "./styled";
 import { tabs, ActiveTabType } from "./data";
-import Image from "next/image";
 import React from "react";
 
 type SideBarProps = {
-  setActiveTab: (tab: ActiveTabType) => void; //通常用在FC上(只處理東西)
+  setActiveTab: (tab: ActiveTabType) => void;
   activeTab: ActiveTabType;
 };
 
 const SideBar: React.FC<SideBarProps> = ({ setActiveTab, activeTab }) => {
+  const router = useRouter();
+
+  const handleTabClick = (tabKey: ActiveTabType) => {
+    setActiveTab(tabKey);
+    router.push(`/user/${tabKey}`);
+  };
+
   return (
     <SideBarContainer>
       <Profile>
-        <Image
-          src="/images/Profile.svg"
-          alt="用戶頭像"
-          width={60}
-          height={60}
-          priority
-        />
+        <img src="/images/Profile.svg" alt="用戶頭像" width={60} height={60} />
       </Profile>
       <Info>
         <Name>王小姐</Name>
@@ -39,7 +40,7 @@ const SideBar: React.FC<SideBarProps> = ({ setActiveTab, activeTab }) => {
           <Tab
             key={tab.key}
             $isActive={tab.isActive(activeTab)}
-            onClick={() => setActiveTab(tab.key)}
+            onClick={() => handleTabClick(tab.key)}
           >
             {tab.icon}
             <Span>{tab.label}</Span>

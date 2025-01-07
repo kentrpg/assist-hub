@@ -9,3 +9,8 @@ export type RegisterField<T extends FieldValues> = {
   validation?: FieldValues;
   errorType: ErrorType;
 };
+
+export type BaseField<T extends FieldValues> = {
+  name: Path<T>;
+  validation?: FieldValues;
+};

@@ -1,14 +1,12 @@
 import { FC } from "react";
 import {
-  Select,
   SubTitle,
   Wrapper,
   Input,
-  IconWrapper,
+  Error,
   PhoneField,
   ContactField,
-} from "../styled";
-import { MdPhoneIphone } from "react-icons/md";
+} from "./styled";
 import { FormHooks } from "../data";
 const Contact: FC<FormHooks> = ({ register, errors }) => {
   return (
@@ -27,26 +25,17 @@ const Contact: FC<FormHooks> = ({ register, errors }) => {
             },
           })}
         />
-        <IconWrapper>
-          <MdPhoneIphone size={24} />
-        </IconWrapper>
-        {errors?.phone && (
-          <p style={{ color: "red" }}>{errors.phone.message}</p>
-        )}
+        {errors?.phone && <Error>{errors.phone.message}</Error>}
       </PhoneField>
       <ContactField>
-        <SubTitle htmlFor="contact-time">方便聯繫時間</SubTitle>
-        <Select
-          id="contact-time"
-          {...register("contactTime", { required: "請選擇聯繫時間" })}
-        >
-          <option value="morning">上午 09:00 - 12:00</option>
-          <option value="afternoon">下午 12:00 - 18:00</option>
-          <option value="evening">晚上 18:00 - 21:00</option>
-        </Select>
-        {errors?.contactTime && (
-          <p style={{ color: "red" }}>{errors.contactTime.message}</p>
-        )}
+        <SubTitle htmlFor="contactTime">方便聯繫時間</SubTitle>
+        <Input
+          type="text"
+          id="contactTime"
+          placeholder="上午 09:00 - 12:00"
+          {...register("contactTime", { required: "請輸入正確的數值" })}
+        />
+        {errors?.contactTime && <Error>{errors.contactTime.message}</Error>}
       </ContactField>
     </Wrapper>
   );

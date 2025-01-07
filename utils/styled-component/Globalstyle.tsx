@@ -1,5 +1,5 @@
 import { CleanAutofill } from "@/styles/effect";
-import { FontFamily, NotoSansTC } from "@/styles/typography";
+import { FontFamily, NotoSansTC } from "@/fonts";
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
@@ -34,7 +34,7 @@ const GlobalStyle = createGlobalStyle`
       border-radius: 0;
     }
 
-    &[type="checkbox"] {
+    &[type="checkbox"], &[type="radio"] {
       cursor: pointer;
     }
 
@@ -50,15 +50,15 @@ const GlobalStyle = createGlobalStyle`
     line-height: inherit;
   }
 
+  h1, h2, h3, h4, h5, h6, div, span, p {
+    cursor: default;
+  }
+
   a, label, button, select, textarea {
     cursor: pointer;
     & * {
       cursor: pointer;
     }
-  }
-
-  h1, h2, h3, h4, h5, h6, div, span, p {
-    cursor: default;
   }
 
   input,

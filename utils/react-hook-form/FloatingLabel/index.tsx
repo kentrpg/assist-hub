@@ -51,6 +51,7 @@ const FormField = <T extends FieldValues>({
         <Label htmlFor={String(field.name)}>{field.label}</Label>
       </FloatingLabelWrapper>
       <FormError
+        $margin="4px"
         name={field.name}
         errorType={field.errorType}
         errors={errors}

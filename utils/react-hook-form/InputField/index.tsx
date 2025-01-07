@@ -14,6 +14,8 @@ const InputField = <T extends FieldValues>({
   register,
   required,
   validate,
+  $autofill,
+  $shadow,
 }: InputFieldProps<T>) => {
   return (
     <StyledInputField
@@ -23,6 +25,8 @@ const InputField = <T extends FieldValues>({
       $fontSize={$fontSize}
       $borderColor={$borderColor}
       $backgroundColor={$backgroundColor}
+      $autofill={$autofill}
+      $shadow={$shadow}
       $padding={$padding}
       {...register(name, {
         required,

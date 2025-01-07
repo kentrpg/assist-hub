@@ -7,7 +7,7 @@ import {
   AccentIconButton,
   PrimaryIconButton,
   SecondaryIconButton,
-} from "@/components/ui/buttons";
+} from "@/components/ui/buttons/Layout";
 
 export const Wrapper = styled.header`
   width: 100%;
@@ -192,8 +192,7 @@ export const HamburgerSvg = styled.svg<{ $menuOpen: boolean }>`
     stroke-dashoffset: 0%;
   }
 
-  ${({ $menuOpen }) =>
-    $menuOpen &&
+  ${({ $menuOpen }) => $menuOpen &&
     `
     .top {
       transform: rotate(45deg);

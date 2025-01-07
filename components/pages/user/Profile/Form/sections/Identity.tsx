@@ -4,7 +4,7 @@ import {
   IdentityField,
   IdentitySelection,
   SelectCheckbox,
-} from "../styled";
+} from "./styled";
 
 const Identity: React.FC<FormHooks> = ({ register }) => {
   return (

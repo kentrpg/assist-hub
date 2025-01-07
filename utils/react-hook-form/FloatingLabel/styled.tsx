@@ -8,7 +8,7 @@ import styled from "styled-components";
 
 export const FloatingLabelWrapper = styled.div`
   position: relative;
-  margin-top: 12px;
+  margin-top: 24px;
 
   input:focus + label,
   :not(:placeholder-shown) + label {

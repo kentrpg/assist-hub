@@ -5,7 +5,7 @@ import {
   SubTitle,
   Assistive,
   CardGroup,
-  DraftSubmitButton,
+  AccentButton,
   ActionAssessment,
 } from "../styled";
 import { PageBackButton } from "@/components/ui/circulars";
@@ -14,7 +14,7 @@ import { inquiryCardColors, draftInquiry } from "../data";
 import { FlexAlignCenter } from "@/styles/flex";
 import InquiryCard from "@/components/ui/cards/InquiryCard";
 import DashedCard from "@/components/ui/cards/DashedCard";
-import Tabs from "./Tabs";
+import Tabs from "@/components/ui/Tabs";
 
 const DraftInquiry = () => {
   const cardSlots = Array.from({ length: 3 - draftInquiry.length });
@@ -53,7 +53,7 @@ const DraftInquiry = () => {
         <Tabs />
       </ActionAssessment>
       <FlexAlignCenter>
-        <DraftSubmitButton>送出詢問單</DraftSubmitButton>
+        <AccentButton>送出詢問單</AccentButton>
       </FlexAlignCenter>
     </Container>
   );

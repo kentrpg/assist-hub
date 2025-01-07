@@ -10,6 +10,10 @@ import styled, { css } from "styled-components";
 
 // Circular size variants for responsive design
 export const circularSizes = {
+  xsmall: css`
+    width: 16px;
+    height: 16px;
+  `,
   small: css`
     width: 24px;
     height: 24px;
@@ -29,7 +33,7 @@ export const circularSizes = {
 };
 
 const BaseCircularButton = css`
-  position: absolute;
+  position: static;
   display: flex;
   align-items: center;
   justify-content: center;

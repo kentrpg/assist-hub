@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
-export const ProfileContainer = styled.div`
+export const Container = styled.div`
   flex: 1;
-  color: #08204d;
   padding: 48px;
   border-radius: 10px;
   outline: 1px #888888 solid;
@@ -11,8 +10,9 @@ export const ProfileContainer = styled.div`
 
 export const Titile = styled.h5`
   font-size: 24px;
+  font-weight: 500;
   padding-left: 14px;
-  border-left: 5px solid #08204d;
+  border-left: 5px solid ${({ theme }) => theme.colors.textprimary};
+  color: ${({ theme }) => theme.colors.textprimary};
   margin-bottom: 32px;
 `;
-

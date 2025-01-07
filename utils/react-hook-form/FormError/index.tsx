@@ -2,6 +2,7 @@ import { FieldErrors, FieldValues, Path } from "react-hook-form";
 import { ErrorMessage, PasswordErrorMessage } from "./styled";
 
 export type FormErrorProps<T extends FieldValues> = {
+  $margin: string;
   name: Path<T>;
   errorType: "password" | "default";
   errors: FieldErrors<T>;
@@ -12,6 +13,7 @@ export type FormErrorProps<T extends FieldValues> = {
 };
 
 export const FormError = <T extends FieldValues>({
+  $margin = "4px",
   name,
   errorType,
   errors,
@@ -35,7 +37,7 @@ export const FormError = <T extends FieldValues>({
       return null;
     case "default":
       return errors[name] ? (
-        <ErrorMessage>{String(errors[name].message)}</ErrorMessage>
+        <ErrorMessage $margin={$margin}>{String(errors[name].message)}</ErrorMessage>
       ) : null;
     default:
       return null;

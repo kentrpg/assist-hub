@@ -1,6 +1,10 @@
-import { buttonSizes, SecondaryButton as SecondaryButtonStyle, PrimaryButton as PrimaryButtonStyle } from "@/components/ui/buttons";
+import {
+  buttonSizes,
+  SecondaryButton as SecondaryButtonStyle,
+  PrimaryButton as PrimaryButtonStyle,
+} from "@/components/ui/buttons/Layout";
 import { FlexAlignCenter } from "@/styles/flex";
-import { Title5 } from "@/styles/typography";
+import { H6 } from "@/styles/typography";
 import { MdPriceCheck } from "react-icons/md";
 import styled from "styled-components";
 
@@ -13,7 +17,7 @@ export const Context = styled.div`
 `;
 
 export const Title = styled.h1`
-  ${Title5};
+  ${H6};
   margin-bottom: 12px;
 `;
 

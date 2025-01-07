@@ -30,7 +30,7 @@ import {
   ProductTitle,
   PaymentOptions,
 } from "./styled";
-import { AccentButton } from "@/components/ui/buttons";
+import { AccentButton } from "@/components/ui/buttons/Layout";
 import CheckboxField from "@/utils/react-hook-form/CheckboxField";
 import { CheckoutImage, ImageWrapper } from "@/components/ui/images";
 import PaymentOption from "@/components/ui/PaymentOption";

@@ -21,7 +21,7 @@ import {
 } from "./styled";
 
 import { signOut } from "@/utils/api/auth/signout";
-import { OutlineButton } from "@/components/ui/buttons";
+// import { OutlineButton } from "@/components/ui/buttons/Layout";
 import { useState } from "react";
 import { useBreakpoint } from "@/hooks/useBreakpoint";
 import { breakpoints } from "@/styles/container";
@@ -33,7 +33,7 @@ const Header = () => {
   const isTablet = useBreakpoint(breakpoints.md);
 
   const toggleMenu = () => {
-    setMenuOpen((prevState) => !prevState);
+    setMenuOpen(prevState => !prevState);
   };
   // ===測試 middleware 驗證===
   const router = useRouter();

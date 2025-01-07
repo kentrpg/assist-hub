@@ -7,7 +7,7 @@ import {
   AccentIconButton,
   PrimaryIconButton,
   SecondaryIconButton,
-} from "@/components/ui/buttons";
+} from "@/components/ui/buttons/Layout";
 
 export const Wrapper = styled.header`
   width: 100%;

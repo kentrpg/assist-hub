@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { CardRadius } from "@/styles/borderRadius";
-import { SecondaryIconButton } from "@/components/ui/buttons";
+import { SecondaryIconButton } from "@/components/ui/buttons/Layout";
 import { StretchedLink } from "@/components/ui/StretchedLink";
 
 export const YellowDashedCard = styled.div`

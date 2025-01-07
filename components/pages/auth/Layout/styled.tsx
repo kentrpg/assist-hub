@@ -1,7 +1,7 @@
 import {
   PrimaryButton,
   OutlineButton as BorderButton,
-} from "@/components/ui/buttons";
+} from "@/components/ui/buttons/Layout";
 import { Container432 } from "@/styles/container";
 import styled from "styled-components";
 

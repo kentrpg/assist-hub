@@ -16,7 +16,7 @@ import {
 } from "./styled";
 import { AddInquirySteps } from "./data";
 import { InquiryStepCircle } from "@/components/ui/circulars";
-import { PrimaryIconButton } from "@/components/ui/buttons";
+import { PrimaryIconButton } from "@/components/ui/buttons/Layout";
 
 const InquiryEmpty = () => {
   return (

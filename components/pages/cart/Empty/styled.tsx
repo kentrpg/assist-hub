@@ -1,4 +1,4 @@
-import { buttonSizes, SecondaryButton } from "@/components/ui/buttons";
+import { buttonSizes, SecondaryButton } from "@/components/ui/buttons/Layout";
 import { Desktop, Mobile, Tablet } from "@/styles/container";
 import { H6 } from "@/styles/typography";
 import styled from "styled-components";

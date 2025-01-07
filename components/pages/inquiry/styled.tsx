@@ -1,4 +1,7 @@
-import { AccentButton as AccentButtonStyle, buttonSizes } from "@/components/ui/buttons";
+import {
+  AccentButton as AccentButtonStyle,
+  buttonSizes,
+} from "@/components/ui/buttons/Layout";
 import { Tablet } from "@/styles/container";
 import styled from "styled-components";
 

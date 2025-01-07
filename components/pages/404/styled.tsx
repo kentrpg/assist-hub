@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { PrimaryButton, buttonSizes } from "@/components/ui/buttons";
+import { PrimaryButton, buttonSizes } from "@/components/ui/buttons/Layout";
 import { H5 } from "@/styles/typography";
 import { Container1021, Mobile, Tablet } from "@/styles/container";
 

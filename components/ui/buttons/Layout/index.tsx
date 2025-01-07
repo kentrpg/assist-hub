@@ -17,6 +17,10 @@ export const buttonSizes = {
     padding: 10px 20px;
     font-size: 18px;
   `,
+  xlarge: css`
+    padding: 10px 40px;
+    font-size: 18px;
+  `,
 };
 
 // Button gap size variants for icon button responsive design
@@ -86,6 +90,7 @@ const BaseButton = styled.button`
 
 export const OutlineButton = styled(BaseButton)`
   ${HstackLayout};
+  ${buttonGapSizes.large};
   outline: 1px solid ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.textSecondary};
 

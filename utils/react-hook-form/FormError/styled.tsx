@@ -1,10 +1,11 @@
-import { IsDefault } from "@/types/uiProps";
+import { IsDefault, Margin } from "@/types/uiProps";
 import styled from "styled-components";
 
-export const ErrorMessage = styled.span`
+export const ErrorMessage = styled.span<Margin>`
+  display: block;
   color: ${({ theme }) => theme.colors.error};
   font-size: 12px;
-  margin-top: 4px;
+  margin-top: ${({ $margin }) => $margin};
 `;
 
 export const PasswordErrorMessage = styled.span<IsDefault>`

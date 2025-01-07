@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import { PrimaryIconButton } from "@/components/ui/buttons";
-import { Mobile } from "@/styles/container";
+import { Desktop, Mobile, Tablet } from "@/styles/container";
 
-export const StepContainer = styled.div`
+export const Step = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -12,7 +11,7 @@ export const StepContainer = styled.div`
   }
 `;
 
-export const StepItem = styled.div`
+export const Card = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -24,21 +23,22 @@ export const StepItem = styled.div`
   }
 `;
 
-export const StepNumber = styled.div`
-  width: 40px;
-  height: 40px;
-`;
-
-export const StepImage = styled.img`
+export const Image = styled.img`
   max-width: 100%;
   height: 80px;
   order: 3;
   @media (${Mobile}) {
     order: inherit;
   }
+  @media (${Tablet}) {
+    height: 110px;
+  }
+  @media (${Desktop}) {
+    height: 156px;
+  }
 `;
 
-export const StepContent = styled.div`
+export const StepGroup = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -59,8 +59,4 @@ export const StepTitle = styled.h3`
 export const StepDescription = styled.p`
   font-size: 14px;
   color: ${({ theme }) => theme.colors.textSecondary};
-`;
-
-export const Button = styled(PrimaryIconButton)`
-  padding: 10px 50px;
 `;

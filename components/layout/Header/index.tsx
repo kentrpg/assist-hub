@@ -21,18 +21,19 @@ import {
 } from "./styled";
 
 import { signOut } from "@/utils/api/auth/signout";
-import { OutlineButton } from "@/components/ui/buttons";
+// import { OutlineButton } from "@/components/ui/buttons/Layout";
 import { useState } from "react";
 import { useBreakpoint } from "@/hooks/useBreakpoint";
 import { breakpoints } from "@/styles/container";
 import { ImageLink as LogoWrapperDesktop } from "@/components/ui/images";
+import Link from "next/link";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const isTablet = useBreakpoint(breakpoints.md);
 
   const toggleMenu = () => {
-    setMenuOpen((prevState) => !prevState);
+    setMenuOpen(prevState => !prevState);
   };
   // ===測試 middleware 驗證===
   const router = useRouter();
@@ -114,7 +115,7 @@ const Header = () => {
 
         <ActionButtonGroup>
           {/* <OutlineButton onClick={handleLogout}>登出</OutlineButton> */}
-          <CartButton>
+          <CartButton as={Link} href="/cart">
             <MdShoppingCart size={24} />
             <ButtonText>購物車</ButtonText>
           </CartButton>
@@ -122,7 +123,7 @@ const Header = () => {
             <MdSearch size={24} />
             <ButtonText>搜尋輔具</ButtonText>
           </SearchButton>
-          <AccountButton>
+          <AccountButton as={Link} href="/user">
             <Avatar
               isLoggedIn={false}
               imageSrc="/images/avatar-placeholder.png"

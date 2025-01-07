@@ -3,12 +3,12 @@ import { Container1116 as Container } from "@/styles/container";
 import { FlexAlignCenter } from "@/styles/flex";
 import { MdArrowBack, MdOutlineShare } from "react-icons/md";
 import { PageBackButton } from "@/components/ui/circulars";
-import { PrimaryIconButton } from "@/components/ui/buttons";
+import { PrimaryIconButton } from "@/components/ui/buttons/Layout";
 
 import { inquiryCardColors, submittedInquiry, inquiryInfo } from "../data";
 import InquiryCard from "@/components/ui/cards/InquiryCard";
-import InquiryDetail from "@/components/ui/Detail";
-import { inquiryInfoMapping } from "@/components/ui/Detail/data";
+import InquiryDetail from "@/components/pages/inquiry/Summary";
+import { inquiryInfoMapping } from "@/components/pages/inquiry/Summary/data";
 
 const SubmittedInquiry = () => {
   return (

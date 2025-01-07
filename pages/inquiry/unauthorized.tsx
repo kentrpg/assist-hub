@@ -1,5 +1,5 @@
 import { MainWrapper } from "@/styles/wrappers";
-import NotFound from "@/components/pages/inquiry/not-found";
+import NotFound from "@/components/pages/inquiry/Unauthorized";
 
 const NotFoundPage = () => {
   return (

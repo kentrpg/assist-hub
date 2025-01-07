@@ -1,15 +1,20 @@
 import styled from "styled-components";
-import { ColorsType, FontSize, Padding, Color } from "@/types/uiProps";
 import {
-  InputFieldCleanAutofill,
-  InputFieldShadow,
-  InputFieldTransition,
-} from "@/styles/effect";
+  ColorsType,
+  FontSize,
+  Padding,
+  Color,
+  Autofill,
+  Shadow,
+} from "@/types/uiProps";
+import { InputFieldTransition } from "@/styles/effect";
 import { InputRadius } from "@/styles/borderRadius";
 
 type InputFieldProps = FontSize &
   Padding &
-  Color & {
+  Color &
+  Autofill &
+  Shadow & {
     $borderColor: ColorsType;
     $backgroundColor: ColorsType;
   };
@@ -26,15 +31,17 @@ export const InputField = styled.input<InputFieldProps>`
   padding: ${({ $padding }) => $padding};
 
   &:-webkit-autofill {
-    ${InputFieldCleanAutofill};
+    ${({ $autofill }) => $autofill};
   }
 
   &:focus {
     border-color: ${({ theme }) => theme.colors.primary};
-    ${InputFieldShadow};
+    ${({ $shadow }) => $shadow};
   }
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.textMuted};
+    font-size: ${({ $fontSize }) => $fontSize}px;
+    font-weight: 400;
   }
 `;

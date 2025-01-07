@@ -11,6 +11,7 @@ export const Container = styled.div`
 export const Titile = styled.h5`
   font-size: 24px;
   font-weight: 500;
+  color: #08204d;
   padding-left: 14px;
   border-left: 5px solid ${({ theme }) => theme.colors.textprimary};
   color: ${({ theme }) => theme.colors.textprimary};

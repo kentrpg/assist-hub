@@ -4,7 +4,7 @@ import { Wrapper100 } from "@/styles/wrappers";
 const Profile = () => {
   return (
     <Wrapper100>
-      <UserPage initialTab="profile" />;
+      <UserPage initialTab="profile" />
     </Wrapper100>
   );
 };

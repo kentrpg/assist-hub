@@ -4,7 +4,7 @@ import { Wrapper100 } from "@/styles/wrappers";
 const Inquiry = () => {
   return (
     <Wrapper100>
-      <UserPage initialTab="inquiry" />;
+      <UserPage initialTab="inquiry" />
     </Wrapper100>
   );
 };

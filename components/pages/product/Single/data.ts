@@ -33,7 +33,7 @@ export const sliderSettings = {
   centerPadding: "0",
   responsive: [
     {
-      breakpoint: 1296,
+      breakpoint: 1440,
       settings: {
         slidesToShow: 4,
         slidesToScroll: 1,

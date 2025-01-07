@@ -31,16 +31,21 @@ import {
   Title,
   Tags,
   Detail,
-  InfoImage,
-  InfoImages,
-  Thumbnail,
   RentBtn,
   InquiryBtn,
-  InquiryIcon,
   ComparisonBtn,
-  ImageWrapper,
+  Deposit,
+  PriceField,
+  Description,
+  DesWord,
+  SubTitle,
+  InfoField,
+  BtnField,
+  InquiryIcon,
 } from "./styled";
 import { sliderSettings } from "./data";
+import Gallery from "./Gallery";
+import BreadCrumb from "./BreadCrumb";
 
 const CustomPrevArrow = ({ onClick }: { onClick?: () => void }) => (
   <div className="slick-prev" onClick={onClick}>
@@ -61,19 +66,20 @@ type ProductDetailsProps = {
 const Single: React.FC<ProductDetailsProps> = ({ product }) => {
   return (
     <Container>
+      {/* 麵包屑 */}
+      <BreadCrumb />
+
       {/* 商品資訊 */}
       <InfoContainer>
-        <InfoImages>
-          <ImageWrapper>
-            <InfoImage src="/images/infoMain.png" alt={product.name} />
-          </ImageWrapper>
-          <Thumbnail>
-            <img src="/images/info1.png" alt="" />
-            <img src="/images/info2.png" alt="" />
-            <img src="/images/info3.png" alt="" />
-            <img src="/images/info4.png" alt="" />
-          </Thumbnail>
-        </InfoImages>
+        <Gallery
+          initialImage="/images/infoMain.png"
+          thumbnails={[
+            "/images/info1.png",
+            "/images/info2.png",
+            "/images/info3.png",
+            "/images/info4.png",
+          ]}
+        />
         <Detail>
           <Title>{product.name}</Title>
           <Tags>
@@ -84,27 +90,28 @@ const Single: React.FC<ProductDetailsProps> = ({ product }) => {
               </FeatureBadge>
             ))}
           </Tags>
-          <div>
-            <p>租金: ${product.rent}/月</p>
-            <p>押金: ${product.deposit}元</p>
-          </div>
-          <div>
-            <h5>商品描述:</h5>
-            <p> {product.description}</p>
-          </div>
-          <div>
-            <h2>商品資訊:</h2>
+          <PriceField>
+            <SubTitle>租金: ${product.rent}/月</SubTitle>
+            <Deposit>押金: ${product.deposit}元</Deposit>
+          </PriceField>
+          <Description>
+            <SubTitle>商品描述</SubTitle>
+            <DesWord> {product.description}</DesWord>
+          </Description>
+          <InfoField>
+            <SubTitle>商品資訊</SubTitle>
             <p>材質: {product.info.material}</p>
             <p>載重: {product.info.load}</p>
             <p>產地: {product.info.origin}</p>
-          </div>
-          <div>
-            <RentBtn>
-              立即租賃
+          </InfoField>
+          <BtnField>
+            <RentBtn>立即租賃</RentBtn>
+            <InquiryBtn>
               <InquiryIcon />
-            </RentBtn>
-            <InquiryBtn></InquiryBtn>
-          </div>
+              <span>加入詢問單</span>
+            </InquiryBtn>
+          </BtnField>
+          <div>使用說明</div>
         </Detail>
       </InfoContainer>
       {/* 比較商品 */}

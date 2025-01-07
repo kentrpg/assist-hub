@@ -21,7 +21,7 @@ type RowProps = {
 export const Container = styled(Container1344)`
   display: flex;
   flex-direction: column;
-  row-gap: 36px;
+  row-gap: 60px;
   justify-content: center;
   align-items: center;
 `;
@@ -33,53 +33,12 @@ export const InfoContainer = styled.div`
   justify-content: center;
   flex-direction: column;
 
-  @media (min-width: 800px) {
+  @media (${Tablet}) {
     flex-direction: row;
     column-gap: 60px;
   }
   @media (${ExtraLarge}) {
     column-gap: 114px;
-  }
-`;
-
-export const InfoImages = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  row-gap: 15px;
-`;
-
-export const ImageWrapper = styled.div`
-  background-color: #f9f8f6;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 30px;
-  @media (${Mobile}) {
-    padding: 40px;
-  }
-  @media (${ExtraLarge}) {
-    padding: 114px;
-  }
-`;
-
-export const InfoImage = styled.img`
-  max-width: 456px;
-  max-height: 456px;
-  width: 100%;
-  object-fit: cover;
-`;
-
-export const Thumbnail = styled.div`
-  display: flex;
-  column-gap: 12px;
-  img {
-    width: 50px;
-    height: 50px;
-    @media (${Mobile}) {
-      width: 78px;
-      height: 78px;
-    }
   }
 `;
 
@@ -91,7 +50,6 @@ export const Detail = styled.div`
   row-gap: 20px;
   @media (min-width: 800px) {
     max-width: 546px;
-    padding: 24px;
   }
 `;
 
@@ -101,25 +59,129 @@ export const Title = styled.h3`
   font-weight: 500;
 `;
 
+export const SubTitle = styled.h6`
+  color: #08204d;
+  font-size: 20px;
+  font-weight: 700;
+`;
+
 export const Tags = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
 `;
 
+export const PriceField = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 6px;
+`;
+
+export const Deposit = styled.p`
+  font-size: 16px;
+  font-weight: 400;
+`;
+
+export const Description = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+`;
+
+export const DesWord = styled.p`
+  font-size: 18px;
+  font-weight: 400;
+`;
+
+export const InfoField = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+`;
+
+export const BtnField = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  column-gap: 24px;
+  font-size: 18px;
+  font-weight: 500;
+  row-gap: 8px;
+
+  @media (min-width: 800px) {
+    flex-direction: row;
+    column-gap: 24px;
+    padding-top: 30px;
+    padding-bottom: 50px;
+  }
+`;
+
 export const RentBtn = styled.button`
-  padding: 10px 0px;
+  max-width: 100%;
   width: 100%;
+  transition: none;
+  padding: 10px 0px;
   color: #ffffff;
   border-radius: 30px;
   background-color: #103f99;
+  transition: none;
 `;
 
 export const InquiryIcon = styled.div`
-  background-image: "/images/accessible.png";
+  background-image: url("/images/accessible.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: none;
+  @media (min-width: 800px) {
+    display: block;
+    width: 27px;
+    height: 27px;
+  }
 `;
 
-export const InquiryBtn = styled.button``;
+export const InquiryBtn = styled.button`
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  white-space: nowrap;
+  width: 100%;
+  padding: 10px 20px;
+  border-radius: 30px;
+  background-color: white;
+  border: 1px solid #ffcc1a;
+  position: relative;
+  transition: none;
+  color: black;
+  text-shadow: none;
+
+  &:hover {
+    max-width: 100%;
+    width: 100%;
+    color: black;
+    span {
+      display: inline-block;
+    }
+  }
+
+  @media (min-width: 800px) {
+    background-color: #ffcc1a;
+    max-width: 67px;
+    width: 100%;
+    color: transparent;
+    text-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    transition: color 0.5s ease, max-width 0.5s ease;
+    span {
+      display: none;
+    }
+    &:hover {
+      max-width: 407px;
+      width: 100%;
+    }
+  }
+`;
 
 export const ComparisonContainer = styled.div`
   display: flex;
@@ -233,45 +295,19 @@ export const RecommendedContainer = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 16px;
-  padding: 36px 0px;
+  max-width: 100%;
+  padding: 0px;
+  @media (${ExtraLarge}) {
+    padding: 0px 48px 36px 48px;
+  }
 
   .slick-slider {
-    max-width: 1344px;
     width: 100%;
     display: flex;
     flex-direction: column;
     row-gap: 16px;
     justify-content: center;
     align-items: center;
-    padding: 0px 48px;
-    @media (max-width: 1440px) {
-      max-width: 1200px;
-      padding: 0px 48px;
-    }
-    @media (max-width: 1296px) {
-      max-width: 1000px;
-      padding: 0px 48px;
-    }
-    @media (max-width: 1096px) {
-      max-width: 800px;
-      padding: 0px 24px;
-    }
-    @media (max-width: 900px) {
-      max-width: 640px;
-      padding: 0px 24px;
-    }
-    @media (max-width: 740px) {
-      max-width: 540px;
-      padding: 0px 24px;
-    }
-    @media (max-width: 640px) {
-      max-width: 460px;
-      padding: 0px 24px;
-    }
-    @media (max-width: 560px) {
-      max-width: 340px;
-      padding: 0px 24px;
-    }
   }
 
   .slick-list {
@@ -288,6 +324,8 @@ export const RecommendedContainer = styled.div`
   }
 
   .slick-slide {
+    max-width: 300px;
+    width: 100%;
     height: auto;
     box-sizing: border-box;
     display: flex;
@@ -297,8 +335,7 @@ export const RecommendedContainer = styled.div`
 
   .slick-slide img {
     display: block;
-    max-width: 100%;
-    height: auto;
+    /* max-width: 100%; */
   }
 
   .slick-prev,
@@ -309,14 +346,14 @@ export const RecommendedContainer = styled.div`
   }
 
   .slick-prev {
-    left: -48px;
+    left: -90px;
     &::before {
       content: "";
     }
   }
 
   .slick-next {
-    right: -48px;
+    right: -90px;
     &::before {
       content: "";
     }
@@ -371,14 +408,13 @@ export const CarouselItem = styled.div`
   flex-direction: column;
   border-radius: 10px;
   background-color: #f9f8f6;
+  padding: 20px;
 `;
 
 export const CarouselImg = styled.div`
-  padding: 20px;
 `;
 
 export const CarouselInfo = styled.div`
-  padding: 20px;
   display: flex;
   flex-direction: column;
   row-gap: 2px;

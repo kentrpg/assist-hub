@@ -4,33 +4,33 @@ import {
   PaymentOptionField,
   PaymentOptionInput,
 } from "./styled";
+import {
+  FieldValues,
+  UseFormRegister,
+  UseFormRegisterReturn,
+} from "react-hook-form";
+import { PaymentMethodValue } from "@/components/pages/cart/Checkout/data";
+import { BaseField } from "@/utils/react-hook-form/types";
 
-type PaymentOptionProps = {
-  id: string;
-  name: "payment";
-  value: "credit-card" | "transfer" | "line-pay";
-  defaultChecked: boolean;
-  onChange: (value: string) => void;
+type PaymentOptionProps<T extends FieldValues> = {
+  value: PaymentMethodValue;
   children: ReactNode;
-};
+  register: UseFormRegister<T>;
+  field: BaseField<T>;
+} & Partial<UseFormRegisterReturn>;
 
-const PaymentOption: React.FC<PaymentOptionProps> = ({
-  id,
-  name,
+const PaymentOption = <T extends FieldValues>({
   value,
-  defaultChecked,
-  onChange,
   children,
-}) => {
+  register,
+  field,
+}: PaymentOptionProps<T>) => {
   return (
     <PaymentOptionField>
       <PaymentOptionInput
         type="radio"
-        id={id}
-        name={name}
         value={value}
-        defaultChecked={defaultChecked}
-        onChange={() => onChange(value)}
+        {...register(field.name, field.validation)}
       />
       <CheckedStateIcon />
       {children}

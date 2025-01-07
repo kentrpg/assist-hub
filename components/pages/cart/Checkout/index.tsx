@@ -3,7 +3,6 @@ import { Container1164 as Container } from "@/styles/container";
 import {
   FormGrid,
   FieldGroup,
-  Input,
   Label,
   OrderForm,
   Summary,
@@ -21,10 +20,10 @@ import {
   Payment,
   Shipping,
   Term,
-  PickupCheckbox,
+  PickupRadio,
   PickupInfo,
   PickupMethod,
-  PickupMethodLabel,
+  PickupLabel,
   Recipient,
   ProductInfo,
   ProductLabel,
@@ -33,131 +32,89 @@ import {
   PaymentOptions,
 } from "./styled";
 import { AccentButton } from "@/components/ui/buttons";
-import Checkbox from "@/components/ui/Checkbox";
-import { InfoLink } from "@/utils/link";
+import CheckboxField from "@/utils/react-hook-form/CheckboxField";
 import { CheckoutImage, ImageWrapper } from "@/components/ui/images";
 import PaymentOption from "@/components/ui/PaymentOption";
 import {
   paymentMethods,
-  defaultPayment,
-  PickupMethodValue,
-  CheckoutState,
-  initialCheckoutState,
-  RecipientInfo,
-  storeInfoDisplay,
-  summaryDisplay,
-  costsDisplay,
-  totalCost,
+  CheckoutFormData,
+  defaultFormValues,
+  LabeledValue,
+  SummaryProps,
+  pickupRadios,
+  errorMessages,
+  checkboxData,
+  recipientInputFields,
 } from "./data";
-import {
-  MdCheckBox,
-  MdCheckBoxOutlineBlank,
-  MdRadioButtonChecked,
-  MdRadioButtonUnchecked,
-} from "react-icons/md";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import InputField from "@/utils/react-hook-form/InputField";
+import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
+import RadioField from "@/utils/react-hook-form/RadioField";
+import { ErrorMessageField } from "@/utils/react-hook-form/ErrorMessageField";
+import { FieldInputLabelMapping } from "@/utils/react-hook-form/InputField/data";
 
-const Checkout = () => {
-  const [checkoutState, setCheckoutState] = useState<CheckoutState>(
-    initialCheckoutState
-  );
+const Checkout = (props: {
+  data: any;
+  storeInfoDisplay: LabeledValue[];
+  totalCostDisplay: LabeledValue;
+  costDisplays: LabeledValue[];
+  summaryData: SummaryProps;
+}) => {
+  const {
+    storeInfoDisplay,
+    totalCostDisplay: amountData,
+    costDisplays: costsData,
+    summaryData,
+  } = props;
 
-  const handleRecipientChange = (field: keyof RecipientInfo, value: string) => {
-    setCheckoutState((prev) => ({
-      ...prev,
-      recipientInfo: {
-        ...prev.recipientInfo,
-        [field]: value,
-      },
-    }));
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<CheckoutFormData>({
+    mode: "onChange",
+    defaultValues: defaultFormValues,
+    criteriaMode: "all",
+    reValidateMode: "onChange",
+  });
+
+  const onSubmit = (data: CheckoutFormData) => {
+    console.log("Form submitted:", data);
   };
 
-  const updateCheckoutState = (
-    field: keyof CheckoutState,
-    value: boolean | PickupMethodValue
-  ) => {
-    if (
-      field === "selectedPickupMethod" &&
-      value === checkoutState.selectedPickupMethod
-    )
-      return;
+  const renderError = (name: keyof CheckoutFormData) => {
+    const config = errorMessages.find((msg) => msg.name === name);
+    if (!config) return null;
 
-    setCheckoutState((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
-
-  const handlePickupMethodChange = (value: PickupMethodValue) => {
-    updateCheckoutState("selectedPickupMethod", value);
-  };
-
-  const handleRulesChange = (value: boolean) => {
-    updateCheckoutState("agreeRentalRules", value);
-  };
-
-  const handlePrivacyChange = (value: boolean) => {
-    updateCheckoutState("agreeTermsPrivacy", value);
-  };
-
-  const handlePaymentChange = (value: string) => {
-    // 只在需要處理付款方式變更時的邏輯
-    console.log("Selected payment:", value);
+    return (
+      <ErrorMessageField name={name} errors={errors} $margin={config.$margin} />
+    );
   };
 
   return (
     <Container>
       <Breadcrumb />
-      <OrderForm>
+      <OrderForm onSubmit={handleSubmit(onSubmit)} noValidate>
         <Shipping>
           <Title>訂購資訊</Title>
           <FormGrid>
             <StoreInfo>
               <PickupMethod>
-                <PickupMethodLabel>取貨方式</PickupMethodLabel>
-                <PickupCheckbox>
-                  <CheckboxItem>
-                    <Checkbox
-                      id="store"
-                      $gap={12}
-                      name="pickupMethod"
-                      value="store"
-                      type="radio"
-                      defaultChecked={
-                        checkoutState.selectedPickupMethod === "store"
-                      }
-                      onChange={handlePickupMethodChange}
-                      $selectedIcon={MdRadioButtonChecked}
-                      $defaultIcon={MdRadioButtonUnchecked}
-                      $checkedIconColor="primary"
-                      $uncheckedIconColor="primary"
-                      $labelColor="textSecondary"
+                <PickupLabel>取貨方式</PickupLabel>
+                <PickupRadio>
+                  {pickupRadios.map((radioProps) => (
+                    <RadioField
+                      key={radioProps.id}
+                      {...radioProps}
+                      control={control}
                     >
-                      店取
-                    </Checkbox>
-                  </CheckboxItem>
-                  <CheckboxItem>
-                    <Checkbox
-                      id="delivery"
-                      $gap={12}
-                      name="pickupMethod"
-                      value="delivery"
-                      type="radio"
-                      defaultChecked={
-                        checkoutState.selectedPickupMethod === "delivery"
-                      }
-                      onChange={handlePickupMethodChange}
-                      $selectedIcon={MdRadioButtonChecked}
-                      $defaultIcon={MdRadioButtonUnchecked}
-                      $checkedIconColor="primary"
-                      $uncheckedIconColor="primary"
-                      $labelColor="textSecondary"
-                    >
-                      宅配
-                    </Checkbox>
-                  </CheckboxItem>
-                </PickupCheckbox>
+                      {radioProps.children}
+                    </RadioField>
+                  ))}
+                </PickupRadio>
               </PickupMethod>
+              {renderError("pickupMethod")}
               <PickupInfo>
                 {storeInfoDisplay.map(({ label, value }) => (
                   <PickupInfoItem key={label}>
@@ -168,84 +125,61 @@ const Checkout = () => {
             </StoreInfo>
 
             <Recipient>
-              <FieldGroup>
-                <Label htmlFor="name" required>
-                  姓名
-                </Label>
-                <Input
-                  id="name"
-                  type="text"
-                  placeholder="王小姐"
-                  value={checkoutState.recipientInfo.name}
-                  onChange={(e) =>
-                    handleRecipientChange("name", e.target.value)
-                  }
-                />
-              </FieldGroup>
-              <FieldGroup>
-                <Label htmlFor="phone" required>
-                  手機
-                </Label>
-                <Input
-                  id="phone"
-                  type="tel"
-                  placeholder="0912345678"
-                  value={checkoutState.recipientInfo.phone}
-                  onChange={(e) =>
-                    handleRecipientChange("phone", e.target.value)
-                  }
-                />
-              </FieldGroup>
-              <FieldGroup>
-                <Label htmlFor="email" required>
-                  電子郵件
-                </Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="A12345678@gmail.com"
-                  value={checkoutState.recipientInfo.email}
-                  onChange={(e) =>
-                    handleRecipientChange("email", e.target.value)
-                  }
-                />
-              </FieldGroup>
+              {recipientInputFields.map((fieldProps) => (
+                <FieldGroup key={fieldProps.name}>
+                  <Label htmlFor={fieldProps.name} required>
+                    {
+                      FieldInputLabelMapping[
+                        fieldProps.name as keyof typeof FieldInputLabelMapping
+                      ]
+                    }
+                  </Label>
+                  <InputField {...fieldProps} register={register} />
+                  {renderError(fieldProps.name as keyof CheckoutFormData)}
+                </FieldGroup>
+              ))}
             </Recipient>
           </FormGrid>
         </Shipping>
+
         <Payment>
           <Title>付款方式</Title>
           <PaymentOptions>
             {paymentMethods.map(({ id, value, icon }) => (
               <PaymentOption
                 key={id}
-                id={id}
-                name="payment"
                 value={value}
-                defaultChecked={value === defaultPayment}
-                onChange={handlePaymentChange}
+                register={register}
+                field={{
+                  name: "paymentMethod",
+                  validation: {
+                    required: "請選擇付款方式",
+                  },
+                }}
               >
                 {icon}
               </PaymentOption>
             ))}
           </PaymentOptions>
+          {renderError("paymentMethod")}
         </Payment>
+
         <Summary>
           <Title>訂單檢視</Title>
           <ProductCard>
             <ImageWrapper>
               <CheckoutImage
-                src={summaryDisplay.image.src}
-                alt={summaryDisplay.image.alt}
-                width={summaryDisplay.image.width}
-                height={summaryDisplay.image.height}
+                src={`/images/${summaryData.image.src}`}
+                alt={summaryData.image.alt}
+                width={summaryData.image.width}
+                height={summaryData.image.height}
               />
             </ImageWrapper>
             <ProductInfos>
               <ProductInfo>
-                <ProductTitle>{summaryDisplay.title}</ProductTitle>
+                <ProductTitle>{summaryData.title}</ProductTitle>
               </ProductInfo>
-              {summaryDisplay.details.map(({ label, value }) => (
+              {summaryData.details.map(({ label, value }) => (
                 <ProductInfo key={label}>
                   <ProductLabel>{label}</ProductLabel>
                   <ProductValue>{value}</ProductValue>
@@ -255,7 +189,7 @@ const Checkout = () => {
           </ProductCard>
 
           <Costs>
-            {costsDisplay.map(({ label, value }) => (
+            {costsData.map(({ label, value }: LabeledValue) => (
               <Cost key={label}>
                 <span>{label}</span>
                 <span>{value}</span>
@@ -263,51 +197,28 @@ const Checkout = () => {
             ))}
           </Costs>
           <TotalCost>
-            <span>{totalCost.label}</span>
-            <span>{totalCost.value}</span>
+            <span>{amountData.label}</span>
+            <span>{amountData.value}</span>
           </TotalCost>
 
           <Term>
             <CheckboxList>
-              <CheckboxItem>
-                <Checkbox
-                  id="agreeRentalRules"
-                  $gap={10}
-                  type="checkbox"
-                  defaultChecked={checkoutState.agreeRentalRules}
-                  onChange={handleRulesChange}
-                  $selectedIcon={MdCheckBox}
-                  $defaultIcon={MdCheckBoxOutlineBlank}
-                  $checkedIconColor="primary"
-                  $uncheckedIconColor="primary"
-                  $labelColor="textSecondary"
-                  required
-                >
-                  我已閱讀並同意此網站之
-                  <InfoLink href="#">租賃輪具規則</InfoLink>
-                </Checkbox>
-              </CheckboxItem>
-              <CheckboxItem>
-                <Checkbox
-                  id="agreeTermsPrivacy"
-                  $gap={10}
-                  type="checkbox"
-                  defaultChecked={checkoutState.agreeTermsPrivacy}
-                  onChange={handlePrivacyChange}
-                  $selectedIcon={MdCheckBox}
-                  $defaultIcon={MdCheckBoxOutlineBlank}
-                  $checkedIconColor="primary"
-                  $uncheckedIconColor="primary"
-                  $labelColor="textSecondary"
-                  required
-                >
-                  我同意網站<InfoLink href="#">服務條款</InfoLink>及
-                  <InfoLink href="#">隱私權政策</InfoLink>
-                </Checkbox>
-              </CheckboxItem>
+              {checkboxData.map((checkboxProps) => (
+                <CheckboxItem key={checkboxProps.id}>
+                  <CheckboxField {...checkboxProps} control={control}>
+                    {checkboxProps.children}
+                  </CheckboxField>
+                  {renderError(checkboxProps.field.name)}
+                </CheckboxItem>
+              ))}
             </CheckboxList>
             <CheckoutAction>
-              <AccentButton>送出訂單</AccentButton>
+              <AccentButton
+                type="submit"
+                disabled={isSubmitting || Object.keys(errors).length !== 0}
+              >
+                {isSubmitting ? <LoaderSpinner /> : "送出訂單"}
+              </AccentButton>
             </CheckoutAction>
           </Term>
         </Summary>

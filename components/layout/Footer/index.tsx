@@ -21,12 +21,10 @@ import { useForm } from "react-hook-form";
 import { ErrorMessage as FormErrorMessage } from "@/utils/react-hook-form/FormError/styled";
 import InputField from "@/utils/react-hook-form/InputField";
 import ForwardButton from "@/components/ui/buttons/ForwardButton";
-import { FooterAutofill, FooterShadow } from "@/styles/effect";
-
-type NewsletterForm = {
-  email: string;
-  isSubscribed: boolean;
-};
+import {
+  footerInputField,
+  NewsletterForm,
+} from "@/utils/react-hook-form/InputField/data";
 
 const Footer: React.FC = () => {
   const theme = useTheme();
@@ -95,43 +93,7 @@ const Footer: React.FC = () => {
             <Title>訂閱電子報</Title>
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
               <SubscriptionField>
-                <InputField
-                  name="email"
-                  type="tel"
-                  placeholder="輸入電子信箱"
-                  $color="grey300"
-                  $fontSize={14}
-                  $borderColor="grey300"
-                  $backgroundColor="grey100"
-                  $autofill={FooterAutofill}
-                  $shadow={FooterShadow}
-                  $padding="7px 34px 7px 10px"
-                  register={register}
-                  required="請輸入電子信箱"
-                  validate={{
-                    domain: (value: string) => {
-                      const domainRegex = /@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-                      return (
-                        domainRegex.test(value) || "請輸入有效的電子郵件域名"
-                      );
-                    },
-                    local: (value: string) => {
-                      const beforeAtRegex = /^(?:[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:\\[\x01-\x09\x0b\x0c\x0e-\x7f]|[\x01-\x09\x0b\x0c\x0e-\x7f])*")@/;
-                      return (
-                        beforeAtRegex.test(value) ||
-                        "電子郵件地址 '@' 前方不應包含空白或非法字符"
-                      );
-                    },
-                    length: (value: string) => {
-                      if (value.length > 254)
-                        return "電子信箱長度不得超過 254 個字符";
-                      const localPart = value.split("@")[0];
-                      if (localPart.length > 64)
-                        return "@ 前方不得超過 64 個字符";
-                      return true;
-                    },
-                  }}
-                />
+                <InputField {...footerInputField} register={register} />
                 <ForwardButton />
                 {errors.email && (
                   <FormErrorMessage $margin="4px">

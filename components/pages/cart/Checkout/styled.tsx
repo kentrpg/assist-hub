@@ -15,7 +15,7 @@ export const Title = styled.h1`
   }
 `;
 
-export const OrderForm = styled.div`
+export const OrderForm = styled.form`
   display: grid;
   grid-template-columns: 1fr;
   gap: 24px;
@@ -93,18 +93,18 @@ export const StoreInfo = styled.div`
 
 export const PickupMethod = styled.div`
   display: flex;
+  flex-direction: row;
   gap: 25px;
 `;
 
-export const PickupMethodLabel = styled.span`
+export const PickupLabel = styled.span`
   font-size: 16px;
   font-weight: 500;
 `;
 
-export const PickupCheckbox = styled.div`
+export const PickupRadio = styled.div`
   display: flex;
-  flex-direction: row;
-  gap: 12px;
+  gap: 24px;
 `;
 
 export const PickupInfo = styled.ul`
@@ -129,9 +129,12 @@ export const FieldGroup = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  flex: 1 1 calc(50% - 8px);
+  flex: 1 1 100%;
   &:last-child {
     flex: 1 1 100%;
+  }
+  @media (${Mobile}) {
+    flex: 1 1 calc(50% - 8px);
   }
 `;
 
@@ -143,18 +146,6 @@ export const Label = styled.label<{ required?: boolean }>`
       color: ${theme.colors.error};
     }
   `}
-`;
-
-export const Input = styled.input`
-  padding: 8px 12px;
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  ${CardRadius};
-  font-size: 14px;
-
-  &:focus {
-    outline: none;
-    border-color: ${({ theme }) => theme.colors.primary};
-  }
 `;
 
 export const PaymentOptions = styled.div`
@@ -253,16 +244,8 @@ export const CheckboxList = styled.div`
 `;
 
 export const CheckboxItem = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 16px;
-
-  a {
-    &:hover {
-      text-decoration: underline;
-    }
-  }
+  display: grid;
+  gap: 4px;
 `;
 
 export const CheckoutAction = styled.div`

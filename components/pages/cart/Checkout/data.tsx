@@ -1,12 +1,32 @@
 import { ReactNode } from "react";
 import LinnPayImage from "./LinnPayImage";
+import { BaseRadioType as RadioProps } from "@/utils/react-hook-form/RadioField";
+import { ErrorMessageProps } from "@/utils/react-hook-form/ErrorMessageField";
+import { InfoLink } from "@/utils/link";
+import { BaseCheckboxType } from "@/utils/react-hook-form/CheckboxField";
+import { FieldValues, Path } from "react-hook-form";
+import {
+  InputFieldAutofill,
+  InputFieldShadow,
+} from "@/styles/effect";
+import {
+  Autofill,
+  Color,
+  ColorsType,
+  FontSize,
+  Padding,
+  Shadow,
+} from "@/types/uiProps";
 
-// 店家資訊型別
-export type StoreInfoType = {
-  phone: string;
-  businessHours: string;
-  address: string;
+export type LabeledValue = {
+  label: string;
+  value: number;
 };
+
+export type PaymentMethodValue = "credit-card" | "transfer" | "line-pay" | "";
+export type PickupMethodValue = "store" | "delivery" | "";
+const defaultPayment: PaymentMethodValue = "line-pay";
+const defaultPickupMethod: PickupMethodValue = "delivery";
 
 // 收件人資訊型別
 export type RecipientInfo = {
@@ -15,98 +35,39 @@ export type RecipientInfo = {
   email: string;
 };
 
-// 商品資訊型別
-export type ProductInfo = {
-  id: string;
-  name: string;
-  quantity: number;
-  rentDate: string;
-  returnDate: string;
-  imageUrl: string;
-  imageAlt: string;
-};
-
-// 費用明細型別
-export type CostDetail = {
-  rental: number;
-  deposit: number;
-  shipping: number;
-};
-
-// Checkout 狀態型別
-export type CheckoutState = {
-  selectedPickupMethod: PickupMethodValue;
-  selectedPayment: PaymentMethodValue;
-  agreeRentalRules: boolean;
-  agreeTermsPrivacy: boolean;
-  recipientInfo: RecipientInfo;
-};
-
-export type PaymentMethodValue = "credit-card" | "transfer" | "line-pay";
-export type PickupMethodValue = "store" | "delivery";
-
-// 預設值
-export const defaultPayment: PaymentMethodValue = "line-pay";
-export const defaultPickupMethod: PickupMethodValue = "store";
-
-export const recipientData: RecipientInfo = {
-  name: "",
-  phone: "",
-  email: "",
-};
-
-const storeData: StoreInfoType = {
-  phone: "0912-345678",
-  businessHours: "08:00-22:00（週一公休）",
-  address: "高雄市新興區",
-};
-
-const productData = {
-  product: {
-    imgSrc: "/images/device1.png",
-    imgAlt: "精品輪椅",
-    title: "精品輪椅",
-    details: {
-      quantity: 1,
-      rentDate: "2025/02/06",
-      returnDate: "2025/03/05",
-    },
-  },
-  costs: {
-    rent: 1000,
-    deposit: 500,
-    delivery: 0,
-  },
-  amount: 1500,
-};
-
-export const initialCheckoutState: CheckoutState = {
-  selectedPickupMethod: defaultPickupMethod,
-  selectedPayment: defaultPayment,
-  agreeRentalRules: false,
-  agreeTermsPrivacy: false,
-  recipientInfo: recipientData,
-};
-
 // Shipping
-
-export type StoreInfoDisplay = {
-  label: string;
-  value: string;
-};
-
-export const storeInfoDisplay: StoreInfoDisplay[] = [
+export const pickupRadios: RadioProps<CheckoutFormData>[] = [
   {
-    label: "店家電話",
-    value: storeData.phone,
+    id: "pickupMethod-store",
+    value: "store",
+    field: {
+      name: "pickupMethod",
+      validation: {
+        required: "請選擇取貨方式",
+      },
+    },
+    $gap: 12,
+    $fontSize: 16,
+    $checkedColor: "primary",
+    $uncheckedColor: "primary",
+    $labelColor: "textSecondary",
+    children: "店取",
   },
   {
-    label: "營業時間",
-    value: storeData.businessHours,
-  },
-  {
-    label: "地址",
-    value: storeData.address,
+    id: "pickupMethod-delivery",
+    value: "delivery",
+    field: {
+      name: "pickupMethod",
+      validation: {
+        required: "請選擇取貨方式",
+      },
+    },
+    $gap: 12,
+    $fontSize: 16,
+    $checkedColor: "primary",
+    $uncheckedColor: "primary",
+    $labelColor: "textSecondary",
+    children: "自取",
   },
 ];
 
@@ -138,7 +99,7 @@ export const paymentMethods: PaymentMethod[] = [
 
 // Summary
 
-export type ProductDisplay = {
+export type SummaryProps = {
   image: {
     src: string;
     alt: string;
@@ -152,51 +113,206 @@ export type ProductDisplay = {
   }[];
 };
 
-export type CostDisplay = {
-  label: string;
-  value: number;
-};
-
-export const summaryDisplay: ProductDisplay = {
-  image: {
-    src: productData.product.imgSrc,
-    alt: productData.product.imgAlt,
-    width: 80,
-    height: 80,
-  },
-  title: productData.product.title,
-  details: [
-    {
-      label: "數量",
-      value: `x${productData.product.details.quantity}`,
-    },
-    {
-      label: "租借日期",
-      value: productData.product.details.rentDate,
-    },
-    {
-      label: "歸還日期",
-      value: productData.product.details.returnDate,
-    },
-  ],
-};
-
-export const costsDisplay: CostDisplay[] = [
+// Term
+export const checkboxData: BaseCheckboxType<CheckoutFormData>[] = [
   {
-    label: "租金",
-    value: productData.costs.rent,
+    id: "agreeRentalRules",
+    field: {
+      name: "agreeRentalRules",
+      validation: {
+        required: "請同意租賃輪具規則",
+      },
+    },
+    $isRequired: true,
+    $gap: 10,
+    $fontSize: 16,
+    $checkedColor: "primary",
+    $uncheckedColor: "primary",
+    $labelColor: "textSecondary",
+    children: (
+      <>
+        我已閱讀並同意此網站之
+        <InfoLink href="#">租賃輪具規則</InfoLink>
+      </>
+    ),
   },
   {
-    label: "押金",
-    value: productData.costs.deposit,
-  },
-  {
-    label: "運費",
-    value: productData.costs.delivery,
+    id: "agreeTermsPrivacy",
+    field: {
+      name: "agreeTermsPrivacy",
+      validation: {
+        required: "請同意服務條款及隱私權政策",
+      },
+    },
+    $isRequired: true,
+    $gap: 10,
+    $fontSize: 16,
+    $checkedColor: "primary",
+    $uncheckedColor: "primary",
+    $labelColor: "textSecondary",
+    children: (
+      <>
+        我同意網站<InfoLink href="#">服務條款</InfoLink>及
+        <InfoLink href="#">隱私權政策</InfoLink>
+      </>
+    ),
   },
 ];
 
-export const totalCost: CostDisplay = {
-  label: "總計",
-  value: productData.amount,
+// Checkout Form
+export type CheckoutFormData = {
+  pickupMethod: PickupMethodValue;
+  paymentMethod: PaymentMethodValue;
+  name: string;
+  phone: string;
+  email: string;
+  agreeRentalRules: boolean;
+  agreeTermsPrivacy: boolean;
 };
+
+export const defaultFormValues: CheckoutFormData = {
+  // pickupMethod: defaultPickupMethod,
+  // paymentMethod: defaultPayment,
+  pickupMethod: "",
+  paymentMethod: "",
+  name: "",
+  phone: "",
+  email: "",
+  agreeRentalRules: false,
+  agreeTermsPrivacy: false,
+};
+
+// ErrorMessage
+export const errorMessages: ErrorMessageProps<CheckoutFormData>[] = [
+  {
+    name: "pickupMethod",
+    $margin: "0",
+  },
+  {
+    name: "paymentMethod",
+    $margin: "-14px",
+  },
+  {
+    name: "name",
+    $margin: "-4px",
+  },
+  {
+    name: "phone",
+    $margin: "-4px",
+  },
+  {
+    name: "email",
+    $margin: "-4px",
+  },
+  {
+    name: "agreeRentalRules",
+    $margin: "-2px",
+  },
+  {
+    name: "agreeTermsPrivacy",
+    $margin: "-2px",
+  },
+];
+
+// 在檔案開頭加入型別定義
+// export type BaseInputFieldType<T extends FieldValues> = Parameters<typeof InputField<T>>[0];
+
+export type BaseInputFieldType<T extends FieldValues> = Padding &
+  Color &
+  FontSize &
+  Autofill &
+  Shadow & {
+    name: Path<T>;
+    type: "email" | "password" | "text" | "tel";
+    placeholder: string;
+    $borderColor: ColorsType;
+    $backgroundColor: ColorsType;
+    required: string;
+    validate?: {
+      notEmpty?: (value: string) => string | boolean;
+      pattern?: (value: string) => string | boolean;
+      domain?: (value: string) => string | boolean;
+      local?: (value: string) => string | boolean;
+      length?: (value: string) => string | boolean;
+    };
+  };
+
+// 在適當位置加入以下資料結構
+export const recipientInputFields: BaseInputFieldType<CheckoutFormData>[] = [
+  {
+    name: "name",
+    type: "text",
+    placeholder: "王小姐",
+    $color: "textSecondary",
+    $fontSize: 16,
+    $borderColor: "border",
+    $backgroundColor: "secondaryBg",
+    $autofill: InputFieldAutofill,
+    $shadow: InputFieldShadow,
+    $padding: "8px 16px",
+    required: "請輸入姓名",
+    validate: {
+      notEmpty: (value: string) => {
+        if (!value || value.trim() === "") {
+          return "請正確輸入姓名";
+        }
+        return true;
+      },
+    },
+  },
+  {
+    name: "phone",
+    type: "tel",
+    placeholder: "0912345678",
+    $color: "textSecondary",
+    $fontSize: 16,
+    $borderColor: "border",
+    $backgroundColor: "secondaryBg",
+    $autofill: InputFieldAutofill,
+    $shadow: InputFieldShadow,
+    $padding: "8px 16px",
+    required: "請輸入手機號碼",
+    validate: {
+      notEmpty: (value: string) => {
+        if (!value || value.trim() === "") {
+          return "請正確輸入手機號碼";
+        }
+        return true;
+      },
+      pattern: (value: string) =>
+        /^09\d{8}$/.test(value) || "請輸入有效的手機號碼格式",
+    },
+  },
+  {
+    name: "email",
+    type: "email",
+    placeholder: "A12345678@gmail.com",
+    $color: "textSecondary",
+    $fontSize: 16,
+    $borderColor: "border",
+    $backgroundColor: "secondaryBg",
+    $autofill: InputFieldAutofill,
+    $shadow: InputFieldShadow,
+    $padding: "8px 16px",
+    required: "請輸入電子郵件",
+    validate: {
+      domain: (value: string) => {
+        const domainRegex = /@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+        return domainRegex.test(value) || "請輸入有效的電子郵件域名";
+      },
+      local: (value: string) => {
+        const beforeAtRegex = /^(?:[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:\\[\x01-\x09\x0b\x0c\x0e-\x7f]|[\x01-\x09\x0b\x0c\x0e-\x7f])*")@/;
+        return (
+          beforeAtRegex.test(value) ||
+          "電子郵件地址 '@' 前方不應包含空白或非法字符"
+        );
+      },
+      length: (value: string) => {
+        if (value.length > 254) return "電子信箱長度不得超過 254 個字符";
+        const localPart = value.split("@")[0];
+        if (localPart.length > 64) return "@ 前方不得超過 64 個字符";
+        return true;
+      },
+    },
+  },
+];

@@ -1,9 +1,47 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"],
-  "plugins": ["prettier"],
+  "extends": [
+    "next/core-web-vitals",
+    "next/typescript",
+    "plugin:prettier/recommended"
+  ],
   "rules": {
-    "quotes": ["error", "double", { "avoidEscape": true }],
+    "quotes": ["error", "double"],
     "linebreak-style": ["error", "unix"],
-    "indent": ["error", 2]
+    "indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1,
+        "ignoredNodes": [
+          "ConditionalExpression"
+        ]
+      }
+    ],
+    "semi": ["error", "always"],
+    "no-multiple-empty-lines": ["error", { "max": 1 }],
+    "eol-last": ["error", "always"]
+  },
+  "overrides": [
+    {
+      "files": ["**/*.styled.ts", "**/*.styled.tsx", "**/styled.ts", "**/styled.tsx"],
+      "rules": {
+        "template-curly-spacing": ["error", "never"],
+        "semi": ["error", "always"],
+        "indent": ["error", 2],
+        "no-irregular-whitespace": "error",
+        "no-trailing-spaces": "error",
+        "semi-style": ["error", "last"],
+        "semi-spacing": ["error", { "before": false, "after": true }]
+      }
+    }
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
   }
 }
+

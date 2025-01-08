@@ -1,34 +1,25 @@
 import styled from "styled-components";
-import {
-  ExtraLarge,
-  Mobile,
-} from "@/styles/container";
+import { Mobile } from "@/styles/container";
 
 export const GalleryContainer = styled.div`
   display: flex;
   flex-direction: column;
+  row-gap: 10px;
   width: 100%;
-  row-gap: 15px;
 `;
 
 export const Main = styled.div`
   background-color: #f9f8f6;
+  max-width: 660px;
+  max-height: 582px;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 30px;
-  @media (${Mobile}) {
-    padding: 40px;
-  }
-  @media (${ExtraLarge}) {
-    padding: 114px;
-  }
 `;
 
 export const InfoImage = styled.img`
-  max-width: 456px;
-  max-height: 456px;
   width: 100%;
+  height: 100%;
   object-fit: cover;
 `;
 

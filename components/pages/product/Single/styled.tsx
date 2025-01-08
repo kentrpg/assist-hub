@@ -6,7 +6,6 @@ import {
   Tablet,
   Mobile,
 } from "@/styles/container";
-// import { c } from "@/styles/theme";
 
 type CellProps = {
   $border?: boolean;
@@ -38,7 +37,7 @@ export const InfoContainer = styled.div`
     column-gap: 60px;
   }
   @media (${ExtraLarge}) {
-    column-gap: 114px;
+    column-gap: 90px;
   }
 `;
 
@@ -48,8 +47,10 @@ export const Detail = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 20px;
-  @media (min-width: 800px) {
-    max-width: 546px;
+  padding: 0px;
+  @media (${Tablet}) {
+    padding: 24px;
+    max-width: 594px;
   }
 `;
 
@@ -109,11 +110,11 @@ export const BtnField = styled.div`
   font-weight: 500;
   row-gap: 8px;
 
-  @media (min-width: 800px) {
+  @media (${Tablet}) {
     flex-direction: row;
     column-gap: 24px;
     padding-top: 30px;
-    padding-bottom: 50px;
+    padding-bottom: 30px;
   }
 `;
 
@@ -133,7 +134,7 @@ export const InquiryIcon = styled.div`
   background-size: contain;
   background-repeat: no-repeat;
   display: none;
-  @media (min-width: 800px) {
+  @media (${Tablet}) {
     display: block;
     width: 27px;
     height: 27px;
@@ -166,7 +167,7 @@ export const InquiryBtn = styled.button`
     }
   }
 
-  @media (min-width: 800px) {
+  @media (${Tablet}) {
     background-color: #ffcc1a;
     max-width: 67px;
     width: 100%;
@@ -188,10 +189,10 @@ export const ComparisonContainer = styled.div`
   flex-direction: column;
   row-gap: 16px;
   width: 100%;
-  padding: 36px 48px;
+  padding: 0px;
   overflow-x: auto;
-  @media (max-width: 945px) {
-    padding: 0px;
+  @media (min-width: 945px) {
+    padding: 36px 48px;
   }
 `;
 
@@ -335,7 +336,7 @@ export const RecommendedContainer = styled.div`
 
   .slick-slide img {
     display: block;
-    /* max-width: 100%; */
+    max-width: 100%;
   }
 
   .slick-prev,
@@ -411,8 +412,7 @@ export const CarouselItem = styled.div`
   padding: 20px;
 `;
 
-export const CarouselImg = styled.div`
-`;
+export const CarouselImg = styled.div``;
 
 export const CarouselInfo = styled.div`
   display: flex;

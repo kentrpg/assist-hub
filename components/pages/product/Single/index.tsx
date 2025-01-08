@@ -46,6 +46,7 @@ import {
 import { sliderSettings } from "./data";
 import Gallery from "./Gallery";
 import BreadCrumb from "./BreadCrumb";
+import Accordion from "./Accordion";
 
 const CustomPrevArrow = ({ onClick }: { onClick?: () => void }) => (
   <div className="slick-prev" onClick={onClick}>
@@ -67,8 +68,7 @@ const Single: React.FC<ProductDetailsProps> = ({ product }) => {
   return (
     <Container>
       {/* 麵包屑 */}
-      <BreadCrumb />
-
+      <BreadCrumb product={product} />
       {/* 商品資訊 */}
       <InfoContainer>
         <Gallery
@@ -111,7 +111,8 @@ const Single: React.FC<ProductDetailsProps> = ({ product }) => {
               <span>加入詢問單</span>
             </InquiryBtn>
           </BtnField>
-          <div>使用說明</div>
+          {/* 手風琴展開 */}
+          <Accordion />
         </Detail>
       </InfoContainer>
       {/* 比較商品 */}

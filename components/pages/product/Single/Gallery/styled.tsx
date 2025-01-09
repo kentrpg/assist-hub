@@ -10,8 +10,6 @@ export const GalleryContainer = styled.div`
 
 export const Main = styled.div`
   background-color: #f9f8f6;
-  max-width: 660px;
-  max-height: 582px;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -34,7 +34,7 @@ export const InfoContainer = styled.div`
 
   @media (${Tablet}) {
     flex-direction: row;
-    column-gap: 60px;
+    column-gap: 40px;
   }
   @media (${ExtraLarge}) {
     column-gap: 90px;
@@ -42,15 +42,13 @@ export const InfoContainer = styled.div`
 `;
 
 export const Detail = styled.div`
-  padding: 0px;
   width: 100%;
   display: flex;
   flex-direction: column;
   row-gap: 20px;
   padding: 0px;
   @media (${Tablet}) {
-    padding: 24px;
-    max-width: 594px;
+    max-width: 570px;
   }
 `;
 

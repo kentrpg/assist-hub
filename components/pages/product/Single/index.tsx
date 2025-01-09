@@ -105,7 +105,7 @@ const Single: React.FC<ProductDetailsProps> = ({ product }) => {
             <p>產地: {product.info.origin}</p>
           </InfoField>
           <BtnField>
-            <RentBtn>立即租賃</RentBtn>
+            <RentBtn>加入購物車</RentBtn>
             <InquiryBtn>
               <InquiryIcon />
               <span>加入詢問單</span>

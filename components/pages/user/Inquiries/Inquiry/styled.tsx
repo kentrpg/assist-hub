@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Tablet, Desktop, Mobile, ExtraLarge } from "@/styles/container";
 
 type StatusProps = {
   $isSuggest?: boolean;
@@ -15,10 +16,14 @@ export const ContentRow = styled.div`
     minmax(60px, 1fr) minmax(60px, 1fr) minmax(60px, 1fr);
   align-items: center;
   text-align: center;
-  padding: 10px 25px;
+  padding: 10px 10px;
   border-bottom: 1px solid #e9e5de;
   &:last-of-type {
     border-bottom: none;
+  }
+
+  @media (${Desktop}) {
+    padding: 24px 25px;
   }
 `;
 
@@ -35,12 +40,23 @@ export const Grid = styled.div<StatusProps>`
 export const ProductImages = styled.div`
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  @media (${ExtraLarge}) {
+    gap: 25px;
+  }
   img {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     object-fit: cover;
     border-radius: 4px;
+    @media (${Tablet}) {
+      width: 70px;
+      height: 70px;
+    }
+    @media (${Desktop}) {
+      width: 80px;
+      height: 80px;
+    }
   }
 `;
 

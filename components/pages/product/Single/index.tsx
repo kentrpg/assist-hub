@@ -13,7 +13,7 @@ import { FeatureBadge } from "@/components/ui/badges";
 import {
   InfoContainer,
   ComparisonContainer,
-  GridContainer,
+  Grid,
   ComparisonHeader,
   Row,
   Cell,
@@ -42,6 +42,8 @@ import {
   InfoField,
   BtnField,
   InquiryIcon,
+  ComparisonProduct,
+  CarouselBtn,
 } from "./styled";
 import { sliderSettings } from "./data";
 import Gallery from "./Gallery";
@@ -105,7 +107,10 @@ const Single: React.FC<ProductDetailsProps> = ({ product }) => {
             <p>產地: {product.info.origin}</p>
           </InfoField>
           <BtnField>
-            <RentBtn>加入購物車</RentBtn>
+            <RentBtn>
+              <MdShoppingCart size={27} />
+              加入購物車
+            </RentBtn>
             <InquiryBtn>
               <InquiryIcon />
               <span>加入詢問單</span>
@@ -118,58 +123,64 @@ const Single: React.FC<ProductDetailsProps> = ({ product }) => {
       {/* 比較商品 */}
       <ComparisonContainer>
         <ComparisonHeader>相同類型輔具比較</ComparisonHeader>
-        <GridContainer>
-          <Row>
-            <Cell></Cell>
-            {items.map((item, index) => (
-              <ComparisonItem key={index}>
-                <ComparisonImg src="/images/wheelChair.svg" alt={item.name} />
-                <ComparisonBtn>
-                  <MdShoppingCart size={24} />
-                  加入購物車
-                </ComparisonBtn>
-              </ComparisonItem>
-            ))}
-          </Row>
-          <Row $bg>
-            <Cell>名稱</Cell>
-            {items.map((item, index) => (
-              <Cell $border key={index}>
-                {item.name}
+        <ComparisonProduct>
+          <Grid>
+            <Row>
+              <Cell $border></Cell>
+              {items.map((item, index) => (
+                <ComparisonItem key={index}>
+                  <ComparisonImg src="/images/wheelChair.svg" alt={item.name} />
+                  <ComparisonBtn>
+                    <MdShoppingCart size={24} />
+                    加入購物車
+                  </ComparisonBtn>
+                </ComparisonItem>
+              ))}
+            </Row>
+            <Row $bg>
+              <Cell $bg="#F9F8F6" $border>
+                名稱
               </Cell>
-            ))}
-          </Row>
-          <Row>
-            <Cell>租金</Cell>
-            {items.map((item, index) => (
-              <Cell $isEm $border key={index}>
-                {item.price}
+              {items.map((item, index) => (
+                <Cell $border key={index}>
+                  {item.name}
+                </Cell>
+              ))}
+            </Row>
+            <Row>
+              <Cell $border>租金</Cell>
+              {items.map((item, index) => (
+                <Cell $isEm $border key={index}>
+                  {item.price}
+                </Cell>
+              ))}
+            </Row>
+            <Row $bg>
+              <Cell $bg="#F9F8F6" $border>
+                材質
               </Cell>
-            ))}
-          </Row>
-          <Row $bg>
-            <Cell>材質</Cell>
-            {items.map((item, index) => (
-              <Cell $border key={index}>
-                {item.material}
-              </Cell>
-            ))}
-          </Row>
-          <Row>
-            <Cell>特色</Cell>
-            {items.map((item, index) => (
-              <Cell $border $feature key={index}>
-                <Feature>
-                  {item.features.map((feature, i) => (
-                    <FeatureBadge key={i}>
-                      <MdCheck size={16} /> {feature}
-                    </FeatureBadge>
-                  ))}
-                </Feature>
-              </Cell>
-            ))}
-          </Row>
-        </GridContainer>
+              {items.map((item, index) => (
+                <Cell $border key={index}>
+                  {item.material}
+                </Cell>
+              ))}
+            </Row>
+            <Row>
+              <Cell $border>特色</Cell>
+              {items.map((item, index) => (
+                <Cell $border $feature key={index}>
+                  <Feature>
+                    {item.features.map((feature, i) => (
+                      <FeatureBadge key={i}>
+                        <MdCheck size={16} /> {feature}
+                      </FeatureBadge>
+                    ))}
+                  </Feature>
+                </Cell>
+              ))}
+            </Row>
+          </Grid>
+        </ComparisonProduct>
       </ComparisonContainer>
       {/* 輪播 */}
       <RecommendedContainer>
@@ -193,6 +204,10 @@ const Single: React.FC<ProductDetailsProps> = ({ product }) => {
                 <CarouselTitle>{item.name}</CarouselTitle>
                 <CarouselPrice>{item.price}</CarouselPrice>
               </CarouselInfo>
+              <CarouselBtn>
+                <InquiryIcon />
+                加入詢問單
+              </CarouselBtn>
             </CarouselItem>
           ))}
         </Slider>

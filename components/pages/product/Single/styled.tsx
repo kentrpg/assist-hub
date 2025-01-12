@@ -11,6 +11,7 @@ type CellProps = {
   $border?: boolean;
   $isEm?: boolean;
   $feature?: boolean;
+  $bg?: string;
 };
 
 type RowProps = {
@@ -117,14 +118,26 @@ export const BtnField = styled.div`
 `;
 
 export const RentBtn = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 4px;
   max-width: 100%;
   width: 100%;
+  font-size: 18px;
+  font-weight: 500;
   transition: none;
   padding: 10px 0px;
   color: #ffffff;
   border-radius: 30px;
   background-color: #103f99;
   transition: none;
+  &:hover {
+    background-color: #0b2c6b;
+  }
+  @media (${Tablet}) {
+    column-gap: 12px;
+  }
 `;
 
 export const InquiryIcon = styled.div`
@@ -140,6 +153,8 @@ export const InquiryIcon = styled.div`
 `;
 
 export const InquiryBtn = styled.button`
+  font-size: 18px;
+  font-weight: 500;
   display: flex;
   column-gap: 10px;
   align-items: center;
@@ -160,6 +175,7 @@ export const InquiryBtn = styled.button`
     max-width: 100%;
     width: 100%;
     color: black;
+    background-color: #b28f12;
     span {
       display: inline-block;
     }
@@ -188,28 +204,26 @@ export const ComparisonContainer = styled.div`
   row-gap: 16px;
   width: 100%;
   padding: 0px;
-  overflow-x: auto;
   @media (min-width: 945px) {
     padding: 36px 48px;
   }
 `;
 
 export const ComparisonHeader = styled.h5`
-  position: sticky;
+  display: flex;
+  justify-content: center;
   color: #08204d;
-  left: 50%;
-  transform: translateX(-50%);
-  width: max-content;
   font-size: 24px;
   font-weight: 500;
 `;
 
-export const GridContainer = styled.div`
-  display: grid;
+export const ComparisonProduct = styled.div`
   border: 1px solid #e9e5de;
   border-radius: 10px;
-  grid-template-rows: repeat(5, auto);
-  grid-auto-flow: row;
+  overflow-x: auto;
+`;
+
+export const Grid = styled.div`
   white-space: nowrap;
   min-width: 720px;
 `;
@@ -220,6 +234,7 @@ export const Row = styled.div<RowProps>`
   align-items: center;
   border-bottom: 1px solid #ddd;
   background-color: ${({ $bg }) => ($bg ? "#F9F8F6" : "white")};
+  position: relative;
 
   &:last-child {
     border-bottom: none;
@@ -234,9 +249,11 @@ export const Cell = styled.div<CellProps>`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  border-right: ${({ $border }) => ($border ? "1px solid #e9e5de" : "none")};
   border-left: ${({ $border }) => ($border ? "1px solid #e9e5de" : "none")};
-  &:first-child {
-    border-left: none;
+  
+  &:last-child {
+    border-right: none;
   }
 
   &:nth-child(1) {
@@ -246,8 +263,10 @@ export const Cell = styled.div<CellProps>`
     position: sticky;
     height: 100%;
     left: 0;
-    background-color: white;
     z-index: 2;
+    background-color: ${({ $bg }) => $bg || "white"};
+    clip-path: inset(0px 0px 0px 0px);
+    overflow: hidden;
   }
 `;
 
@@ -266,6 +285,8 @@ export const ComparisonItem = styled.div`
   row-gap: 10px;
   padding: 20px 0px;
   border-left: 1px solid #e9e5de;
+  overflow: hidden;
+  position: relative;
 `;
 
 export const ComparisonImg = styled.img`
@@ -282,12 +303,19 @@ export const ComparisonImg = styled.img`
 export const ComparisonBtn = styled.button`
   background-color: #103f99;
   display: flex;
-  column-gap: 8px;
+  column-gap: 4px;
   font-size: 16px;
   font-weight: 500;
   color: white;
-  padding: 8px 16px;
+  padding: 4px 8px;
   border-radius: 30px;
+  @media (${Tablet}) {
+    column-gap: 8px;
+    padding: 8px 16px;
+  }
+  &:hover {
+    background-color: #0b2c6b;
+  }
 `;
 
 export const RecommendedContainer = styled.div`
@@ -311,7 +339,7 @@ export const RecommendedContainer = styled.div`
 
   .slick-list {
     width: 100%;
-    padding: 0 48px;
+    padding-top: 1px !important;
     overflow: hidden;
     margin: 0;
   }
@@ -408,6 +436,41 @@ export const CarouselItem = styled.div`
   border-radius: 10px;
   background-color: #f9f8f6;
   padding: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  &:hover {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    outline: 1px solid #103f99;
+  }
+
+  &:hover ${() => CarouselBtn} {
+    opacity: 1;
+  }
+`;
+
+export const CarouselBtn = styled.button`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 6px;
+  top: 20px;
+  right: 20px;
+  background-color: #ffcc1a;
+  border: none;
+  border-radius: 30px;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    background-color: #b28f12;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
 `;
 
 export const CarouselImg = styled.div``;

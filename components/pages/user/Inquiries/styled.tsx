@@ -21,6 +21,10 @@ export const Title = styled.h5`
   color: #08204d;
   border-left: 5px #103f99 solid;
   padding-left: 14px;
+  display: none;
+  @media (${Tablet}) {
+    display: block;
+  }
 `;
 
 export const GridContainer = styled.div`

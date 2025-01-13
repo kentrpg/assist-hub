@@ -20,4 +20,8 @@ export const Titile = styled.h5`
   border-left: 5px solid ${({ theme }) => theme.colors.textprimary};
   color: ${({ theme }) => theme.colors.textprimary};
   margin-bottom: 32px;
+  display: none;
+  @media (${Tablet}) {
+    display: block;
+  }
 `;

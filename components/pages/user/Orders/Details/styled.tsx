@@ -1,12 +1,14 @@
 import styled from "styled-components";
+import { ExtraLarge, Desktop, Tablet, Mobile } from "@/styles/container";
 
 export type PProps = {
   $type: "title" | "content";
 };
 
-export const Container = styled.div`
-  max-width: 1002px;
-  padding: 48px;
+export const DetailContainer = styled.div`
+  min-height: 0;
+  overflow: auto;
+  padding: 24px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -14,6 +16,9 @@ export const Container = styled.div`
   border-radius: 10px;
   outline: 1px solid #888888;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+  @media (${ExtraLarge}) {
+    padding: 48px;
+  }
 `;
 
 export const BackToOrders = styled.div`
@@ -72,17 +77,46 @@ export const Fee = styled.th`
 
 export const Footer = styled.div`
   display: flex;
+  flex-direction: column;
   border-top: #e9e5de 1px solid;
+  @media (${ExtraLarge}) {
+    flex-direction: row;
+  }
+`;
+
+export const RentInfo = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  border-bottom: #e9e5de 1px solid;
+  @media (${Mobile}) {
+    flex-direction: row;
+  }
+  @media (${ExtraLarge}) {
+    border-bottom: none;
+  }
 `;
 
 export const Detail = styled.div`
   position: relative;
-  max-width: 328px;
   width: 100%;
-  padding: 24px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
   row-gap: 24px;
+
+  @media (${Mobile}) {
+    padding: 24px;
+  }
+  @media (${ExtraLarge}) {
+    max-width: 328px;
+  }
+  &:nth-child(1) {
+    border-bottom: #e9e5de 1px solid;
+    @media (${Mobile}) {
+      border-bottom: none;
+    }
+  }
 
   &::after {
     content: "";
@@ -104,7 +138,10 @@ export const Span = styled.span`
 export const Remark = styled.div`
   max-width: 250px;
   width: 100%;
-  padding: 24px;
+  padding: 12px;
+  @media (${Mobile}) {
+    padding: 24px;
+  }
 `;
 
 export const Rental = styled.div`
@@ -121,7 +158,12 @@ export const Delivery = styled.div`
 
 export const Row = styled.div`
   display: flex;
-  column-gap: 30px;
+  row-gap: 8px;
+  flex-direction: column;
+  @media (${ExtraLarge}) {
+    flex-direction: row;
+    column-gap: 30px;
+  }
 `;
 
 export const P = styled.p<PProps>`
@@ -130,4 +172,6 @@ export const P = styled.p<PProps>`
   font-weight: ${({ $type }) => ($type === "title" ? "400" : "500")};
   max-width: ${({ $type }) => ($type === "title" ? "60px" : "190px")};
   width: 100%;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 `;

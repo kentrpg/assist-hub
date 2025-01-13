@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Header, Tabs, Tab, Title, List } from "./styled";
+import { OrderContainer, Header, Tabs, Tab, Title, List } from "./styled";
 import { orders, Order } from "./data";
 import Empty from "./Empty";
 import ListItem from "./ListItem";
@@ -21,7 +21,7 @@ const Orders: React.FC<OrdersProps> = ({ setActiveOrder }) => {
   });
 
   return (
-    <Container>
+    <OrderContainer>
       <Header>
         <Title>我的訂單</Title>
         <Tabs>
@@ -58,7 +58,7 @@ const Orders: React.FC<OrdersProps> = ({ setActiveOrder }) => {
           ))
         )}
       </List>
-    </Container>
+    </OrderContainer>
   );
 };
 

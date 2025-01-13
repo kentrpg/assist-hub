@@ -1,12 +1,13 @@
 import styled from "styled-components";
+import { ExtraLarge, Desktop, Tablet, Mobile } from "@/styles/container";
 
 type TabProps = {
   $active: boolean;
 };
 
-export const Container = styled.div`
-  max-width: 1002px;
-  padding: 48px;
+export const OrderContainer = styled.div`
+  min-width: 0;
+  padding: 24px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -14,6 +15,9 @@ export const Container = styled.div`
   border-radius: 10px;
   outline: 1px solid #888888;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+  @media (${ExtraLarge}) {
+    padding: 48px;
+  }
 `;
 
 export const List = styled.div`
@@ -25,7 +29,12 @@ export const List = styled.div`
 
 export const Header = styled.div`
   display: flex;
+  flex-direction: column;
+  row-gap: 12px;
   justify-content: space-between;
+  @media (${Mobile}) {
+    flex-direction: row;
+  }
 `;
 
 export const Title = styled.h5`
@@ -34,6 +43,10 @@ export const Title = styled.h5`
   padding-left: 14px;
   color: #08204d;
   border-left: 5px solid #08204d;
+  display: none;
+  @media (${Tablet}) {
+    display: block;
+  }
 `;
 
 export const Tabs = styled.div`
@@ -56,12 +69,16 @@ export const Tabs = styled.div`
 `;
 
 export const Tab = styled.button<TabProps>`
-  min-width: 86px;
+  width: 100%;
   font-size: 14px;
   font-weight: 700;
   color: ${({ $active }) => ($active ? "#08204d" : "#888888")};
   background-color: white;
   transition: all 0.3s ease;
+
+  @media (${Mobile}) {
+    min-width: 86px;
+  }
 
   &:hover {
     cursor: pointer;

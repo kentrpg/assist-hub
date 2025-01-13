@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { ExtraLarge, Desktop, Tablet, Mobile } from "@/styles/container";
+
 type $LineProps = {
   $isCompleted: boolean;
 };
@@ -17,7 +19,7 @@ export const ProgressBar = styled.div`
   row-gap: 24px;
   align-items: center;
   width: 100%;
-  padding: 24px 24px;
+  padding: 12px;
   position: relative;
   &::after {
     content: "";
@@ -27,6 +29,9 @@ export const ProgressBar = styled.div`
     width: 100%;
     height: 1px;
     background-color: #e9e5de;
+  }
+  @media (${Mobile}) {
+    padding: 24px;
   }
 `;
 

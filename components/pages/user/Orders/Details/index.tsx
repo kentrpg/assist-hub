@@ -14,6 +14,7 @@ import {
   Finished,
   Status,
   Table,
+  TableContainer,
   Thead,
   Tr,
   RentHeader,
@@ -45,7 +46,8 @@ import {
   Delivery,
   P,
   Row,
-  Container,
+  DetailContainer,
+  RentInfo,
 } from "./styled";
 import { MdArrowBack } from "react-icons/md";
 import { Order } from "../data";
@@ -78,7 +80,7 @@ const Details = ({ order, onBack }: DetailsProps) => {
   const totalPrice = (quantity * rent + deposit + deliveryFee).toLocaleString();
 
   return (
-    <Container>
+    <DetailContainer>
       <BackToOrders>
         <Icon onClick={onBack}>
           <MdArrowBack size={16} color="White" />
@@ -101,79 +103,83 @@ const Details = ({ order, onBack }: DetailsProps) => {
           <Status $status={status}>{status}</Status>
         </Main>
         {deliveryType === "宅配" && <Progress />}
-        <Table>
-          <ColGroup>
-            <Col style={{ width: "40%" }} />
-            <Col style={{ width: "12.5%" }} />
-            <Col style={{ width: "12.5%" }} />
-            <Col style={{ width: "12.5%" }} />
-            <Col style={{ width: "12.5%" }} />
-          </ColGroup>
-          <Thead>
-            <Tr>
-              <NameHeader>輔具名稱</NameHeader>
-              <QuantityrHeader>數量</QuantityrHeader>
-              <RentHeader>租金</RentHeader>
-              <DepositHeader>押金</DepositHeader>
-              <FeeHeader>運費</FeeHeader>
-            </Tr>
-          </Thead>
-          <Tbody>
-            <Tr>
-              <Product>
-                <img src={img} width={66} height={66} alt="XX輪椅" />
-                <Description>
-                  <Name>精品輪椅</Name>
-                  <Feature>{description}</Feature>
-                </Description>
-              </Product>
-              <Quantity>x{quantity}</Quantity>
-              <Rent>{rent.toLocaleString()}元</Rent>
-              <Deposit>{deposit}元</Deposit>
-              <Fee>{deliveryFee}元</Fee>
-            </Tr>
-          </Tbody>
-        </Table>
+        <TableContainer>
+          <Table>
+            <ColGroup>
+              <Col style={{ width: "40%" }} />
+              <Col style={{ width: "12.5%" }} />
+              <Col style={{ width: "12.5%" }} />
+              <Col style={{ width: "12.5%" }} />
+              <Col style={{ width: "12.5%" }} />
+            </ColGroup>
+            <Thead>
+              <Tr>
+                <NameHeader>輔具名稱</NameHeader>
+                <QuantityrHeader>數量</QuantityrHeader>
+                <RentHeader>租金</RentHeader>
+                <DepositHeader>押金</DepositHeader>
+                <FeeHeader>運費</FeeHeader>
+              </Tr>
+            </Thead>
+            <Tbody>
+              <Tr>
+                <Product>
+                  <img src={img} width={66} height={66} alt="XX輪椅" />
+                  <Description>
+                    <Name>精品輪椅</Name>
+                    <Feature>{description}</Feature>
+                  </Description>
+                </Product>
+                <Quantity>x{quantity}</Quantity>
+                <Rent>{rent.toLocaleString()}元</Rent>
+                <Deposit>{deposit}元</Deposit>
+                <Fee>{deliveryFee}元</Fee>
+              </Tr>
+            </Tbody>
+          </Table>
+        </TableContainer>
         <Footer>
-          <Detail>
-            <Span>租賃資訊</Span>
-            <Rental>
+          <RentInfo>
+            <Detail>
+              <Span>租賃資訊</Span>
+              <Rental>
+                <Row>
+                  <P $type="title">租賃日期</P>
+                  <P $type="content">2024/11/28 到 2024/12/28</P>
+                </Row>
+                <Row>
+                  <P $type="title">租賃期約</P>
+                  <P $type="content">{period}個月</P>
+                </Row>
+                <Row>
+                  <P $type="title">付款方式</P>
+                  <P $type="content">{payment}</P>
+                </Row>
+              </Rental>
+            </Detail>
+            <Detail>
+              <Span>取貨資訊</Span>
               <Row>
-                <P $type="title">租賃日期</P>
-                <P $type="content">2024/11/28 到 2024/12/28</P>
+                <P $type="title">姓名</P>
+                <P $type="content">{name}</P>
               </Row>
               <Row>
-                <P $type="title">租賃期約</P>
-                <P $type="content">{period}個月</P>
+                <P $type="title">手機號碼</P>
+                <P $type="content">{phone}</P>
               </Row>
               <Row>
-                <P $type="title">付款方式</P>
-                <P $type="content">{payment}</P>
+                <P $type="title">電子信箱</P>
+                <P $type="content">{email}</P>
               </Row>
-            </Rental>
-          </Detail>
-          <Detail>
-            <Span>取貨資訊</Span>
-            <Row>
-              <P $type="title">姓名</P>
-              <P $type="content">{name}</P>
-            </Row>
-            <Row>
-              <P $type="title">手機號碼</P>
-              <P $type="content">{phone}</P>
-            </Row>
-            <Row>
-              <P $type="title">電子信箱</P>
-              <P $type="content">{email}</P>
-            </Row>
-          </Detail>
+            </Detail>
+          </RentInfo>
           <Remark>
             <Span>備註</Span>
             <Delivery></Delivery>
           </Remark>
         </Footer>
       </Item>
-    </Container>
+    </DetailContainer>
   );
 };
 

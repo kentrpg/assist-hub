@@ -16,7 +16,7 @@ const BreadCrumb: React.FC<BreadCrumbProps> = ({ product }) => {
         </Li>
         <MdChevronRight color="#888888" size={24} />
         <Li>
-          <Link href={`/product/filter?type=${product.type}`}>行動輪椅</Link>
+          <Link href={`/product?type=${product.type}`}>行動輪椅</Link>
         </Li>
         <MdChevronRight color="#888888" size={24} />
         <Li>{product.name}</Li>

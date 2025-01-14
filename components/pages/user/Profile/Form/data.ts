@@ -11,8 +11,6 @@ export type FormData = {
   addressCity: string;
   addressDistrict: string;
   addressDetail: string;
-  identity: string;
-  disability: string;
 };
 
 export type FormHooks = {
@@ -21,7 +19,7 @@ export type FormHooks = {
 };
 
 export const User1 = {
-  name: "鄭柏易",
+  name: "",
   gender: "男生",
   dobStamp: "1999-02-22",
   email: "123@gmail.com",
@@ -31,6 +29,4 @@ export const User1 = {
   addressCity: "高雄市",
   addressDistrict: "新興區",
   addressDetail: "大同路123號",
-  identity: "是",
-  disability: "無",
 };

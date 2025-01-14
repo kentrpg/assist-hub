@@ -38,9 +38,9 @@ const NameWithDob: React.FC<FormHooks> = ({ register, errors }) => (
         id="dobStamp"
         {...register("dobStamp", { required: "請輸入出生年月日" })} 
       />
-      <DobIcon>
+      {/* <DobIcon>
         <MdCake size={24} color="#103F99" />
-      </DobIcon>
+      </DobIcon> */}
       {errors?.dobStamp && <Error>{errors.dobStamp.message}</Error>}
     </DobField>
   </Wrapper>

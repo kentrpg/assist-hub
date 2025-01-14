@@ -15,10 +15,10 @@ export const Input = styled.input<InputProps>`
   outline: solid #888888 1px;
   flex: 1;
 
-  &::-webkit-calendar-picker-indicator {
-    display: none; /* 隱藏日曆圖示 */
-    -webkit-appearance: none; /* Safari/Chrome */
-  }
+  /* &::-webkit-calendar-picker-indicator {
+    display: none; // 隱藏日曆圖示 
+    -webkit-appearance: none; 
+  } */
 
   outline: ${({ disabled }) => disabled && "none"};
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "text")};
@@ -55,11 +55,15 @@ export const Select = styled.select`
   outline: solid #888888 1px;
 `;
 
-export const SelectCheckbox = styled.div`
-  min-width: 90px;
+export const GenderInput = styled.input`
+  appearance: none;
+`;
+
+export const SelectCheckbox = styled.label`
   font-size: 16px;
+  font-weight: 400;
   display: flex;
-  column-gap: 12px;
+  column-gap: 8px;
 `;
 
 export const NameIcon = styled.div`
@@ -120,7 +124,6 @@ export const GenderField = styled.div`
 export const GenderSelection = styled.div`
   display: flex;
   column-gap: 12px;
-  font-size: 16px;
 `;
 
 export const NameField = styled.div`

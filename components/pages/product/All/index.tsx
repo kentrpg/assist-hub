@@ -152,7 +152,7 @@ const All: React.FC<AllProps> = ({ products }) => {
           title="行動輪椅"
           color="primary"
           bgColor="primaryLight"
-          type="wheelchair"
+          type="wheelChair"
           products={filteredProducts}
         />
         <Category

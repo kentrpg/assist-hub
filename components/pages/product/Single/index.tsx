@@ -2,7 +2,7 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { items, carouselItems, ProductItem } from "./data";
+import { ProductItem, ComparisonItem, RecommendedItem } from "./data";
 import {
   MdArrowBackIosNew,
   MdArrowForwardIos,
@@ -17,7 +17,7 @@ import {
   ComparisonHeader,
   Row,
   Cell,
-  ComparisonItem,
+  ComparisonContent,
   ComparisonImg,
   Container,
   Feature,
@@ -64,9 +64,15 @@ const CustomNextArrow = ({ onClick }: { onClick?: () => void }) => (
 
 type ProductDetailsProps = {
   product: ProductItem;
+  comparison: ComparisonItem[];
+  recommended: RecommendedItem[];
 };
 
-const Single: React.FC<ProductDetailsProps> = ({ product }) => {
+const Single: React.FC<ProductDetailsProps> = ({
+  product,
+  comparison,
+  recommended,
+}) => {
   return (
     <Container>
       {/* 麵包屑 */}
@@ -74,18 +80,17 @@ const Single: React.FC<ProductDetailsProps> = ({ product }) => {
       {/* 商品資訊 */}
       <InfoContainer>
         <Gallery
-          initialImage="/images/infoMain.png"
-          thumbnails={[
-            "/images/info1.png",
-            "/images/info2.png",
-            "/images/info3.png",
-            "/images/info4.png",
-          ]}
+          initialImage={product.image.preivew}
+          thumbnails={
+            product.image.list.length > 0
+              ? product.image.list
+              : [product.image.preivew]
+          }
         />
         <Detail>
           <Title>{product.name}</Title>
           <Tags>
-            {product.feature.map((tag, index) => (
+            {product.features.map((tag, index) => (
               <FeatureBadge key={index}>
                 <MdCheck size={16} />
                 {tag}
@@ -123,25 +128,28 @@ const Single: React.FC<ProductDetailsProps> = ({ product }) => {
       {/* 比較商品 */}
       <ComparisonContainer>
         <ComparisonHeader>相同類型輔具比較</ComparisonHeader>
-        <ComparisonProduct>
+        <ComparisonContent>
           <Grid>
             <Row>
               <Cell $border></Cell>
-              {items.map((item, index) => (
-                <ComparisonItem key={index}>
-                  <ComparisonImg src="/images/wheelChair.svg" alt={item.name} />
+              {comparison.map((item, index) => (
+                <ComparisonProduct key={index}>
+                  <ComparisonImg
+                    src={item.imgSrc || "/images/wheelChair.svg"}
+                    alt={item.name}
+                  />
                   <ComparisonBtn>
                     <MdShoppingCart size={24} />
                     加入購物車
                   </ComparisonBtn>
-                </ComparisonItem>
+                </ComparisonProduct>
               ))}
             </Row>
             <Row $bg>
               <Cell $bg="#F9F8F6" $border>
                 名稱
               </Cell>
-              {items.map((item, index) => (
+              {comparison.map((item, index) => (
                 <Cell $border key={index}>
                   {item.name}
                 </Cell>
@@ -149,9 +157,9 @@ const Single: React.FC<ProductDetailsProps> = ({ product }) => {
             </Row>
             <Row>
               <Cell $border>租金</Cell>
-              {items.map((item, index) => (
+              {comparison.map((item, index) => (
                 <Cell $isEm $border key={index}>
-                  {item.price}
+                  ${item.rent}
                 </Cell>
               ))}
             </Row>
@@ -159,15 +167,15 @@ const Single: React.FC<ProductDetailsProps> = ({ product }) => {
               <Cell $bg="#F9F8F6" $border>
                 材質
               </Cell>
-              {items.map((item, index) => (
+              {comparison.map((item, index) => (
                 <Cell $border key={index}>
-                  {item.material}
+                  {item.material || "無資料"}
                 </Cell>
               ))}
             </Row>
             <Row>
               <Cell $border>特色</Cell>
-              {items.map((item, index) => (
+              {comparison.map((item, index) => (
                 <Cell $border $feature key={index}>
                   <Feature>
                     {item.features.map((feature, i) => (
@@ -180,7 +188,7 @@ const Single: React.FC<ProductDetailsProps> = ({ product }) => {
               ))}
             </Row>
           </Grid>
-        </ComparisonProduct>
+        </ComparisonContent>
       </ComparisonContainer>
       {/* 輪播 */}
       <RecommendedContainer>
@@ -190,11 +198,11 @@ const Single: React.FC<ProductDetailsProps> = ({ product }) => {
           prevArrow={<CustomPrevArrow />}
           nextArrow={<CustomNextArrow />}
         >
-          {carouselItems.map((item, index) => (
+          {recommended.map((item, index) => (
             <CarouselItem key={index}>
               <CarouselImg>
                 <img
-                  src="/images/wheelChair.svg"
+                  src={item.imgSrc || "/images/wheelChair.svg"}
                   width={260}
                   height={190}
                   alt={item.name}
@@ -202,7 +210,7 @@ const Single: React.FC<ProductDetailsProps> = ({ product }) => {
               </CarouselImg>
               <CarouselInfo>
                 <CarouselTitle>{item.name}</CarouselTitle>
-                <CarouselPrice>{item.price}</CarouselPrice>
+                <CarouselPrice>${item.rent}</CarouselPrice>
               </CarouselInfo>
               <CarouselBtn>
                 <InquiryIcon />

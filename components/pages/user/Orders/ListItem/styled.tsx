@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { ExtraLarge, Desktop, Tablet, Mobile } from "@/styles/container";
 
 type DeliveryOptionProps = {
   $deliveryType: "自取" | "宅配";
@@ -14,7 +15,7 @@ export const Item = styled.div`
 `;
 
 export const Header = styled.div<DeliveryOptionProps>`
-  padding: 24px;
+  padding: 12px;
   border-radius: 5px 5px 0 0;
   background-color: ${({ $deliveryType }) =>
     $deliveryType === "宅配"
@@ -23,6 +24,7 @@ export const Header = styled.div<DeliveryOptionProps>`
       ? "#FFF3D3"
       : "#FFFFFF"};
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   position: relative;
@@ -35,24 +37,37 @@ export const Header = styled.div<DeliveryOptionProps>`
     height: 1px;
     background-color: #888888;
   }
+  @media (${Mobile}) {
+    padding: 24px;
+    flex-direction: row;
+  }
 `;
 
 export const Major = styled.div`
   display: flex;
   column-gap: 20px;
-  align-items: center;
+  @media (${Mobile}) {
+    align-items: center;
+  }
 `;
 
 export const Type = styled.h4`
   color: #08204d;
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 500;
+  @media (${Mobile}) {
+    font-size: 28px;
+  }
 `;
 
 export const Price = styled.h4`
   color: #08204d;
   font-size: 28px;
   font-weight: 500;
+  align-self: end;
+  @media (${Mobile}) {
+    align-self: normal;
+  }
 `;
 
 export const Info = styled.div`
@@ -73,7 +88,7 @@ export const Created = styled.p`
 `;
 
 export const Main = styled.div`
-  padding: 12px 24px;
+  padding: 12px 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -87,6 +102,10 @@ export const Main = styled.div`
     width: 100%;
     height: 1px;
     background-color: #e9e5de;
+  }
+
+  @media (${Mobile}) {
+    padding: 12px 24px;
   }
 `;
 
@@ -117,9 +136,15 @@ export const Status = styled.div<StatusProps>`
       : "none"};
 `;
 
+export const TableContainer = styled.div`
+  overflow-x: auto;
+  width: 100%;
+`;
+
 export const Table = styled.table`
   width: 100%;
-  border-collapse: collapse; /* 確保邊框不重疊 */
+  min-width: 900px;
+  border-collapse: collapse;
 `;
 
 export const ColGroup = styled.colgroup``;
@@ -140,11 +165,14 @@ export const Tr = styled.tr`
 
 export const NameHeader = styled.th`
   text-align: left;
-  padding: 10px 24px;
+  padding: 10px 12px;
   font-size: 12px;
   font-weight: 400;
   color: #08204d;
   white-space: nowrap;
+  @media (${Mobile}) {
+    padding: 12px 24px;
+  }
 `;
 
 export const QuantityrHeader = styled.th`
@@ -177,10 +205,13 @@ export const OthersHeader = styled.th`
 export const Product = styled.td`
   display: flex;
   align-items: center;
-  padding: 24px 24px;
+  padding: 24px 12px;
   font-size: 14px;
   font-weight: 400;
   column-gap: 24px;
+  @media (${Mobile}) {
+    padding: 12px 24px;
+  }
 `;
 
 export const Quantity = styled.td`

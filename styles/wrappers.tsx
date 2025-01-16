@@ -2,6 +2,10 @@ import styled from "styled-components";
 import { Mobile, Tablet } from "./container";
 
 export const MainWrapper = styled.div`
+  padding: 80px 0;
+`;
+
+export const Wrapper100 = styled.div`
   padding: 100px 0;
 `;
 

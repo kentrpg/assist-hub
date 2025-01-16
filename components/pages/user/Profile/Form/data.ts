@@ -1,20 +1,16 @@
-import { UseFormRegister, FieldErrors } from "react-hook-form"; // 引入 react-hook-form 類型
+import { UseFormRegister, FieldErrors } from "react-hook-form";
 
 export type FormData = {
-  firstName: string;
-  lastName: string;
-  gender: string;
   name: string;
-  dob: string;
+  gender: string;
+  dobStamp: string;
   email: string;
   phone: string;
   contactTime: string;
-  postalCode: string;
-  city: string;
-  district: string;
-  address: string;
-  identity: string;
-  declaration: string;
+  addressZip: string;
+  addressCity: string;
+  addressDistrict: string;
+  addressDetail: string;
 };
 
 export type FormHooks = {

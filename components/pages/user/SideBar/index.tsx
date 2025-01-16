@@ -8,6 +8,7 @@ import {
   Tabs,
   Tab,
   Profile,
+  Wrapper,
 } from "./styled";
 import { tabs, ActiveTabType } from "./data";
 import React from "react";
@@ -42,8 +43,10 @@ const SideBar: React.FC<SideBarProps> = ({ setActiveTab, activeTab }) => {
             $isActive={tab.isActive(activeTab)}
             onClick={() => handleTabClick(tab.key)}
           >
-            {tab.icon}
-            <Span>{tab.label}</Span>
+            <Wrapper>
+              {tab.icon}
+              <Span>{tab.label}</Span>
+            </Wrapper>
           </Tab>
         ))}
       </Tabs>

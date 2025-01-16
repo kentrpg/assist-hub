@@ -30,6 +30,7 @@ import {
   Others,
   Col,
   ColGroup,
+  TableContainer,
 } from "./styled";
 
 import { Order } from "../data";
@@ -71,44 +72,46 @@ const ListItem = ({ order, onViewDetails }: ListProps) => {
         <Price>{totalPrice}元</Price>
       </Header>
       <Main>
-        <Finished>{finishedDate}</Finished>
+        <Finished>預計抵達日期 {finishedDate}</Finished>
         <Status $status={status}>{status}</Status>
       </Main>
-      <Table>
-        <ColGroup>
-          <Col style={{ width: "40%" }} />
-          <Col style={{ width: "15%" }} />
-          <Col style={{ width: "15%" }} />
-          <Col style={{ width: "15%" }} />
-          <Col style={{ width: "15%" }} />
-        </ColGroup>
-        <Thead>
-          <Tr>
-            <NameHeader>輔具名稱</NameHeader>
-            <QuantityrHeader>數量</QuantityrHeader>
-            <RentHeader>租金</RentHeader>
-            <OthersHeader>其他費用</OthersHeader>
-            <th></th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          <Tr>
-            <Product>
-              <img src={img} width={66} height={66} alt="XX輪椅" />
-              <Description>
-                <Name>精品輪椅</Name>
-                <Feature>{description}</Feature>
-              </Description>
-            </Product>
-            <Quantity>x{quantity}</Quantity>
-            <Rent>{rent.toLocaleString()}元</Rent>
-            <Others>{deposit + deliveryFee}元</Others>
-            <BtnContainer>
-              <DetailsBtn onClick={onViewDetails}>查看訂單</DetailsBtn>
-            </BtnContainer>
-          </Tr>
-        </Tbody>
-      </Table>
+      <TableContainer>
+        <Table>
+          <ColGroup>
+            <Col style={{ width: "40%" }} />
+            <Col style={{ width: "15%" }} />
+            <Col style={{ width: "15%" }} />
+            <Col style={{ width: "15%" }} />
+            <Col style={{ width: "15%" }} />
+          </ColGroup>
+          <Thead>
+            <Tr>
+              <NameHeader>輔具名稱</NameHeader>
+              <QuantityrHeader>數量</QuantityrHeader>
+              <RentHeader>租金</RentHeader>
+              <OthersHeader>其他費用</OthersHeader>
+              <th></th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            <Tr>
+              <Product>
+                <img src={img} width={66} height={66} alt="XX輪椅" />
+                <Description>
+                  <Name>精品輪椅</Name>
+                  <Feature>{description}</Feature>
+                </Description>
+              </Product>
+              <Quantity>x{quantity}</Quantity>
+              <Rent>{rent.toLocaleString()}元</Rent>
+              <Others>{deposit + deliveryFee}元</Others>
+              <BtnContainer>
+                <DetailsBtn onClick={onViewDetails}>查看訂單</DetailsBtn>
+              </BtnContainer>
+            </Tr>
+          </Tbody>
+        </Table>
+      </TableContainer>
     </Item>
   );
 };

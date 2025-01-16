@@ -1,10 +1,17 @@
-import styled from "styled-components";
-import { Container1344 } from "@/styles/container";
+import styled, { css } from "styled-components";
+import {
+  Container1344,
+  ExtraLarge,
+  Desktop,
+  Tablet,
+  Mobile,
+} from "@/styles/container";
 
 type CellProps = {
   $border?: boolean;
   $isEm?: boolean;
   $feature?: boolean;
+  $bg?: string;
 };
 
 type RowProps = {
@@ -14,16 +21,181 @@ type RowProps = {
 export const Container = styled(Container1344)`
   display: flex;
   flex-direction: column;
-  row-gap: 36px;
+  row-gap: 60px;
   justify-content: center;
   align-items: center;
 `;
 
-export const Info = styled.div`
+export const InfoContainer = styled.div`
+  display: flex;
+  width: 100%;
+  row-gap: 24px;
+  justify-content: center;
+  flex-direction: column;
+
+  @media (${Tablet}) {
+    flex-direction: row;
+    column-gap: 40px;
+  }
+  @media (${ExtraLarge}) {
+    column-gap: 90px;
+  }
+`;
+
+export const Detail = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  row-gap: 20px;
+  padding: 0px;
+  @media (${Tablet}) {
+    max-width: 570px;
+  }
+`;
+
+export const Title = styled.h3`
+  color: #08204d;
+  font-size: 32px;
+  font-weight: 500;
+`;
+
+export const SubTitle = styled.h6`
+  color: #08204d;
+  font-size: 20px;
+  font-weight: 700;
+`;
+
+export const Tags = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+`;
+
+export const PriceField = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 6px;
+`;
+
+export const Deposit = styled.p`
+  font-size: 16px;
+  font-weight: 400;
+`;
+
+export const Description = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+`;
+
+export const DesWord = styled.p`
+  font-size: 18px;
+  font-weight: 400;
+`;
+
+export const InfoField = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+`;
+
+export const BtnField = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  column-gap: 24px;
+  font-size: 18px;
+  font-weight: 500;
+  row-gap: 8px;
+
+  @media (${Tablet}) {
+    flex-direction: row;
+    column-gap: 24px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+`;
+
+export const RentBtn = styled.button`
+  display: flex;
   align-items: center;
+  justify-content: center;
+  column-gap: 4px;
+  max-width: 100%;
+  width: 100%;
+  font-size: 18px;
+  font-weight: 500;
+  transition: none;
+  padding: 10px 0px;
+  color: #ffffff;
+  border-radius: 30px;
+  background-color: #103f99;
+  transition: none;
+  &:hover {
+    background-color: #0b2c6b;
+  }
+  @media (${Tablet}) {
+    column-gap: 12px;
+  }
+`;
+
+export const InquiryIcon = styled.div`
+  background-image: url("/images/accessible.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: none;
+  @media (${Tablet}) {
+    display: block;
+    width: 27px;
+    height: 27px;
+  }
+`;
+
+export const InquiryBtn = styled.button`
+  font-size: 18px;
+  font-weight: 500;
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  white-space: nowrap;
+  width: 100%;
+  padding: 10px 20px;
+  border-radius: 30px;
+  background-color: white;
+  border: 1px solid #ffcc1a;
+  position: relative;
+  transition: none;
+  color: black;
+  text-shadow: none;
+
+  &:hover {
+    max-width: 100%;
+    width: 100%;
+    color: black;
+    background-color: #b28f12;
+    span {
+      display: inline-block;
+    }
+  }
+
+  @media (${Tablet}) {
+    background-color: #ffcc1a;
+    max-width: 67px;
+    width: 100%;
+    color: transparent;
+    text-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    transition: color 0.5s ease, max-width 0.5s ease;
+    span {
+      display: none;
+    }
+    &:hover {
+      max-width: 407px;
+      width: 100%;
+    }
+  }
 `;
 
 export const ComparisonContainer = styled.div`
@@ -31,29 +203,27 @@ export const ComparisonContainer = styled.div`
   flex-direction: column;
   row-gap: 16px;
   width: 100%;
-  max-width: 1200px;
-  padding: 36px 48px;
-  overflow-x: auto;
-  @media (max-width: 945px) {
-    padding: 0px;
+  padding: 0px;
+  @media (min-width: 945px) {
+    padding: 36px 48px;
   }
 `;
 
-export const ComparisonHeader = styled.h1`
-  position: sticky;
-  left: 50%;
-  transform: translateX(-50%);
-  width: max-content;
+export const ComparisonHeader = styled.h5`
+  display: flex;
+  justify-content: center;
+  color: #08204d;
   font-size: 24px;
   font-weight: 500;
 `;
 
-export const GridContainer = styled.div`
-  display: grid;
+export const ComparisonContent = styled.div`
   border: 1px solid #e9e5de;
   border-radius: 10px;
-  grid-template-rows: repeat(5, auto);
-  grid-auto-flow: row;
+  overflow-x: auto;
+`;
+
+export const Grid = styled.div`
   white-space: nowrap;
   min-width: 720px;
 `;
@@ -64,6 +234,7 @@ export const Row = styled.div<RowProps>`
   align-items: center;
   border-bottom: 1px solid #ddd;
   background-color: ${({ $bg }) => ($bg ? "#F9F8F6" : "white")};
+  position: relative;
 
   &:last-child {
     border-bottom: none;
@@ -78,9 +249,11 @@ export const Cell = styled.div<CellProps>`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  border-right: ${({ $border }) => ($border ? "1px solid #e9e5de" : "none")};
   border-left: ${({ $border }) => ($border ? "1px solid #e9e5de" : "none")};
-  &:first-child {
-    border-left: none;
+  
+  &:last-child {
+    border-right: none;
   }
 
   &:nth-child(1) {
@@ -90,8 +263,10 @@ export const Cell = styled.div<CellProps>`
     position: sticky;
     height: 100%;
     left: 0;
-    background-color: white;
     z-index: 2;
+    background-color: ${({ $bg }) => $bg || "white"};
+    clip-path: inset(0px 0px 0px 0px);
+    overflow: hidden;
   }
 `;
 
@@ -103,84 +278,68 @@ export const Feature = styled.div`
   row-gap: 10px;
 `;
 
-export const ComparisonItem = styled.div`
+export const ComparisonProduct = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   row-gap: 10px;
   padding: 20px 0px;
   border-left: 1px solid #e9e5de;
+  overflow: hidden;
+  position: relative;
 `;
 
-export const ComparisonImage = styled.img`
+export const ComparisonImg = styled.img`
   width: 100%;
-  max-width: 200px;
-  max-height: 200px;
+  max-width: 100px;
+  max-height: 100px;
+
+  @media (${Tablet}) {
+    max-width: 200px;
+    max-height: 200px;
+  }
 `;
 
-export const Button = styled.button`
+export const ComparisonBtn = styled.button`
   background-color: #103f99;
   display: flex;
-  column-gap: 8px;
+  column-gap: 4px;
   font-size: 16px;
   font-weight: 500;
   color: white;
-  padding: 8px 16px;
+  padding: 4px 8px;
   border-radius: 30px;
-`;
-
-export const Span = styled.span`
-  display: flex;
-  column-gap: 4px;
-  padding: 3px 8px;
-  color: #888888;
-  font-size: 12px;
-  font-weight: 400;
-  border-radius: 5px;
-  border: 1px solid #888888;
+  @media (${Tablet}) {
+    column-gap: 8px;
+    padding: 8px 16px;
+  }
+  &:hover {
+    background-color: #0b2c6b;
+  }
 `;
 
 export const RecommendedContainer = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 16px;
-  padding-top: 36px;
+  max-width: 100%;
+  padding: 0px;
+  @media (${ExtraLarge}) {
+    padding: 0px 48px 36px 48px;
+  }
 
   .slick-slider {
-    max-width: 1200px;
     width: 100%;
     display: flex;
+    flex-direction: column;
+    row-gap: 16px;
     justify-content: center;
     align-items: center;
-    padding: 0px 48px;
-    @media (max-width: 1296px) {
-      max-width: 1000px;
-      padding: 0px 48px;
-    }
-    @media (max-width: 1096px) {
-      max-width: 800px;
-      padding: 0px 24px;
-    }
-    @media (max-width: 900px) {
-      max-width: 640px;
-      padding: 0px 24px;
-    }
-    @media (max-width: 740px) {
-      max-width: 540px;
-      padding: 0px 24px;
-    }
-    @media (max-width: 640px) {
-      max-width: 400px;
-      padding: 0px 24px;
-    }
-    @media (max-width: 500px) {
-      max-width: 300px;
-      padding: 0px 24px;
-    }
   }
 
   .slick-list {
-    padding: 0 48px;
+    width: 100%;
+    padding-top: 1px !important;
     overflow: hidden;
     margin: 0;
   }
@@ -192,16 +351,18 @@ export const RecommendedContainer = styled.div`
   }
 
   .slick-slide {
+    max-width: 300px;
+    width: 100%;
     height: auto;
     box-sizing: border-box;
     display: flex;
     align-items: center;
+    justify-content: center;
   }
 
   .slick-slide img {
     display: block;
     max-width: 100%;
-    height: auto;
   }
 
   .slick-prev,
@@ -212,25 +373,27 @@ export const RecommendedContainer = styled.div`
   }
 
   .slick-prev {
-    left: -48px;
+    left: -90px;
     &::before {
       content: "";
     }
   }
 
   .slick-next {
-    right: -48px;
+    right: -90px;
     &::before {
       content: "";
     }
   }
 
   .slick-dots {
+    position: static;
     display: flex !important;
     justify-content: center;
     align-items: center;
     column-gap: 8px;
     bottom: -16px;
+    padding: 16px 0px;
   }
 
   .slick-dots li {
@@ -259,7 +422,7 @@ export const RecommendedContainer = styled.div`
   }
 `;
 
-export const RecommendedHeader = styled.div`
+export const RecommendedHeader = styled.h5`
   font-size: 24px;
   padding: 12px 0px;
   font-weight: 500;
@@ -272,14 +435,47 @@ export const CarouselItem = styled.div`
   flex-direction: column;
   border-radius: 10px;
   background-color: #f9f8f6;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  &:hover {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    outline: 1px solid #103f99;
+  }
+
+  &:hover ${() => CarouselBtn} {
+    opacity: 1;
+  }
 `;
 
-export const CarouselImage = styled.div`
-  padding: 20px;
+export const CarouselBtn = styled.button`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 6px;
+  top: 20px;
+  right: 20px;
+  background-color: #ffcc1a;
+  border: none;
+  border-radius: 30px;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    background-color: #b28f12;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
 `;
+
+export const CarouselImg = styled.div``;
 
 export const CarouselInfo = styled.div`
-  padding: 20px;
   display: flex;
   flex-direction: column;
   row-gap: 2px;

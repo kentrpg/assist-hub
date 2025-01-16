@@ -1,13 +1,14 @@
 import styled from "styled-components";
+import { Tablet, Desktop, Mobile, ExtraLarge } from "@/styles/container";
 
-export const Container = styled.form`
+
+export const FormInfo = styled.form`
   display: flex;
   flex-direction: column;
   row-gap: 16px;
 `;
 
 export const SaveBtn = styled.button`
-  margin-top: 44px;
   font-size: 18px;
   width: 100%;
   height: 48px;

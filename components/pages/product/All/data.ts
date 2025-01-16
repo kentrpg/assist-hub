@@ -8,13 +8,6 @@ export type ProductItem = {
   imgAlt: string;
 };
 
-export type ProductApiResponse = {
-  status: number;
-  message: string;
-  data: ProductItem[];
-};
-
-
 export const tabsData = [
   { label: "行動輪椅", value: "wheelChair" },
   { label: "柺杖步行", value: "crutch" },

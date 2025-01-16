@@ -217,7 +217,7 @@ export const ComparisonHeader = styled.h5`
   font-weight: 500;
 `;
 
-export const ComparisonProduct = styled.div`
+export const ComparisonContent = styled.div`
   border: 1px solid #e9e5de;
   border-radius: 10px;
   overflow-x: auto;
@@ -278,7 +278,7 @@ export const Feature = styled.div`
   row-gap: 10px;
 `;
 
-export const ComparisonItem = styled.div`
+export const ComparisonProduct = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

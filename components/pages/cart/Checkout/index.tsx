@@ -67,7 +67,7 @@ const Checkout = () => {
 
   const formatCurrency = useFormatCurrency;
   const contractDate = `${useDateFormatter(
-    cart.rentStamp,
+    cart.rentStamp
   )} - ${useDateFormatter(cart.returnStamp)}`;
 
   const methods = useForm<FormValuesProps["checkout"]>({
@@ -103,15 +103,46 @@ const Checkout = () => {
   const onSubmit = async (data: FormValuesProps["checkout"]) => {
     console.log("Form submitted:", data);
     setIsOrderSubmitting(true);
+
+    const checkoutData = {
+      product: {
+        id: 23,
+        name: "鋁製躺式輪椅",
+        imgSrc: "圖片路徑",
+        imgAlt: "",
+        quantity: 2,
+        rentStamp: "2011-10-10T14:48:00",
+        returnStamp: "2011-10-10T14:48:00",
+        period: 2,
+        rent: 3000,
+        deposit: 500,
+        fee: 0,
+        finalAmount: 3500,
+      },
+      payment: data.payment,
+      shipping: {
+        method: data.method,
+        data: {
+          userName: data.name,
+          phone: data.phone,
+          email: data.email,
+          addressZIP: data.addressZIP,
+          addressCity: data.addressCity,
+          addressDistinct: data.addressDistrict,
+          // addressDistrict: data.addressDistrict,
+          addressDetail: data.addressDetail,
+        },
+      },
+    };
+
     const res = await fetch("/api/checkout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify(checkoutData),
     });
 
     const result = await res.json();
     console.log("response", res, result);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     const isSuccess = result.statusCode === 200 && result.status;
     if (Object.is(result.error, null)) {

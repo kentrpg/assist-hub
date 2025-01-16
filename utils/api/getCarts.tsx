@@ -7,7 +7,7 @@ import { ResultGetCarts, ResultGetCartsType } from "@/types/getCarts";
 import { get_carts } from "@/constants/apiPath";
 
 export const getCarts = async (
-  token: string,
+  token: string
 ): Promise<Result<ResultGetCartsType["data"]>> => {
   const parsedUrl = new URL(get_carts);
   const options = {
@@ -20,8 +20,6 @@ export const getCarts = async (
   };
 
   const [res, error] = await catchError(fetch(parsedUrl, options));
-
-  console.log("res", res);
 
   if (error) {
     console.log("error", error);
@@ -48,8 +46,6 @@ export const getCarts = async (
     !validation.isValid &&
       console.error("API Response validation failed:", validation.errors);
   }
-
-  console.log("json", json);
 
   return {
     statusCode: json.statusCode,

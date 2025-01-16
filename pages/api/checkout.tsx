@@ -4,9 +4,11 @@ import checkout from "@/utils/api/checkout";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Result>,
+  res: NextApiResponse<Result>
 ) {
-  const result = await checkout(req.body);
+  console.log("req.body", req.body);
+  const result = await checkout(req.cookies.token || "", req.body);
+  console.log("result", result);
 
   return res.json(result);
 }

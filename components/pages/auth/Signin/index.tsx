@@ -53,6 +53,8 @@ const Signin: React.FC = () => {
 
     const result = await res.json();
 
+    console.log("result", result);
+
     if (Object.is(result.error, null)) {
       switch (result.statusCode) {
         case 200:

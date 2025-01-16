@@ -52,13 +52,11 @@ export const signIn = async (
       console.error("API Response validation failed:", validation.errors);
   }
 
-  const { jwtToken, ...userData } = json.data;
-
   return {
     statusCode: json.statusCode,
     status: json.status,
     message: json.message,
-    data: userData,
+    data: json.data,
     error: null,
   };
 };

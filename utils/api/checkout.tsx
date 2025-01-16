@@ -1,16 +1,19 @@
-import { FormValuesProps } from "../react-hook-form/InputField/data";
-import { Result } from "@/types/checkout";
+import { Result, Response, ResultCheckoutType } from "@/types/checkout";
 import { catchError } from "../handleErrors";
 import { Error } from "@/types/apiRoutes";
-import { post_order } from "@/constants/apiPath";
+import { post_orders } from "@/constants/apiPath";
+import { NODE_ENV } from "@/constants/environment";
+import { validateResponseType } from "../typeGuards";
 
 export const checkout = async (
-  data: FormValuesProps["checkout"],
+  token: string,
+  data: ResultCheckoutType
 ): Promise<Result> => {
-  const parsedUrl = new URL(post_order);
+  const parsedUrl = new URL(post_orders);
   const options = {
     method: "POST",
     headers: {
+      Authorization: `Bearer ${token}`,
       Accept: "application/json",
       "Content-Type": "application/json",
     },
@@ -18,6 +21,8 @@ export const checkout = async (
   };
 
   const [res, error] = await catchError(fetch(parsedUrl, options));
+
+  console.log("res", res, error);
 
   if (error) {
     console.log("error", error);
@@ -37,6 +42,15 @@ export const checkout = async (
   }
 
   const json = await res.json();
+
+  console.log("json", json);
+
+  if (NODE_ENV === "development") {
+    const validation = validateResponseType(json, Response);
+
+    !validation.isValid &&
+      console.error("API Response validation failed:", validation.errors);
+  }
 
   return {
     statusCode: json.statusCode,

@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { Response } from "@/types/checkout";
+import { ResponseMock } from "@/types/checkout";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Response>
+  res: NextApiResponse<ResponseMock>
 ) {
   if (req.method === "POST") {
     return res.json({

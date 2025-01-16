@@ -36,7 +36,7 @@ export const CardGroup = styled.div`
   flex-wrap: wrap;
   gap: 24px;
   margin-bottom: 40px;
-  @media (${Tablet}) {
+  @media ${Tablet} {
     flex-direction: row;
   }
 `;

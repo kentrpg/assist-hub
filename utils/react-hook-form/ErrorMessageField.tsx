@@ -1,23 +1,28 @@
-import { FieldErrors, FieldValues, Path } from "react-hook-form";
+import { FieldErrors } from "react-hook-form";
 import { ErrorMessage } from "@/utils/react-hook-form/FormError/styled";
+import { FieldError } from "./InputField/data";
 
-export type ErrorMessageProps<T> = {
-  name: Path<T>;
+export type ErrorMessageProps = {
+  name: FieldError;
   $margin: string;
 };
 
-type ErrorMessageFieldProps<T extends FieldValues> = ErrorMessageProps<T> & {
-  errors: FieldErrors<T>;
+type ErrorMessageFieldProps = ErrorMessageProps & {
+  errors: FieldErrors;
 };
 
-export const ErrorMessageField = <T extends FieldValues>({
+const ErrorMessageField = ({
   name,
   errors,
   $margin,
-}: ErrorMessageFieldProps<T>) => {
-  return errors[name] ? (
+}: ErrorMessageFieldProps) => {
+  if (!errors[name]?.message) return null;
+
+  return (
     <ErrorMessage $margin={$margin}>
       {String(errors[name].message)}
     </ErrorMessage>
-  ) : null;
+  );
 };
+
+export default ErrorMessageField;

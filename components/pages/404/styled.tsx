@@ -9,10 +9,10 @@ export const Container = styled(Container1021)`
   align-items: center;
   justify-content: center;
   gap: 16px;
-  @media (${Mobile}) {
+  @media ${Mobile} {
     flex-direction: row;
   }
-  @media (${Tablet}) {
+  @media ${Tablet} {
     gap: 32px;
   }
 `;
@@ -20,7 +20,7 @@ export const Container = styled(Container1021)`
 export const Image = styled.img`
   height: auto;
   max-width: 300px;
-  @media (${Mobile}) {
+  @media ${Mobile} {
     max-width: 100%;
   }
 `;
@@ -31,7 +31,7 @@ export const Content = styled.div`
   align-items: center;
   justify-content: center;
   gap: 16px;
-  @media (${Tablet}) {
+  @media ${Tablet} {
     gap: 32px;
   }
 `;

@@ -6,7 +6,7 @@ export const Step = styled.div`
   flex-direction: column;
   gap: 24px;
   padding: 60px 0;
-  @media (${Mobile}) {
+  @media ${Mobile} {
     flex-direction: row;
   }
 `;
@@ -18,7 +18,7 @@ export const Card = styled.div`
   align-items: center;
   text-align: center;
   gap: 12px;
-  @media (${Mobile}) {
+  @media ${Mobile} {
     flex-direction: column;
   }
 `;
@@ -27,13 +27,13 @@ export const Image = styled.img`
   max-width: 100%;
   height: 80px;
   order: 3;
-  @media (${Mobile}) {
+  @media ${Mobile} {
     order: inherit;
   }
-  @media (${Tablet}) {
+  @media ${Tablet} {
     height: 110px;
   }
-  @media (${Desktop}) {
+  @media ${Desktop} {
     height: 156px;
   }
 `;
@@ -42,7 +42,7 @@ export const StepGroup = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  @media (${Mobile}) {
+  @media ${Mobile} {
     /* flex: inherit; */
     flex-grow: 1;
     flex: 1 0 auto;

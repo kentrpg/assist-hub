@@ -1,98 +1,112 @@
-import { useFormContext } from "react-hook-form";
-import { CheckoutFormData } from "../data";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 import {
   AddressWrapper,
   AddressField,
   FieldGroup,
   Label,
   SelectArrowIcon,
+  AddressFieldSelect,
 } from "./styled";
 import InputField from "@/utils/react-hook-form/InputField";
 import { MdArrowDropDown } from "react-icons/md";
+import {
+  FormValuesData,
+  FormValuesProps,
+} from "@/utils/react-hook-form/InputField/data";
+import useRenderError from "@/hooks/useRenderError";
+import { errorMessages } from "../data";
 
-const Address = () => {
-  const { register } = useFormContext<CheckoutFormData>();
+type AddressProps = {
+  errors: FieldErrors<FormValuesProps["checkout"]>;
+  register: UseFormRegister<FormValuesProps["checkout"]>;
+};
+
+const Address = ({ errors, register }: AddressProps) => {
+  const { renderError } = useRenderError({
+    errors,
+    errorMessages,
+  });
 
   return (
     <AddressWrapper>
       <FieldGroup>
-        <Label htmlFor="zipCode" required>
-          郵
+        <Label htmlFor={FormValuesData.zipCode.id} required={false}>
+          郵遞區號
         </Label>
-        <InputField
-          name="zipCode"
-          type="text"
-          placeholder="800"
-          $color="textSecondary"
-          $fontSize={16}
-          $borderColor="border"
-          $backgroundColor="secondaryBg"
-          $padding="12px 16px"
+        <InputField<"checkout">
+          {...FormValuesData.zipCode}
           register={register}
-          required="請輸入郵遞區號"
-          validate={{
-            pattern: (value) =>
-              /^\d{3,6}$/.test(value) || "請輸入有效的郵遞區號",
-          }}
+          variant="checkout"
         />
+        {renderError(FormValuesData.zipCode.name)}
       </FieldGroup>
 
       <FieldGroup>
-        <Label htmlFor="city" required>
+        <Label htmlFor={FormValuesData.city.id} required>
           縣市
         </Label>
         <AddressField>
-          <select
-            {...register("city", {
-              required: "請選擇縣市",
+          <AddressFieldSelect
+            id={FormValuesData.city.id}
+            {...register("addressCity", {
+              required: FormValuesData.city.required,
             })}
           >
-            <option value="">請選擇縣市</option>
-            <option value="高雄市">高雄市</option>
-          </select>
+            <option value="" disabled>
+              {FormValuesData.city.required}
+            </option>
+            {FormValuesData.city.options.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </AddressFieldSelect>
           <SelectArrowIcon>
             <MdArrowDropDown size={24} />
           </SelectArrowIcon>
         </AddressField>
+        {renderError(FormValuesData.city.name)}
       </FieldGroup>
 
       <FieldGroup>
-        <Label htmlFor="district" required>
-          區域
+        <Label htmlFor={FormValuesData.district.id} required>
+          鄉鎮區
         </Label>
         <AddressField>
-          <select
-            {...register("district", {
-              required: "請選擇區域",
+          <AddressFieldSelect
+            id={FormValuesData.district.id}
+            {...register(FormValuesData.district.name, {
+              required: FormValuesData.district.required,
             })}
           >
-            <option value="">請選擇區域</option>
-            <option value="新興區">新興區</option>
-          </select>
+            <option value="" disabled>
+              {FormValuesData.district.required}
+            </option>
+            {FormValuesData.district.options.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </AddressFieldSelect>
           <SelectArrowIcon>
             <MdArrowDropDown size={24} />
           </SelectArrowIcon>
         </AddressField>
+        {renderError("addressDistrict")}
       </FieldGroup>
 
       <FieldGroup>
-        <Label htmlFor="address" required>
+        <Label htmlFor={FormValuesData.addressDetail.id} required>
           詳細地址
         </Label>
         <AddressField>
-          <InputField
-            name="address"
-            type="text"
-            placeholder="民生一路"
-            $color="textSecondary"
-            $fontSize={16}
-            $borderColor="border"
-            $backgroundColor="secondaryBg"
-            $padding="12px 16px"
+          <InputField<"checkout">
+            {...FormValuesData.addressDetail}
+            variant="checkout"
             register={register}
-            required="請輸入詳細地址"
           />
         </AddressField>
+        {renderError(FormValuesData.addressDetail.name)}
       </FieldGroup>
     </AddressWrapper>
   );

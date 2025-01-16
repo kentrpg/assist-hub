@@ -12,10 +12,10 @@ export const Card = styled.div<Color>`
     $color ? theme.colors[`${$color}Light`] : theme.colors.white};
   border-color: ${({ theme, $color }) => theme.colors[$color]};
   padding: 20px;
-  @media (${Tablet}) {
+  @media ${Tablet} {
     text-align: center;
   }
-  @media (${Desktop}) {
+  @media ${Desktop} {
     text-align: left;
   }
 `;
@@ -32,10 +32,10 @@ export const CardContent = styled.div`
   justify-content: space-between;
   flex-grow: 1;
   margin-bottom: 16px;
-  @media (${Tablet}) {
+  @media ${Tablet} {
     flex-direction: column;
   }
-  @media (${Desktop}) {
+  @media ${Desktop} {
     flex-direction: row;
   }
 `;
@@ -100,11 +100,11 @@ export const FeatureGroup = styled.ul`
   align-items: center;
   justify-content: start;
   gap: 16px;
-  @media (${Tablet}) {
+  @media ${Tablet} {
     flex-direction: column;
     justify-content: center;
   }
-  @media (${Desktop}) {
+  @media ${Desktop} {
     align-items: start;
   }
 `;
@@ -117,7 +117,7 @@ export const Feature = styled.li`
   font-size: 14px;
   font-weight: 400;
   color: ${({ theme }) => theme.colors.textSecondary};
-  @media (${Tablet}) {
+  @media ${Tablet} {
     gap: 16px;
   }
 `;

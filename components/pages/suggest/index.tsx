@@ -30,6 +30,8 @@ import { FlexAlignCenter } from "@/styles/flex";
 import useFormatCurrency from "@/hooks/useFormatCurrency";
 
 const Suggest = () => {
+  const formatCurrency = useFormatCurrency;
+
   return (
     <Container>
       <Header>
@@ -47,8 +49,7 @@ const Suggest = () => {
               <Card key={id}>
                 <ImageWrapper>
                   <Image src={`/images/${imgSrc}`} alt={name} />
-                  {/* TBD: 確認 useFormatCurrency() 使用方式 */}
-                  <PriceBadge>{useFormatCurrency(price)}/ 月</PriceBadge>
+                  <PriceBadge>{formatCurrency(price)}/ 月</PriceBadge>
                 </ImageWrapper>
                 <Info>
                   <Name>{name}</Name>
@@ -77,7 +78,7 @@ const Suggest = () => {
                   </FlexAlignCenter>
                 </RecommendDescription>
               </Card>
-            )
+            ),
           )}
         </RecommendationList>
       </Assistive>

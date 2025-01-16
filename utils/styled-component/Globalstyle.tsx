@@ -23,27 +23,16 @@ const GlobalStyle = createGlobalStyle`
     list-style: none;
   }
 
+  select {
+    appearance: none;
+  }
+
   address {
     font-style: normal;
     unicode-bidi: normal;
   }
 
-  input {
-    &[type="search"] {
-      appearance: none;
-      border-radius: 0;
-    }
-
-    &[type="checkbox"], &[type="radio"] {
-      cursor: pointer;
-    }
-
-    &:-webkit-autofill {
-      ${CleanAutofill};
-    }
-  }
-
-  button, input {
+  button, input, select, textarea {
     border: none;
     outline: none;
     border-radius: 0;
@@ -52,6 +41,17 @@ const GlobalStyle = createGlobalStyle`
 
   h1, h2, h3, h4, h5, h6, div, span, p {
     cursor: default;
+  }
+
+  input {
+    &[type="checkbox"], &[type="radio"], &[type="date"] {
+      cursor: pointer;
+      appearance: none;
+    }
+
+    &:-webkit-autofill {
+      ${CleanAutofill};
+    }
   }
 
   a, label, button, select, textarea {
@@ -76,11 +76,6 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
     color: ${({ theme }) => theme.colors.black};
     appearance: none;
-  }
-
-  h1 {
-    font-size: 40px;
-    font-weight: 400;
   }
 `;
 

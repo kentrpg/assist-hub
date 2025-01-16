@@ -27,6 +27,8 @@ const InquiryCard = ({
   imgSrc,
   features,
 }: InquiryCardProps) => {
+  const formatPrice = useFormatCurrency(price);
+
   return (
     <Card $color={$color}>
       <FlexFullHeight>
@@ -37,7 +39,7 @@ const InquiryCard = ({
               <Description>{description}</Description>
             </Details>
             <Price>
-              {useFormatCurrency(price)}
+              {formatPrice}
               <PriceUnit>/月</PriceUnit>
             </Price>
           </DetailsWrapper>
@@ -50,8 +52,6 @@ const InquiryCard = ({
           <FeatureGroup>
             {features.map((feature, index) => (
               <Feature key={index}>
-                {/* <MdCheck size={24} /> */
-                /* TBD: react-icons 在 styled 內設置 width、height、color 做法可以嗎 */}
                 <InquiryCheck />
                 {feature}
               </Feature>

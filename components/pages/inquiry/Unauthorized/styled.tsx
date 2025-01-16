@@ -7,7 +7,7 @@ export const InquiryStep = styled.div`
   gap: 16px;
   padding: 30px 0;
 
-  @media (${Mobile}) {
+  @media ${Mobile} {
     padding: 60px 0;
   }
 `;

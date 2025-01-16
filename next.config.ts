@@ -6,8 +6,21 @@ const nextConfig = {
     styledComponents: true,
   },
   eslint: {
-    // 在生產環境建置時忽略 ESLint 錯誤
     ignoreDuringBuilds: true,
+  },
+  async redirects() {
+    return [
+      {
+        source: "/user",
+        destination: "/user/profile",
+        permanent: true,
+      },
+      {
+        source: "/auth",
+        destination: "/auth/signin",
+        permanent: false,
+      },
+    ];
   },
 };
 

@@ -77,7 +77,7 @@ export const DashedCircle = styled.button`
   background-color: transparent;
   color: ${({ theme }) => theme.colors.textPrimary};
   ${H5};
-  @media (${Tablet}) {
+  @media ${Tablet} {
     ${circularSizes.extraLarge};
   }
 `;

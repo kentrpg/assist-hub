@@ -7,18 +7,23 @@ export const breakpoints = {
   xl: 1344,
 };
 
-export const ExtraLarge = `min-width: ${breakpoints.xl}px`;
-export const Desktop = `min-width: ${breakpoints.l}px`;
-export const Tablet = `min-width: ${breakpoints.md}px`;
-export const Mobile = `min-width: ${breakpoints.sm}px`;
+export const ExtraLarge = `(min-width: ${breakpoints.xl}px)`;
+export const Desktop = `(min-width: ${breakpoints.l}px)`;
+export const Tablet = `(min-width: ${breakpoints.md}px)`;
+export const Mobile = `(min-width: ${breakpoints.sm}px)`;
 
 const Container = styled.div`
   width: 100%;
   margin: 0 auto;
-  padding-left: 24px;
-  padding-right: 24px;
+  padding-left: 12px;
+  padding-right: 12px;
 
-  @media (${ExtraLarge}) {
+  @media ${Tablet} {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  @media ${ExtraLarge} {
     padding-left: 0;
     padding-right: 0;
   }

@@ -34,7 +34,7 @@ export const RecommendationList = styled.div`
   flex-direction: column;
   gap: 24px;
 
-  @media (${Tablet}) {
+  @media ${Tablet} {
     flex-direction: row;
   }
 `;
@@ -49,14 +49,14 @@ export const Card = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   padding: 16px;
 
-  @media (${Mobile}) {
+  @media ${Mobile} {
     flex-direction: row;
     flex-wrap: wrap;
     row-gap: 24px;
     column-gap: 16px;
     padding: 24px;
   }
-  @media (${Tablet}) {
+  @media ${Tablet} {
     flex-wrap: nowrap;
   }
 `;
@@ -69,7 +69,7 @@ export const ImageWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  @media (${Tablet}) {
+  @media ${Tablet} {
     flex: 0 0 19.22%; /* 204px / 1061px */
     max-width: 19.22%;
   }
@@ -79,10 +79,10 @@ export const Image = styled.img`
   width: 100%;
   max-width: 100px;
   height: auto;
-  @media (${Mobile}) {
+  @media ${Mobile} {
     max-width: 130px;
   }
-  @media (${Tablet}) {
+  @media ${Tablet} {
     max-width: 150px;
   }
 `;
@@ -95,11 +95,11 @@ export const Info = styled.div`
   flex-direction: column;
   justify-content: space-between;
   gap: 8px;
-  @media (${Mobile}) {
+  @media ${Mobile} {
     width: calc((100% - 1 * 16px) / 2);
     justify-content: start;
   }
-  @media (${Tablet}) {
+  @media ${Tablet} {
     flex: 0 0 51.45%; /* 546px / 1061px */
     max-width: 51.45%;
     justify-content: space-between;
@@ -130,11 +130,11 @@ export const RecommendDescription = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  @media (${Mobile}) {
+  @media ${Mobile} {
     width: calc((100% - 1 * 16px) / 2);
     gap: 10px;
   }
-  @media (${Tablet}) {
+  @media ${Tablet} {
     flex: 0 0 24.79%; /* 263px / 1061px */
     max-width: 24.79%;
     gap: 16.5px;
@@ -162,14 +162,14 @@ export const RentButton = styled(AccentIconButton)`
     width: 20px;
     height: 20px;
   }
-  @media (${Mobile}) {
+  @media ${Mobile} {
     ${buttonGapSizes.medium};
     svg {
       width: 24px;
       height: 24px;
     }
   }
-  @media (${Tablet}) {
+  @media ${Tablet} {
     width: inherit;
   }
 `;

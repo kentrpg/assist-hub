@@ -19,11 +19,11 @@ export const CheckoutImage = styled.img`
   max-height: 100px;
   max-width: 100px;
   ${CardRadius};
-  @media (${Mobile}) {
+  @media ${Mobile} {
     max-height: 100px;
     max-width: 100px;
   }
-  @media (${Tablet}) {
+  @media ${Tablet} {
     max-height: 130px;
     max-width: 130px;
   }

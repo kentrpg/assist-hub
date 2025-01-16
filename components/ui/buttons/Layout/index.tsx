@@ -40,7 +40,7 @@ export const buttonGapSizes = {
 };
 
 // Button color variants extended from BaseButton
-const buttonVariants = {
+export const buttonVariants = {
   primary: css`
     background-color: ${({ theme }) => theme.colors.primary};
     color: ${({ theme }) => theme.colors.white};
@@ -71,7 +71,7 @@ const buttonVariants = {
   `,
 };
 
-const BaseButton = styled.button`
+export const BaseButton = css`
   background-color: ${({ theme }) => theme.colors.white};
   color: ${({ theme }) => theme.colors.white};
   ${ButtonRadius};
@@ -88,7 +88,8 @@ const BaseButton = styled.button`
   }
 `;
 
-export const OutlineButton = styled(BaseButton)`
+export const OutlineButton = styled.button`
+  ${BaseButton};
   ${HstackLayout};
   ${buttonGapSizes.large};
   outline: 1px solid ${({ theme }) => theme.colors.primary};
@@ -99,39 +100,47 @@ export const OutlineButton = styled(BaseButton)`
   }
 `;
 
-export const CtaButton = styled(BaseButton)`
+export const CtaButton = styled.button`
+  ${BaseButton};
   ${buttonVariants.accent};
 `;
 
-export const CtaSecondaryButton = styled(BaseButton)`
+export const CtaSecondaryButton = styled.button`
+  ${BaseButton};
   ${buttonVariants.accentSecondary};
 `;
 
-export const PrimaryButton = styled(BaseButton)`
+export const PrimaryButton = styled.button`
+  ${BaseButton};
   ${buttonVariants.primary};
 `;
 
-export const PrimaryIconButton = styled(BaseButton)`
+export const PrimaryIconButton = styled.button`
+  ${BaseButton};
   ${HstackLayout}
   ${buttonGapSizes.large};
   ${buttonVariants.primary};
 `;
 
-export const SecondaryButton = styled(BaseButton)`
+export const SecondaryButton = styled.button`
+  ${BaseButton};
   ${buttonVariants.secondary};
 `;
 
-export const SecondaryIconButton = styled(BaseButton)`
+export const SecondaryIconButton = styled.button`
+  ${BaseButton};
   ${HstackLayout}
   ${buttonGapSizes.large};
   ${buttonVariants.secondary};
 `;
 
-export const AccentButton = styled(BaseButton)`
+export const AccentButton = styled.button`
+  ${BaseButton};
   ${buttonVariants.accent};
 `;
 
-export const AccentIconButton = styled(BaseButton)`
+export const AccentIconButton = styled.button`
+  ${BaseButton};
   ${HstackLayout}
   ${buttonGapSizes.large};
   ${buttonVariants.accent};

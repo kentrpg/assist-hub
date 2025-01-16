@@ -6,7 +6,7 @@ import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import FormField from "@/utils/react-hook-form/FloatingLabel";
 import { RegisterField } from "@/utils/react-hook-form/types";
 import { registerFields, SignInInputs } from "./data";
-import { UnderlineLink } from "@/utils/link";
+import { InfoLink, UnderlineLink } from "@/styles/link";
 import { signIn } from "@/utils/api/auth/signin";
 import { IconWrapper } from "@/utils/react-icons/iconWrappers";
 import { FaLine } from "react-icons/fa";
@@ -20,7 +20,8 @@ import {
   Button,
   OutlineButton,
 } from "../Layout/styled";
-import { ForgotPasswordLink, Remember } from "./styled";
+import { Remember } from "./styled";
+import { ErrorMessage } from "@/utils/react-hook-form/FormError/styled";
 
 const Signin: React.FC = () => {
   const {
@@ -42,26 +43,43 @@ const Signin: React.FC = () => {
 
   const onSubmit: SubmitHandler<SignInInputs> = async (data) => {
     console.log(data);
-    try {
-      const response = await signIn({
-        email: data.email,
-        password: data.password,
-      });
-      console.log(response);
-      switch (response.status) {
+
+    const res = await fetch("/api/auth/signin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    const result = await res.json();
+    console.log("response", res, result);
+
+    if (Object.is(result.error, null)) {
+      switch (result.statusCode) {
         case 200:
           router.push("/user");
           break;
-        case 401:
-          setError("password", {
-            message: response.message,
-          });
+        case 404:
+          setError("email", { type: "manual", message: "帳號或密碼錯誤" });
+          break;
+        case 400:
+          setError("password", { type: "manual", message: "密碼格式錯誤" });
+          break;
+        case 403:
+          setError("password", { type: "manual", message: "帳號或密碼錯誤" });
           break;
         default:
-          setError("email", { message: "系統錯誤，請稍後再試" });
+          setError("root.serverError", {
+            type: result.statusCode.toString(),
+            message: "系統發生未預期的錯誤，請刷新整理頁面後再嘗試",
+          });
+          break;
       }
-    } catch (error) {
-      console.error("登入錯誤:", error);
+    } else {
+      setError("email", { message: "找不到帳號" });
+      setError("root.serverError", {
+        type: result.statusCode.toString(),
+        message: result.message || "伺服器錯誤，請稍後再試",
+      });
     }
   };
 
@@ -82,7 +100,7 @@ const Signin: React.FC = () => {
           </Fragment>
         ))}
         <Remember>
-          <CheckboxField
+          <CheckboxField<SignInInputs>
             id="remember"
             control={control}
             field={{ name: "remember" }}
@@ -90,12 +108,16 @@ const Signin: React.FC = () => {
             $fontSize={16}
             $checkedColor="textMuted"
             $uncheckedColor="textMuted"
-            $labelColor="textMuted"
-          >
-            記住我
-          </CheckboxField>
-          <ForgotPasswordLink>忘記密碼</ForgotPasswordLink>
+            $color="textMuted"
+            label="記住我"
+          />
+          <InfoLink href="#">忘記密碼</InfoLink>
         </Remember>
+        {errors.root?.serverError && (
+          <ErrorMessage $margin="4px">
+            {errors.root.serverError.message || "系統錯誤，請稍後再試"}
+          </ErrorMessage>
+        )}
         <Button
           type="submit"
           disabled={isSubmitting || Object.keys(errors).length !== 0}

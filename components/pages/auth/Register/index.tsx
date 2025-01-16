@@ -43,26 +43,20 @@ const Regist: React.FC = () => {
   const router = useRouter();
 
   const onSubmit: SubmitHandler<RegistInputs> = async (data) => {
-    try {
-      const response = await signUp({
-        email: data.email,
-        password: data.password,
-        nickname: data.name,
-      });
+    const res = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
 
-      switch (response.status) {
-        case 201:
-          router.push("/auth/signin");
-          break;
-        case 422:
-          setError("email", { message: response.message || "請求錯誤" });
-          break;
-        default:
-          setError("email", { message: "系統錯誤，請稍後再試" });
-          break;
-      }
-    } catch (error) {
-      console.error("註冊錯誤:", error);
+    const result = await res.json();
+
+    const isSuccess = result.statusCode === 200 && result.status;
+    if (Object.is(result.error, null)) {
+      isSuccess && router.push("/auth/signin");
+    } else {
+      setError("email", { message: result.message || "請求錯誤" });
+      console.error("Error:", result.error);
     }
   };
 

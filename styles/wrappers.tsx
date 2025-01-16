@@ -21,10 +21,6 @@ export const Wrapper120 = styled.div`
   }
 `;
 
-export const Wrapper100 = styled.div`
-  padding: 100px 0;
-`;
-
 export const Wrapper70 = styled.div`
   padding: 70px 0;
 `;

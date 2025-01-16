@@ -1,41 +1,37 @@
 import { ReactNode } from "react";
 import { RadioGroup, RadioControl, AccessibleInput, RadioText } from "./styled";
-import { ColorsType } from "@/types/uiProps";
 import { MdRadioButtonChecked, MdRadioButtonUnchecked } from "react-icons/md";
-import { FieldValues, useController, Control } from "react-hook-form";
-import { BaseField } from "@/utils/react-hook-form/types";
+import { useController, Control, Path } from "react-hook-form";
+import { FormValuesProps } from "../InputField/data";
 import { RadioSize } from "@/constants/iconSize";
 
-export type BaseRadioType<T extends FieldValues> = {
+export type BaseRadioType<T extends keyof FormValuesProps> = {
   id: string;
   value: string;
-  field: BaseField<T>;
-  $gap: number;
-  $fontSize: number;
-  $checkedColor: ColorsType;
-  $uncheckedColor: ColorsType;
-  $labelColor: ColorsType;
+  field: {
+    name: Path<FormValuesProps[T]>;
+    validation: {
+      required: string;
+    };
+  };
   children: ReactNode;
 };
 
-type RadioFieldProps<T extends FieldValues> = BaseRadioType<T> & {
-  control: Control<T>;
+type RadioFieldProps<T extends keyof FormValuesProps> = BaseRadioType<T> & {
+  control: Control<FormValuesProps[T]>;
+  onChange: (value: string) => void;
 };
 
-const RadioField = <T extends FieldValues>({
+const RadioField = <T extends keyof FormValuesProps>({
   id,
   value,
   control,
   field,
-  $gap = 12,
-  $fontSize = 16,
-  $checkedColor = "textMuted",
-  $uncheckedColor = "textMuted",
-  $labelColor = "textMuted",
   children,
+  onChange,
 }: RadioFieldProps<T>) => {
   const {
-    field: { onChange, value: fieldValue },
+    field: { onChange: fieldOnChange, value: fieldValue },
   } = useController({
     name: field.name,
     control,
@@ -44,18 +40,20 @@ const RadioField = <T extends FieldValues>({
 
   const isChecked = fieldValue === value;
 
+  const handleChange = () => {
+    fieldOnChange(value);
+    onChange && onChange(value);
+  };
+
   return (
-    <RadioGroup $gap={$gap}>
-      <RadioControl
-        $size={RadioSize.regular}
-        $color={isChecked ? $checkedColor : $uncheckedColor}
-      >
+    <RadioGroup>
+      <RadioControl>
         <AccessibleInput
           type="radio"
           value={value}
           id={id}
           checked={isChecked}
-          onChange={() => onChange(value)}
+          onChange={handleChange}
         />
         {isChecked ? (
           <MdRadioButtonChecked size={RadioSize.regular} />
@@ -63,11 +61,7 @@ const RadioField = <T extends FieldValues>({
           <MdRadioButtonUnchecked size={RadioSize.regular} />
         )}
       </RadioControl>
-      {children && (
-        <RadioText $fontSize={$fontSize} $color={$labelColor} htmlFor={id}>
-          {children}
-        </RadioText>
-      )}
+      {children && <RadioText htmlFor={id}>{children}</RadioText>}
     </RadioGroup>
   );
 };

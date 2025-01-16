@@ -4,12 +4,20 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   async redirects() {
     return [
       {
-        source: "/user", // 匹配 /user路徑
-        destination: "/user/profile", // 重導向到 /user/profile
-        permanent: false, // 使用 302 重導向，此頁面不被搜尋到
+        source: "/user",
+        destination: "/user/profile",
+        permanent: true,
+      },
+      {
+        source: "/auth",
+        destination: "/auth/signin",
+        permanent: false,
       },
     ];
   },

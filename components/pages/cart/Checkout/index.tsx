@@ -10,66 +10,78 @@ import {
   ProductInfos,
   Title,
   PickupInfoItem,
-  CheckboxItem,
+  Checkbox,
   TotalCost,
-  CheckoutAction,
-  CheckboxList,
   Cost,
   Costs,
   Payment,
   Shipping,
-  Term,
+  Agreement,
   PickupRadio,
   PickupInfo,
   PickupMethod,
   PickupLabel,
   Recipient,
   ProductInfo,
-  ProductLabel,
-  ProductValue,
   ProductTitle,
   PaymentOptions,
+  PickupGroup,
+  SummaryContent,
 } from "./styled";
-import { AccentButton } from "@/components/ui/buttons/Layout";
+import { AccentButton as SubmitButton } from "@/components/ui/buttons/Layout";
 import CheckboxField from "@/utils/react-hook-form/CheckboxField";
 import { CheckoutImage, ImageWrapper } from "@/components/ui/images";
 import PaymentOption from "@/components/ui/PaymentOption";
 import {
+  store,
   paymentMethods,
-  CheckoutFormData,
   defaultFormValues,
-  LabeledValue,
-  SummaryProps,
   pickupRadios,
   errorMessages,
-  checkboxData,
+  agreementInfo,
   storePickupInputFields,
 } from "./data";
 import { useForm, FormProvider } from "react-hook-form";
 import InputField from "@/utils/react-hook-form/InputField";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import RadioField from "@/utils/react-hook-form/RadioField";
-import { ErrorMessageField } from "@/utils/react-hook-form/ErrorMessageField";
-import { FieldInputLabelMapping } from "@/utils/react-hook-form/InputField/data";
+import {
+  FieldInputLabelMapping,
+  FormValuesProps,
+} from "@/utils/react-hook-form/InputField/data";
 import Address from "./Address";
+import useRenderError from "@/hooks/useRenderError";
+import { checkoutSlice } from "./cartSlice";
+import { userSlice } from "./userSlice";
+import useDateFormatter from "@/hooks/useDateFormatter";
+import LinePayImage from "./LinePayImage";
+import useFormatCurrency from "@/hooks/useFormatCurrency";
+import { useState } from "react";
+import { useRouter } from "next/router";
 
-const Checkout = (props: {
-  data: any;
-  storeInfoDisplay: LabeledValue[];
-  totalCostDisplay: LabeledValue;
-  costDisplays: LabeledValue[];
-  summaryData: SummaryProps;
-}) => {
-  const {
-    storeInfoDisplay,
-    totalCostDisplay: amountData,
-    costDisplays: costsData,
-    summaryData,
-  } = props;
+const Checkout = () => {
+  const [isOrderSubmitting, setIsOrderSubmitting] = useState(false);
+  const cart = checkoutSlice;
+  const user = userSlice;
+  const router = useRouter();
 
-  const methods = useForm<CheckoutFormData>({
+  const formatCurrency = useFormatCurrency;
+  const contractDate = `${useDateFormatter(
+    cart.rentStamp,
+  )} - ${useDateFormatter(cart.returnStamp)}`;
+
+  const methods = useForm<FormValuesProps["checkout"]>({
     mode: "onChange",
-    defaultValues: defaultFormValues,
+    defaultValues: {
+      ...defaultFormValues,
+      name: user.name,
+      phone: user.phone,
+      email: user.email,
+      addressZIP: user.addressZIP,
+      addressCity: user.addressCity,
+      addressDistrict: user.addressDistrict,
+      addressDetail: user.addressDetail,
+    },
     criteriaMode: "all",
     reValidateMode: "onChange",
   });
@@ -79,155 +91,185 @@ const Checkout = (props: {
     control,
     handleSubmit,
     watch,
+    clearErrors,
     formState: { errors, isSubmitting },
   } = methods;
 
-  const onSubmit = (data: CheckoutFormData) => {
+  const { renderError } = useRenderError({
+    errors,
+    errorMessages,
+  });
+
+  const onSubmit = async (data: FormValuesProps["checkout"]) => {
     console.log("Form submitted:", data);
+    setIsOrderSubmitting(true);
+    const res = await fetch("/api/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    const result = await res.json();
+    console.log("response", res, result);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    const isSuccess = result.statusCode === 200 && result.status;
+    if (Object.is(result.error, null)) {
+      isSuccess && router.push(`${router.asPath}/approval`);
+      router.push(`${router.asPath}/declined`);
+    } else {
+      console.error("Error:", result.error);
+    }
+    setIsOrderSubmitting(false);
   };
 
-  const renderError = (name: keyof CheckoutFormData) => {
-    const config = errorMessages.find((msg) => msg.name === name);
-    if (!config) return null;
-
-    return (
-      <ErrorMessageField name={name} errors={errors} $margin={config.$margin} />
-    );
+  const handleMethodChange = (value: string) => {
+    console.log("Method changed:", value);
+    if (value === "store") {
+      clearErrors([
+        "addressZIP",
+        "addressCity",
+        "addressDistrict",
+        "addressDetail",
+      ]);
+    }
   };
 
   return (
     <Container>
       <Breadcrumb />
-      <FormProvider {...methods}>
-        <OrderForm onSubmit={handleSubmit(onSubmit)} noValidate>
-          <Shipping>
-            <Title>訂購資訊</Title>
+      {/* <FormProvider {...methods}> */}
+      <OrderForm onSubmit={handleSubmit(onSubmit)} noValidate>
+        <Shipping>
+          <Title>訂購資訊</Title>
+          <ShippingInfo>
             <PickupMethod>
-              <PickupLabel>取貨方式</PickupLabel>
-              <PickupRadio>
-                {pickupRadios.map((radioProps) => (
-                  <RadioField
-                    key={radioProps.id}
-                    {...radioProps}
-                    control={control}
-                  >
-                    {radioProps.children}
-                  </RadioField>
-                ))}
-              </PickupRadio>
-            </PickupMethod>
-            {renderError("pickupMethod")}
-            <ShippingInfo>
-              {watch("pickupMethod") === "store" && (
-                <PickupInfo>
-                  {storeInfoDisplay.map(({ label, value }) => (
-                    <PickupInfoItem key={label}>
-                      {label}：{value}
-                    </PickupInfoItem>
+              <PickupGroup>
+                <PickupLabel>取貨方式</PickupLabel>
+                <PickupRadio>
+                  {pickupRadios.map((radioProps) => (
+                    <RadioField<"checkout">
+                      key={radioProps.id}
+                      {...radioProps}
+                      control={control}
+                      onChange={handleMethodChange}
+                    >
+                      {radioProps.label}
+                    </RadioField>
                   ))}
-                </PickupInfo>
-              )}
-              <Recipient>
-                {storePickupInputFields.map((fieldProps) => (
-                  <FieldGroup key={fieldProps.name}>
-                    <Label htmlFor={fieldProps.name} required>
-                      {
-                        FieldInputLabelMapping[
-                          fieldProps.name as keyof typeof FieldInputLabelMapping
-                        ]
-                      }
-                    </Label>
-                    <InputField {...fieldProps} register={register} />
-                    {renderError(fieldProps.name as keyof CheckoutFormData)}
-                  </FieldGroup>
-                ))}
-                {watch("pickupMethod") === "delivery" && <Address />}
-              </Recipient>
-            </ShippingInfo>
-          </Shipping>
-
-          <Payment>
-            <Title>付款方式</Title>
-            <PaymentOptions>
-              {paymentMethods.map(({ id, value, icon }) => (
-                <PaymentOption
-                  key={id}
-                  value={value}
-                  register={register}
-                  field={{
-                    name: "paymentMethod",
-                    validation: {
-                      required: "請選擇付款方式",
-                    },
-                  }}
-                >
-                  {icon}
-                </PaymentOption>
+                </PickupRadio>
+              </PickupGroup>
+              {renderError("method")}
+            </PickupMethod>
+            {watch("method") === "store" && (
+              <PickupInfo>
+                <PickupInfoItem>店家電話：{store.phone}</PickupInfoItem>
+                <PickupInfoItem>營業時間：{store.businessHours}</PickupInfoItem>
+                <PickupInfoItem>地址：{store.address}</PickupInfoItem>
+              </PickupInfo>
+            )}
+            <Recipient>
+              {storePickupInputFields.map((fieldData) => (
+                <FieldGroup key={fieldData.id}>
+                  <Label htmlFor={fieldData.id} required>
+                    {FieldInputLabelMapping[fieldData.name]}
+                  </Label>
+                  <InputField<"checkout">
+                    {...fieldData}
+                    variant="checkout"
+                    register={register}
+                  />
+                  {renderError(fieldData.name)}
+                </FieldGroup>
               ))}
-            </PaymentOptions>
-            {renderError("paymentMethod")}
-          </Payment>
+              {watch("method") === "delivery" && (
+                <Address register={register} errors={errors} />
+              )}
+            </Recipient>
+          </ShippingInfo>
+        </Shipping>
 
-          <Summary>
-            <Title>訂單檢視</Title>
+        <Payment>
+          <Title>付款方式</Title>
+          <PaymentOptions>
+            {paymentMethods.map(({ id, value, icon }) => (
+              <PaymentOption
+                key={id}
+                value={value}
+                register={register}
+                field={{
+                  name: "payment",
+                  validation: {
+                    required: "請選擇付款方式",
+                  },
+                }}
+              >
+                {icon === "LinePay" ? <LinePayImage /> : icon}
+              </PaymentOption>
+            ))}
+          </PaymentOptions>
+          {renderError("payment")}
+        </Payment>
+
+        <Summary>
+          <Title>訂單檢視</Title>
+          <SummaryContent>
             <ProductCard>
               <ImageWrapper>
                 <CheckoutImage
-                  src={`/images/${summaryData.image.src}`}
-                  alt={summaryData.image.alt}
-                  width={summaryData.image.width}
-                  height={summaryData.image.height}
+                  src={cart.imgSrc}
+                  alt={cart.imgAlt}
+                  width="80"
+                  height="80"
                 />
               </ImageWrapper>
               <ProductInfos>
-                <ProductInfo>
-                  <ProductTitle>{summaryData.title}</ProductTitle>
-                </ProductInfo>
-                {summaryData.details.map(({ label, value }) => (
-                  <ProductInfo key={label}>
-                    <ProductLabel>{label}</ProductLabel>
-                    <ProductValue>{value}</ProductValue>
-                  </ProductInfo>
-                ))}
+                <ProductTitle>{cart.name}</ProductTitle>
+                <ProductInfo>x{cart.quantity}</ProductInfo>
+                <ProductInfo>{cart.period} 天</ProductInfo>
+                <ProductInfo>{contractDate}</ProductInfo>
               </ProductInfos>
             </ProductCard>
 
             <Costs>
-              {costsData.map(({ label, value }: LabeledValue) => (
-                <Cost key={label}>
-                  <span>{label}</span>
-                  <span>{value}</span>
-                </Cost>
-              ))}
+              <Cost>
+                <span>租金</span>
+                <span>{formatCurrency(cart.rent)}</span>
+              </Cost>
+              <Cost>
+                <span>押金</span>
+                <span>{formatCurrency(cart.deposit)}</span>
+              </Cost>
+              <Cost>
+                <span>運費</span>
+                <span>{formatCurrency(cart.fee)}</span>
+              </Cost>
             </Costs>
             <TotalCost>
-              <span>{amountData.label}</span>
-              <span>{amountData.value}</span>
+              <span>總計</span>
+              <span>{formatCurrency(cart.finalAmount)}</span>
             </TotalCost>
-
-            <Term>
-              <CheckboxList>
-                {checkboxData.map((checkboxProps) => (
-                  <CheckboxItem key={checkboxProps.id}>
-                    <CheckboxField {...checkboxProps} control={control}>
-                      {checkboxProps.children}
-                    </CheckboxField>
-                    {renderError(checkboxProps.field.name)}
-                  </CheckboxItem>
-                ))}
-              </CheckboxList>
-              <CheckoutAction>
-                <AccentButton
-                  type="submit"
-                  disabled={isSubmitting || Object.keys(errors).length !== 0}
-                >
-                  {isSubmitting ? <LoaderSpinner /> : "送出訂單"}
-                </AccentButton>
-              </CheckoutAction>
-            </Term>
-          </Summary>
-        </OrderForm>
-      </FormProvider>
+            <Agreement>
+              {agreementInfo.map((checkboxProps) => (
+                <Checkbox key={checkboxProps.id}>
+                  <CheckboxField<FormValuesProps["checkout"]>
+                    {...checkboxProps}
+                    control={control}
+                  />
+                  {renderError(checkboxProps.field.name)}
+                </Checkbox>
+              ))}
+            </Agreement>
+          </SummaryContent>
+          <SubmitButton
+            type="submit"
+            disabled={isSubmitting || Object.keys(errors).length !== 0}
+          >
+            {isOrderSubmitting ? <LoaderSpinner /> : "送出訂單"}
+          </SubmitButton>
+        </Summary>
+      </OrderForm>
+      {/* </FormProvider> */}
     </Container>
   );
 };

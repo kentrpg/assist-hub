@@ -19,7 +19,7 @@ export const Group = styled.div`
   display: flex;
   gap: 20px;
   flex-direction: column;
-  @media (${Mobile}) {
+  @media ${Mobile} {
     flex-direction: row;
   }
 `;

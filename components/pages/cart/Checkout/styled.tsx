@@ -1,47 +1,44 @@
 import { CardRadius, InputRadius } from "@/styles/borderRadius";
-import { Mobile, Tablet } from "@/styles/container";
+import { Desktop, Mobile, Tablet } from "@/styles/container";
 import { H4, H6 } from "@/styles/typography";
 import styled, { css } from "styled-components";
 
 export const Title = styled.h1`
   text-align: center;
-  ${H6};
+  ${H4};
   ${InputRadius};
   background-color: ${({ theme }) => theme.colors.primaryLight};
   color: ${({ theme }) => theme.colors.textPrimary};
   padding: 10px;
-  @media (${Tablet}) {
-    ${H4};
-  }
 `;
 
 export const OrderForm = styled.form`
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
-  padding: 20px 0;
-  @media (${Tablet}) {
+  row-gap: 20px;
+  column-gap: 24px;
+  @media ${Tablet} {
     grid-template-columns: minmax(334px, auto) minmax(362px, 456px);
   }
 `;
 
 const Section = css`
   display: grid;
+  gap: 20px;
   ${CardRadius};
   background-color: ${({ theme }) => theme.colors.secondaryBg};
   padding: 20px;
-  @media (${Tablet}) {
+  @media ${Tablet} {
     padding: 24px;
   }
 `;
 
 export const Shipping = styled.section`
   ${Section};
-  gap: 16px;
   grid-column: 1 / -1;
   grid-row: auto;
 
-  @media (${Tablet}) {
+  @media ${Tablet} {
     grid-column: 1 / 2;
     grid-row: 1 / 2;
   }
@@ -49,11 +46,10 @@ export const Shipping = styled.section`
 
 export const Payment = styled.section`
   ${Section};
-  gap: 20px;
   grid-column: 1 / -1;
   grid-row: auto;
 
-  @media (${Tablet}) {
+  @media ${Tablet} {
     grid-column: 1 / 2;
     grid-row: 2 / 3;
   }
@@ -61,11 +57,10 @@ export const Payment = styled.section`
 
 export const Summary = styled.section`
   ${Section};
-  gap: 16px;
   grid-column: 1 / -1;
   grid-row: auto;
 
-  @media (${Tablet}) {
+  @media ${Tablet} {
     grid-column: 2 / 3;
     grid-row: 1 / 3;
     align-self: start;
@@ -87,10 +82,15 @@ export const ShippingInfo = styled.div`
   gap: 16px;
 `;
 
-export const PickupMethod = styled.div`
+export const PickupGroup = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 25px;
+  gap: 24px;
+`;
+
+export const PickupMethod = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 export const PickupLabel = styled.span`
@@ -100,7 +100,7 @@ export const PickupLabel = styled.span`
 
 export const PickupRadio = styled.div`
   display: flex;
-  gap: 24px;
+  gap: 16px;
 `;
 
 export const PickupInfo = styled.ul`
@@ -129,7 +129,7 @@ export const FieldGroup = styled.div`
   &:last-child {
     flex: 1 1 100%;
   }
-  @media (${Mobile}) {
+  @media ${Mobile} {
     flex: 1 1 calc(50% - 8px);
   }
 
@@ -153,22 +153,25 @@ export const PaymentOptions = styled.div`
   gap: 20px;
 `;
 
+export const SummaryContent = styled.div`
+  display: grid;
+  gap: 16px;
+`;
+
 export const ProductCard = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
   background: ${({ theme }) => theme.colors.backgroundLight};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
-  padding-bottom: 16px;
-  @media (${Mobile}) {
+
+  @media ${Mobile} {
     flex-direction: row;
     align-items: center;
-    gap: 16px;
+    gap: 18px;
     border-bottom: none;
-    padding: 16px 5px;
   }
-  @media (${Tablet}) {
-    padding: 21px 5px;
+  @media ${Desktop} {
+    gap: 24px;
   }
 `;
 
@@ -176,12 +179,7 @@ export const ProductInfos = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  gap: 11px;
-`;
-
-export const ProductInfo = styled.div`
-  display: flex;
-  justify-content: space-between;
+  gap: 8px;
 `;
 
 export const ProductTitle = styled.h2`
@@ -190,24 +188,17 @@ export const ProductTitle = styled.h2`
   color: ${({ theme }) => theme.colors.textPrimary};
 `;
 
-export const ProductLabel = styled.span`
-  width: 50%;
+export const ProductInfo = styled.span`
   font-size: 14px;
-`;
-
-export const ProductValue = styled.span`
-  width: 50%;
-  text-align: end;
-  font-size: 14px;
-  font-weight: 500;
-  color: ${({ theme }) => theme.colors.textPrimary};
+  font-weight: 700;
 `;
 
 export const Costs = styled.ul`
-  ${CardRadius};
   background: ${({ theme }) => theme.colors.backgroundLight};
   color: ${({ theme }) => theme.colors.textMuted};
   font-size: 14px;
+  border-top: 1px solid ${({ theme }) => theme.colors.border};
+  padding-top: 16px;
 `;
 
 export const Cost = styled.li`
@@ -216,7 +207,11 @@ export const Cost = styled.li`
   font-size: 14px;
 
   & + & {
-    margin-top: 10px;
+    margin-top: 8px;
+
+    @media ${Mobile} {
+      margin-top: 12px;
+    }
   }
 `;
 
@@ -229,25 +224,13 @@ export const TotalCost = styled.div`
   padding-top: 16px;
 `;
 
-export const Term = styled.div`
-  margin-top: 16px;
-  @media (${Tablet}) {
-    margin-top: 48px;
-  }
-`;
-
-export const CheckboxList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 20px;
-`;
-
-export const CheckboxItem = styled.div`
+export const Checkbox = styled.div`
   display: grid;
   gap: 4px;
 `;
 
-export const CheckoutAction = styled.div`
-  display: grid;
+export const Agreement = styled.div`
+  ${Checkbox} + ${Checkbox} {
+    margin-top: 6px;
+  }
 `;

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Mobile } from "@/styles/container";
 import { InputRadius } from "@/styles/borderRadius";
+import { InputOutline } from "@/styles/effect";
 
 export const AddressWrapper = styled.div`
   display: flex;
@@ -12,25 +13,17 @@ export const AddressWrapper = styled.div`
 export const AddressField = styled.div`
   width: 100%;
   position: relative;
+`;
 
-  select {
-    width: 100%;
-    padding: 12px 16px;
-    padding-right: 40px;
-    ${InputRadius};
-    border: 1px solid ${({ theme }) => theme.colors.border};
-    background-color: ${({ theme }) => theme.colors.secondaryBg};
-    color: ${({ theme }) => theme.colors.textSecondary};
-    font-size: 16px;
-    outline: none;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-
-    &:focus {
-      border-color: ${({ theme }) => theme.colors.primary};
-    }
-  }
+export const AddressFieldSelect = styled.select`
+  width: 100%;
+  padding: 12px 16px;
+  padding-right: 40px;
+  ${InputRadius};
+  background-color: ${({ theme }) => theme.colors.secondaryBg};
+  color: ${({ theme }) => theme.colors.textPrimary};
+  font-size: 16px;
+  ${InputOutline};
 `;
 
 export const SelectArrowIcon = styled.div`
@@ -50,7 +43,7 @@ export const FieldGroup = styled.div`
   gap: 8px;
   flex: 1 1 100%;
 
-  @media (${Mobile}) {
+  @media ${Mobile} {
     flex: 1 1 auto;
   }
 
@@ -58,18 +51,26 @@ export const FieldGroup = styled.div`
     min-width: 65px;
     flex: 1;
   }
+
   ${AddressWrapper} > &:last-child {
     max-width: 100%;
     flex: 1 1 100%;
   }
 `;
 
-export const Label = styled.label<{ required?: boolean }>`
+export const Label = styled.label<{ required: boolean }>`
   font-size: 16px;
-  ${({ theme }) =>
-    `&::after {
+
+  ${({ theme, required }) =>
+    required &&
+    `
+    &::after {
       content: '*';
       color: ${theme.colors.error};
+    }
+    
+    & {
+      min-width: 72px;
     }
   `}
 `;

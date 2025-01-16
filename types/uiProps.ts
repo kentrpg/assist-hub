@@ -7,6 +7,11 @@ export type IsDefault = {
 
 export type ColorsType = keyof typeof colors;
 
+export type CheckboxTextProps = FontSize &
+  Color & {
+    $isRequired?: boolean;
+};
+
 // for boolean status
 export type IsActive = {
   $isActive: boolean;

@@ -2,7 +2,12 @@ import styled from "styled-components";
 import { CardRadius } from "@/styles/borderRadius";
 import { MdCheckCircle } from "react-icons/md";
 import { Mobile } from "@/styles/container";
-import { ColorTransition, OutlineColorTransition } from "@/styles/effect";
+import {
+  ColorTransition,
+  InputOutline,
+  InputOutlineHover,
+  OutlineColorTransition,
+} from "@/styles/effect";
 
 export const PaymentOptionInput = styled.input`
   opacity: 0;
@@ -21,19 +26,17 @@ export const PaymentOptionField = styled.label`
   align-items: center;
   gap: 8px;
   ${CardRadius};
-  outline: 1px solid ${({ theme }) => theme.colors.border};
-  ${OutlineColorTransition};
+  ${InputOutline};
   padding: 12px 16px;
-  @media (${Mobile}) {
+  @media ${Mobile} {
     padding: 16px 24px;
   }
 
-  &:hover {
-    outline-color: ${({ theme }) => theme.colors.primary};
-  }
+  ${InputOutlineHover};
 
   &:has(${PaymentOptionInput}:checked) {
     outline-color: ${({ theme }) => theme.colors.primary};
+    outline-width: 2px;
 
     ${CheckedStateIcon} {
       color: ${({ theme }) => theme.colors.primary};

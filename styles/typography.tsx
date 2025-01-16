@@ -1,13 +1,24 @@
 import { css } from "styled-components";
-import { Tablet } from "./container";
+import { Desktop, Tablet } from "./container";
 
 export const H1 = css`
-  font-size: 40px;
+  color: ${({ theme }) => theme.colors.textPrimary};
+  font-size: 28px;
   font-weight: 500;
+  @media ${Tablet} {
+    font-size: 36px;
+  }
+  @media ${Desktop} {
+    font-size: 40px;
+  }
 `;
 export const H2 = css`
-  font-size: 36px;
-  font-weight: 700;
+  font-size: 28px;
+  font-weight: 500;
+  @media ${Tablet} {
+    font-size: 36px;
+    font-weight: 700;
+  }
 `;
 export const H3 = css`
   font-size: 32px;
@@ -15,8 +26,8 @@ export const H3 = css`
 `;
 export const H4 = css`
   font-weight: 500;
-  font-size: 21px;
-  @media (${Tablet}) {
+  font-size: 22px;
+  @media ${Tablet} {
     font-size: 28px;
   }
 `;
@@ -31,7 +42,7 @@ export const H6 = css`
 
 export const CheckboxLabelFontSize = css`
   font-size: 14px;
-  @media (${Tablet}) {
+  @media ${Tablet} {
     font-size: 16px;
   }
 `;

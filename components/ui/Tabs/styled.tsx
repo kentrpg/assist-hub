@@ -7,7 +7,7 @@ export const TabsContainer = styled.div`
   display: flex;
   gap: 20px;
   padding: 0;
-  @media (${Desktop}) {
+  @media ${Desktop} {
     padding: 0 90px;
   }
 `;
@@ -18,7 +18,7 @@ export const TabsMenu = styled.div`
   flex-direction: column;
   flex-grow: 1;
   gap: 12px;
-  @media (${Tablet}) {
+  @media ${Tablet} {
     max-width: 366px;
   }
 `;
@@ -46,7 +46,7 @@ export const TabContent = styled.div`
   justify-content: center;
   gap: 16px;
   max-width: 50%;
-  @media (${Tablet}) {
+  @media ${Tablet} {
     max-width: inherit;
   }
 `;

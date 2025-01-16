@@ -14,7 +14,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths,
-    fallback: false, // 不允許的路徑會返回 404
+    fallback: false,
   };
 };
 
@@ -23,7 +23,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   if (!allowedMethods.includes(method)) {
     return {
-      notFound: true, // 返回 404 頁面
+      notFound: true,
     };
   }
 

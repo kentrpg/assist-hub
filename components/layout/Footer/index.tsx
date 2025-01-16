@@ -17,13 +17,13 @@ import { IconLinkWrapper } from "@/utils/react-icons/iconWrappers";
 import CheckboxField from "@/utils/react-hook-form/CheckboxField";
 import { FaFacebookSquare, FaLine } from "react-icons/fa";
 import { useTheme } from "styled-components";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { ErrorMessage as FormErrorMessage } from "@/utils/react-hook-form/FormError/styled";
 import InputField from "@/utils/react-hook-form/InputField";
 import ForwardButton from "@/components/ui/buttons/ForwardButton";
 import {
-  footerInputField,
-  NewsletterForm,
+  FormValuesData,
+  FormValuesProps,
 } from "@/utils/react-hook-form/InputField/data";
 
 const Footer: React.FC = () => {
@@ -34,14 +34,14 @@ const Footer: React.FC = () => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<NewsletterForm>({
+  } = useForm<FormValuesProps["newsletter"]>({
     defaultValues: {
       email: "",
       isSubscribed: false,
     },
   });
 
-  const onSubmit = (data: NewsletterForm) => {
+  const onSubmit = (data: FormValuesProps["newsletter"]) => {
     console.log(data);
   };
 
@@ -93,7 +93,11 @@ const Footer: React.FC = () => {
             <Title>訂閱電子報</Title>
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
               <SubscriptionField>
-                <InputField {...footerInputField} register={register} />
+                <InputField<"newsletter">
+                  {...FormValuesData.email}
+                  register={register}
+                  variant="default"
+                />
                 <ForwardButton />
                 {errors.email && (
                   <FormErrorMessage $margin="4px">
@@ -101,19 +105,18 @@ const Footer: React.FC = () => {
                   </FormErrorMessage>
                 )}
               </SubscriptionField>
+              <CheckboxField<FormValuesProps["newsletter"]>
+                id="newsletter-consent"
+                control={control}
+                field={{ name: "isSubscribed" }}
+                $gap={10}
+                $fontSize={14}
+                $checkedColor="textMuted"
+                $uncheckedColor="textMuted"
+                $color="grey300"
+                label="我想要了解最新的輔具資訊"
+              />
             </form>
-            <CheckboxField
-              id="newsletter-consent"
-              control={control}
-              field={{ name: "isSubscribed" }}
-              $gap={10}
-              $fontSize={14}
-              $checkedColor="textMuted"
-              $uncheckedColor="textMuted"
-              $labelColor="grey300"
-            >
-              我想要了解最新的輔具資訊
-            </CheckboxField>
           </Newsletter>
         </Content>
 

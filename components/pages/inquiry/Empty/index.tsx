@@ -1,8 +1,8 @@
 import { Container1116 as Container } from "@/styles/container";
 import {
-  PageTitle as Title,
-  PageTitleDescription as Description,
-  PageTitleGroup as Group,
+  Title,
+  TitleDescription as Description,
+  TitleGroup as Group,
 } from "@/components/ui/titles";
 import { FlexAlignCenter } from "@/styles/flex";
 import { MdArrowForward } from "react-icons/md";

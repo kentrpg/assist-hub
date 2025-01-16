@@ -1,10 +1,10 @@
 import { css } from "styled-components";
 
-export const NavBarShadow = css`
+export const ShadowLow = css`
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
 `;
 
-export const UserContainerShadow = css`
+export const ShadowMedium = css`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
@@ -85,14 +85,35 @@ export const ButtonDisabled = css`
   /* cursor: not-allowed; */
 `;
 
+export const CardOpacityTransition = css`
+  transition: opacity 0.2s ease-in-out;
+`;
+
 export const OutlineColorTransition = css`
-  transition: outline-color 0.15s ease;
+  transition: outline-color 0.2s ease;
 `;
 
 export const ColorTransition = css`
   transition: color 0.15s ease;
 `;
 
-export const CheckoutImageShadow = css`
-  /* 其他樣式 */
+// outline
+export const InputOutlineHover = css`
+  &:hover {
+    outline-color: ${({ theme }) => theme.colors.primary};
+  }
+`;
+
+export const InputOutline = css`
+  outline: 1px solid ${({ theme }) => theme.colors.border};
+  transition: outline-color 0.09s ease-in-out, outline-width 0.07s ease-in-out;
+
+  &:focus {
+    outline-color: ${({ theme }) => theme.colors.primary};
+    outline-width: 2px;
+  }
+
+  &:-webkit-autofill {
+    ${InputFieldAutofill};
+  }
 `;

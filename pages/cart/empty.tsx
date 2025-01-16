@@ -1,4 +1,4 @@
-import { MainWrapper } from "@/styles/wrappers";
+import { Wrapper60 as MainWrapper } from "@/styles/wrappers";
 import CartEmpty from "@/components/pages/cart/Empty";
 
 const InquiryPage = () => {

@@ -1,18 +1,13 @@
 import { Tablet } from "@/styles/container";
 import { CheckboxLabelFontSize } from "@/styles/typography";
-import { Size, Gap, FontSize, Color } from "@/types/uiProps";
+import { Size, Gap, Color, CheckboxTextProps } from "@/types/uiProps";
 import styled from "styled-components";
-
-type CheckboxTextProps = FontSize &
-  Color & {
-    $isRequired?: boolean;
-  };
 
 export const CheckboxGroup = styled.div<Gap>`
   display: flex;
   align-items: center;
   gap: 6px;
-  @media (${Tablet}) {
+  @media ${Tablet} {
     gap: ${({ $gap }) => $gap}px;
   }
 `;

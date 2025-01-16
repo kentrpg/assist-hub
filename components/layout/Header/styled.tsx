@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { Container1344, Desktop, Tablet } from "@/styles/container";
 import Link from "next/link";
-import { NavBarShadow, NavLinkHover } from "@/styles/effect";
+import { ShadowLow, NavLinkHover } from "@/styles/effect";
 import { RoundedFull } from "@/styles/borderRadius";
 import {
   AccentIconButton,
@@ -18,8 +18,8 @@ export const Container = styled(Container1344)`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 16px;
-  padding-bottom: 16px;
+  padding-top: 15px;
+  padding-bottom: 10px;
 `;
 
 export const Navbar = styled.nav<{ $menuOpen: boolean }>`
@@ -39,14 +39,14 @@ export const Navbar = styled.nav<{ $menuOpen: boolean }>`
   transition: transform 0.3s ease-in-out;
   will-change: transform;
 
-  @media (${Tablet}) {
+  @media ${Tablet} {
     height: inherit;
     width: auto;
     position: sticky;
     flex-direction: row;
     align-items: center;
     gap: 25px;
-    ${NavBarShadow};
+    ${ShadowLow};
     ${RoundedFull};
     padding: 15px 30px;
     transform: translateX(0);
@@ -56,7 +56,7 @@ export const Navbar = styled.nav<{ $menuOpen: boolean }>`
 export const LogoWrapperMobile = styled.div`
   font-size: 0;
   display: block;
-  @media (${Tablet}) {
+  @media ${Tablet} {
     display: none;
   }
 `;
@@ -74,7 +74,7 @@ export const NavLinks = styled.div`
   font-size: 16px;
   font-weight: bold;
   padding: 12px 16px;
-  @media (${Tablet}) {
+  @media ${Tablet} {
     align-items: center;
     flex-direction: row;
     padding: 0;
@@ -118,14 +118,14 @@ const BaseButton = css`
   font-weight: 700;
   color: ${({ theme }) => theme.colors.white};
   padding: 13px;
-  @media (${Desktop}) {
+  @media ${Desktop} {
     padding: 14px 27px;
   }
 `;
 
 export const CartButton = styled(SecondaryIconButton)`
   ${BaseButton};
-  @media (${Desktop}) {
+  @media ${Desktop} {
     padding: 14px 35px;
   }
 `;
@@ -141,7 +141,7 @@ export const AccountButton = styled(PrimaryIconButton)`
 export const ButtonText = styled.span`
   display: none;
   color: ${({ theme }) => theme.colors.white};
-  @media (${Desktop}) {
+  @media ${Desktop} {
     display: block;
   }
 `;
@@ -154,7 +154,7 @@ export const HamburgerMenuButton = styled.button`
   justify-content: center;
   background: none;
   z-index: 10;
-  @media (${Tablet}) {
+  @media ${Tablet} {
     display: none;
   }
 `;
@@ -192,7 +192,8 @@ export const HamburgerSvg = styled.svg<{ $menuOpen: boolean }>`
     stroke-dashoffset: 0%;
   }
 
-  ${({ $menuOpen }) => $menuOpen &&
+  ${({ $menuOpen }) =>
+    $menuOpen &&
     `
     .top {
       transform: rotate(45deg);

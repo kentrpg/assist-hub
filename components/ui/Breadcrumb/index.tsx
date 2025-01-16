@@ -6,7 +6,6 @@ import {
   Indicator,
 } from "./styled";
 
-// TBD: 元件化的顆粒度，對於 Breadcrumb 來說是否會太小？
 const CircularNmber = ({
   stepNumber,
   label,

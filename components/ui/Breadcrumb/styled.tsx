@@ -1,14 +1,15 @@
 import { CartStepCompleted, circularSizes } from "@/components/ui/circulars";
 import { Mobile } from "@/styles/container";
+import { Wrapper20 } from "@/styles/wrappers";
 import type { IsCompleted } from "@/types/uiProps";
 import { MdChevronRight } from "react-icons/md";
 import styled from "styled-components";
 
-export const Breadcrumb = styled.div`
+export const Breadcrumb = styled(Wrapper20)`
   display: flex;
   align-items: center;
   gap: 4px;
-  @media (${Mobile}) {
+  @media ${Mobile} {
     gap: 12px;
   }
 `;
@@ -25,7 +26,7 @@ export const Number = styled(CartStepCompleted)<IsCompleted>`
   background-color: ${({ $completed, theme }) =>
     $completed ? theme.colors.primary : "#9CA3AF"};
   ${circularSizes.xsmall};
-  @media (${Mobile}) {
+  @media ${Mobile} {
     ${circularSizes.small};
   }
 `;

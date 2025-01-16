@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import {
   CheckboxGroup,
   CheckboxControl,
@@ -7,19 +6,26 @@ import {
 } from "./styled";
 import { ColorsType } from "@/types/uiProps";
 import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
-import { FieldValues, useController, Control } from "react-hook-form";
-import { BaseField } from "@/utils/react-hook-form/types";
+import { useController, Control, Path, FieldValues } from "react-hook-form";
+import { InfoLink } from "@/styles/link";
 
 export type BaseCheckboxType<T extends FieldValues> = {
   id: string;
-  field: BaseField<T>;
+  field: {
+    name: Path<T>;
+    validation?: {
+      required?: string;
+    };
+  };
   $isRequired?: boolean;
   $gap: number;
   $fontSize: number;
   $checkedColor: ColorsType;
   $uncheckedColor: ColorsType;
-  $labelColor: ColorsType;
-  children: ReactNode;
+  $color: ColorsType;
+  label: string;
+  link?: string;
+  linkHref?: string;
 };
 
 type CheckboxFieldProps<T extends FieldValues> = BaseCheckboxType<T> & {
@@ -36,11 +42,13 @@ const CheckboxField = <T extends FieldValues>({
   $fontSize = 16,
   $checkedColor = "textMuted",
   $uncheckedColor = "textMuted",
-  $labelColor = "textMuted",
-  children,
+  $color = "textMuted",
+  label,
+  link,
+  linkHref,
 }: CheckboxFieldProps<T>) => {
   const {
-    field: { onChange, value: isChecked },
+    field: { onChange, value: fieldValue },
   } = useController({
     name: field.name,
     control,
@@ -51,30 +59,29 @@ const CheckboxField = <T extends FieldValues>({
     <CheckboxGroup $gap={$gap}>
       <CheckboxControl
         $size={24}
-        $color={isChecked ? $checkedColor : $uncheckedColor}
+        $color={fieldValue ? $checkedColor : $uncheckedColor}
       >
         <AccessibleInput
           type="checkbox"
           id={id}
-          checked={isChecked}
+          checked={fieldValue === true}
           onChange={(e) => onChange(e.target.checked)}
         />
-        {isChecked ? (
+        {fieldValue ? (
           <MdCheckBox size={24} />
         ) : (
           <MdCheckBoxOutlineBlank size={24} />
         )}
       </CheckboxControl>
-      {children && (
-        <CheckboxText
-          $fontSize={$fontSize}
-          $color={$labelColor}
-          htmlFor={id}
-          $isRequired={$isRequired}
-        >
-          {children}
-        </CheckboxText>
-      )}
+      <CheckboxText
+        $fontSize={$fontSize}
+        $color={$color}
+        htmlFor={id}
+        $isRequired={$isRequired}
+      >
+        {label}
+        {link && linkHref && <InfoLink href={linkHref}>{link}</InfoLink>}
+      </CheckboxText>
     </CheckboxGroup>
   );
 };

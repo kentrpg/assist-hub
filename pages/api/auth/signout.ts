@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { serialize, parse } from 'cookie';
 import { AuthResponse } from "@/types/apiRoutes";
+import { BASE_URL } from '@/constants/environment';
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,7 +12,7 @@ export default async function handler(
 
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL_5XCAMP}/users/sign_out`,
+      `${BASE_URL}/users/sign_out`,
       {
         method: "DELETE",
         headers: token ? {

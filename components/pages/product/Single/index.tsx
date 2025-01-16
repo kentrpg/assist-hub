@@ -73,10 +73,29 @@ const Single: React.FC<ProductDetailsProps> = ({
   comparison,
   recommended,
 }) => {
+  console.log("product", product);
+  const handleAddToCart = async (productId: number) => {
+    console.log("handleAddToCart", productId);
+
+    const res = await fetch("/api/postCarts", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: productId,
+      }),
+    });
+
+    const result = await res.json();
+    console.log("result", result);
+  };
+
   return (
     <Container>
       {/* 麵包屑 */}
       <BreadCrumb product={product} />
+      <button onClick={() => handleAddToCart(product.id)}>
+        測試加入購物車按鈕
+      </button>
       {/* 商品資訊 */}
       <InfoContainer>
         <Gallery

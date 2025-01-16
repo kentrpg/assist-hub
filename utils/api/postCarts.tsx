@@ -1,23 +1,32 @@
-import { get_auth_check } from "@/constants/apiPath";
 import { Result } from "@/types/checkout";
 import { Error } from "@/types/apiRoutes";
 import { catchError } from "@/utils/handleErrors";
+import { NODE_ENV } from "@/constants/environment";
+import { validateResponseType } from "@/utils/typeGuards";
+import { post_carts } from "@/constants/apiPath";
+import { ResponsePostCartsType, ResultPostCarts } from "@/types/postCarts";
 
-export const check = async (token?: string): Promise<Result> => {
-
-  const parsedUrl = new URL(get_auth_check);
+export const postCarts = async (
+  token: string,
+  data: ResponsePostCartsType,
+): Promise<Result> => {
+  const parsedUrl = new URL(post_carts);
   const options = {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
       Accept: "application/json",
+      "Content-Type": "application/json",
     },
+    body: JSON.stringify(data),
   };
 
   const [res, error] = await catchError(fetch(parsedUrl, options));
 
+  console.log("res", res);
+
   if (error) {
-    console.log("Auth check error:", error);
+    console.log("error", error);
 
     const unexpectedError: Error = {
       code: 500,
@@ -34,7 +43,15 @@ export const check = async (token?: string): Promise<Result> => {
   }
 
   const json = await res.json();
-  console.log("Auth check response:", json);
+
+  if (NODE_ENV === "development") {
+    const validation = validateResponseType(json, ResultPostCarts);
+
+    !validation.isValid &&
+      console.error("API Response validation failed:", validation.errors);
+  }
+
+  console.log("json", json);
 
   return {
     statusCode: json.statusCode,
@@ -45,4 +62,4 @@ export const check = async (token?: string): Promise<Result> => {
   };
 };
 
-export default check;
+export default postCarts;

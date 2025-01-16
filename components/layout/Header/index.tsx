@@ -33,7 +33,7 @@ const Header = () => {
   const isTablet = useBreakpoint(breakpoints.md);
 
   const toggleMenu = () => {
-    setMenuOpen(prevState => !prevState);
+    setMenuOpen((prevState) => !prevState);
   };
   // ===測試 middleware 驗證===
   const router = useRouter();
@@ -105,7 +105,7 @@ const Header = () => {
             </LogoWrapperDesktop>
           )}
           <NavLinks>
-            <NavLink href="#" $active={true}>
+            <NavLink href="/product" $active={true}>
               所有輔具
             </NavLink>
             <NavLink href="#">常見問題</NavLink>

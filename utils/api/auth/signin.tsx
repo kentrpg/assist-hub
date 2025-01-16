@@ -2,8 +2,6 @@ import { post_auth_sign_in } from "@/constants/apiPath";
 import { Result } from "@/types/checkout";
 import { Error } from "@/types/apiRoutes";
 import { catchError } from "@/utils/handleErrors";
-import { AuthResponse } from "@/types/apiRoutes";
-import { serialize } from "cookie";
 import { NODE_ENV } from "@/constants/environment";
 import { validateResponseType } from "@/utils/typeGuards";
 import { ResultSigninType, ResultSignin } from "@/types/signin";
@@ -28,8 +26,6 @@ export const signIn = async (
 
   const [res, error] = await catchError(fetch(parsedUrl, options));
 
-  console.log("res", res);
-
   if (error) {
     console.log("error", error);
 
@@ -47,8 +43,6 @@ export const signIn = async (
     };
   }
 
-  // const token = res.headers.get("authorization");
-
   const json = await res.json();
 
   if (NODE_ENV === "development") {
@@ -58,26 +52,13 @@ export const signIn = async (
       console.error("API Response validation failed:", validation.errors);
   }
 
-  console.log("json", json);
-  // const token = json.data.jwtToken;
-  // console.log("json", json, token, res.headers.get("authorization"));
-
-  // const token =
-  //   "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjgsIkV4cCI6IjEvMTcvMjAyNSAxOjI0OjI1IFBNIn0.mnvwc02joKDCYPuq4rtUHemnGb1I_Zi5eQcUrwZ00ppH1dfyDCTf_pqojKL-y-M90gjebM81G51YtFtn9RJmag";
-  // const cookie = serialize("session", token || "", {
-  //   httpOnly: true,
-  //   secure: NODE_ENV === "production",
-  //   path: "/",
-  //   sameSite: "strict",
-  // });
-
-  // res.ok && json.statusCode === 200 && json.setHeader("Set-Cookie", cookie);
+  const { jwtToken, ...userData } = json.data;
 
   return {
     statusCode: json.statusCode,
     status: json.status,
     message: json.message,
-    data: json.data,
+    data: userData,
     error: null,
   };
 };

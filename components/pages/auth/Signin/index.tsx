@@ -7,7 +7,6 @@ import FormField from "@/utils/react-hook-form/FloatingLabel";
 import { RegisterField } from "@/utils/react-hook-form/types";
 import { registerFields, SignInInputs } from "./data";
 import { InfoLink, UnderlineLink } from "@/styles/link";
-import { signIn } from "@/utils/api/auth/signin";
 import { IconWrapper } from "@/utils/react-icons/iconWrappers";
 import { FaLine } from "react-icons/fa";
 import { useTheme } from "styled-components";

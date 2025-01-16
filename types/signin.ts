@@ -16,10 +16,10 @@ export const ResultSignin = {
 };
 
 export type ResultSigninType = {
-  statusCode: string,
+  statusCode: number,
   status: boolean,
   message: string,
-  JWTToken: string,
+  jwtToken: string,
   data: {
     jwtToken: string,
     name: string,

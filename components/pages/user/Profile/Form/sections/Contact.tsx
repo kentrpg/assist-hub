@@ -9,9 +9,10 @@ import {
   PhoneIcon,
   Warn,
   ContactSelect,
+  ContactIcon,
 } from "./styled";
 import { FormHooks } from "../data";
-import { MdPhoneIphone } from "react-icons/md";
+import { MdPhoneIphone, MdArrowDropDown } from "react-icons/md";
 const Contact: FC<FormHooks> = ({ register, errors }) => {
   return (
     <Wrapper>
@@ -52,6 +53,9 @@ const Contact: FC<FormHooks> = ({ register, errors }) => {
           <option value="下午 12：00 - 18：00">下午 12：00 - 18：00</option>
           <option value="晚上 18：00 - 21：00">晚上 18：00 - 21：00</option>
         </ContactSelect>
+        <ContactIcon>
+          <MdArrowDropDown size={24} color="#103F99" />
+        </ContactIcon>
         {errors?.contactTime && <Error>{errors.contactTime.message}</Error>}
       </ContactField>
     </Wrapper>

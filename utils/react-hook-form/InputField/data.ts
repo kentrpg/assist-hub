@@ -1,4 +1,4 @@
-import { Path, UseFormRegister, Validate } from "react-hook-form";
+import { Path, UseFormRegister, Validate, FieldValues } from "react-hook-form";
 
 export type FormValuesProps = {
   signin: {
@@ -134,7 +134,7 @@ export const FormValuesData: {
     type: "tel",
     placeholder: "0912345678",
     required: "請輸入手機",
-    validate: "notEmpty",
+    validate: "phone",
   },
   radio: {
     id: "pickupMethod-store",
@@ -182,56 +182,59 @@ export const FieldInputLabelMapping = {
   email: "電子郵件",
 };
 
-export const ValidateFunctionData: Record<
-  string,
-  Validate<string | boolean, FormValuesProps["newsletter" | "checkout"]> | Record<string, Validate<string | boolean, FormValuesProps["newsletter" | "checkout"]>>
-> = {
-  notEmpty: {
-    notEmpty: (value: string | boolean) => {
-      if (typeof value !== 'string' || !value || value.trim() === "") {
-        return "請勿輸入空白";
-      }
-      return true;
-    },
-  },
+export type ValidateFunction<TFieldValues extends FieldValues = FieldValues> = Validate<
+  string | boolean,
+  TFieldValues
+>;
+
+export const ValidateFunctionData = {
+  notEmpty: ((value: string | boolean) => {
+    if (typeof value !== "string" || !value || value.trim() === "") {
+      return "請勿輸入空白";
+    }
+    return true;
+  }) as ValidateFunction,
+  
   email: {
-    domain: (value: string | boolean) => {
-      if (typeof value !== 'string') return "請輸入有效的電子郵件";
+    domain: ((value: string | boolean) => {
+      if (typeof value !== "string") return "請輸入有效的電子郵件";
       const domainRegex = /@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
       return domainRegex.test(value) || "請輸入有效的電子郵件域名";
-    },
-    local: (value: string | boolean) => {
-      if (typeof value !== 'string') return "請輸入有效的電子郵件";
+    }) as ValidateFunction,
+    
+    local: ((value: string | boolean) => {
+      if (typeof value !== "string") return "請輸入有效的電子郵件";
       const beforeAtRegex = /^(?:[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:\\[\x01-\x09\x0b\x0c\x0e-\x7f]|[\x01-\x09\x0b\x0c\x0e-\x7f])*")@/;
-      return (
-        beforeAtRegex.test(value) ||
-        "電子郵件地址 '@' 前方不應包含空白或非法字符"
-      );
-    },
-    length: (value: string | boolean) => {
-      if (typeof value !== 'string') return "電子信箱長度不得超過 254 個字符";
+      return beforeAtRegex.test(value) || "電子郵件地址 '@' 前方不應包含空白或非法字符";
+    }) as ValidateFunction,
+    
+    length: ((value: string | boolean) => {
+      if (typeof value !== "string") return "電子信箱長度不得超過 254 個字符";
       const localPart = value.split("@")[0];
       if (localPart.length > 64) return "@ 前方不得超過 64 個字符";
       return true;
-    },
+    }) as ValidateFunction,
   },
+  
   phone: {
-    notEmpty: (value: string | boolean) => {
-      if (typeof value !== 'string' || !value || value.trim() === "") {
-        return "請正確輸入手機號碼";
+    notEmpty: ((value: string | boolean) => {
+      if (typeof value !== "string" || !value || value.trim() === "") {
+        return "請勿輸入空白";
       }
       return true;
-    },
-    pattern: (value: string | boolean) => {
-      if (typeof value !== 'string') return "請輸入有效的手機號碼格式";
+    }) as ValidateFunction,
+    
+    pattern: ((value: string | boolean) => {
+      if (typeof value !== "string") return "請輸入有效的手機號碼格式";
       return /^09\d{8}$/.test(value) || "請輸入有效的手機號碼格式";
-    },
+    }) as ValidateFunction,
   },
+  
   zipCode: {
-    pattern: (value: string | boolean) => {
-      if (typeof value !== 'string') return "請重新確認";
+    pattern: ((value: string | boolean) => {
+      if (typeof value !== "string") return "請重新確認";
       return /^\d{3,6}$/.test(value) || "請重新確認";
-    },
+    }) as ValidateFunction,
   },
 } as const;
 

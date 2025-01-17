@@ -1,4 +1,4 @@
-import { Result } from "@/types/checkout";
+import { Result } from "@/types/postOrder";
 import { Error } from "@/types/apiRoutes";
 import { catchError } from "@/utils/handleErrors";
 import { NODE_ENV } from "@/constants/environment";

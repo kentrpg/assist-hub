@@ -1,5 +1,5 @@
 import { post_auth_sign_up } from "@/constants/apiPath";
-import { Result } from "@/types/checkout";
+import { Result } from "@/types/postOrder";
 import { Error } from "@/types/apiRoutes";
 import { catchError } from "@/utils/handleErrors";
 
@@ -9,9 +9,7 @@ type Register = {
   password: string;
 };
 
-export const signUp = async (
-  data: Register,
-): Promise<Result> => {
+export const signUp = async (data: Register): Promise<Result> => {
   const parsedUrl = new URL(post_auth_sign_up);
   const options = {
     method: "POST",

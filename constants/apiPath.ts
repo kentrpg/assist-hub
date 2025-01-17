@@ -8,6 +8,10 @@ export const basePath = MOCK_MODE === "true" && BASE_PATH || "/api/v1";
 export const post_auth_sign_up = `${baseUrl}${basePath}/auth/sign_up`;
 export const post_auth_sign_in = `${baseUrl}${basePath}/auth/sign_in`;
 export const get_auth_check = `${baseUrl}${basePath}/auth`;
+
 export const get_carts = `${baseUrl}${basePath}/carts`;
 export const post_carts = `${baseUrl}${basePath}/carts`;
 export const post_orders = `${baseUrl}${basePath}/orders`;
+
+export const get_member_profile = `${baseUrl}${basePath}/member/profile`;
+export const put_member_profile = `${baseUrl}${basePath}/member/profile`;

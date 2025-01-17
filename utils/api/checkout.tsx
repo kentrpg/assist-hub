@@ -1,11 +1,11 @@
-import { Result, Response, ResultCheckoutType } from "@/types/checkout";
+import { Result, Response, ResultCheckoutType } from "@/types/postOrder";
 import { catchError } from "../handleErrors";
 import { Error } from "@/types/apiRoutes";
 import { post_orders } from "@/constants/apiPath";
 import { NODE_ENV } from "@/constants/environment";
 import { validateResponseType } from "../typeGuards";
 
-export const checkout = async (
+export const postOrder = async (
   token: string,
   data: ResultCheckoutType
 ): Promise<Result> => {
@@ -21,8 +21,6 @@ export const checkout = async (
   };
 
   const [res, error] = await catchError(fetch(parsedUrl, options));
-
-  console.log("res", res, error);
 
   if (error) {
     console.log("error", error);
@@ -43,8 +41,6 @@ export const checkout = async (
 
   const json = await res.json();
 
-  console.log("json", json);
-
   if (NODE_ENV === "development") {
     const validation = validateResponseType(json, Response);
 
@@ -61,4 +57,4 @@ export const checkout = async (
   };
 };
 
-export default checkout;
+export default postOrder;

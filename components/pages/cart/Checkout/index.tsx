@@ -106,7 +106,7 @@ const Checkout = () => {
 
     const checkoutData = {
       product: {
-        id: 23,
+        id: 20,
         name: "鋁製躺式輪椅",
         imgSrc: "圖片路徑",
         imgAlt: "",
@@ -135,7 +135,7 @@ const Checkout = () => {
       },
     };
 
-    const res = await fetch("/api/checkout", {
+    const res = await fetch("/api/postOrder", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(checkoutData),

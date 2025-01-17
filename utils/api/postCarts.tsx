@@ -1,4 +1,4 @@
-import { Result } from "@/types/checkout";
+import { Result } from "@/types/postOrder";
 import { Error } from "@/types/apiRoutes";
 import { catchError } from "@/utils/handleErrors";
 import { NODE_ENV } from "@/constants/environment";
@@ -8,7 +8,7 @@ import { ResponsePostCartsType, ResultPostCarts } from "@/types/postCarts";
 
 export const postCarts = async (
   token: string,
-  data: ResponsePostCartsType,
+  data: ResponsePostCartsType
 ): Promise<Result> => {
   const parsedUrl = new URL(post_carts);
   const options = {

@@ -8,16 +8,6 @@ import Head from "next/head";
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const result = await getCarts(req.cookies.token || "");
 
-  // TBD: 問學長如果在 middleware 中已經處理過，這裡是否需要再處理一次
-  if (result.statusCode !== 200) {
-    return {
-      redirect: {
-        destination: "/auth/signin",
-        permanent: false,
-      },
-    };
-  }
-
   return {
     props: {
       data: result.data || [],

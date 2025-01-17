@@ -5,20 +5,32 @@ import { setUser } from "@/utils/redux/slices/user";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { FormData } from "@/components/pages/user/Profile/Form/data";
+import getProfile from "@/utils/api/member/getProfile";
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  try {
-    const data = await fetch("http://localhost:4002/data").then((res) => {
-      if (!res.ok) throw new Error("Failed to fetch user data");
-      return res.json();
-    });
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  // TBD: 問學長這邊是否有比 !token 更簡單的判斷方式，讓型別驗證會通過
+  const token = req.cookies.token;
 
-    return { props: { userData: data } };
-  } catch (error) {
-    console.error("Error fetching user data:", error);
+  console.log("profile token", token);
 
-    return { props: { userData: null } };
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/auth/signin",
+        permanent: false,
+      },
+    };
   }
+
+  const result = await getProfile(token);
+
+  console.log("profile result", result);
+
+  return {
+    props: {
+      userData: result.data,
+    },
+  };
 };
 
 const Profile = ({ userData }: { userData: FormData }) => {

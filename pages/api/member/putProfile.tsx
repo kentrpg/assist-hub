@@ -7,6 +7,5 @@ export default async function handler(
   res: NextApiResponse<Result>
 ) {
   const result = await putProfile(req.cookies.token || "", req.body);
-  console.log("putProfile", result);
   return res.json(result);
 }

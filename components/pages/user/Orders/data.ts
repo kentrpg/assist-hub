@@ -19,7 +19,7 @@ export type Order = {
 export const orders: Order[] = [
   {
     deliveryType: "宅配",
-    orderId: "333LHJ",
+    orderId: "15",
     createdTime: "2024/12/24 7:32 PM",
     finishedDate: "2025/01/21",
     status: "租賃中",
@@ -36,7 +36,7 @@ export const orders: Order[] = [
   },
   {
     deliveryType: "自取",
-    orderId: "356KJL",
+    orderId: "16",
     createdTime: "2024/11/04 7:32 PM",
     finishedDate: "於2024/11/27完成取件",
     status: "已結案",

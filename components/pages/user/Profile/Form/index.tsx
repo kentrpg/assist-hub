@@ -62,7 +62,7 @@ const Form = () => {
 
     const result = await res.json();
 
-    console.log("result", result);
+    console.log("Form result", result);
 
     if (result.statusCode === 200 && result.status) {
       dispatch(setUser(data));

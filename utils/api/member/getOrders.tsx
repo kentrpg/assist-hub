@@ -3,25 +3,18 @@ import { Error } from "@/types/apiRoutes";
 import { catchError } from "@/utils/handleErrors";
 import { NODE_ENV } from "@/constants/environment";
 import { validateResponseType } from "@/utils/typeGuards";
-import { put_member_profile } from "@/constants/apiPath";
-import {
-  ResultPutMemberProfile,
-  ResultPutMemberProfileType,
-} from "@/types/putMemberProfile";
+import { get_member_orders } from "@/constants/apiPath";
+import { ResultGetMemberOrders } from "@/types/getOrders";
 
-export const putProfile = async (
-  token: string,
-  data: ResultPutMemberProfileType["data"]
-): Promise<Result> => {
-  const parsedUrl = new URL(put_member_profile);
+export const getOrders = async (token: string): Promise<Result> => {
+  const parsedUrl = new URL(get_member_orders);
   const options = {
-    method: "PUT",
+    method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data),
   };
 
   const [res, error] = await catchError(fetch(parsedUrl, options));
@@ -46,7 +39,7 @@ export const putProfile = async (
   const json = await res.json();
 
   if (NODE_ENV === "development") {
-    const validation = validateResponseType(json, ResultPutMemberProfile);
+    const validation = validateResponseType(json, ResultGetMemberOrders);
 
     !validation.isValid &&
       console.error("API Response validation failed:", validation.errors);
@@ -61,4 +54,4 @@ export const putProfile = async (
   };
 };
 
-export default putProfile;
+export default getOrders;

@@ -4,11 +4,11 @@ import { catchError } from "@/utils/handleErrors";
 import { NODE_ENV } from "@/constants/environment";
 import { validateResponseType } from "@/utils/typeGuards";
 import { post_carts } from "@/constants/apiPath";
-import { ResponsePostCartsType, ResultPostCarts } from "@/types/postCarts";
+import { RequestPostCartsType, ResultPostCarts } from "@/types/postCarts";
 
 export const postCarts = async (
   token: string,
-  data: ResponsePostCartsType
+  data: RequestPostCartsType
 ): Promise<Result> => {
   const parsedUrl = new URL(post_carts);
   const options = {
@@ -22,8 +22,6 @@ export const postCarts = async (
   };
 
   const [res, error] = await catchError(fetch(parsedUrl, options));
-
-  console.log("res", res);
 
   if (error) {
     console.log("error", error);
@@ -50,8 +48,6 @@ export const postCarts = async (
     !validation.isValid &&
       console.error("API Response validation failed:", validation.errors);
   }
-
-  console.log("json", json);
 
   return {
     statusCode: json.statusCode,

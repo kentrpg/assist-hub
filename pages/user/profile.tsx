@@ -8,7 +8,6 @@ import { FormData } from "@/components/pages/user/Profile/Form/data";
 import getProfile from "@/utils/api/member/getProfile";
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  // TBD: 問學長這邊是否有比 !token 更簡單的判斷方式，讓型別驗證會通過
   const token = req.cookies.token;
 
   console.log("profile token", token);

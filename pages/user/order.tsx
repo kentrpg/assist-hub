@@ -6,6 +6,7 @@ import getOrders from "@/utils/api/member/getOrders";
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   // TBD: 問學長這邊是否有比 !token 更簡單的判斷方式，讓型別驗證會通過
+  // TBD: 問學長 token 是否有三種模式，是否直接從 req.cookies，還是可以封裝出去？
   const token = req.cookies.token;
 
   console.log("order token", token);

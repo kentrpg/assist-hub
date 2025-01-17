@@ -45,6 +45,7 @@ const Signin: React.FC = () => {
   const onSubmit: SubmitHandler<SignInInputs> = async (data) => {
     const { remember, ...signinData } = data;
 
+    // TBD: 問學長 call api route 的地方 fetch 要帶上 headers 的 Content-Type 跟 Accept 嗎？
     const res = await fetch("/api/auth/signin", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -55,6 +56,7 @@ const Signin: React.FC = () => {
 
     console.log("result", result);
 
+    // TBD: 問學長回傳的資料在透過狀態碼來判斷要處理的邏輯可以嗎？
     if (Object.is(result.error, null)) {
       switch (result.statusCode) {
         case 200:

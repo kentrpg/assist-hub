@@ -1,4 +1,4 @@
-export type ResponsePostCartsType = {
+export type RequestPostCartsType = {
   id: number;
 };
 

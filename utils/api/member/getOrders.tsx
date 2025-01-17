@@ -38,6 +38,7 @@ export const getOrders = async (token: string): Promise<Result> => {
 
   const json = await res.json();
 
+  // 型別錯誤放在 error 
   if (NODE_ENV === "development") {
     const validation = validateResponseType(json, ResultGetMemberOrders);
 

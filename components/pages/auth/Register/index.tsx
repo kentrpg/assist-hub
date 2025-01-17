@@ -45,7 +45,10 @@ const Regist: React.FC = () => {
   const onSubmit: SubmitHandler<RegistInputs> = async (data) => {
     const res = await fetch("/api/auth/register", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(data),
     });
 

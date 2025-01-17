@@ -137,20 +137,28 @@ const Checkout = () => {
 
     const res = await fetch("/api/postOrder", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(checkoutData),
     });
 
     const result = await res.json();
     console.log("response", res, result);
-
+    // TBD: result.statusCode === 200 包成 help function
+    // result.status 包成 help function
     const isSuccess = result.statusCode === 200 && result.status;
+
+    // TBD: Object.is(result.error, null) 包成 help function
     if (Object.is(result.error, null)) {
       isSuccess && router.push(`${router.asPath}/approval`);
       router.push(`${router.asPath}/declined`);
     } else {
       console.error("Error:", result.error);
     }
+
+    // 把 error 當作防呆，如果 error 有值，則 return 回去
     setIsOrderSubmitting(false);
   };
 

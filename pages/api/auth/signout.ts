@@ -16,7 +16,9 @@ export default async function handler(
       {
         method: "DELETE",
         headers: token ? {
-          Authorization: token
+          Authorization: token,
+          Accept: "application/json",
+          "Content-Type": "application/json",
         } : undefined,
       }
     );

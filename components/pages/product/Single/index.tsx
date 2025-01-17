@@ -79,7 +79,10 @@ const Single: React.FC<ProductDetailsProps> = ({
 
     const res = await fetch("/api/postCarts", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         id: productId,
       }),

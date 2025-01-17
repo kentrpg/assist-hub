@@ -22,6 +22,7 @@ export async function middleware(request: NextRequest) {
       headers: {
         Authorization: `Bearer ${token.value}`,
         Accept: "application/json",
+        "Content-Type": "application/json",
       },
     });
 

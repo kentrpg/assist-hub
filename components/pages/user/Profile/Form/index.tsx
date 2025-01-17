@@ -55,6 +55,7 @@ const Form = () => {
     const res = await fetch("/api/member/putProfile", {
       method: "PUT",
       headers: {
+        Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),

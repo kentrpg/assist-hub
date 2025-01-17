@@ -28,6 +28,7 @@ const UserPage: React.FC<UserPageLayoutProps> = ({
     const res = await fetch("/api/member/getOrder", {
       method: "POST",
       headers: {
+        Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({

@@ -77,7 +77,8 @@ export const Tab = styled.button<ButtonProps>`
   border-radius: 10px;
   color: ${({ $isActive }) => ($isActive ? "white" : "black")};
   &:hover {
-    background-color: #ffe08a;
+    background-color: #0b2c6b;
+    color: white;
   }
   @media (${Mobile}) {
     padding: 10px 30px;

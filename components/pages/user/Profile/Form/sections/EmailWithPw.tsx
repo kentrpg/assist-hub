@@ -20,6 +20,7 @@ const EmailWithPw: FC<FormHooks> = ({ register, errors }) => {
           電子信箱
         </SubTitle>
         <Input
+          $Isdisabled={true}
           disabled={true}
           type="email"
           id="email"

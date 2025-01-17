@@ -14,13 +14,13 @@ export const Input = styled.input<InputProps>`
   border-radius: 5px;
   outline: solid #888888 1px;
   flex: 1;
-
-  /* &::-webkit-calendar-picker-indicator {
+  color: ${({ $Isdisabled }) => ($Isdisabled ? "#B3B3B3" : "black")};
+  &::-webkit-calendar-picker-indicator {
     display: none; // 隱藏日曆圖示 
     -webkit-appearance: none; 
-  } */
+  }
 
-  outline: ${({ disabled }) => disabled && "none"};
+  outline: ${({ disabled }) => disabled && " outline: solid #B3B3B3 1px"};
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "text")};
 
   &:hover {
@@ -29,6 +29,10 @@ export const Input = styled.input<InputProps>`
 
   &::placeholder {
     color: "#B3B3B3";
+  }
+
+  &:focus {
+    outline: 2px solid ${({ theme }) => theme.colors.primary};
   }
 `;
 
@@ -104,6 +108,30 @@ export const AddressIcon = styled.div`
   }
 `;
 
+export const CityIcon = styled.div`
+  position: absolute;
+  display: flex;
+  top: 48px;
+  right: 16px;
+  hover {
+    cursor: pointer;
+  }
+`;
+
+export const DistrictIcon = styled.div`
+  position: absolute;
+  display: flex;
+  top: 48px;
+  right: 16px;
+`;
+
+export const ContactIcon = styled.div`
+  position: absolute;
+  display: flex;
+  top: 48px;
+  right: 16px;
+`;
+
 export const Wrapper = styled.div`
   display: flex;
   row-gap: 12px;
@@ -154,6 +182,7 @@ export const ContactField = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
+  position: relative;
   row-gap: 12px;
 `;
 
@@ -162,7 +191,11 @@ export const ContactSelect = styled.select`
   font-weight: 400;
   max-height: 48px;
   padding: 12px 16px;
+  outline: solid #888888 1px;
   border-radius: 4px;
+  &:focus {
+    outline: 2px solid ${({ theme }) => theme.colors.primary};
+  }
 `;
 
 export const AddressField = styled.div`
@@ -216,11 +249,13 @@ export const Zip = styled.div`
     max-width: 131px;
   }
 `;
+
 export const City = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 8px;
   width: 100%;
+  position: relative;
   @media (${ExtraLarge}) {
     max-width: 131px;
   }
@@ -230,6 +265,7 @@ export const District = styled.div`
   flex-direction: column;
   row-gap: 8px;
   width: 100%;
+  position: relative;
   @media (${ExtraLarge}) {
     max-width: 131px;
   }
@@ -246,6 +282,9 @@ export const AddressInput = styled.input`
     font-weight: 400;
     font-size: 16px;
   }
+  &:focus {
+    outline: 2px solid ${({ theme }) => theme.colors.primary};
+  }
 `;
 
 export const AddressSelect = styled.select`
@@ -255,6 +294,10 @@ export const AddressSelect = styled.select`
   max-height: 48px;
   padding: 12px 16px;
   border-radius: 4px;
+  outline: solid #888888 1px;
+  &:focus {
+    outline: 2px solid ${({ theme }) => theme.colors.primary};
+  }
 `;
 
 export const IdentityField = styled.div`

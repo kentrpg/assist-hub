@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "@/utils/redux/slices/user";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 
-const Form = () => {
+const Form: React.FC = () => {
   const user = useSelector((state: RootState) => state.user);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useDispatch();

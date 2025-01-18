@@ -16,10 +16,10 @@ import {
 } from "./styled";
 import { MdArrowDropDown } from "react-icons/md";
 import { FormHooks } from "../data";
-import { FC, useRef } from "react";
+import { useRef } from "react";
 import { useFormContext } from "react-hook-form";
 
-const Address: FC<FormHooks> = ({ errors }) => {
+const Address: React.FC<FormHooks> = ({ errors }) => {
   const citySelectRef = useRef<HTMLSelectElement | null>(null);
   const districtSelectRef = useRef<HTMLSelectElement | null>(null);
 
@@ -32,13 +32,19 @@ const Address: FC<FormHooks> = ({ errors }) => {
   // 點擊圖標模擬下拉行為
   const handleCityIconClick = () => {
     citySelectRef.current?.focus(); // 聚焦到選單
-    const event = new KeyboardEvent("keydown", { key: "ArrowDown", bubbles: true });
+    const event = new KeyboardEvent("keydown", {
+      key: "ArrowDown",
+      bubbles: true,
+    });
     citySelectRef.current?.dispatchEvent(event); // 模擬下拉行為
   };
 
   const handleDistrictIconClick = () => {
     districtSelectRef.current?.focus(); // 聚焦到選單
-    const event = new KeyboardEvent("keydown", { key: "ArrowDown", bubbles: true });
+    const event = new KeyboardEvent("keydown", {
+      key: "ArrowDown",
+      bubbles: true,
+    });
     districtSelectRef.current?.dispatchEvent(event); // 模擬下拉行為
   };
 
@@ -77,7 +83,9 @@ const Address: FC<FormHooks> = ({ errors }) => {
               value={addressCity || ""} // 綁定 Redux 初始值
               onChange={(e) => setValue("addressCity", e.target.value)} // 更新表單值
             >
-              <option value="">請選擇</option>
+              <option value="" disabled>
+                請選擇
+              </option>
               <option value="高雄市">高雄市</option>
             </AddressSelect>
             <CityIcon onClick={handleCityIconClick}>
@@ -97,7 +105,9 @@ const Address: FC<FormHooks> = ({ errors }) => {
               value={addressDistrict || ""} // 綁定 Redux 初始值
               onChange={(e) => setValue("addressDistrict", e.target.value)} // 更新表單值
             >
-              <option value="">請選擇</option>
+              <option value="" disabled>
+                請選擇
+              </option>
               <option value="新興區">新興區</option>
               <option value="苓雅區">苓雅區</option>
               <option value="小港區">小港區</option>
@@ -138,7 +148,6 @@ const Address: FC<FormHooks> = ({ errors }) => {
 };
 
 export default Address;
-
 
 // import {
 //   SubTitle,

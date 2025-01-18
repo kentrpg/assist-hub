@@ -1,4 +1,3 @@
-import { FC } from "react";
 import {
   SubTitle,
   Wrapper,
@@ -13,7 +12,7 @@ import {
 } from "./styled";
 import { FormHooks } from "../data";
 import { MdPhoneIphone, MdArrowDropDown } from "react-icons/md";
-const Contact: FC<FormHooks> = ({ register, errors }) => {
+const Contact: React.FC<FormHooks> = ({ register, errors }) => {
   return (
     <Wrapper>
       <PhoneField>

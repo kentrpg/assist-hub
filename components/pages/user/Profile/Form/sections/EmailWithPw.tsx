@@ -1,4 +1,3 @@
-import { FC } from "react";
 import {
   SubTitle,
   Wrapper,
@@ -12,7 +11,7 @@ import {
 import { MdMail } from "react-icons/md";
 import { FormHooks } from "../data";
 
-const EmailWithPw: FC<FormHooks> = ({ register, errors }) => {
+const EmailWithPw: React.FC<FormHooks> = ({ register, errors }) => {
   return (
     <Wrapper>
       <EmailField>
@@ -20,6 +19,7 @@ const EmailWithPw: FC<FormHooks> = ({ register, errors }) => {
           電子信箱
         </SubTitle>
         <Input
+          $Isdisabled={true}
           disabled={true}
           type="email"
           id="email"

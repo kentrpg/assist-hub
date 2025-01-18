@@ -22,31 +22,36 @@ const UserPage: React.FC<UserPageLayoutProps> = ({
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [orderData, setOrderData] = useState<
     ResultGetMemberOrderType["data"] | null
-  >(null);
+  >(null); // 單個訂單型別
 
   const handleViewOrder = async (order: Order) => {
-    const res = await fetch("/api/member/getOrder", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        orderId: Number(order.orderId),
-      }),
-    });
+    try {
+      const res = await fetch("/api/member/getOrder", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          orderId: Number(order.orderId),
+        }),
+      });
 
-    const result = await res.json();
+      const result: ResultGetMemberOrderType = await res.json();
 
-    console.log("getOrder result", result);
+      console.log("getOrder result", result);
 
-    if (result.statusCode === 200 && result.status) {
-      setOrderData(result.data);
-      setSelectedOrder(order);
-      setActiveTab("detail");
-    } else {
-      console.error("獲取訂單詳細資料失敗:", result.error);
-      alert(result.message || "獲取訂單詳細資料失敗，請稍後再試");
+      if (result.statusCode === 200 && result.status) {
+        setOrderData(result.data);
+        setSelectedOrder(order);
+        setActiveTab("detail");
+      } else {
+        console.error("獲取訂單詳細資料失敗:", result.error);
+        alert(result.message || "獲取訂單詳細資料失敗，請稍後再試");
+      }
+    } catch (error) {
+      console.error("無法獲取訂單詳細資料:", error);
+      alert("發生錯誤，請稍後再試");
     }
   };
 
@@ -61,17 +66,10 @@ const UserPage: React.FC<UserPageLayoutProps> = ({
       <SideBar setActiveTab={setActiveTab} activeTab={activeTab} />
       {activeTab === "profile" && <Profile />}
       {activeTab === "order" && (
-        <Orders
-          setActiveOrder={handleViewOrder as any}
-          ordersData={ordersData}
-        />
+        <Orders setActiveOrder={handleViewOrder} ordersData={ordersData} />
       )}
-      {activeTab === "detail" && selectedOrder && (
-        <Details
-          order={selectedOrder}
-          onBack={handleBackToOrders}
-          orderData={orderData}
-        />
+      {activeTab === "detail" && selectedOrder && orderData && (
+        <Details onBack={handleBackToOrders} orderData={orderData} />
       )}
       {activeTab === "inquiry" && <Inquiries />}
     </Container>

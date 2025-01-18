@@ -50,7 +50,9 @@ export const Card = styled.div<CardProps>`
   border-radius: 10px;
   position: relative;
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   &:hover {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
     outline: 1px solid #103f99;
@@ -63,7 +65,8 @@ export const Card = styled.div<CardProps>`
 export const CardImg = styled.img`
   width: 100%;
   max-height: 190px;
-  margin: 0;
+  height: 100%;
+  object-fit: contain;
 `;
 
 export const InquiryIcon = styled.div`
@@ -91,7 +94,9 @@ export const CardBtn = styled.button`
   cursor: pointer;
   opacity: 0;
   transform: translateY(-10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 
   &:hover {
     background-color: #b28f12;

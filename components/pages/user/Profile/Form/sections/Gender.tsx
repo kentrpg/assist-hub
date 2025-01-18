@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   GenderField as StyledGenderField,
@@ -13,7 +13,7 @@ import { MdRadioButtonChecked, MdOutlineCircle } from "react-icons/md";
 import { FormHooks } from "../data";
 import { RootState } from "@/utils/redux/store";
 
-const Gender: FC<FormHooks> = ({ register, errors }) => {
+const Gender: React.FC<FormHooks> = ({ register, errors }) => {
   const user = useSelector((state: RootState) => state.user);
   const [selectedGender, setSelectedGender] = useState<string | null>(null);
 

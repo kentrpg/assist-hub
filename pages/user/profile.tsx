@@ -10,8 +10,6 @@ import getProfile from "@/utils/api/member/getProfile";
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const token = req.cookies.token;
 
-  console.log("profile token", token);
-
   if (!token) {
     return {
       redirect: {

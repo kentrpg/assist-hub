@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "@/utils/redux/slices/user";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 
-const Form = () => {
+const Form: React.FC = () => {
   const user = useSelector((state: RootState) => state.user);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useDispatch();
@@ -33,7 +33,6 @@ const Form = () => {
     },
   });
 
-  // 當 user 資料更新時，重設表單值
   useEffect(() => {
     methods.reset({
       name: user.name,
@@ -68,6 +67,7 @@ const Form = () => {
     if (result.statusCode === 200 && result.status) {
       dispatch(setUser(data));
       alert("資料更新成功");
+      window.location.reload(); // 刷新當前頁面
     } else {
       console.error("更新失敗:", result.error);
       alert(result.message || "更新失敗，請稍後再試");

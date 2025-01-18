@@ -1,7 +1,7 @@
 import Form from "./Form";
 import { FormContainer, Titile } from "./styled";
 
-const Profile = () => {
+const Profile: React.FC = () => {
   return (
     <FormContainer>
       <Titile>基本資料</Titile>

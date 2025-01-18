@@ -47,20 +47,11 @@ import {
 import { rentalPeriodOptions, PeriodProps, ProductItemProps } from "../data";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import useFormatCurrency from "@/hooks/useFormatCurrency";
+import { useSelector } from "react-redux";
+import { RootState } from "@/utils/redux/store";
 
 export const ProductItem: FC<ProductItemProps> = ({
   cartId,
-  name,
-  description,
-  quantity,
-  rent,
-  deposit,
-  amount,
-  period,
-  rentStamp,
-  returnStamp,
-  imgSrc,
-  imgAlt,
   isDatepickerTarget,
   onRentalPeriodChange,
   onStartDateChange,
@@ -71,6 +62,27 @@ export const ProductItem: FC<ProductItemProps> = ({
   isDeleting,
 }: ProductItemProps) => {
   const formatCurrency = useFormatCurrency;
+
+  const cartItem = useSelector((state: RootState) =>
+    state.cart.items.find((item) => item.cartId === cartId)
+  );
+
+  if (!cartItem) return null;
+
+  const {
+    name,
+    description,
+    quantity,
+    rent,
+    deposit,
+    amount,
+    period,
+    rentStamp,
+    returnStamp,
+    imgSrc,
+    imgAlt,
+  } = cartItem;
+
   // calculate input date max&min value
   const newDate = new Date();
   const today = newDate.toISOString().split("T")[0];
@@ -79,7 +91,7 @@ export const ProductItem: FC<ProductItemProps> = ({
   const oneYearLater = yearDate.toISOString().split("T")[0];
 
   const handleRentalPeriodChange = (
-    e: React.ChangeEvent<HTMLSelectElement>,
+    e: React.ChangeEvent<HTMLSelectElement>
   ) => {
     onRentalPeriodChange(Number(e.target.value) as PeriodProps);
   };
@@ -113,6 +125,11 @@ export const ProductItem: FC<ProductItemProps> = ({
   };
 
   const isSubmitDisabled = !rentStamp;
+
+  // 如果需要訪問完整的購物車項目數據
+  // const cartItem = useSelector((state: RootState) =>
+  //   state.cart.items.find((item) => item.cartId === cartId)
+  // );
 
   return (
     <Product $isActive={$isActive} onClick={onClick}>

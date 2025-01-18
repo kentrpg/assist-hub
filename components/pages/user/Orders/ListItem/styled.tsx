@@ -1,28 +1,14 @@
 import styled from "styled-components";
 import { ExtraLarge, Desktop, Tablet, Mobile } from "@/styles/container";
 
-type DeliveryOptionProps = {
-  $deliveryType: "自取" | "宅配";
-};
-
-type StatusProps = {
-  $status: "租賃中" | "已結案";
-};
-
 export const Item = styled.div`
   border-radius: 5px;
   outline: 1px solid #888888;
 `;
 
-export const Header = styled.div<DeliveryOptionProps>`
+export const Header = styled.div`
   padding: 12px;
   border-radius: 5px 5px 0 0;
-  background-color: ${({ $deliveryType }) =>
-    $deliveryType === "宅配"
-      ? "#fdefec"
-      : $deliveryType === "自取"
-      ? "#FFF3D3"
-      : "#FFFFFF"};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -116,24 +102,11 @@ export const Finished = styled.span`
   font-size: 14px;
 `;
 
-export const Status = styled.div<StatusProps>`
+export const Status = styled.div`
   padding: 5px 10px;
   font-size: 16px;
   font-weight: 500;
   border-radius: 6px;
-
-  color: ${({ $status }) =>
-    $status === "租賃中"
-      ? "#103f99"
-      : $status === "已結案"
-      ? "#B3B3B3"
-      : "#000"};
-  outline: ${({ $status }) =>
-    $status === "租賃中"
-      ? "#103f99 solid 2px"
-      : $status === "已結案"
-      ? "#B3B3B3 solid 2px"
-      : "none"};
 `;
 
 export const TableContainer = styled.div`

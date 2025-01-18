@@ -32,51 +32,55 @@ import {
   ColGroup,
   TableContainer,
 } from "./styled";
+import { ResultGetMemberOrdersType } from "@/types/getOrders";
 
-import { Order } from "../data";
-
-const img =
-  "https://www.karma.com.tw/wp-content/uploads/2018/08/TW-KM-8520X-1050x960-front.png";
+type Order = ResultGetMemberOrdersType["data"][0];
 
 type ListProps = {
   order: Order;
-  onViewDetails: () => void;
-  orderIdData: number;
+  onViewDetails: () => void; // 查看訂單詳情的回調函數
 };
 
-const ListItem = ({ order, onViewDetails, orderIdData }: ListProps) => {
+const ListItem: React.FC<ListProps> = ({ order, onViewDetails }) => {
   const {
-    deliveryType,
     orderId,
-    createdTime,
-    finishedDate,
-    status,
-    quantity,
-    rent,
-    deliveryFee,
-    deposit,
-    description,
+    orderStatus,
+    shippingStatus,
+    orderCode,
+    createdDate,
+    createdStamp,
+    shipping,
+    details: {
+      quantity,
+      productName,
+      productDes,
+      productImgSrc,
+      productImgAlt,
+      rent,
+      deposit,
+      finalAmount,
+      rentDate,
+      rentStamp,
+      returnDate,
+      returnStamp,
+    },
   } = order;
-
-  console.log("orderIdData", orderIdData);
-
-  const totalPrice = (quantity * rent + deposit + deliveryFee).toLocaleString();
 
   return (
     <Item>
-      <Header $deliveryType={deliveryType}>
+      <Header>
         <Major>
-          <Type>{deliveryType}</Type>
+          <Type>{shipping}</Type>
           <Info>
-            <Id>訂單編號 {orderId}</Id>
-            <Created>訂單時間 {createdTime}</Created>
+            <Id>訂單編號 {orderCode}</Id>
+            <Created>訂單時間 {createdStamp}</Created>
           </Info>
         </Major>
-        <Price>{totalPrice}元</Price>
+        <Price>元</Price>
       </Header>
       <Main>
-        <Finished>預計抵達日期 {finishedDate}</Finished>
-        <Status $status={status}>{status}</Status>
+        <Finished>預計抵達日期{rentStamp}</Finished>
+        <Status>{orderStatus}</Status>
       </Main>
       <TableContainer>
         <Table>
@@ -99,15 +103,20 @@ const ListItem = ({ order, onViewDetails, orderIdData }: ListProps) => {
           <Tbody>
             <Tr>
               <Product>
-                <img src={img} width={66} height={66} alt="XX輪椅" />
+                <img
+                  src={productImgSrc}
+                  width={66}
+                  height={66}
+                  alt={productImgAlt}
+                />
                 <Description>
-                  <Name>精品輪椅</Name>
-                  <Feature>{description}</Feature>
+                  <Name>{productName}</Name>
+                  <Feature>{productDes}</Feature>
                 </Description>
               </Product>
               <Quantity>x{quantity}</Quantity>
-              <Rent>{rent.toLocaleString()}元</Rent>
-              <Others>{deposit + deliveryFee}元</Others>
+              <Rent>{rent}元</Rent>
+              <Others>{deposit}元</Others>
               <BtnContainer>
                 <DetailsBtn onClick={onViewDetails}>查看訂單</DetailsBtn>
               </BtnContainer>

@@ -1,5 +1,3 @@
-const img =
-  "https://www.karma.com.tw/wp-content/uploads/2018/08/TW-KM-8520X-1050x960-front.png";
 import React from "react";
 import {
   Item,
@@ -50,38 +48,48 @@ import {
   RentInfo,
 } from "./styled";
 import { MdArrowBack } from "react-icons/md";
-import { Order } from "../data";
-import Progress from "./Progress";
 import { ResultGetMemberOrderType } from "@/types/getOrder";
+import Progress from "./Progress";
 
 type DetailsProps = {
-  order: Order;
-  onBack: () => void;
-  orderData: ResultGetMemberOrderType["data"] | null;
+  onBack: () => void; // 返回按鈕的回調函數
+  orderData: ResultGetMemberOrderType["data"];
 };
 
-const Details = ({ order, onBack, orderData }: DetailsProps) => {
+const Details: React.FC<DetailsProps> = ({ onBack, orderData }) => {
+  const orderDetails = orderData ? orderData[0] : null;
+
+  if (!orderDetails) {
+    return <div>Order details not available</div>;
+  }
+
   const {
-    deliveryType,
-    orderId,
-    createdTime,
-    finishedDate,
-    status,
-    quantity,
-    rent,
-    deposit,
-    deliveryFee,
-    description,
-    period,
-    payment,
-    name,
-    email,
-    phone,
-  } = order;
-
-  const totalPrice = (quantity * rent + deposit + deliveryFee).toLocaleString();
-
-  console.log("orderData", orderData);
+    orderStatus,
+    shippingStatus,
+    orderCode,
+    createdDate,
+    createdStamp,
+    note,
+    shipping,
+    shippinginfo: { name, phone, eamil, address },
+    details: {
+      quantity,
+      productName,
+      productDes,
+      productImgSrc,
+      productImgAlt,
+      rent,
+      deposit,
+      fee,
+      finalAmount,
+      period,
+      rentDate,
+      rentStamp,
+      returnDate,
+      returnStamp,
+      payment,
+    },
+  } = orderDetails;
 
   return (
     <DetailContainer>
@@ -92,21 +100,24 @@ const Details = ({ order, onBack, orderData }: DetailsProps) => {
         <Title onClick={onBack}>全部訂單</Title>
       </BackToOrders>
       <Item>
-        <Header $deliveryType={deliveryType}>
+        <Header>
           <Major>
-            <Type>{deliveryType}</Type>
+            <Type>{shipping}</Type>
             <Info>
-              <Id>訂單編號 {orderId}</Id>
-              <Created>訂單時間 {createdTime}</Created>
+              <Id>訂單編號 {orderCode}</Id>
+              <Created>訂單時間</Created>
             </Info>
           </Major>
-          <Price>{totalPrice}元</Price>
+          <Price>元</Price>
         </Header>
         <Main>
-          <Finished>{finishedDate}</Finished>
-          <Status $status={status}>{status}</Status>
+          <Finished>{returnStamp}</Finished>
+          <Status>{orderStatus}</Status>
         </Main>
-        {deliveryType === "宅配" && <Progress />}
+
+        {/* ProgressBar */}
+        {shipping === "宅配" && <Progress />}
+
         <TableContainer>
           <Table>
             <ColGroup>
@@ -128,16 +139,21 @@ const Details = ({ order, onBack, orderData }: DetailsProps) => {
             <Tbody>
               <Tr>
                 <Product>
-                  <img src={img} width={66} height={66} alt="XX輪椅" />
+                  <img
+                    src={productImgSrc}
+                    width={66}
+                    height={66}
+                    alt={productImgAlt}
+                  />
                   <Description>
-                    <Name>精品輪椅</Name>
-                    <Feature>{description}</Feature>
+                    <Name>{productName}</Name>
+                    <Feature>{productDes}</Feature>
                   </Description>
                 </Product>
                 <Quantity>x{quantity}</Quantity>
-                <Rent>{rent.toLocaleString()}元</Rent>
+                <Rent>{rent}元</Rent>
                 <Deposit>{deposit}元</Deposit>
-                <Fee>{deliveryFee}元</Fee>
+                <Fee>{fee}元</Fee>
               </Tr>
             </Tbody>
           </Table>
@@ -149,11 +165,13 @@ const Details = ({ order, onBack, orderData }: DetailsProps) => {
               <Rental>
                 <Row>
                   <P $type="title">租賃日期</P>
-                  <P $type="content">2024/11/28 到 2024/12/28</P>
+                  <P $type="content">
+                    {rentStamp} 到 {returnStamp}
+                  </P>
                 </Row>
                 <Row>
                   <P $type="title">租賃期約</P>
-                  <P $type="content">{period}個月</P>
+                  <P $type="content">{period}天</P>
                 </Row>
                 <Row>
                   <P $type="title">付款方式</P>
@@ -173,7 +191,11 @@ const Details = ({ order, onBack, orderData }: DetailsProps) => {
               </Row>
               <Row>
                 <P $type="title">電子信箱</P>
-                <P $type="content">{email}</P>
+                <P $type="content">{eamil}</P>
+              </Row>
+              <Row>
+                <P $type="title">地址</P>
+                <P $type="content">{address}</P>
               </Row>
             </Detail>
           </RentInfo>

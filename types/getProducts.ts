@@ -37,6 +37,7 @@ export const ResultGetProducts = {
 
 export type ResultGetProductsTypeGuard = typeof ResultGetProducts;
 
+// error handle response data 會帶 undefined
 export type ResultGetProductsType = {
   statusCode: number;
   status: boolean;

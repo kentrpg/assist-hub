@@ -40,7 +40,7 @@ export const getProducts = async (): Promise<ResultGetProductsType> => {
     const validation = validateResponseType(json, ResultGetProducts);
 
     !validation.isValid &&
-      console.error("API Response validation failed:", validation.errors);
+      console.error("API response validation failed:", validation.errors);
   }
 
   return {

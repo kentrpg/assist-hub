@@ -27,12 +27,14 @@ export type EnhancedCartItem = CartItem & {
   isDatepickerTarget: boolean;
 };
 
-export type ProductItemProps = EnhancedCartItem & {
+export type ProductItemProps = {
+  item: EnhancedCartItem;
+  isDatepickerTarget: boolean;
+  $isActive: boolean;
+  isDeleting: boolean;
+  onClick: () => void;
+  onDelete: (id: number) => void;
   onRentalPeriodChange: (period: PeriodProps) => void;
   onStartDateChange: (date: string) => void;
   onQuantityChange: (delta: number) => void;
-  $isActive: boolean;
-  onClick: () => void;
-  onDelete: (cartId: number) => Promise<void>;
-  isDeleting: boolean;
 };

@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Result } from "@/types/postOrder";
-import postOrder from "@/utils/api/checkout";
+import postOrder from "@/utils/api/postOrder";
 
 export default async function handler(
   req: NextApiRequest,

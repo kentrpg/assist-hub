@@ -28,7 +28,7 @@ export type EnhancedCartItem = CartItem & {
 };
 
 export type ProductItemProps = {
-  cartId: number;
+  item: EnhancedCartItem;
   isDatepickerTarget: boolean;
   $isActive: boolean;
   isDeleting: boolean;

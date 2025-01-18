@@ -126,15 +126,15 @@ const Cart = ({ data }: { data: EnhancedCartItem[] }) => {
 
   return (
     <Container>
-      {data.length > 0 ? (
+      {cartItems.length > 0 ? (
         <>
           <Breadcrumb />
           <Title>購物車</Title>
           <ProductList>
-            {data.map((item) => (
+            {cartItems.map((item) => (
               <ProductItem
                 key={item.cartId}
-                cartId={item.cartId}
+                item={item}
                 isDatepickerTarget={false}
                 $isActive={activeCartId === item.cartId}
                 onClick={() => dispatch(setActiveCartId(item.cartId))}

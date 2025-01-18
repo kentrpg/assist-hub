@@ -17,25 +17,27 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    setCartItems: (state, action: PayloadAction<EnhancedCartItem[]>) => {
-      state.items = action.payload;
+    setCartItems: (state, {payload}: PayloadAction<EnhancedCartItem[]>) => {
+      state.items = payload;
       state.isInitialized = true;
-      state.activeCartId = action.payload[0]?.cartId || null;
+      state.activeCartId = payload[0]?.cartId || null;
     },
-    updateCartItem: (state, action: PayloadAction<EnhancedCartItem>) => {
-      const index = state.items.findIndex(item => item.cartId === action.payload.cartId);
-      if (index !== -1) {
-        state.items[index] = action.payload;
+    updateCartItem: (state, {payload}: PayloadAction<EnhancedCartItem>) => {
+      const index = state.items.findIndex(item => item.cartId === payload.cartId);
+      if (index === -1) {
+        console.error(`找不到 cartId 為 ${payload.cartId} 的項目`);
+        return;
       }
+      state.items[index] = payload;
     },
-    removeCartItem: (state, action: PayloadAction<number>) => {
-      state.items = state.items.filter(item => item.cartId !== action.payload);
-      if (state.activeCartId === action.payload) {
+    removeCartItem: (state, {payload}: PayloadAction<number>) => {
+      state.items = state.items.filter(item => item.cartId !== payload);
+      if (state.activeCartId === payload) {
         state.activeCartId = state.items[0]?.cartId || null;
       }
     },
-    setActiveCartId: (state, action: PayloadAction<number>) => {
-      state.activeCartId = action.payload;
+    setActiveCartId: (state, {payload}: PayloadAction<number>) => {
+      state.activeCartId = payload;
     },
   },
 });

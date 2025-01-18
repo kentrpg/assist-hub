@@ -47,11 +47,9 @@ import {
 import { rentalPeriodOptions, PeriodProps, ProductItemProps } from "../data";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import useFormatCurrency from "@/hooks/useFormatCurrency";
-import { useSelector } from "react-redux";
-import { RootState } from "@/utils/redux/store";
 
 export const ProductItem: FC<ProductItemProps> = ({
-  cartId,
+  item,
   isDatepickerTarget,
   onRentalPeriodChange,
   onStartDateChange,
@@ -63,73 +61,67 @@ export const ProductItem: FC<ProductItemProps> = ({
 }: ProductItemProps) => {
   const formatCurrency = useFormatCurrency;
 
-  const cartItem = useSelector((state: RootState) =>
-    state.cart.items.find((item) => item.cartId === cartId)
-  );
+  const { quantity, rent, period, rentStamp } = item;
 
-  if (!cartItem) return null;
-
-  const {
-    name,
-    description,
-    quantity,
-    rent,
-    deposit,
-    amount,
-    period,
-    rentStamp,
-    returnStamp,
-    imgSrc,
-    imgAlt,
-  } = cartItem;
-
-  // calculate input date max&min value
-  const newDate = new Date();
-  const today = newDate.toISOString().split("T")[0];
-  const yearDate = new Date(newDate);
-  yearDate.setFullYear(yearDate.getFullYear() + 1);
-  const oneYearLater = yearDate.toISOString().split("T")[0];
-
-  const handleRentalPeriodChange = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    onRentalPeriodChange(Number(e.target.value) as PeriodProps);
+  const dateControls = {
+    range: {
+      today: new Date().toISOString().split("T")[0],
+      oneYearLater: (() => {
+        const date = new Date();
+        date.setFullYear(date.getFullYear() + 1);
+        return date.toISOString().split("T")[0];
+      })(),
+    },
+    picker: {
+      value: rentStamp,
+      handleToggle: (e: React.MouseEvent<HTMLInputElement>) => {
+        if (isDatepickerTarget) {
+          e.currentTarget.blur();
+          e.preventDefault();
+          isDatepickerTarget = false;
+        } else {
+          e.currentTarget.showPicker();
+          isDatepickerTarget = true;
+        }
+      },
+      handleBlur: () => {
+        isDatepickerTarget = false;
+      },
+      handleChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (!e.target.value) return;
+        onStartDateChange(e.target.value);
+      },
+    },
+    display: {
+      rentDate: rentStamp || "選擇租借日",
+      returnDate: item.returnStamp || "計算歸還日",
+    },
   };
 
-  const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.value) return;
-    onStartDateChange(e.target.value);
+  const quantityControls = {
+    isMinQuantity: quantity === 1,
+    handleIncrement: () => onQuantityChange(1),
+    handleDecrement: () => {
+      if (quantity <= 1) return;
+      onQuantityChange(-1);
+    },
   };
 
-  const isMinQuantity = quantity === 1;
-
-  const handleDatePickerToggle = (e: React.MouseEvent<HTMLInputElement>) => {
-    if (isDatepickerTarget) {
-      e.currentTarget.blur();
-      e.preventDefault();
-      isDatepickerTarget = false;
-    } else {
-      // e.currentTarget.focus();
-      e.currentTarget.showPicker();
-      isDatepickerTarget = true;
-    }
+  const checkoutControls = {
+    isDisabled: !rentStamp,
+    checkoutUrl: "/cart/checkout",
   };
 
-  const handleDatePickerBlur = () => {
-    isDatepickerTarget = false;
+  const selectControls = {
+    value: period,
+    options: rentalPeriodOptions.map((option) => ({
+      value: option,
+      label: `${option}天`,
+    })),
+    handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => {
+      onRentalPeriodChange(Number(e.target.value) as PeriodProps);
+    },
   };
-
-  const handleDecreaseQuantity = () => {
-    if (isMinQuantity) return;
-    onQuantityChange(-1);
-  };
-
-  const isSubmitDisabled = !rentStamp;
-
-  // 如果需要訪問完整的購物車項目數據
-  // const cartItem = useSelector((state: RootState) =>
-  //   state.cart.items.find((item) => item.cartId === cartId)
-  // );
 
   return (
     <Product $isActive={$isActive} onClick={onClick}>
@@ -143,28 +135,34 @@ export const ProductItem: FC<ProductItemProps> = ({
 
         <CardContent>
           <ProductInfo>
-            <ProductImage src={imgSrc || "images/device1.png"} alt={imgAlt} />
+            <ProductImage
+              src={item.imgSrc || "images/device1.png"}
+              alt={item.imgAlt}
+            />
             <ProductContent>
-              <ProductTitle>{name}</ProductTitle>
-              <ProductDescription>{description}</ProductDescription>
+              <ProductTitle>{item.name}</ProductTitle>
+              <ProductDescription>{item.description}</ProductDescription>
             </ProductContent>
           </ProductInfo>
           <PriceInfo>
             <PriceValue>{formatCurrency(rent)}</PriceValue>
           </PriceInfo>
           <PriceInfo>
-            <PriceValue>{formatCurrency(deposit)}</PriceValue>
+            <PriceValue>{formatCurrency(item.deposit)}</PriceValue>
           </PriceInfo>
           <QuantityControl>
             <QuantityButton
               type="button"
-              onClick={handleDecreaseQuantity}
-              disabled={isMinQuantity}
+              onClick={quantityControls.handleDecrement}
+              disabled={quantityControls.isMinQuantity}
             >
               <MdRemove size={24} />
             </QuantityButton>
             <QuantityValue>{quantity}</QuantityValue>
-            <QuantityButton type="button" onClick={() => onQuantityChange(1)}>
+            <QuantityButton
+              type="button"
+              onClick={quantityControls.handleIncrement}
+            >
               <MdAdd size={24} />
             </QuantityButton>
           </QuantityControl>
@@ -176,12 +174,12 @@ export const ProductItem: FC<ProductItemProps> = ({
               <RentalLabel>租賃期約</RentalLabel>
               <Period>
                 <RentalSelect
-                  value={period}
-                  onChange={handleRentalPeriodChange}
+                  value={selectControls.value}
+                  onChange={selectControls.handleChange}
                 >
-                  {rentalPeriodOptions.map((option) => (
-                    <option key={option} value={option}>
-                      {option}天
+                  {selectControls.options.map(({ value, label }) => (
+                    <option key={value} value={value}>
+                      {label}
                     </option>
                   ))}
                 </RentalSelect>
@@ -195,38 +193,32 @@ export const ProductItem: FC<ProductItemProps> = ({
               <DateInputWrapper>
                 <RentalDateInput
                   type="date"
-                  value={rentStamp}
-                  onClick={handleDatePickerToggle}
-                  onChange={handleStartDateChange}
-                  onBlur={handleDatePickerBlur}
-                  min={today}
-                  max={oneYearLater}
+                  value={dateControls.picker.value}
+                  onClick={dateControls.picker.handleToggle}
+                  onChange={dateControls.picker.handleChange}
+                  onBlur={dateControls.picker.handleBlur}
+                  min={dateControls.range.today}
+                  max={dateControls.range.oneYearLater}
                 />
                 <RentalDate>
                   <RentalInputWrapper>
-                    <RentalText>{rentStamp || "選擇租借日"}</RentalText>
-                    <DateIcon>
-                      <MdHorizontalRule size={16} />
-                    </DateIcon>
+                    <RentalText>{dateControls.display.rentDate}</RentalText>
                   </RentalInputWrapper>
                   <RentalInputWrapper>
-                    <RentalText>{returnStamp || "計算歸還日"}</RentalText>
-                    <DateIcon>
-                      <MdCalendarToday size={16} />
-                    </DateIcon>
+                    <RentalText>{dateControls.display.returnDate}</RentalText>
                   </RentalInputWrapper>
                 </RentalDate>
               </DateInputWrapper>
             </RentalAction>
           </RentalGroup>
           <RentalSummaryAmount>
-            總額(未含運送費)：{formatCurrency(amount)}
+            總額(未含運送費)：{formatCurrency(item.amount)}
           </RentalSummaryAmount>
         </Rental>
         <Footer>
           <ProductRemoveButton
             type="button"
-            onClick={() => onDelete(cartId)}
+            onClick={() => onDelete(item.cartId)}
             disabled={isDeleting}
           >
             {isDeleting ? <LoaderSpinner /> : "刪除"}
@@ -237,10 +229,10 @@ export const ProductItem: FC<ProductItemProps> = ({
               <br />
               請先選擇租借日期，再前往結帳
             </CheckoutNotice>
-            <CheckoutActive $isDisabled={isSubmitDisabled}>
+            <CheckoutActive $isDisabled={checkoutControls.isDisabled}>
               <CheckoutButton
-                href="/cart/checkout"
-                $isDisabled={isSubmitDisabled}
+                href={checkoutControls.checkoutUrl}
+                $isDisabled={checkoutControls.isDisabled}
               >
                 前往結帳
                 <MdArrowForward size={27} />

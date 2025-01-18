@@ -204,9 +204,15 @@ export const ProductItem: FC<ProductItemProps> = ({
                   <RentalInputWrapper>
                     <RentalText>{dateControls.display.rentDate}</RentalText>
                   </RentalInputWrapper>
+                  <DateIcon>
+                    <MdHorizontalRule size={16} />
+                  </DateIcon>
                   <RentalInputWrapper>
                     <RentalText>{dateControls.display.returnDate}</RentalText>
                   </RentalInputWrapper>
+                  <DateIcon>
+                    <MdCalendarToday size={16} />
+                  </DateIcon>
                 </RentalDate>
               </DateInputWrapper>
             </RentalAction>

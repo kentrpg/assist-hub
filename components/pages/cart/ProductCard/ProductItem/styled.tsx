@@ -238,6 +238,14 @@ export const RentalDate = styled.div`
   display: flex;
   padding: 4px 10px 4px 10px;
   margin: 0 2px;
+
+  & > *:nth-child(2) {
+    margin-right: 4px;
+  }
+
+  & > *:last-child {
+    margin-left: 1px;
+  }
 `;
 
 export const DateInputWrapper = styled.div`
@@ -287,14 +295,6 @@ export const RentalInputWrapper = styled.div`
   position: relative;
   pointer-events: none;
   font-size: 0;
-
-  &:first-child {
-    margin-right: 4px;
-  }
-
-  &:last-child > ${RentalText} {
-    padding-right: 10px;
-  }
 `;
 
 export const DateIcon = styled.div`

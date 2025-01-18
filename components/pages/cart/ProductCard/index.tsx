@@ -5,7 +5,7 @@ import ProductItem from "./ProductItem";
 import { useState, useEffect } from "react";
 import { PeriodProps } from "./data";
 import CartEmpty from "../Empty";
-import { EnhancedCartItem } from "./data";
+import { CartItem } from "@/components/pages/cart/ProductCard/data";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/utils/redux/store";
 import {
@@ -16,7 +16,7 @@ import {
 } from "@/utils/redux/slices/cart";
 import Loading from "@/components/ui/Loading";
 
-const Cart = ({ data }: { data: EnhancedCartItem[] }) => {
+const Cart = ({ data }: { data: CartItem[] }) => {
   const dispatch = useDispatch();
 
   const { items: cartItems, activeCartId, isInitialized } = useSelector(

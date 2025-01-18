@@ -9,26 +9,19 @@ export type CartItem = {
   quantity: number;
   rent: number;
   deposit: number;
+  fee: number;
   amount: number;
   period: PeriodProps;
+  rentDate: string;
   rentStamp: string;
+  returnDate: string;
   returnStamp: string;
   imgSrc: string;
   imgAlt: string;
 };
 
-export type CartResponse = {
-  status: number;
-  message: string;
-  data: CartItem[];
-};
-
-export type EnhancedCartItem = CartItem & {
-  isDatepickerTarget: boolean;
-};
-
 export type ProductItemProps = {
-  item: EnhancedCartItem;
+  item: CartItem;
   isDatepickerTarget: boolean;
   $isActive: boolean;
   isDeleting: boolean;

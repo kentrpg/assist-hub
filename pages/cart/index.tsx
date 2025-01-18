@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import Loading from "@/components/ui/Loading";
 import { Wrapper60 as MainWrapper } from "@/styles/wrappers";
 import { GetServerSideProps } from "next";
-import { EnhancedCartItem } from "@/components/pages/cart/ProductCard/data";
+import { CartItem } from "@/components/pages/cart/ProductCard/data";
 import getCarts from "@/utils/api/getCarts";
 import Head from "next/head";
 
@@ -20,7 +20,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   };
 };
 
-const CartPage = ({ data }: { data: EnhancedCartItem[] }) => {
+const CartPage = ({ data }: { data: CartItem[] }) => {
   return (
     <>
       <Head>

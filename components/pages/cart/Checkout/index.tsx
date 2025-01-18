@@ -41,7 +41,7 @@ import {
   agreementInfo,
   storePickupInputFields,
 } from "./data";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import InputField from "@/utils/react-hook-form/InputField";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import RadioField from "@/utils/react-hook-form/RadioField";
@@ -51,19 +51,35 @@ import {
 } from "@/utils/react-hook-form/InputField/data";
 import Address from "./Address";
 import useRenderError from "@/hooks/useRenderError";
-import { checkoutSlice } from "./cartSlice";
-import { userSlice } from "./userSlice";
 import useDateFormatter from "@/hooks/useDateFormatter";
 import LinePayImage from "./LinePayImage";
 import useFormatCurrency from "@/hooks/useFormatCurrency";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { selectActiveCartItem } from "@/utils/redux/slices/cart";
+import { Loading } from "@/components/ui/Loading";
+import { RootState } from "@/utils/redux/store";
 
 const Checkout = () => {
-  const [isOrderSubmitting, setIsOrderSubmitting] = useState(false);
-  const cart = checkoutSlice;
-  const user = userSlice;
   const router = useRouter();
+  const cart = useSelector(selectActiveCartItem);
+  const user = useSelector((state: RootState) => state.user);
+
+  useEffect(() => {
+    if (!cart) {
+      router.push("/cart");
+    }
+  }, [cart, router]);
+
+  if (!cart || !user) {
+    return <Loading />;
+  }
+
+  const [isOrderSubmitting, setIsOrderSubmitting] = useState(false);
+
+  console.log("cartData", cart);
+  console.log("userData", user);
 
   const formatCurrency = useFormatCurrency;
   const contractDate = `${useDateFormatter(
@@ -77,7 +93,7 @@ const Checkout = () => {
       name: user.name,
       phone: user.phone,
       email: user.email,
-      addressZIP: user.addressZIP,
+      addressZIP: user.addressZip,
       addressCity: user.addressCity,
       addressDistrict: user.addressDistrict,
       addressDetail: user.addressDetail,
@@ -177,7 +193,6 @@ const Checkout = () => {
   return (
     <Container>
       <Breadcrumb />
-      {/* <FormProvider {...methods}> */}
       <OrderForm onSubmit={handleSubmit(onSubmit)} noValidate>
         <Shipping>
           <Title>訂購資訊</Title>
@@ -286,7 +301,7 @@ const Checkout = () => {
             </Costs>
             <TotalCost>
               <span>總計</span>
-              <span>{formatCurrency(cart.finalAmount)}</span>
+              <span>{formatCurrency(cart.amount)}</span>
             </TotalCost>
             <Agreement>
               {agreementInfo.map((checkboxProps) => (
@@ -308,7 +323,6 @@ const Checkout = () => {
           </SubmitButton>
         </Summary>
       </OrderForm>
-      {/* </FormProvider> */}
     </Container>
   );
 };

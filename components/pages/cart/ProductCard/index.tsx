@@ -3,7 +3,7 @@ import { Container1164 as Container } from "@/styles/container";
 import { ProductList, Title } from "./styled";
 import ProductItem from "./ProductItem";
 import { useState, useEffect } from "react";
-import { PeriodProps, rentalPeriodOptions } from "./data";
+import { PeriodProps } from "./data";
 import CartEmpty from "../Empty";
 import { EnhancedCartItem } from "./data";
 import { useSelector, useDispatch } from "react-redux";
@@ -16,13 +16,7 @@ import {
 } from "@/utils/redux/slices/cart";
 import Loading from "@/components/ui/Loading";
 
-console.error("render Cart");
-
 const Cart = ({ data }: { data: EnhancedCartItem[] }) => {
-  // TBD: 點擊 ProductItem 就會重新渲染，需要解決效一直 re-render 的問題
-
-  console.log("Cartdata", data);
-
   const dispatch = useDispatch();
 
   const { items: cartItems, activeCartId, isInitialized } = useSelector(
@@ -32,21 +26,14 @@ const Cart = ({ data }: { data: EnhancedCartItem[] }) => {
   const [isDeletingIds, setIsDeletingIds] = useState<number[]>([]);
 
   useEffect(() => {
-    console.log("Cartdata useEffect");
     dispatch(setCartItems(data));
   }, [data, dispatch]);
 
   const handleDeleteProduct = async (cartId: number) => {
     setIsDeletingIds((prev) => [...prev, cartId]);
-
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      dispatch(removeCartItem(cartId));
-    } catch (error) {
-      console.error("Delete failed:", error);
-    } finally {
-      setIsDeletingIds((prev) => prev.filter((id) => id !== cartId));
-    }
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    dispatch(removeCartItem(cartId));
+    setIsDeletingIds((prev) => prev.filter((id) => id !== cartId));
   };
 
   const handleRentalPeriodChange = (id: number, period: PeriodProps) => {
@@ -107,11 +94,6 @@ const Cart = ({ data }: { data: EnhancedCartItem[] }) => {
 
   const calculateEndDate = (startDate: string, period: PeriodProps): string => {
     if (!startDate) return "";
-
-    if (!rentalPeriodOptions.includes(period)) {
-      console.error(`Invalid rental period: ${period}`);
-      return "";
-    }
 
     const date = new Date(startDate);
     const currentDate = date.getDate();

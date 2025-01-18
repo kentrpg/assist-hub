@@ -17,3 +17,5 @@ export const get_member_profile = `${baseUrl}${basePath}/member/profile`;
 export const put_member_profile = `${baseUrl}${basePath}/member/profile`;
 export const get_member_orders = `${baseUrl}${basePath}/members/orders`;
 export const get_member_order = `${baseUrl}${basePath}/members/order/:id`;
+
+export const get_products = `${baseUrl}${basePath}/products`;

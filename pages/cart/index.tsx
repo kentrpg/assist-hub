@@ -1,9 +1,14 @@
-import Cart from "@/components/pages/cart/ProductCard";
+import dynamic from "next/dynamic";
+import Loading from "@/components/ui/Loading";
 import { Wrapper60 as MainWrapper } from "@/styles/wrappers";
 import { GetServerSideProps } from "next";
 import { EnhancedCartItem } from "@/components/pages/cart/ProductCard/data";
 import getCarts from "@/utils/api/getCarts";
 import Head from "next/head";
+
+const Cart = dynamic(() => import("@/components/pages/cart/ProductCard"), {
+  loading: () => <Loading />,
+});
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const result = await getCarts(req.cookies.token || "");

@@ -14,6 +14,7 @@ import {
   removeCartItem,
   setActiveCartId,
 } from "@/utils/redux/slices/cart";
+import Loading from "@/components/ui/Loading";
 
 console.error("render Cart");
 
@@ -24,7 +25,7 @@ const Cart = ({ data }: { data: EnhancedCartItem[] }) => {
 
   const dispatch = useDispatch();
 
-  const { items: cartItems, activeCartId } = useSelector(
+  const { items: cartItems, activeCartId, isInitialized } = useSelector(
     (state: RootState) => state.cart
   );
 
@@ -119,14 +120,18 @@ const Cart = ({ data }: { data: EnhancedCartItem[] }) => {
     return date.toISOString().split("T")[0];
   };
 
+  if (!isInitialized) {
+    return <Loading />;
+  }
+
   return (
     <Container>
-      {cartItems.length > 0 ? (
+      {data.length > 0 ? (
         <>
           <Breadcrumb />
           <Title>購物車</Title>
           <ProductList>
-            {cartItems.map((item) => (
+            {data.map((item) => (
               <ProductItem
                 key={item.cartId}
                 cartId={item.cartId}

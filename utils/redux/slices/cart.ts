@@ -4,11 +4,13 @@ import { EnhancedCartItem } from "@/components/pages/cart/ProductCard/data";
 type CartState = {
   items: EnhancedCartItem[];
   activeCartId: number | null;
+  isInitialized: boolean;
 };
 
 const initialState: CartState = {
   items: [],
   activeCartId: null,
+  isInitialized: false,
 };
 
 const cartSlice = createSlice({
@@ -17,6 +19,7 @@ const cartSlice = createSlice({
   reducers: {
     setCartItems: (state, action: PayloadAction<EnhancedCartItem[]>) => {
       state.items = action.payload;
+      state.isInitialized = true;
       state.activeCartId = action.payload[0]?.cartId || null;
     },
     updateCartItem: (state, action: PayloadAction<EnhancedCartItem>) => {

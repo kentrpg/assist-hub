@@ -187,7 +187,9 @@ export const InquiryBtn = styled.button`
     width: 100%;
     color: transparent;
     text-shadow: 0 0 0 rgba(0, 0, 0, 0);
-    transition: color 0.5s ease, max-width 0.5s ease;
+    transition:
+      color 0.5s ease,
+      max-width 0.5s ease;
     span {
       display: none;
     }
@@ -242,6 +244,10 @@ export const Row = styled.div<RowProps>`
 `;
 
 export const Cell = styled.div<CellProps>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
   font-size: ${({ $isEm }) => ($isEm ? "20px" : "18px")};
   font-weight: ${({ $isEm }) => ($isEm ? "700" : "400")};
   padding: ${({ $feature }) => ($feature ? "15px 20px" : "10px 20px")};
@@ -251,7 +257,7 @@ export const Cell = styled.div<CellProps>`
   text-overflow: ellipsis;
   border-right: ${({ $border }) => ($border ? "1px solid #e9e5de" : "none")};
   border-left: ${({ $border }) => ($border ? "1px solid #e9e5de" : "none")};
-  
+
   &:last-child {
     border-right: none;
   }
@@ -292,11 +298,12 @@ export const ComparisonProduct = styled.div`
 export const ComparisonImg = styled.img`
   width: 100%;
   max-width: 100px;
-  max-height: 100px;
+  height: 100px;
+  object-fit: contain;
 
   @media (${Tablet}) {
     max-width: 200px;
-    max-height: 200px;
+    height: 200px;
   }
 `;
 
@@ -361,6 +368,7 @@ export const RecommendedContainer = styled.div`
   }
 
   .slick-slide img {
+    object-fit: contain;
     display: block;
     max-width: 100%;
   }
@@ -438,7 +446,9 @@ export const CarouselItem = styled.div`
   padding: 20px;
   position: relative;
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   &:hover {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
     outline: 1px solid #103f99;
@@ -465,7 +475,9 @@ export const CarouselBtn = styled.button`
   font-weight: 500;
   cursor: pointer;
   opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 
   &:hover {
     background-color: #b28f12;

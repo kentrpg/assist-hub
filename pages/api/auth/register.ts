@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { Result } from "@/types/checkout";
+import { Result } from "@/types/postOrder";
 import signUp from "@/utils/api/auth/register";
 
 export default async function handler(

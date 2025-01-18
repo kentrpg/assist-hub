@@ -1,30 +1,32 @@
-import { post_auth_sign_in } from "@/constants/apiPath";
-import { Result } from "@/types/postOrder";
 import { Error } from "@/types/apiRoutes";
 import { catchError } from "@/utils/handleErrors";
 import { NODE_ENV } from "@/constants/environment";
 import { validateResponseType } from "@/utils/typeGuards";
-import { ResultSigninType, ResultSignin } from "@/types/signin";
+import { get_member_order } from "@/constants/apiPath";
+import {
+  ResultGetMemberOrder,
+  ResultGetMemberOrderType,
+} from "@/types/getOrder";
 
-type SignIn = {
-  email: string;
-  password: string;
-};
-
-export const signIn = async (
-  data: SignIn
-): Promise<Result<ResultSigninType["data"]>> => {
-  const parsedUrl = new URL(post_auth_sign_in);
+export const getOrder = async (
+  token: string,
+  orderId: number
+): Promise<ResultGetMemberOrderType> => {
+  const parsedUrl = new URL(
+    get_member_order.replace(":id", orderId.toString())
+  );
   const options = {
-    method: "POST",
+    method: "GET",
     headers: {
+      Authorization: `Bearer ${token}`,
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data),
   };
 
   const [res, error] = await catchError(fetch(parsedUrl, options));
+
+  console.log(res, error);
 
   if (error) {
     console.log("error", error);
@@ -45,8 +47,10 @@ export const signIn = async (
 
   const json = await res.json();
 
+  console.log("json", json);
+
   if (NODE_ENV === "development") {
-    const validation = validateResponseType(json, ResultSignin);
+    const validation = validateResponseType(json, ResultGetMemberOrder);
 
     !validation.isValid &&
       console.error("API Response validation failed:", validation.errors);
@@ -61,4 +65,4 @@ export const signIn = async (
   };
 };
 
-export default signIn;
+export default getOrder;

@@ -1,27 +1,20 @@
-import { post_auth_sign_in } from "@/constants/apiPath";
-import { Result } from "@/types/postOrder";
 import { Error } from "@/types/apiRoutes";
 import { catchError } from "@/utils/handleErrors";
 import { NODE_ENV } from "@/constants/environment";
 import { validateResponseType } from "@/utils/typeGuards";
-import { ResultSigninType, ResultSignin } from "@/types/signin";
+import { get_product } from "@/constants/apiPath";
+import { ResultGetProduct, ResultGetProductType } from "@/types/getProduct";
 
-type SignIn = {
-  email: string;
-  password: string;
-};
-
-export const signIn = async (
-  data: SignIn
-): Promise<Result<ResultSigninType["data"]>> => {
-  const parsedUrl = new URL(post_auth_sign_in);
+export const getProduct = async (
+  productId: number
+): Promise<ResultGetProductType> => {
+  const parsedUrl = new URL(get_product.replace(":id", productId.toString()));
   const options = {
-    method: "POST",
+    method: "GET",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data),
   };
 
   const [res, error] = await catchError(fetch(parsedUrl, options));
@@ -45,12 +38,12 @@ export const signIn = async (
 
   const json = await res.json();
 
-  if (NODE_ENV === "development") {
-    const validation = validateResponseType(json, ResultSignin);
+  // if (NODE_ENV === "development") {
+  //   const validation = validateResponseType(json, ResultGetProduct);
 
-    !validation.isValid &&
-      console.error("API Response validation failed:", validation.errors);
-  }
+  //   !validation.isValid &&
+  //     console.error("API Response validation failed:", validation.errors);
+  // }
 
   return {
     statusCode: json.statusCode,
@@ -61,4 +54,4 @@ export const signIn = async (
   };
 };
 
-export default signIn;
+export default getProduct;

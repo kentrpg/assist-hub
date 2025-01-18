@@ -41,9 +41,10 @@ const img =
 type ListProps = {
   order: Order;
   onViewDetails: () => void;
+  orderIdData: number;
 };
 
-const ListItem = ({ order, onViewDetails }: ListProps) => {
+const ListItem = ({ order, onViewDetails, orderIdData }: ListProps) => {
   const {
     deliveryType,
     orderId,
@@ -56,6 +57,8 @@ const ListItem = ({ order, onViewDetails }: ListProps) => {
     deposit,
     description,
   } = order;
+
+  console.log("orderIdData", orderIdData);
 
   const totalPrice = (quantity * rent + deposit + deliveryFee).toLocaleString();
 

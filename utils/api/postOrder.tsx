@@ -1,23 +1,19 @@
-import { post_auth_sign_in } from "@/constants/apiPath";
-import { Result } from "@/types/postOrder";
+import { Result, Response, ResultCheckoutType } from "@/types/postOrder";
+import { catchError } from "../handleErrors";
 import { Error } from "@/types/apiRoutes";
-import { catchError } from "@/utils/handleErrors";
+import { post_orders } from "@/constants/apiPath";
 import { NODE_ENV } from "@/constants/environment";
-import { validateResponseType } from "@/utils/typeGuards";
-import { ResultSigninType, ResultSignin } from "@/types/signin";
+import { validateResponseType } from "../typeGuards";
 
-type SignIn = {
-  email: string;
-  password: string;
-};
-
-export const signIn = async (
-  data: SignIn
-): Promise<Result<ResultSigninType["data"]>> => {
-  const parsedUrl = new URL(post_auth_sign_in);
+export const postOrder = async (
+  token: string,
+  data: ResultCheckoutType
+): Promise<Result> => {
+  const parsedUrl = new URL(post_orders);
   const options = {
     method: "POST",
     headers: {
+      Authorization: `Bearer ${token}`,
       Accept: "application/json",
       "Content-Type": "application/json",
     },
@@ -46,7 +42,7 @@ export const signIn = async (
   const json = await res.json();
 
   if (NODE_ENV === "development") {
-    const validation = validateResponseType(json, ResultSignin);
+    const validation = validateResponseType(json, Response);
 
     !validation.isValid &&
       console.error("API Response validation failed:", validation.errors);
@@ -56,9 +52,9 @@ export const signIn = async (
     statusCode: json.statusCode,
     status: json.status,
     message: json.message,
-    data: json.data,
+    data: undefined,
     error: null,
   };
 };
 
-export default signIn;
+export default postOrder;

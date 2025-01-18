@@ -1,8 +1,7 @@
 export const ResultSignin = {
-  statusCode: "",
+  statusCode: 0,
   status: true,
   message: "",
-  JWTToken: "",
   data: {
     jwtToken: "",
     name: "",
@@ -15,19 +14,4 @@ export const ResultSignin = {
   }
 };
 
-export type ResultSigninType = {
-  statusCode: number,
-  status: boolean,
-  message: string,
-  jwtToken: string,
-  data: {
-    jwtToken: string,
-    name: string,
-    email: string,
-    phone: string,
-    addressZip: string,
-    addressCity: string,
-    addressDistinct: string,
-    addressDetail: string,
-  }
-};
+export type ResultSigninType = typeof ResultSignin;

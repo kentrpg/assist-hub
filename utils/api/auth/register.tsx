@@ -1,23 +1,31 @@
-import { get_auth_check } from "@/constants/apiPath";
-import { Result } from "@/types/checkout";
+import { post_auth_sign_up } from "@/constants/apiPath";
+import { Result } from "@/types/postOrder";
 import { Error } from "@/types/apiRoutes";
 import { catchError } from "@/utils/handleErrors";
 
-export const check = async (token?: string): Promise<Result> => {
+type Register = {
+  name: string;
+  email: string;
+  password: string;
+};
 
-  const parsedUrl = new URL(get_auth_check);
+export const signUp = async (data: Register): Promise<Result> => {
+  const parsedUrl = new URL(post_auth_sign_up);
   const options = {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${token}`,
       Accept: "application/json",
+      "Content-Type": "application/json",
     },
+    body: JSON.stringify(data),
   };
 
   const [res, error] = await catchError(fetch(parsedUrl, options));
 
+  console.log("res", res);
+
   if (error) {
-    console.log("Auth check error:", error);
+    console.log("error", error);
 
     const unexpectedError: Error = {
       code: 500,
@@ -34,15 +42,15 @@ export const check = async (token?: string): Promise<Result> => {
   }
 
   const json = await res.json();
-  console.log("Auth check response:", json);
+  console.log("json", json);
 
   return {
     statusCode: json.statusCode,
     status: json.status,
     message: json.message,
-    data: json.data,
+    data: undefined,
     error: null,
   };
 };
 
-export default check;
+export default signUp;

@@ -3,15 +3,18 @@ import { OrderContainer, Header, Tabs, Tab, Title, List } from "./styled";
 import { orders, Order } from "./data";
 import Empty from "./Empty";
 import ListItem from "./ListItem";
+import { ResultGetMemberOrderType } from "@/types/getOrder";
 
 type OrdersProps = {
-  setActiveOrder: (order: Order) => void;
+  setActiveOrder: (order: Order | ResultGetMemberOrderType["data"]) => void;
+  ordersData?: Order[];
 };
 
 type ActiveTab = "全部訂單" | "已結案" | "租賃中";
 
-const Orders: React.FC<OrdersProps> = ({ setActiveOrder }) => {
+const Orders: React.FC<OrdersProps> = ({ setActiveOrder, ordersData }) => {
   const [activeTab, setActiveTab] = useState<ActiveTab>("全部訂單");
+  console.log("Orders result", ordersData);
 
   const filteredOrders = orders.filter((order) => {
     if (activeTab === "全部訂單") return true;
@@ -54,6 +57,7 @@ const Orders: React.FC<OrdersProps> = ({ setActiveOrder }) => {
               key={order.orderId}
               order={order}
               onViewDetails={() => setActiveOrder(order)}
+              orderIdData={Number(order.orderId)}
             />
           ))
         )}

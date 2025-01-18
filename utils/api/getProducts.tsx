@@ -1,20 +1,18 @@
-import { FormValuesProps } from "../react-hook-form/InputField/data";
-import { Result } from "@/types/checkout";
-import { catchError } from "../handleErrors";
 import { Error } from "@/types/apiRoutes";
-import { post_order } from "@/constants/apiPath";
+import { catchError } from "@/utils/handleErrors";
+import { NODE_ENV } from "@/constants/environment";
+import { validateResponseType } from "@/utils/typeGuards";
+import { ResultGetProducts, ResultGetProductsType } from "@/types/getProducts";
+import { get_products } from "@/constants/apiPath";
 
-export const checkout = async (
-  data: FormValuesProps["checkout"],
-): Promise<Result> => {
-  const parsedUrl = new URL(post_order);
+export const getProducts = async (): Promise<ResultGetProductsType> => {
+  const parsedUrl = new URL(get_products);
   const options = {
-    method: "POST",
+    method: "GET",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data),
   };
 
   const [res, error] = await catchError(fetch(parsedUrl, options));
@@ -38,13 +36,20 @@ export const checkout = async (
 
   const json = await res.json();
 
+  if (NODE_ENV === "development") {
+    const validation = validateResponseType(json, ResultGetProducts);
+
+    !validation.isValid &&
+      console.error("API response validation failed:", validation.errors);
+  }
+
   return {
     statusCode: json.statusCode,
     status: json.status,
     message: json.message,
-    data: undefined,
+    data: json.data,
     error: null,
   };
 };
 
-export default checkout;
+export default getProducts;

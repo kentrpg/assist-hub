@@ -1,56 +1,59 @@
-import fs from "fs/promises";
-import path from "path";
-import {
-  CartResponse,
-  rentalPeriodOptions,
-} from "@/components/pages/cart/ProductCard/data";
+import { Result } from "@/types/postOrder";
+import { Error } from "@/types/apiRoutes";
+import { catchError } from "@/utils/handleErrors";
+import { NODE_ENV } from "@/constants/environment";
+import { validateResponseType } from "@/utils/typeGuards";
+import { ResultGetCarts, ResultGetCartsType } from "@/types/getCarts";
+import { get_carts } from "@/constants/apiPath";
 
-// 用於驗證 response 資料的型別檢查函數
-export const isCartResponse = (response: unknown): response is CartResponse => {
-  if (typeof response !== "object" || response === null) {
-    return false;
+export const getCarts = async (
+  token: string
+): Promise<Result<ResultGetCartsType["data"]>> => {
+  const parsedUrl = new URL(get_carts);
+  const options = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  };
+
+  const [res, error] = await catchError(fetch(parsedUrl, options));
+
+  if (error) {
+    console.log("error", error);
+
+    const unexpectedError: Error = {
+      code: 500,
+      message: `發生未知錯誤: ${error.message}`,
+    };
+
+    return {
+      statusCode: 500,
+      status: false,
+      message: unexpectedError.message,
+      data: undefined,
+      error: unexpectedError,
+    };
   }
 
-  const { status, message, data } = response as CartResponse;
+  const json = await res.json();
 
-  return (
-    typeof status === "number" &&
-    typeof message === "string" &&
-    Array.isArray(data) &&
-    data.every((item) => {
-      return (
-        typeof item.cartId === "number" &&
-        typeof item.name === "string" &&
-        typeof item.description === "string" &&
-        typeof item.quantity === "number" &&
-        typeof item.rent === "number" &&
-        typeof item.deposit === "number" &&
-        typeof item.amount === "number" &&
-        rentalPeriodOptions.includes(item.period) &&
-        typeof item.rentStamp === "string" &&
-        typeof item.returnStamp === "string" &&
-        typeof item.imgSrc === "string" &&
-        typeof item.imgAlt === "string"
-      );
-    })
-  );
-};
+  if (NODE_ENV === "development") {
+    const validation = validateResponseType(json, ResultGetCarts);
 
-export const getOrder = async (): Promise<CartResponse> => {
-  try {
-    const filePath = path.join(process.cwd(), "mock/GET_carts.json");
-    const jsonData = await fs.readFile(filePath, "utf8");
-    const response = JSON.parse(jsonData);
-
-    if (!isCartResponse(response)) {
-      throw new Error("無效的購物車資料結構");
-    }
-
-    return response;
-  } catch (error) {
-    console.error("取得訂單資料失敗:", error);
-    throw error;
+    !validation.isValid &&
+      console.error("API Response validation failed:", validation.errors);
   }
+
+  return {
+    statusCode: json.statusCode,
+    status: json.status,
+    message: json.message,
+    data: json.data,
+    error: null,
+  };
 };
 
-export default getOrder;
+export default getCarts;

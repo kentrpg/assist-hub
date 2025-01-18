@@ -126,7 +126,7 @@ export const ProductItem: FC<ProductItemProps> = ({
 
         <CardContent>
           <ProductInfo>
-            <ProductImage src={imgSrc} alt={imgAlt} />
+            <ProductImage src={imgSrc || "images/device1.png"} alt={imgAlt} />
             <ProductContent>
               <ProductTitle>{name}</ProductTitle>
               <ProductDescription>{description}</ProductDescription>

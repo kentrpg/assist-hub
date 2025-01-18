@@ -1,6 +1,7 @@
 import { useState, Fragment } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-
+import { useDispatch } from "react-redux";
+import { setUser } from "@/utils/redux/slices/user";
 import { useRouter } from "next/router";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import FormField from "@/utils/react-hook-form/FloatingLabel";
@@ -23,6 +24,7 @@ import { Remember } from "./styled";
 import { ErrorMessage } from "@/utils/react-hook-form/FormError/styled";
 
 const Signin: React.FC = () => {
+  const dispatch = useDispatch();
   const {
     register,
     control,
@@ -41,20 +43,24 @@ const Signin: React.FC = () => {
   const theme = useTheme();
 
   const onSubmit: SubmitHandler<SignInInputs> = async (data) => {
-    console.log(data);
+    const { remember, ...signinData } = data;
 
+    // TBD: 問學長 call api route 的地方 fetch 要帶上 headers 的 Content-Type 跟 Accept 嗎？
     const res = await fetch("/api/auth/signin", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify(signinData),
     });
 
     const result = await res.json();
-    console.log("response", res, result);
 
+    console.log("result", result);
+
+    // TBD: 問學長回傳的資料在透過狀態碼來判斷要處理的邏輯可以嗎？
     if (Object.is(result.error, null)) {
       switch (result.statusCode) {
         case 200:
+          result.data && dispatch(setUser(result.data));
           router.push("/user/profile");
           break;
         case 404:

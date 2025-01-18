@@ -52,13 +52,15 @@ import {
 import { MdArrowBack } from "react-icons/md";
 import { Order } from "../data";
 import Progress from "./Progress";
+import { ResultGetMemberOrderType } from "@/types/getOrder";
 
 type DetailsProps = {
   order: Order;
   onBack: () => void;
+  orderData: ResultGetMemberOrderType["data"] | null;
 };
 
-const Details = ({ order, onBack }: DetailsProps) => {
+const Details = ({ order, onBack, orderData }: DetailsProps) => {
   const {
     deliveryType,
     orderId,
@@ -78,6 +80,8 @@ const Details = ({ order, onBack }: DetailsProps) => {
   } = order;
 
   const totalPrice = (quantity * rent + deposit + deliveryFee).toLocaleString();
+
+  console.log("orderData", orderData);
 
   return (
     <DetailContainer>

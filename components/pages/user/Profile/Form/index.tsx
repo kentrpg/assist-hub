@@ -17,7 +17,6 @@ const Form = () => {
   const user = useSelector((state: RootState) => state.user);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useDispatch();
-  // const [loading, setLoading] = useState(false);
 
   const methods = useForm<FormData>({
     defaultValues: {
@@ -49,7 +48,6 @@ const Form = () => {
     });
   }, [user, methods]);
 
-  // const onSubmit = methods.handleSubmit((data) => console.log(data));
   const onSubmit = methods.handleSubmit(async (data) => {
     setIsSubmitting(true);
 
@@ -69,6 +67,7 @@ const Form = () => {
     if (result.statusCode === 200 && result.status) {
       dispatch(setUser(data));
       alert("資料更新成功");
+      window.location.reload(); // 刷新當前頁面
     } else {
       console.error("更新失敗:", result.error);
       alert(result.message || "更新失敗，請稍後再試");
@@ -105,58 +104,3 @@ const Form = () => {
 };
 
 export default Form;
-
-// const onSubmit = methods.handleSubmit(async (data) => {
-//   setLoading(true);
-
-//   const { email, ...payload } = data; // 排除 email，因為後端不需要
-//   console.log("提交的資料：", payload);
-
-//   try {
-//     // 在提交時從 API 中獲取 Token
-//     const tokenResponse = await fetch("/api/auth/get-token");
-//     if (!tokenResponse.ok) {
-//       throw new Error("無法獲取 Token");
-//     }
-//     const { token } = await tokenResponse.json();
-
-//     if (!token) {
-//       console.error("未找到 token");
-//       alert("未找到驗證 Token，請重新登入！");
-//       setLoading(false);
-//       return;
-//     }
-
-//     // 發送更新請求
-//     const response = await fetch(
-//       "http://52.172.145.130:8080/api/v1/member/profile",
-//       {
-//         method: "PUT",
-//         headers: {
-//           "Content-Type": "application/json",
-//           Authorization: `Bearer ${token}`, // 使用獲取的 token
-//         },
-//         body: JSON.stringify(payload),
-//       }
-//     );
-
-//     if (!response.ok) {
-//       const errorText = await response.text();
-//       console.error("API 回傳錯誤：", errorText);
-//       alert("更新失敗：" + errorText);
-//       throw new Error("無法更新使用者資料");
-//     }
-
-//     const result = await response.json();
-//     console.log("更新成功：", result);
-
-//     // 更新成功提示並刷新頁面
-//     alert("資料已成功更新！");
-//     window.location.reload(); // 刷新當前頁面
-//   } catch (error) {
-//     console.error("更新資料時發生錯誤：", error);
-//     alert("更新失敗，請稍後再試！");
-//   } finally {
-//     setLoading(false);
-//   }
-// });

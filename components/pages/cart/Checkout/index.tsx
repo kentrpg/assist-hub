@@ -78,9 +78,6 @@ const Checkout = () => {
 
   const [isOrderSubmitting, setIsOrderSubmitting] = useState(false);
 
-  console.log("cartData", cart);
-  console.log("userData", user);
-
   const formatCurrency = useFormatCurrency;
   const contractDate = `${useDateFormatter(
     cart.rentStamp
@@ -122,18 +119,18 @@ const Checkout = () => {
 
     const checkoutData = {
       product: {
-        id: 20,
-        name: "鋁製躺式輪椅",
-        imgSrc: "圖片路徑",
-        imgAlt: "",
-        quantity: 2,
-        rentStamp: "2011-10-10T14:48:00",
-        returnStamp: "2011-10-10T14:48:00",
-        period: 2,
-        rent: 3000,
-        deposit: 500,
-        fee: 0,
-        finalAmount: 3500,
+        id: cart.cartId,
+        name: cart.name,
+        imgSrc: cart.imgSrc,
+        imgAlt: cart.imgAlt,
+        quantity: cart.quantity,
+        rentStamp: cart.rentStamp,
+        returnStamp: cart.returnStamp,
+        period: cart.period,
+        rent: cart.rent,
+        deposit: cart.deposit,
+        fee: cart.fee,
+        finalAmount: cart.amount,
       },
       payment: data.payment,
       shipping: {
@@ -161,20 +158,28 @@ const Checkout = () => {
     });
 
     const result = await res.json();
-    console.log("response", res, result);
     // TBD: result.statusCode === 200 包成 help function
     // result.status 包成 help function
-    const isSuccess = result.statusCode === 200 && result.status;
+    // const isSuccess = result.statusCode === 200 && result.status;
 
-    // TBD: Object.is(result.error, null) 包成 help function
-    if (Object.is(result.error, null)) {
-      isSuccess && router.push(`${router.asPath}/approval`);
-      router.push(`${router.asPath}/declined`);
-    } else {
+    if (result.error) {
       console.error("Error:", result.error);
+      setIsOrderSubmitting(false);
+      return;
     }
 
-    // 把 error 當作防呆，如果 error 有值，則 return 回去
+    if (data.payment === "Remit") {
+      router.push("/user/order");
+      setIsOrderSubmitting(false);
+      return;
+    }
+
+    const isSuccess = result.statusCode === 200 && result.status;
+    const redirectPath = isSuccess
+      ? `${router.asPath}/approval`
+      : `${router.asPath}/declined`;
+
+    router.push(redirectPath);
     setIsOrderSubmitting(false);
   };
 

@@ -22,7 +22,7 @@ const Declined = () => {
           為了您的訂單安全，店內取貨時需出示<Mark>驗證碼</Mark>以完成核對
         </Description>
         <Group>
-          <SecondaryButton href="/orders">查看訂單</SecondaryButton>
+          <SecondaryButton href="/user/order">查看訂單</SecondaryButton>
           <PrimaryButton href="/cart">返回購物車</PrimaryButton>
         </Group>
       </Context>

@@ -5,35 +5,8 @@ import {
   FormValuesProps,
 } from "@/utils/react-hook-form/InputField/data";
 
-// type BaseLabelValue = {
-//   label: string;
-//   value: number | string;
-// };
-
-// type DataField = "rent" | "deposit" | "fee" | "amount";
-// export type DataMapping = {
-//   [K in DataField]: BaseLabelValue;
-// };
-
-// export type DisplayItem = BaseLabelValue;
-
-// export type DataGroup = {
-//   costs: Pick<DataMapping, "rent" | "deposit" | "fee" | "amount">;
-// };
-
-// export const isDisplayItem = (value: unknown): value is DisplayItem => {
-//   return (
-//     typeof value === "object" &&
-//     value !== null &&
-//     "label" in value &&
-//     "value" in value
-//   );
-// };
-
 export type PaymentMethodValue = "CreditCard" | "Remit" | "LinePay" | "";
 export type PickupMethodValue = "store" | "delivery" | "";
-// const defaultPayment: PaymentMethodValue = "LinePay";
-// const defaultPickupMethod: PickupMethodValue = "delivery";
 
 export const defaultFormValues: FormValuesProps["checkout"] = {
   method: "",

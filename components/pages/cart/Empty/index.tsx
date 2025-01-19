@@ -18,7 +18,7 @@ const CartEmpty = () => {
         ))}
       </Content>
       <Action>
-        <PrimaryButton href="/products">探索更多輔具</PrimaryButton>
+        <PrimaryButton href="/product">探索更多輔具</PrimaryButton>
       </Action>
     </>
   );

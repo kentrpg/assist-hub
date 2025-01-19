@@ -36,60 +36,103 @@ const Cart = ({ data }: { data: CartItem[] }) => {
     setIsDeletingIds((prev) => prev.filter((id) => id !== cartId));
   };
 
-  const handleRentalPeriodChange = (id: number, period: PeriodProps) => {
-    const item = cartItems.find((item) => item.cartId === id);
-    if (!item) return;
+  const updateCartItemToServer = async (
+    cartId: number,
+    updateData: { [key: string]: number | string }
+  ) => {
+    const res = await fetch("/api/putCarts", {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        cartId,
+        ...updateData,
+      }),
+    });
 
-    const newAmount = item.rent * item.quantity * (period / 30) + item.deposit;
-    const newEndDate = calculateEndDate(item.rentStamp, period);
+    const result = await res.json();
+
+    const isSuccess = result.statusCode === 200 && result.status;
+    if (!isSuccess) {
+      console.error("更新購物車失敗:", result.error);
+      alert(result.message || "更新失敗，請稍後再試");
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleQuantityChange = async (id: number, quantity: number) => {
+    const targetCartItem = cartItems.find((item) => item.cartId === id);
+    if (!targetCartItem) return;
+
+    const newQuantity = targetCartItem.quantity + quantity;
+    if (newQuantity < 1) return;
+
+    const isUpdateSuccess = await updateCartItemToServer(id, {
+      quantity: newQuantity,
+    });
+
+    if (!isUpdateSuccess) return;
+
+    const newAmount =
+      targetCartItem.rent * newQuantity * (targetCartItem.period / 30) +
+      targetCartItem.deposit;
 
     dispatch(
       updateCartItem({
-        ...item,
-        period,
+        ...targetCartItem,
+        quantity: newQuantity,
         amount: newAmount,
-        ...(item.rentStamp && {
-          returnStamp: newEndDate,
-        }),
       })
     );
   };
 
-  const handleStartDateChange = (id: number, rentStamp: string) => {
-    const item = cartItems.find((item) => item.cartId === id);
-    if (!item) return;
+  const handleStartDateChange = async (id: number, rentStamp: string) => {
+    const targetCartItem = cartItems.find((item) => item.cartId === id);
+    if (!targetCartItem) return;
+
+    const isUpdateSuccess = await updateCartItemToServer(id, { rentStamp });
+    if (!isUpdateSuccess) return;
 
     const newEndDate = calculateEndDate(
       rentStamp,
-      Number(item.period) as PeriodProps
+      Number(targetCartItem.period) as PeriodProps
     );
 
     dispatch(
       updateCartItem({
-        ...item,
+        ...targetCartItem,
         rentStamp,
         returnStamp: newEndDate,
       })
     );
   };
 
-  const handleQuantityChange = (id: number, delta: number) => {
-    const item = cartItems.find((item) => item.cartId === id);
-    if (!item) return;
+  const handleRentalPeriodChange = async (id: number, period: PeriodProps) => {
+    const targetCartItem = cartItems.find((item) => item.cartId === id);
+    if (!targetCartItem) return;
 
-    const newQuantity = item.quantity + delta;
-    if (newQuantity >= 1) {
-      const newAmount =
-        item.rent * newQuantity * (item.period / 30) + item.deposit;
+    const isUpdateSuccess = await updateCartItemToServer(id, { period });
+    if (!isUpdateSuccess) return;
 
-      dispatch(
-        updateCartItem({
-          ...item,
-          quantity: newQuantity,
-          amount: newAmount,
-        })
-      );
-    }
+    const newAmount =
+      targetCartItem.rent * targetCartItem.quantity * (period / 30) +
+      targetCartItem.deposit;
+    const newEndDate = calculateEndDate(targetCartItem.rentStamp, period);
+
+    dispatch(
+      updateCartItem({
+        ...targetCartItem,
+        period,
+        amount: newAmount,
+        ...(targetCartItem.rentStamp && {
+          returnStamp: newEndDate,
+        }),
+      })
+    );
   };
 
   const calculateEndDate = (startDate: string, period: PeriodProps): string => {
@@ -128,8 +171,8 @@ const Cart = ({ data }: { data: CartItem[] }) => {
                 onStartDateChange={(date) =>
                   handleStartDateChange(item.cartId, date)
                 }
-                onQuantityChange={(delta) =>
-                  handleQuantityChange(item.cartId, delta)
+                onQuantityChange={(quantity) =>
+                  handleQuantityChange(item.cartId, quantity)
                 }
               />
             ))}

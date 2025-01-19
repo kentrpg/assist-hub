@@ -12,6 +12,7 @@ export const get_auth_check = `${baseUrl}${basePath}/auth`;
 export const get_carts = `${baseUrl}${basePath}/carts`;
 export const post_carts = `${baseUrl}${basePath}/carts`;
 export const post_orders = `${baseUrl}${basePath}/orders`;
+export const put_carts = `${baseUrl}${basePath}/carts`;
 
 export const get_member_profile = `${baseUrl}${basePath}/member/profile`;
 export const put_member_profile = `${baseUrl}${basePath}/member/profile`;

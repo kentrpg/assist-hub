@@ -79,9 +79,14 @@ const Checkout = () => {
   const [isOrderSubmitting, setIsOrderSubmitting] = useState(false);
 
   const formatCurrency = useFormatCurrency;
-  const contractDate = `${useDateFormatter(
-    cart.rentStamp
-  )} - ${useDateFormatter(cart.returnStamp)}`;
+
+  const orderControls = {
+    finalAmount: cart.fee + cart.amount,
+    contractDate: `${useDateFormatter(cart.rentStamp)} - ${useDateFormatter(
+      cart.returnStamp
+    )}`,
+    formatAmount: (value: number) => formatCurrency(value),
+  };
 
   const methods = useForm<FormValuesProps["checkout"]>({
     mode: "onChange",
@@ -130,7 +135,7 @@ const Checkout = () => {
         rent: cart.rent,
         deposit: cart.deposit,
         fee: cart.fee,
-        finalAmount: cart.amount,
+        finalAmount: orderControls.finalAmount,
       },
       payment: data.payment,
       shipping: {
@@ -142,7 +147,7 @@ const Checkout = () => {
           addressZIP: data.addressZIP,
           addressCity: data.addressCity,
           addressDistinct: data.addressDistrict,
-          // addressDistrict: data.addressDistrict,
+          // TBD: 後續 API 有更新錯誤在改回來 addressDistrict: data.addressDistrict,
           addressDetail: data.addressDetail,
         },
       },
@@ -286,27 +291,29 @@ const Checkout = () => {
                 <ProductTitle>{cart.name}</ProductTitle>
                 <ProductInfo>x{cart.quantity}</ProductInfo>
                 <ProductInfo>{cart.period} 天</ProductInfo>
-                <ProductInfo>{contractDate}</ProductInfo>
+                <ProductInfo>{orderControls.contractDate}</ProductInfo>
               </ProductInfos>
             </ProductCard>
 
             <Costs>
               <Cost>
                 <span>租金</span>
-                <span>{formatCurrency(cart.rent)}</span>
+                <span>{orderControls.formatAmount(cart.rent)}</span>
               </Cost>
               <Cost>
                 <span>押金</span>
-                <span>{formatCurrency(cart.deposit)}</span>
+                <span>{orderControls.formatAmount(cart.deposit)}</span>
               </Cost>
               <Cost>
                 <span>運費</span>
-                <span>{formatCurrency(cart.fee)}</span>
+                <span>{orderControls.formatAmount(cart.fee)}</span>
               </Cost>
             </Costs>
             <TotalCost>
               <span>總計</span>
-              <span>{formatCurrency(cart.amount)}</span>
+              <span>
+                {orderControls.formatAmount(orderControls.finalAmount)}
+              </span>
             </TotalCost>
             <Agreement>
               {agreementInfo.map((checkboxProps) => (

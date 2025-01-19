@@ -29,5 +29,5 @@ export type ProductItemProps = {
   onDelete: (id: number) => void;
   onRentalPeriodChange: (period: PeriodProps) => void;
   onStartDateChange: (date: string) => void;
-  onQuantityChange: (delta: number) => void;
+  onQuantityChange: (quantity: number) => void;
 };

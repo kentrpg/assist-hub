@@ -8,6 +8,5 @@ export default async function handler(
 ) {
   const result = await putCarts(req.cookies.token || "", req.body);
 
-  console.log("API Route result", result);
   return res.json(result);
 }

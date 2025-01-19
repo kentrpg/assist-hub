@@ -23,8 +23,6 @@ export const putCarts = async (
 
   const [res, error] = await catchError(fetch(parsedUrl, options));
 
-  console.log("res", res, error);
-
   if (error) {
     console.log("error", error);
 
@@ -43,8 +41,6 @@ export const putCarts = async (
   }
 
   const json = await res.json();
-
-  console.log("API Function json", json);
 
   if (NODE_ENV === "development") {
     const validation = validateResponseType(json, ResultPutCarts);

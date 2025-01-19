@@ -1,21 +1,22 @@
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import React from "react";
 import Single from "@/components/pages/product/Single";
 import { SinglePageProps } from "@/components/pages/product/Single/data";
 import { MainWrapper } from "@/styles/wrappers";
-
-const API_URL = "http://52.172.145.130:8080/api/v1/products";
+import getProduct from "@/utils/api/getProduct";
+import getProducts from "@/utils/api/getProducts";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
-    const response = await fetch("http://52.172.145.130:8080/api/v1/products");
-    const result = await response.json();
+    // 使用封裝的 getProducts API Function 獲取商品資料
+    const result = await getProducts();
 
-    if (!result.data || result.data.length === 0) {
+    if (!result.status || !Array.isArray(result.data)) {
+      console.error("Error fetching product data:", result.message);
       return { paths: [], fallback: "blocking" };
     }
 
-    const paths = result.data.map((product: { id: number }) => ({
+    const paths = result.data.map((product) => ({
       params: { id: product.id.toString() },
     }));
 
@@ -24,7 +25,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       fallback: "blocking",
     };
   } catch (error) {
-    console.error("Error fetching product data:", error);
+    console.error("Error in getStaticPaths:", error);
     return { paths: [], fallback: "blocking" };
   }
 };
@@ -33,14 +34,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const { id } = context.params as { id: string };
 
   try {
-    const response = await fetch(`${API_URL}/${id}`);
-    const result = await response.json();
+    const result = await getProduct(Number(id));
 
-    if (
-      !result.data ||
-      !result.data.product ||
-      result.data.product.length === 0
-    ) {
+    if (!result.status || !result.data || !result.data.product) {
       return { notFound: true };
     }
 
@@ -57,7 +53,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }
 };
 
-const ProductPage: React.FC<SinglePageProps> = ({
+const ProductPage: NextPage<SinglePageProps> = ({
   product,
   comparison,
   recommended,

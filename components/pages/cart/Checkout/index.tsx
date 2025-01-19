@@ -83,6 +83,8 @@ const Checkout = () => {
     cart.rentStamp
   )} - ${useDateFormatter(cart.returnStamp)}`;
 
+  const orderTotalAmount = cart.fee + cart.amount;
+
   const methods = useForm<FormValuesProps["checkout"]>({
     mode: "onChange",
     defaultValues: {
@@ -130,7 +132,7 @@ const Checkout = () => {
         rent: cart.rent,
         deposit: cart.deposit,
         fee: cart.fee,
-        finalAmount: cart.amount,
+        finalAmount: orderTotalAmount,
       },
       payment: data.payment,
       shipping: {
@@ -142,7 +144,7 @@ const Checkout = () => {
           addressZIP: data.addressZIP,
           addressCity: data.addressCity,
           addressDistinct: data.addressDistrict,
-          // addressDistrict: data.addressDistrict,
+          // TBD: 後續 API 有更新錯誤在改回來 addressDistrict: data.addressDistrict,
           addressDetail: data.addressDetail,
         },
       },
@@ -306,7 +308,7 @@ const Checkout = () => {
             </Costs>
             <TotalCost>
               <span>總計</span>
-              <span>{formatCurrency(cart.amount)}</span>
+              <span>{formatCurrency(orderTotalAmount)}</span>
             </TotalCost>
             <Agreement>
               {agreementInfo.map((checkboxProps) => (

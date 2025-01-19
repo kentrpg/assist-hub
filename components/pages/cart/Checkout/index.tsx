@@ -72,10 +72,6 @@ const Checkout = () => {
   const user = useSelector((state: RootState) => state.user);
   const { activeCartId } = useSelector((state: RootState) => state.cart);
 
-  console.log("user", user);
-  console.log("cart", cart);
-  console.log("activeCartId", activeCartId);
-
   useEffect(() => {
     if (!cart) {
       router.push("/cart");
@@ -200,7 +196,6 @@ const Checkout = () => {
   };
 
   const handleMethodChange = (value: string) => {
-    console.log("Method changed:", value);
     if (value === "store") {
       clearErrors([
         "addressZIP",

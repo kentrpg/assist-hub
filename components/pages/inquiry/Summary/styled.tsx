@@ -28,7 +28,6 @@ export const Field = styled.div`
   display: flex;
   align-items: center;
   flex: 1 1 auto;
-  // TBD: 需要補設計 flex+max-width 方式需要針對六種行動評估都測試出合適的 max-width 避免空白空間過大
   &:first-child {
     flex-shrink: 0;
     max-width: 211px;

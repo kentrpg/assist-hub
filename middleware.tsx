@@ -15,8 +15,6 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("/auth/signin", request.url));
     }
 
-    // TBD: 問學長 middleware 直接使用外部 API 是否可行，還是要打 API function？
-    // TBD: const authResponse = await fetch(`${request.nextUrl.origin}/api/auth/check`) + Cookie: `token=${token.value}
     const authResponse = await fetch(get_auth_check, {
       method: "POST",
       headers: {

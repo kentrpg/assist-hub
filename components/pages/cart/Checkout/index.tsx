@@ -56,15 +56,25 @@ import LinePayImage from "./LinePayImage";
 import useFormatCurrency from "@/hooks/useFormatCurrency";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
-import { selectActiveCartItem } from "@/utils/redux/slices/cart";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  selectActiveCartItem,
+  clearActiveCartId,
+} from "@/utils/redux/slices/cart";
 import { Loading } from "@/components/ui/Loading";
 import { RootState } from "@/utils/redux/store";
+import { isValid, hasError } from "@/helpers/api/status";
 
 const Checkout = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
   const cart = useSelector(selectActiveCartItem);
   const user = useSelector((state: RootState) => state.user);
+  const { activeCartId } = useSelector((state: RootState) => state.cart);
+
+  console.log("user", user);
+  console.log("cart", cart);
+  console.log("activeCartId", activeCartId);
 
   useEffect(() => {
     if (!cart) {
@@ -83,7 +93,7 @@ const Checkout = () => {
   const orderControls = {
     finalAmount: cart.fee + cart.amount,
     contractDate: `${useDateFormatter(cart.rentStamp)} - ${useDateFormatter(
-      cart.returnStamp
+      cart.returnStamp,
     )}`,
     formatAmount: (value: number) => formatCurrency(value),
   };
@@ -163,27 +173,28 @@ const Checkout = () => {
     });
 
     const result = await res.json();
-    // TBD: result.statusCode === 200 包成 help function
-    // result.status 包成 help function
-    // const isSuccess = result.statusCode === 200 && result.status;
 
-    if (result.error) {
+    dispatch(clearActiveCartId());
+
+    if (hasError(result)) {
       console.error("Error:", result.error);
+      alert(`${result.message}，請重新整理稍後重新下單`);
       setIsOrderSubmitting(false);
       return;
     }
 
     if (data.payment === "Remit") {
+      alert("訂單已送出，請等待審核");
       router.push("/user/order");
       setIsOrderSubmitting(false);
       return;
     }
 
-    const isSuccess = result.statusCode === 200 && result.status;
-    const redirectPath = isSuccess
+    const redirectPath = isValid(result)
       ? `${router.asPath}/approval`
       : `${router.asPath}/declined`;
 
+    alert(`付款${isValid(result) ? "成功" : "失敗"}，訂單已送出`);
     router.push(redirectPath);
     setIsOrderSubmitting(false);
   };

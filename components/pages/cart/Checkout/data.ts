@@ -112,7 +112,7 @@ export const pickupRadios = [
     ...FormValuesData.radio,
     id: "pickupMethod-delivery",
     value: "delivery",
-    label: "自取",
+    label: "宅配",
   },
 ];
 

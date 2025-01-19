@@ -54,7 +54,7 @@ const cartSlice = createSlice({
         state.activeCartId = state.items[0]?.cartId || null;
       }
     },
-    setActiveCartId: (state, {payload}: PayloadAction<number>) => {
+    setActiveCartId: (state, {payload}: PayloadAction<number | null>) => {
       state.activeCartId = payload;
     },
   },
@@ -68,3 +68,7 @@ export const selectActiveCartItem = createSelector(
     (state: RootState) => state.cart.activeCartId],
   (items, activeId) => items.find((item: CartItem) => item.cartId === activeId)
 );
+
+export const clearActiveCartId = () => {
+  return setActiveCartId(null);
+};

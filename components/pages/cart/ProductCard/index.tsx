@@ -15,12 +15,13 @@ import {
   setActiveCartId,
 } from "@/utils/redux/slices/cart";
 import Loading from "@/components/ui/Loading";
+import { hasError, isValid } from "@/helpers/api/status";
 
 const Cart = ({ data }: { data: CartItem[] }) => {
   const dispatch = useDispatch();
 
   const { items: cartItems, activeCartId, isInitialized } = useSelector(
-    (state: RootState) => state.cart
+    (state: RootState) => state.cart,
   );
 
   const [isDeletingIds, setIsDeletingIds] = useState<number[]>([]);
@@ -38,7 +39,7 @@ const Cart = ({ data }: { data: CartItem[] }) => {
 
   const updateCartItemToServer = async (
     cartId: number,
-    updateData: { [key: string]: number | string }
+    updateData: { [key: string]: number | string },
   ) => {
     const res = await fetch("/api/putCarts", {
       method: "PUT",
@@ -54,10 +55,9 @@ const Cart = ({ data }: { data: CartItem[] }) => {
 
     const result = await res.json();
 
-    const isSuccess = result.statusCode === 200 && result.status;
-    if (!isSuccess) {
+    if (hasError(result) || !isValid(result)) {
       console.error("更新購物車失敗:", result.error);
-      alert(result.message || "更新失敗，請稍後再試");
+      alert(`${result.message}，請稍後再試`);
       return false;
     }
 
@@ -86,7 +86,7 @@ const Cart = ({ data }: { data: CartItem[] }) => {
         ...targetCartItem,
         quantity: newQuantity,
         amount: newAmount,
-      })
+      }),
     );
   };
 
@@ -99,7 +99,7 @@ const Cart = ({ data }: { data: CartItem[] }) => {
 
     const newEndDate = calculateEndDate(
       rentStamp,
-      Number(targetCartItem.period) as PeriodProps
+      Number(targetCartItem.period) as PeriodProps,
     );
 
     dispatch(
@@ -107,7 +107,7 @@ const Cart = ({ data }: { data: CartItem[] }) => {
         ...targetCartItem,
         rentStamp,
         returnStamp: newEndDate,
-      })
+      }),
     );
   };
 
@@ -131,7 +131,7 @@ const Cart = ({ data }: { data: CartItem[] }) => {
         ...(targetCartItem.rentStamp && {
           returnStamp: newEndDate,
         }),
-      })
+      }),
     );
   };
 

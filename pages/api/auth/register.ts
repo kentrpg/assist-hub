@@ -4,7 +4,7 @@ import signUp from "@/utils/api/auth/register";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Result>,
+  res: NextApiResponse<Result>
 ) {
   const result = await signUp(req.body);
 

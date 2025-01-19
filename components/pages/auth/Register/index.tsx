@@ -8,7 +8,7 @@ import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import FormField from "@/utils/react-hook-form/FloatingLabel";
 import { RegisterField } from "@/utils/react-hook-form/types";
 import { registerFields, RegistInputs } from "./data";
-import { signUp } from "@/utils/api/auth/register";
+import { hasError, isValid } from "@/helpers/api/status";
 
 const Regist: React.FC = () => {
   const {
@@ -54,13 +54,13 @@ const Regist: React.FC = () => {
 
     const result = await res.json();
 
-    const isSuccess = result.statusCode === 200 && result.status;
-    if (Object.is(result.error, null)) {
-      isSuccess && router.push("/auth/signin");
-    } else {
+    if (hasError(result)) {
       setError("email", { message: result.message || "請求錯誤" });
       console.error("Error:", result.error);
+      return;
     }
+
+    isValid(result) && router.push("/auth/signin");
   };
 
   return (

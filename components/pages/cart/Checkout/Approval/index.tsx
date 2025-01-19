@@ -24,8 +24,8 @@ const Approval = () => {
           為了您的訂單安全，店內取貨時需出示<Mark>驗證碼</Mark>以完成核對
         </Description>
         <Group>
-          <SecondaryButton href="/products">繼續逛逛</SecondaryButton>
-          <PrimaryButton href="/orders">查看訂單</PrimaryButton>
+          <SecondaryButton href="/product">繼續逛逛</SecondaryButton>
+          <PrimaryButton href="/user/order">查看訂單</PrimaryButton>
         </Group>
       </Context>
     </Container>

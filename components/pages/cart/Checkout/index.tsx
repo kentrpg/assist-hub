@@ -41,7 +41,7 @@ import {
   agreementInfo,
   storePickupInputFields,
 } from "./data";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import InputField from "@/utils/react-hook-form/InputField";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import RadioField from "@/utils/react-hook-form/RadioField";
@@ -51,19 +51,32 @@ import {
 } from "@/utils/react-hook-form/InputField/data";
 import Address from "./Address";
 import useRenderError from "@/hooks/useRenderError";
-import { checkoutSlice } from "./cartSlice";
-import { userSlice } from "./userSlice";
 import useDateFormatter from "@/hooks/useDateFormatter";
 import LinePayImage from "./LinePayImage";
 import useFormatCurrency from "@/hooks/useFormatCurrency";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { selectActiveCartItem } from "@/utils/redux/slices/cart";
+import { Loading } from "@/components/ui/Loading";
+import { RootState } from "@/utils/redux/store";
 
 const Checkout = () => {
-  const [isOrderSubmitting, setIsOrderSubmitting] = useState(false);
-  const cart = checkoutSlice;
-  const user = userSlice;
   const router = useRouter();
+  const cart = useSelector(selectActiveCartItem);
+  const user = useSelector((state: RootState) => state.user);
+
+  useEffect(() => {
+    if (!cart) {
+      router.push("/cart");
+    }
+  }, [cart, router]);
+
+  if (!cart || !user) {
+    return <Loading />;
+  }
+
+  const [isOrderSubmitting, setIsOrderSubmitting] = useState(false);
 
   const formatCurrency = useFormatCurrency;
   const contractDate = `${useDateFormatter(
@@ -77,7 +90,7 @@ const Checkout = () => {
       name: user.name,
       phone: user.phone,
       email: user.email,
-      addressZIP: user.addressZIP,
+      addressZIP: user.addressZip,
       addressCity: user.addressCity,
       addressDistrict: user.addressDistrict,
       addressDetail: user.addressDetail,
@@ -106,18 +119,18 @@ const Checkout = () => {
 
     const checkoutData = {
       product: {
-        id: 20,
-        name: "鋁製躺式輪椅",
-        imgSrc: "圖片路徑",
-        imgAlt: "",
-        quantity: 2,
-        rentStamp: "2011-10-10T14:48:00",
-        returnStamp: "2011-10-10T14:48:00",
-        period: 2,
-        rent: 3000,
-        deposit: 500,
-        fee: 0,
-        finalAmount: 3500,
+        id: cart.cartId,
+        name: cart.name,
+        imgSrc: cart.imgSrc,
+        imgAlt: cart.imgAlt,
+        quantity: cart.quantity,
+        rentStamp: cart.rentStamp,
+        returnStamp: cart.returnStamp,
+        period: cart.period,
+        rent: cart.rent,
+        deposit: cart.deposit,
+        fee: cart.fee,
+        finalAmount: cart.amount,
       },
       payment: data.payment,
       shipping: {
@@ -145,20 +158,28 @@ const Checkout = () => {
     });
 
     const result = await res.json();
-    console.log("response", res, result);
     // TBD: result.statusCode === 200 包成 help function
     // result.status 包成 help function
-    const isSuccess = result.statusCode === 200 && result.status;
+    // const isSuccess = result.statusCode === 200 && result.status;
 
-    // TBD: Object.is(result.error, null) 包成 help function
-    if (Object.is(result.error, null)) {
-      isSuccess && router.push(`${router.asPath}/approval`);
-      router.push(`${router.asPath}/declined`);
-    } else {
+    if (result.error) {
       console.error("Error:", result.error);
+      setIsOrderSubmitting(false);
+      return;
     }
 
-    // 把 error 當作防呆，如果 error 有值，則 return 回去
+    if (data.payment === "Remit") {
+      router.push("/user/order");
+      setIsOrderSubmitting(false);
+      return;
+    }
+
+    const isSuccess = result.statusCode === 200 && result.status;
+    const redirectPath = isSuccess
+      ? `${router.asPath}/approval`
+      : `${router.asPath}/declined`;
+
+    router.push(redirectPath);
     setIsOrderSubmitting(false);
   };
 
@@ -177,7 +198,6 @@ const Checkout = () => {
   return (
     <Container>
       <Breadcrumb />
-      {/* <FormProvider {...methods}> */}
       <OrderForm onSubmit={handleSubmit(onSubmit)} noValidate>
         <Shipping>
           <Title>訂購資訊</Title>
@@ -286,7 +306,7 @@ const Checkout = () => {
             </Costs>
             <TotalCost>
               <span>總計</span>
-              <span>{formatCurrency(cart.finalAmount)}</span>
+              <span>{formatCurrency(cart.amount)}</span>
             </TotalCost>
             <Agreement>
               {agreementInfo.map((checkboxProps) => (
@@ -308,7 +328,6 @@ const Checkout = () => {
           </SubmitButton>
         </Summary>
       </OrderForm>
-      {/* </FormProvider> */}
     </Container>
   );
 };

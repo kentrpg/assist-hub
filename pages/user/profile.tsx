@@ -1,9 +1,9 @@
+import { NextPage, GetServerSideProps } from "next";
+import React, { useEffect } from "react";
 import UserPage from "@/components/pages/user/UserPage";
 import { Wrapper100 } from "@/styles/wrappers";
-import { GetServerSideProps } from "next";
 import { setUser } from "@/utils/redux/slices/user";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
 import { FormData } from "@/components/pages/user/Profile/Form/data";
 import getProfile from "@/utils/api/member/getProfile";
 
@@ -30,7 +30,11 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   };
 };
 
-const Profile = ({ userData }: { userData: FormData }) => {
+type ProfileProps = {
+  userData: FormData;
+};
+
+const Profile: NextPage<ProfileProps> = ({ userData }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {

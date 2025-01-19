@@ -49,6 +49,10 @@ import { sliderSettings } from "./data";
 import Gallery from "./Gallery";
 import BreadCrumb from "./BreadCrumb";
 import Accordion from "./Accordion";
+import { useSelector } from "react-redux";
+import { RootState } from "@/utils/redux/store";
+import { useDispatch } from "react-redux";
+import { addToInquiryBar } from "@/utils/redux/slices/inquiryBar";
 
 const CustomPrevArrow = ({ onClick }: { onClick?: () => void }) => (
   <div className="slick-prev" onClick={onClick}>
@@ -74,6 +78,30 @@ const Single: React.FC<ProductDetailsProps> = ({
   recommended,
 }) => {
   console.log("product", product);
+
+  const dispatch = useDispatch();
+  const inquiryBar = useSelector((state: RootState) => state.inquiryBar);
+
+  const handleAddToInquiryBar = () => {
+    if (inquiryBar.length >= 3) {
+      alert("⚠️ 詢問單最多只能添加 3 個商品！");
+      return;
+    }
+    const exists = inquiryBar.some((item) => item.id === product.id);
+    if (exists) {
+      alert("⚠️ 該商品已經在詢問單中！");
+      return;
+    }
+    dispatch(
+      addToInquiryBar({
+        id: product.id,
+        imgSrc: product.image.preivew,
+        name: product.name,
+        rent: product.rent,
+      }),
+    );
+    alert("✅ 商品成功加入詢問單！");
+  };
 
   const handleAddToCart = async (productId: number) => {
     console.log("handleAddToCart", productId);
@@ -137,7 +165,7 @@ const Single: React.FC<ProductDetailsProps> = ({
           </PriceField>
           <Description>
             <SubTitle>商品描述</SubTitle>
-            <DesWord> {product.description}</DesWord>
+            <DesWord>{product.description}</DesWord>
           </Description>
           <InfoField>
             <SubTitle>商品資訊</SubTitle>
@@ -150,12 +178,11 @@ const Single: React.FC<ProductDetailsProps> = ({
               <MdShoppingCart size={27} />
               加入購物車
             </RentBtn>
-            <InquiryBtn>
+            <InquiryBtn onClick={handleAddToInquiryBar}>
               <InquiryIcon />
               <span>加入詢問單</span>
             </InquiryBtn>
           </BtnField>
-          {/* 手風琴展開 */}
           <Accordion />
         </Detail>
       </InfoContainer>
@@ -246,7 +273,7 @@ const Single: React.FC<ProductDetailsProps> = ({
                 <CarouselTitle>{item.name}</CarouselTitle>
                 <CarouselPrice>${item.rent}</CarouselPrice>
               </CarouselInfo>
-              <CarouselBtn>
+              <CarouselBtn onClick={handleAddToInquiryBar}>
                 <InquiryIcon />
                 加入詢問單
               </CarouselBtn>

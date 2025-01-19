@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import signIn from "@/utils/api/auth/signin";
-import { setAuthCookie } from "@/utils/cookies";
+import { setAuthCookie } from "@/helpers/cookies";
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,8 +11,8 @@ export default async function handler(
   const { data, ...rest } = result;
   const { jwtToken, ...userData } = data || {};
 
-  if (result.statusCode === 200 && result.data?.jwtToken) {
-    res.setHeader("Set-Cookie", setAuthCookie(result.data.jwtToken));
+  if (result.statusCode === 200 && jwtToken) {
+    res.setHeader("Set-Cookie", setAuthCookie(jwtToken));
   }
 
   return res.json({

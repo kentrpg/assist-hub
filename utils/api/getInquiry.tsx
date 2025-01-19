@@ -2,20 +2,16 @@ import { Error } from "@/types/apiRoutes";
 import { catchError } from "@/utils/handleErrors";
 import { NODE_ENV } from "@/constants/environment";
 import { validateResponseType } from "@/utils/typeGuards";
-import { get_inquirys } from "@/constants/apiPath";
-import {
-  ResultGetInquirys,
-  ResultGetInquirysType,
-} from "@/types/getMemberInquirys";
+import { get_inquiry } from "@/constants/apiPath";
+import { ResultGetInquiry, ResultGetInquiryType } from "@/types/getInquiry";
 
-export const getInquirys = async (
-  token: string,
-): Promise<ResultGetInquirysType> => {
-  const parsedUrl = new URL(get_inquirys);
+export const getInquiry = async (
+  inquiryId: string,
+): Promise<ResultGetInquiryType> => {
+  const parsedUrl = new URL(get_inquiry.replace(":id", inquiryId));
   const options = {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${token}`,
       Accept: "application/json",
       "Content-Type": "application/json",
     },
@@ -43,7 +39,7 @@ export const getInquirys = async (
   const json = await res.json();
 
   if (NODE_ENV === "development") {
-    const validation = validateResponseType(json, ResultGetInquirys);
+    const validation = validateResponseType(json, ResultGetInquiry);
 
     !validation.isValid &&
       console.error("API Response validation failed:", validation.errors);
@@ -58,4 +54,4 @@ export const getInquirys = async (
   };
 };
 
-export default getInquirys;
+export default getInquiry;

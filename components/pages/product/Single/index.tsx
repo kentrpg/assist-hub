@@ -74,31 +74,43 @@ const Single: React.FC<ProductDetailsProps> = ({
   recommended,
 }) => {
   console.log("product", product);
+
   const handleAddToCart = async (productId: number) => {
     console.log("handleAddToCart", productId);
 
-    const res = await fetch("/api/postCarts", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: productId,
-      }),
-    });
+    try {
+      const res = await fetch("/api/postCarts", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: productId,
+        }),
+      });
 
-    const result = await res.json();
-    console.log("result", result);
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+
+      const result = await res.json();
+
+      if (result.status) {
+        alert("✅ 成功加入購物車！");
+      } else {
+        alert(`⚠️ 加入購物車失敗：${result.message}`);
+      }
+    } catch (error) {
+      console.error("加入購物車時發生錯誤：", error);
+      alert("❌ 加入購物車時發生錯誤，請稍後再試！");
+    }
   };
 
   return (
     <Container>
       {/* 麵包屑 */}
       <BreadCrumb product={product} />
-      <button onClick={() => handleAddToCart(product.id)}>
-        測試加入購物車按鈕
-      </button>
       {/* 商品資訊 */}
       <InfoContainer>
         <Gallery
@@ -134,7 +146,7 @@ const Single: React.FC<ProductDetailsProps> = ({
             <p>產地: {product.info.origin}</p>
           </InfoField>
           <BtnField>
-            <RentBtn>
+            <RentBtn onClick={() => handleAddToCart(product.id)}>
               <MdShoppingCart size={27} />
               加入購物車
             </RentBtn>

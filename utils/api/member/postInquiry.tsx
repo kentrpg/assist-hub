@@ -2,29 +2,34 @@ import { Error } from "@/types/apiRoutes";
 import { catchError } from "@/utils/handleErrors";
 import { NODE_ENV } from "@/constants/environment";
 import { validateResponseType } from "@/utils/typeGuards";
-import { get_member_order } from "@/constants/apiPath";
+import { post_member_inquiry } from "@/constants/apiPath";
 import {
-  ResultGetMemberOrder,
-  ResultGetMemberOrderType,
-} from "@/types/getOrder";
+  RequestPostInquiryType,
+  ResultPostInquiry,
+  ResultPostInquiryType,
+} from "@/types/postMemberInquiry";
 
-export const getOrder = async (
+export const postInquiry = async (
   token: string,
-  orderId: number,
-): Promise<ResultGetMemberOrderType> => {
-  const parsedUrl = new URL(
-    get_member_order.replace(":id", orderId.toString()),
-  );
+  data: RequestPostInquiryType,
+): Promise<ResultPostInquiryType> => {
+  console.log("postInquiry data", data);
+  const parsedUrl = new URL(post_member_inquiry);
   const options = {
-    method: "GET",
+    method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
       Accept: "application/json",
       "Content-Type": "application/json",
     },
+    body: JSON.stringify({
+      data,
+    }),
   };
 
   const [res, error] = await catchError(fetch(parsedUrl, options));
+
+  console.log("res", res, error);
 
   if (error) {
     console.log("error", error);
@@ -45,8 +50,10 @@ export const getOrder = async (
 
   const json = await res.json();
 
+  console.log("json", json);
+
   if (NODE_ENV === "development") {
-    const validation = validateResponseType(json, ResultGetMemberOrder);
+    const validation = validateResponseType(json, ResultPostInquiry);
 
     !validation.isValid &&
       console.error("API Response validation failed:", validation.errors);
@@ -56,9 +63,9 @@ export const getOrder = async (
     statusCode: json.statusCode,
     status: json.status,
     message: json.message,
-    data: json.data,
+    data: undefined,
     error: null,
   };
 };
 
-export default getOrder;
+export default postInquiry;

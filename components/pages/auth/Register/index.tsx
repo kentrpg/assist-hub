@@ -29,15 +29,10 @@ const Regist: React.FC = () => {
   });
 
   const togglePassword = (field: keyof typeof showPasswords) => {
-    // TBD: useState set function 防呆是否正確
-    setShowPasswords((prev) => {
-      const newValue = !prev[field];
-      if (prev[field] === newValue) return prev;
-      return {
-        ...prev,
-        [field]: newValue,
-      };
-    });
+    setShowPasswords((prev) => ({
+      ...prev,
+      [field]: typeof prev[field] === "boolean" ? !prev[field] : false,
+    }));
   };
 
   const router = useRouter();

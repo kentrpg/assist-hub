@@ -23,11 +23,12 @@ const InquiryCard = ({
   $color,
   name,
   description,
-  price,
+  rent,
   imgSrc,
+  imgAlt,
   features,
 }: InquiryCardProps) => {
-  const formatPrice = useFormatCurrency(price);
+  const formatPrice = useFormatCurrency(rent);
 
   return (
     <Card $color={$color}>
@@ -44,7 +45,7 @@ const InquiryCard = ({
             </Price>
           </DetailsWrapper>
           <ImageWrapper>
-            <Image src={imgSrc} alt={name} />
+            <Image src={imgSrc} alt={imgAlt} />
           </ImageWrapper>
         </CardContent>
         <Features>

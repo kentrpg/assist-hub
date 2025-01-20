@@ -63,5 +63,5 @@ export type ResultGetInquiryType = {
 };
 
 export type InquiryPageProps = {
-  data: ResultGetInquiryType["data"];
+  data: NonNullable<ResultGetInquiryType["data"]>;
 };

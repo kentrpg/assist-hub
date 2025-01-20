@@ -1,25 +1,20 @@
-// for inquiryInfo section
-
 type BaseInfoProps = {
-  orderId: string;
-  createdDate: string;
-  actionAssessment: string;
+  inquiryCode: string;
+  createdStamp: string;
+  level: string;
+  additionalInfo: string;
 };
 
-export type InquiryInfoProps = BaseInfoProps & {
-  description: string;
+export type InquiryInfoProps = BaseInfoProps;
+
+// export type InquiryInfoProps = BaseInfoProps & {
+//   description?: string;
+// };
+
+export const suggestInfoMapping: BaseInfoProps = {
+  inquiryCode: "單號",
+  createdStamp: "建立日期",
+  level: "行動評估",
+  additionalInfo: "專業建議",
 };
 
-export const inquiryInfoMapping: InquiryInfoProps = {
-  "orderId": "單號",
-  "createdDate": "建立日期",
-  "actionAssessment": "行動評估",
-  "description": "補充說明",
-}
-
-export const suggestInfoMapping: InquiryInfoProps = {
-  "orderId": "單號",
-  "createdDate": "建立日期",
-  "actionAssessment": "行動評估",
-  "description": "專業建議"
-}

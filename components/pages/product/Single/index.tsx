@@ -53,6 +53,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/utils/redux/store";
 import { useDispatch } from "react-redux";
 import { addToInquiryBar } from "@/utils/redux/slices/inquiryBar";
+import Link from "next/link";
 
 const CustomPrevArrow = ({ onClick }: { onClick?: () => void }) => (
   <div className="slick-prev" onClick={onClick}>
@@ -170,6 +171,7 @@ const Single: React.FC<ProductDetailsProps> = ({
       {/* 商品資訊 */}
       <InfoContainer>
         <Gallery
+          key={product.id} 
           initialImage={product.image.preview}
           thumbnails={
             product.image.list.length > 0
@@ -291,26 +293,29 @@ const Single: React.FC<ProductDetailsProps> = ({
         >
           {recommended.map((item, index) => (
             <CarouselItem key={index}>
-              <CarouselImg>
-                <img
-                  src={item.imgSrc || "/images/wheelChair.svg"}
-                  width={260}
-                  height={190}
-                  alt={item.name}
-                />
-              </CarouselImg>
-              <CarouselInfo>
-                <CarouselTitle>{item.name}</CarouselTitle>
-                <CarouselRent>${item.rent.toLocaleString()}</CarouselRent>
-              </CarouselInfo>
-              <CarouselBtn
-                onClick={() =>
-                  handleAddCarouselProductToInquiryBar(item.productId)
-                }
-              >
-                <InquiryIcon />
-                加入詢問單
-              </CarouselBtn>
+              <Link key={index} href={`/product/${item.productId}`} passHref>
+                <CarouselImg>
+                  <img
+                    src={item.imgSrc || "/images/wheelChair.svg"}
+                    width={260}
+                    height={190}
+                    alt={item.name}
+                  />
+                </CarouselImg>
+                <CarouselInfo>
+                  <CarouselTitle>{item.name}</CarouselTitle>
+                  <CarouselRent>${item.rent.toLocaleString()}</CarouselRent>
+                </CarouselInfo>
+                <CarouselBtn
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleAddCarouselProductToInquiryBar(item.productId);
+                  }}
+                >
+                  <InquiryIcon />
+                  加入詢問單
+                </CarouselBtn>
+              </Link>
             </CarouselItem>
           ))}
         </Slider>

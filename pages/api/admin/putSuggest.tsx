@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import putAdminSuggest from "@/utils/api/admin/putAdminSuggest";
+import putAdminSuggest from "@/utils/api/admin/putSuggest";
 import { ResultPutAdminSuggestType } from "@/types/putAdminSuggest";
 
 export default async function handler(

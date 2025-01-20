@@ -8,7 +8,7 @@ export const ResultGetInquiry = {
     "inquiryId": 1,
     "inquiryCode": "AKC833",
     "createdStamp": "2011-10-10T14:48:00",
-    "level":"1",
+    "level": "1",
     "additionalInfo": "",
     "products": [
       {
@@ -63,5 +63,5 @@ export type ResultGetInquiryType = {
 };
 
 export type InquiryPageProps = {
-  inquiryData: ResultGetInquiryType["data"];
+  data: ResultGetInquiryType["data"];
 };

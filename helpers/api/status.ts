@@ -20,4 +20,20 @@ export const isValid = <T>(response: ApiResponse<T>): boolean => {
  */
 export const hasError = <T>(response: ApiResponse<T>): boolean => {
   return !Object.is(response.error, null);
-}; 
+};
+
+/**
+ * 檢查 API 回應的資料是否為空
+ * @returns 如果資料為空則返回 true
+ */
+export const isEmptyData = <T>(response: ApiResponse<T>): boolean => {
+  if (!response.data) {
+    return true;
+  }
+
+  if (Array.isArray(response.data)) {
+    return response.data.length === 0;
+  }
+
+  return false;
+};

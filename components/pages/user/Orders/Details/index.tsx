@@ -57,10 +57,6 @@ type DetailsProps = {
 };
 
 const Details: React.FC<DetailsProps> = ({ onBack, orderData }) => {
-  if (!orderData) {
-    return <div>Order data is not available</div>;
-  }
-
   const {
     orderStatus,
     shippingStatus,
@@ -69,7 +65,7 @@ const Details: React.FC<DetailsProps> = ({ onBack, orderData }) => {
     createdStamp,
     note,
     shipping,
-    shippinginfo: { name, phone, email, address },
+    shippinginfo: { name, phone, email, address } = {},
     details: {
       quantity,
       productName,
@@ -86,8 +82,8 @@ const Details: React.FC<DetailsProps> = ({ onBack, orderData }) => {
       returnDate,
       returnStamp,
       payment,
-    },
-  } = orderData;
+    } = {},
+  } = orderData || {};
 
   return (
     <DetailContainer>

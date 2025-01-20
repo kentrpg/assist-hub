@@ -82,7 +82,7 @@ const Single: React.FC<ProductDetailsProps> = ({
   const dispatch = useDispatch();
   const inquiryBar = useSelector((state: RootState) => state.inquiryBar);
 
-  const handleAddToInquiryBar = () => {
+  const handleAddCurrentProductToInquiryBar = () => {
     if (inquiryBar.length >= 3) {
       alert("⚠️ 詢問單最多只能添加 3 個商品！");
       return;
@@ -95,12 +95,40 @@ const Single: React.FC<ProductDetailsProps> = ({
     dispatch(
       addToInquiryBar({
         id: product.id,
-        imgSrc: product.image.preivew,
+        imgSrc: product.image.preview,
         name: product.name,
         rent: product.rent,
       }),
     );
     alert("✅ 商品成功加入詢問單！");
+  };
+
+  const handleAddCarouselProductToInquiryBar = (carouselProductId: number) => {
+    if (inquiryBar.length >= 3) {
+      alert("⚠️ 詢問單最多只能添加 3 個商品！");
+      return;
+    }
+    const exists = inquiryBar.some((item) => item.id === carouselProductId);
+    if (exists) {
+      alert("⚠️ 該商品已經在詢問單中！");
+      return;
+    }
+    const productToAdd = recommended.find(
+      (item) => item.productId === carouselProductId,
+    );
+    if (productToAdd) {
+      dispatch(
+        addToInquiryBar({
+          id: productToAdd.productId,
+          imgSrc: productToAdd.imgSrc,
+          name: productToAdd.name,
+          rent: productToAdd.rent,
+        }),
+      );
+      alert("✅ 商品成功加入詢問單！");
+    } else {
+      alert("❌ 找不到該商品！");
+    }
   };
 
   const handleAddToCart = async (productId: number) => {
@@ -142,11 +170,11 @@ const Single: React.FC<ProductDetailsProps> = ({
       {/* 商品資訊 */}
       <InfoContainer>
         <Gallery
-          initialImage={product.image.preivew}
+          initialImage={product.image.preview}
           thumbnails={
             product.image.list.length > 0
               ? product.image.list
-              : [product.image.preivew]
+              : [product.image.preview]
           }
         />
         <Detail>
@@ -178,7 +206,7 @@ const Single: React.FC<ProductDetailsProps> = ({
               <MdShoppingCart size={27} />
               加入購物車
             </RentBtn>
-            <InquiryBtn onClick={handleAddToInquiryBar}>
+            <InquiryBtn onClick={handleAddCurrentProductToInquiryBar}>
               <InquiryIcon />
               <span>加入詢問單</span>
             </InquiryBtn>
@@ -273,7 +301,11 @@ const Single: React.FC<ProductDetailsProps> = ({
                 <CarouselTitle>{item.name}</CarouselTitle>
                 <CarouselPrice>${item.rent}</CarouselPrice>
               </CarouselInfo>
-              <CarouselBtn onClick={handleAddToInquiryBar}>
+              <CarouselBtn
+                onClick={() =>
+                  handleAddCarouselProductToInquiryBar(item.productId)
+                }
+              >
                 <InquiryIcon />
                 加入詢問單
               </CarouselBtn>

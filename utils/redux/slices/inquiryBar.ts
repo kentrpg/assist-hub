@@ -7,26 +7,7 @@ export type InquiryBarState = Array<{
   rent: number;
 }>;
 
-const initialState: InquiryBarState = [
-  {
-    id: 1,
-    imgSrc: "https://i4.momoshop.com.tw/1692633920/goodsimg/0006/110/758/6110758_R_m.webp",
-    name: "拐杖1號",
-    rent: 1000,
-  },
-  {
-    id: 2,
-    imgSrc: "https://i4.momoshop.com.tw/1692633920/goodsimg/0006/110/758/6110758_R_m.webp",
-    name: "拐杖2號",
-    rent: 1000,
-  },
-  {
-    id: 3,
-    imgSrc: "https://i4.momoshop.com.tw/1692633920/goodsimg/0006/110/758/6110758_R_m.webp",
-    name: "拐杖3號",
-    rent: 1000,
-  },
-];
+const initialState: InquiryBarState = [];
 
 const inquiryBarSlice = createSlice({
   name: "inquiryBar",

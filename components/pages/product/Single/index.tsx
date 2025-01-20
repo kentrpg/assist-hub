@@ -171,7 +171,7 @@ const Single: React.FC<ProductDetailsProps> = ({
       {/* 商品資訊 */}
       <InfoContainer>
         <Gallery
-          key={product.id} 
+          key={product.id}
           initialImage={product.image.preview}
           thumbnails={
             product.image.list.length > 0
@@ -224,18 +224,23 @@ const Single: React.FC<ProductDetailsProps> = ({
             <Row>
               <Cell $border></Cell>
               {comparison.map((item, index) => (
-                <ComparisonProduct key={index}>
-                  <ComparisonImg
-                    src={item.imgSrc || "/images/wheelChair.svg"}
-                    alt={item.name}
-                  />
-                  <ComparisonBtn
-                    onClick={() => handleAddToCart(item.productId)}
-                  >
-                    <MdShoppingCart size={24} />
-                    加入購物車
-                  </ComparisonBtn>
-                </ComparisonProduct>
+                <Link key={index} href={`/product/${item.productId}`} passHref>
+                  <ComparisonProduct key={index}>
+                    <ComparisonImg
+                      src={item.imgSrc || "/images/wheelChair.svg"}
+                      alt={item.name}
+                    />
+                    <ComparisonBtn
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleAddToCart(item.productId);
+                      }}
+                    >
+                      <MdShoppingCart size={24} />
+                      加入購物車
+                    </ComparisonBtn>
+                  </ComparisonProduct>
+                </Link>
               ))}
             </Row>
             <Row $bg>

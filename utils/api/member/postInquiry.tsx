@@ -11,7 +11,7 @@ import {
 
 export const postInquiry = async (
   token: string,
-  data: RequestPostInquiryType,
+  data: RequestPostInquiryType
 ): Promise<ResultPostInquiryType> => {
   console.log("postInquiry data", data);
   const parsedUrl = new URL(post_member_inquiry);
@@ -22,9 +22,7 @@ export const postInquiry = async (
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      data,
-    }),
+    body: JSON.stringify(data),
   };
 
   const [res, error] = await catchError(fetch(parsedUrl, options));

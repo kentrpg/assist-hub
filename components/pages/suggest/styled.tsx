@@ -1,7 +1,4 @@
-import {
-  AccentIconButton,
-  buttonGapSizes,
-} from "@/components/ui/buttons/Layout";
+import { PrimaryButton, buttonGapSizes } from "@/components/ui/buttons/Layout";
 import { InputRadius } from "@/styles/borderRadius";
 import { Tablet, Mobile } from "@/styles/container";
 import { H6 } from "@/styles/typography";
@@ -68,7 +65,8 @@ export const ImageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
+  row-gap: 10px;
   @media ${Tablet} {
     flex: 0 0 19.22%; /* 204px / 1061px */
     max-width: 19.22%;
@@ -129,33 +127,33 @@ export const RecommendDescription = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 8px;
   @media ${Mobile} {
     width: calc((100% - 1 * 16px) / 2);
-    gap: 10px;
+    gap: 12px;
   }
   @media ${Tablet} {
     flex: 0 0 24.79%; /* 263px / 1061px */
     max-width: 24.79%;
-    gap: 16.5px;
   }
 `;
 
-export const Reasons = styled.ul`
+export const Reason = styled.textarea`
   border: 1px solid ${({ theme }) => theme.colors.border};
   ${InputRadius};
-  padding: 8px 10px 8px 30px;
-`;
-
-export const Reason = styled.li`
   font-size: 18px;
   color: ${({ theme }) => theme.colors.textSecondary};
   display: list-item;
   list-style-type: "•";
   padding-inline-start: 6px;
+  cursor: default;
 `;
 
-export const RentButton = styled(AccentIconButton)`
+export const RentButton = styled(PrimaryButton)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   ${buttonGapSizes.small};
   width: 100%;
   svg {
@@ -168,9 +166,6 @@ export const RentButton = styled(AccentIconButton)`
       width: 24px;
       height: 24px;
     }
-  }
-  @media ${Tablet} {
-    width: inherit;
   }
 `;
 

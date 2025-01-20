@@ -1,12 +1,5 @@
 import type { InquiryInfoProps } from "@/components/pages/inquiry/Summary/data";
 
-export const suggestInfo: InquiryInfoProps = {
-  "orderId": "AKC833",
-  "createdDate": "2024/10/04",
-  "actionAssessment": "具平地跑跳能力",
-  "description": "需好好休息2個月，避免用受傷的腳出力，必要時抬高腳增加血液循環。"
-};
-
 export type SuggestDetailProps = {
   data: InquiryInfoProps;
   mapping: Record<keyof InquiryInfoProps, string>;

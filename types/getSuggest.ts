@@ -6,6 +6,7 @@ export const ResultGetSuggest = {
   message: "",
   "data": {
     "suggestId": 29,
+    "suggestCode": "AA063S",
     "createdDate": "2025-01-20T05:16:44.55",
     "createdStamp": "2025-01-20",
     "additionalInfo": "stirng",
@@ -46,6 +47,4 @@ export type ResultGetSuggestType = {
   error: Error | null;
 };
 
-export type SuggestPageProps = {
-  data: ResultGetSuggestType["data"];
-};
+export type SuggestPageProps = typeof ResultGetSuggest["data"];

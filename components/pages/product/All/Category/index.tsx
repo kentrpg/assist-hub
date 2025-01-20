@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToInquiryBar } from "@/utils/redux/slices/inquiryBar";
 import { RootState } from "@/utils/redux/store";
+import Link from "next/link";
 import {
   Title,
   CardWrapper,
@@ -34,7 +35,12 @@ const Category: React.FC<ProductCategoryProps> = ({
   const dispatch = useDispatch();
   const inquiryBar = useSelector((state: RootState) => state.inquiryBar);
 
-  const handleAddToInquiryBar = (product: ProductItem) => {
+  const handleAddToInquiryBar = (
+    product: ProductItem,
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.preventDefault(); // 阻止按鈕觸發 Link 跳轉
+    e.stopPropagation(); // 確保按鈕點擊不冒泡到父層
     if (inquiryBar.length >= 3) {
       alert("⚠️ 詢問單最多只能添加 3 個商品！");
       return;
@@ -64,17 +70,25 @@ const Category: React.FC<ProductCategoryProps> = ({
       <Title $color={color}>{title}</Title>
       <CardWrapper>
         {filteredProducts.map((product) => (
-          <Card $bg={bgColor} key={product.id}>
-            <CardImg src={product.imgSrc} alt={product.imgAlt || product.name} />
-            <Info>
-              <Name>{product.name}</Name>
-              <Rent>${product.rent}</Rent>
-            </Info>
-            <CardBtn onClick={() => handleAddToInquiryBar(product)}>
-              <InquiryIcon />
-              加入詢問單
-            </CardBtn>
-          </Card>
+          <Link key={product.id} href={`/product/${product.id}`} passHref>
+            <Card $bg={bgColor}>
+              <CardImg
+                src={product.imgSrc}
+                alt={product.imgAlt || product.name}
+              />
+              <Info>
+                <Name>{product.name}</Name>
+                <Rent>${product.rent}</Rent>
+              </Info>
+              {/* 確保按鈕的行為不觸發 Link */}
+              <CardBtn
+                onClick={(e) => handleAddToInquiryBar(product, e)}
+              >
+                <InquiryIcon />
+                加入詢問單
+              </CardBtn>
+            </Card>
+          </Link>
         ))}
       </CardWrapper>
     </CategoryContainer>

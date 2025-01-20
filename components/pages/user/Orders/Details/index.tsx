@@ -52,15 +52,13 @@ import { ResultGetMemberOrderType } from "@/types/getOrder";
 import Progress from "./Progress";
 
 type DetailsProps = {
-  onBack: () => void; // 返回按鈕的回調函數
+  onBack: () => void;
   orderData: ResultGetMemberOrderType["data"];
 };
 
 const Details: React.FC<DetailsProps> = ({ onBack, orderData }) => {
-  const orderDetails = orderData ? orderData[0] : null;
-
-  if (!orderDetails) {
-    return <div>Order details not available</div>;
+  if (!orderData) {
+    return <div>Order data is not available</div>;
   }
 
   const {
@@ -71,7 +69,7 @@ const Details: React.FC<DetailsProps> = ({ onBack, orderData }) => {
     createdStamp,
     note,
     shipping,
-    shippinginfo: { name, phone, eamil, address },
+    shippinginfo: { name, phone, email, address },
     details: {
       quantity,
       productName,
@@ -89,7 +87,7 @@ const Details: React.FC<DetailsProps> = ({ onBack, orderData }) => {
       returnStamp,
       payment,
     },
-  } = orderDetails;
+  } = orderData;
 
   return (
     <DetailContainer>
@@ -191,7 +189,7 @@ const Details: React.FC<DetailsProps> = ({ onBack, orderData }) => {
               </Row>
               <Row>
                 <P $type="title">電子信箱</P>
-                <P $type="content">{eamil}</P>
+                <P $type="content">{email}</P>
               </Row>
               <Row>
                 <P $type="title">地址</P>

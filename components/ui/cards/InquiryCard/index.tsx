@@ -17,7 +17,7 @@ import {
   PriceUnit,
 } from "./styled";
 import { ImageWrapper } from "@/components/ui/images";
-import useFormatCurrency from "@/hooks/useFormatCurrency";
+import { formatCurrency } from "@/helpers/format/currency";
 
 const InquiryCard = ({
   $color,
@@ -28,8 +28,6 @@ const InquiryCard = ({
   imgAlt,
   features,
 }: InquiryCardProps) => {
-  const formatPrice = useFormatCurrency(rent);
-
   return (
     <Card $color={$color}>
       <FlexFullHeight>
@@ -40,7 +38,7 @@ const InquiryCard = ({
               <Description>{description}</Description>
             </Details>
             <Price>
-              {formatPrice}
+              {formatCurrency(rent)}
               <PriceUnit>/月</PriceUnit>
             </Price>
           </DetailsWrapper>

@@ -46,7 +46,7 @@ import {
 } from "react-icons/md";
 import { rentalPeriodOptions, PeriodProps, ProductItemProps } from "../data";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
-import useFormatCurrency from "@/hooks/useFormatCurrency";
+import { formatCurrency } from "@/helpers/format/currency";
 
 export const ProductItem: FC<ProductItemProps> = ({
   item,
@@ -59,8 +59,6 @@ export const ProductItem: FC<ProductItemProps> = ({
   onDelete,
   isDeleting,
 }: ProductItemProps) => {
-  const formatCurrency = useFormatCurrency;
-
   const { quantity, rent, period, rentStamp } = item;
 
   const dateControls = {

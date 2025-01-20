@@ -123,7 +123,7 @@ const Header = () => {
             <MdSearch size={24} />
             <ButtonText>搜尋輔具</ButtonText>
           </SearchButton>
-          <AccountButton as={Link} href="/user">
+          <AccountButton as={Link} href="/user/profile">
             <Avatar
               isLoggedIn={false}
               imageSrc="/images/avatar-placeholder.png"

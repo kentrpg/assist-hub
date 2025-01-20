@@ -53,7 +53,7 @@ import Address from "./Address";
 import useRenderError from "@/hooks/useRenderError";
 import useDateFormatter from "@/hooks/useDateFormatter";
 import LinePayImage from "./LinePayImage";
-import useFormatCurrency from "@/hooks/useFormatCurrency";
+import { formatCurrency } from "@/helpers/format/currency";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
@@ -70,41 +70,19 @@ const Checkout = () => {
   const router = useRouter();
   const cart = useSelector(selectActiveCartItem);
   const user = useSelector((state: RootState) => state.user);
-  const { activeCartId } = useSelector((state: RootState) => state.cart);
-
-  useEffect(() => {
-    if (!cart) {
-      router.push("/cart");
-    }
-  }, [cart, router]);
-
-  if (!cart || !user) {
-    return <Loading />;
-  }
-
   const [isOrderSubmitting, setIsOrderSubmitting] = useState(false);
-
-  const formatCurrency = useFormatCurrency;
-
-  const orderControls = {
-    finalAmount: cart.fee + cart.amount,
-    contractDate: `${useDateFormatter(cart.rentStamp)} - ${useDateFormatter(
-      cart.returnStamp,
-    )}`,
-    formatAmount: (value: number) => formatCurrency(value),
-  };
 
   const methods = useForm<FormValuesProps["checkout"]>({
     mode: "onChange",
     defaultValues: {
       ...defaultFormValues,
-      name: user.name,
-      phone: user.phone,
-      email: user.email,
-      addressZIP: user.addressZip,
-      addressCity: user.addressCity,
-      addressDistrict: user.addressDistrict,
-      addressDetail: user.addressDetail,
+      name: user?.name || "",
+      phone: user?.phone || "",
+      email: user?.email || "",
+      addressZIP: user?.addressZip || "",
+      addressCity: user?.addressCity || "",
+      addressDistrict: user?.addressDistrict || "",
+      addressDetail: user?.addressDetail || "",
     },
     criteriaMode: "all",
     reValidateMode: "onChange",
@@ -123,6 +101,24 @@ const Checkout = () => {
     errors,
     errorMessages,
   });
+
+  useEffect(() => {
+    if (!cart && !isSubmitting) {
+      router.push("/cart");
+    }
+  }, [cart, router, isSubmitting]);
+
+  if (!cart || !user) {
+    return <Loading />;
+  }
+
+  const orderControls = {
+    finalAmount: cart.fee + cart.amount,
+    contractDate: `${useDateFormatter(cart.rentStamp)} - ${useDateFormatter(
+      cart.returnStamp
+    )}`,
+    formatAmount: formatCurrency,
+  };
 
   const onSubmit = async (data: FormValuesProps["checkout"]) => {
     console.log("Form submitted:", data);
@@ -170,8 +166,6 @@ const Checkout = () => {
 
     const result = await res.json();
 
-    dispatch(clearActiveCartId());
-
     if (hasError(result)) {
       console.error("Error:", result.error);
       alert(`${result.message}，請重新整理稍後重新下單`);
@@ -180,6 +174,7 @@ const Checkout = () => {
     }
 
     if (data.payment === "Remit") {
+      dispatch(clearActiveCartId());
       alert("訂單已送出，請等待審核");
       router.push("/user/order");
       setIsOrderSubmitting(false);
@@ -191,6 +186,8 @@ const Checkout = () => {
       : `${router.asPath}/declined`;
 
     alert(`付款${isValid(result) ? "成功" : "失敗"}，訂單已送出`);
+
+    dispatch(clearActiveCartId());
     router.push(redirectPath);
     setIsOrderSubmitting(false);
   };
@@ -304,22 +301,20 @@ const Checkout = () => {
             <Costs>
               <Cost>
                 <span>租金</span>
-                <span>{orderControls.formatAmount(cart.rent)}</span>
+                <span>{formatCurrency(cart.rent)}</span>
               </Cost>
               <Cost>
                 <span>押金</span>
-                <span>{orderControls.formatAmount(cart.deposit)}</span>
+                <span>{formatCurrency(cart.deposit)}</span>
               </Cost>
               <Cost>
                 <span>運費</span>
-                <span>{orderControls.formatAmount(cart.fee)}</span>
+                <span>{formatCurrency(cart.fee)}</span>
               </Cost>
             </Costs>
             <TotalCost>
               <span>總計</span>
-              <span>
-                {orderControls.formatAmount(orderControls.finalAmount)}
-              </span>
+              <span>{formatCurrency(orderControls.finalAmount)}</span>
             </TotalCost>
             <Agreement>
               {agreementInfo.map((checkboxProps) => (

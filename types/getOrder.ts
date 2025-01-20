@@ -4,8 +4,7 @@ export const ResultGetMemberOrder = {
   statusCode: 0,
   status: true,
   message: "",
-  data: [
-    {
+  data: {
       "orderStatus": "已結案",
       "shippingStatus": "已歸還",
       "orderCode": "135723",
@@ -16,9 +15,9 @@ export const ResultGetMemberOrder = {
       "shippinginfo": {
         "name": "訂購人姓名",
         "phone": "訂購人電話",
-        "eamil": "訂購人信箱",
+        "email": "訂購人信箱",
         "address": "訂購人地址"
-    },
+      },
       "details": {
         "quantity": 2,
         "productName": "鋁製躺式輪椅",
@@ -37,7 +36,6 @@ export const ResultGetMemberOrder = {
         "payment": "LinePay"
       }
     },
-  ],
 };
 
 export type ResultGetMemberOrderType = Omit<typeof ResultGetMemberOrder, "error" | "data"> & {

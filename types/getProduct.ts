@@ -45,6 +45,7 @@ export const ResultGetProduct = {
     },
     comparison: [
       {
+        productId: 1,
         imgSrc: "https://image.com",
         name: "手動輪椅",
         rent: 3000,
@@ -57,6 +58,7 @@ export const ResultGetProduct = {
     ],
     recommended: [
       {
+        productId: 1,
         imgSrc: "https://image.com",
         name: "手動輪椅",
         rent: 1000,

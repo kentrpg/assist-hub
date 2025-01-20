@@ -39,8 +39,8 @@ const Category: React.FC<ProductCategoryProps> = ({
     product: ProductItem,
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
-    e.preventDefault(); // 阻止按鈕觸發 Link 跳轉
-    e.stopPropagation(); // 確保按鈕點擊不冒泡到父層
+    e.preventDefault(); 
+    e.stopPropagation();
     if (inquiryBar.length >= 3) {
       alert("⚠️ 詢問單最多只能添加 3 個商品！");
       return;
@@ -78,9 +78,8 @@ const Category: React.FC<ProductCategoryProps> = ({
               />
               <Info>
                 <Name>{product.name}</Name>
-                <Rent>${product.rent}</Rent>
+                <Rent>${product.rent.toLocaleString()}</Rent>
               </Info>
-              {/* 確保按鈕的行為不觸發 Link */}
               <CardBtn
                 onClick={(e) => handleAddToInquiryBar(product, e)}
               >

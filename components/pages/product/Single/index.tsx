@@ -27,7 +27,7 @@ import {
   CarouselImg,
   CarouselInfo,
   CarouselTitle,
-  CarouselPrice,
+  CarouselRent,
   Title,
   Tags,
   Detail,
@@ -188,8 +188,8 @@ const Single: React.FC<ProductDetailsProps> = ({
             ))}
           </Tags>
           <PriceField>
-            <SubTitle>租金: ${product.rent}/月</SubTitle>
-            <Deposit>押金: ${product.deposit}元</Deposit>
+            <SubTitle>租金: ${product.rent.toLocaleString()}/月</SubTitle>
+            <Deposit>押金: ${product.deposit.toLocaleString()}元</Deposit>
           </PriceField>
           <Description>
             <SubTitle>商品描述</SubTitle>
@@ -227,7 +227,9 @@ const Single: React.FC<ProductDetailsProps> = ({
                     src={item.imgSrc || "/images/wheelChair.svg"}
                     alt={item.name}
                   />
-                  <ComparisonBtn>
+                  <ComparisonBtn
+                    onClick={() => handleAddToCart(item.productId)}
+                  >
                     <MdShoppingCart size={24} />
                     加入購物車
                   </ComparisonBtn>
@@ -248,7 +250,7 @@ const Single: React.FC<ProductDetailsProps> = ({
               <Cell $border>租金</Cell>
               {comparison.map((item, index) => (
                 <Cell $isEm $border key={index}>
-                  ${item.rent}
+                  ${item.rent.toLocaleString()}
                 </Cell>
               ))}
             </Row>
@@ -299,7 +301,7 @@ const Single: React.FC<ProductDetailsProps> = ({
               </CarouselImg>
               <CarouselInfo>
                 <CarouselTitle>{item.name}</CarouselTitle>
-                <CarouselPrice>${item.rent}</CarouselPrice>
+                <CarouselRent>${item.rent.toLocaleString()}</CarouselRent>
               </CarouselInfo>
               <CarouselBtn
                 onClick={() =>

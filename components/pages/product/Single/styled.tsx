@@ -499,7 +499,7 @@ export const CarouselTitle = styled.span`
   color: #08204d;
 `;
 
-export const CarouselPrice = styled.span`
+export const CarouselRent = styled.span`
   font-size: 14px;
   font-weight: 500;
 `;

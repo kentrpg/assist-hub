@@ -29,3 +29,4 @@ export const get_inquiry = `${baseUrl}${basePath}/inquiry/:id`;
 export const get_suggest = `${baseUrl}${basePath}/suggest/:id`;
 
 export const post_admin_suggest_product = `${baseUrl}${basePath}/admin/suggest/product`;
+export const put_admin_suggest = `${baseUrl}${basePath}/admin/suggest`;

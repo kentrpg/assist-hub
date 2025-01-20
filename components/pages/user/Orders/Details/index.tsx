@@ -110,7 +110,7 @@ const Details: React.FC<DetailsProps> = ({ onBack, orderData }) => {
         </Main>
 
         {/* ProgressBar */}
-        {shipping === "宅配" && <Progress />}
+        {shipping === "delivery" && <Progress />}
 
         <TableContainer>
           <Table>
@@ -188,7 +188,7 @@ const Details: React.FC<DetailsProps> = ({ onBack, orderData }) => {
                 <P $type="content">{email}</P>
               </Row>
               <Row>
-                <P $type="title">地址</P>
+                <P $type="title">運送地址</P>
                 <P $type="content">{address}</P>
               </Row>
             </Detail>

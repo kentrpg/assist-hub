@@ -24,7 +24,7 @@ export const BarContainer = styled(Container1344)`
 
 export const Products = styled.div`
   display: flex;
-  column-gap: 57px;
+  column-gap: 40px;
 `;
 
 export const Product = styled.div`
@@ -49,6 +49,7 @@ export const Rent = styled.span`
 `;
 
 export const Img = styled.img`
+  object-fit: contain;
   width: 80px;
   height: 80px;
 `;
@@ -76,4 +77,24 @@ export const IconWrapper = styled.div`
 export const DeleteBtn = styled.button`
   align-self: baseline;
   background-color: white;
+`;
+
+// 空圈圈樣式
+export const EmptyCircle = styled.div`
+  width: 50px;
+  height: 50px;
+  border: 2px dashed #ccc; // 使用虛線
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  position: relative;
+`;
+
+// 圈圈內的文字樣式
+export const EmptyCircleText = styled.div`
+  font-size: 24px;
+  font-weight: 500;
+  color: #08204d; // 深藍色
 `;

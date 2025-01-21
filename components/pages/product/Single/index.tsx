@@ -27,7 +27,7 @@ import {
   CarouselImg,
   CarouselInfo,
   CarouselTitle,
-  CarouselPrice,
+  CarouselRent,
   Title,
   Tags,
   Detail,
@@ -49,6 +49,11 @@ import { sliderSettings } from "./data";
 import Gallery from "./Gallery";
 import BreadCrumb from "./BreadCrumb";
 import Accordion from "./Accordion";
+import { useSelector } from "react-redux";
+import { RootState } from "@/utils/redux/store";
+import { useDispatch } from "react-redux";
+import { addToInquiryBar } from "@/utils/redux/slices/inquiryBar";
+import Link from "next/link";
 
 const CustomPrevArrow = ({ onClick }: { onClick?: () => void }) => (
   <div className="slick-prev" onClick={onClick}>
@@ -74,6 +79,62 @@ const Single: React.FC<ProductDetailsProps> = ({
   recommended,
 }) => {
   console.log("product", product);
+
+  const dispatch = useDispatch();
+  const inquiryBar = useSelector((state: RootState) => state.inquiryBar);
+
+  const handleAddCurrentProductToInquiryBar = () => {
+    if (inquiryBar.length >= 3) {
+      alert("⚠️ 詢問單最多只能添加 3 個商品！");
+      return;
+    }
+    const exists = inquiryBar.some((item) => item.id === product.id);
+    if (exists) {
+      alert("⚠️ 該商品已經在詢問單中！");
+      return;
+    }
+    dispatch(
+      addToInquiryBar({
+        id: product.id,
+        imgSrc: product.image.preview,
+        name: product.name,
+        rent: product.rent,
+        features: product.features,
+        description: product.description,
+      }),
+    );
+    alert("✅ 商品成功加入詢問單！");
+  };
+
+  const handleAddCarouselProductToInquiryBar = (carouselProductId: number) => {
+    if (inquiryBar.length >= 3) {
+      alert("⚠️ 詢問單最多只能添加 3 個商品！");
+      return;
+    }
+    const exists = inquiryBar.some((item) => item.id === carouselProductId);
+    if (exists) {
+      alert("⚠️ 該商品已經在詢問單中！");
+      return;
+    }
+    const productToAdd = recommended.find(
+      (item) => item.productId === carouselProductId,
+    );
+    if (productToAdd) {
+      dispatch(
+        addToInquiryBar({
+          id: productToAdd.productId,
+          imgSrc: productToAdd.imgSrc,
+          name: productToAdd.name,
+          rent: productToAdd.rent,
+          features: product.features,
+          description: product.description,
+        }),
+      );
+      alert("✅ 商品成功加入詢問單！");
+    } else {
+      alert("❌ 找不到該商品！");
+    }
+  };
 
   const handleAddToCart = async (productId: number) => {
     console.log("handleAddToCart", productId);
@@ -114,11 +175,12 @@ const Single: React.FC<ProductDetailsProps> = ({
       {/* 商品資訊 */}
       <InfoContainer>
         <Gallery
-          initialImage={product.image.preivew}
+          key={product.id}
+          initialImage={product.image.preview}
           thumbnails={
             product.image.list.length > 0
               ? product.image.list
-              : [product.image.preivew]
+              : [product.image.preview]
           }
         />
         <Detail>
@@ -132,12 +194,12 @@ const Single: React.FC<ProductDetailsProps> = ({
             ))}
           </Tags>
           <PriceField>
-            <SubTitle>租金: ${product.rent}/月</SubTitle>
-            <Deposit>押金: ${product.deposit}元</Deposit>
+            <SubTitle>租金: ${product.rent.toLocaleString()}/月</SubTitle>
+            <Deposit>押金: ${product.deposit.toLocaleString()}元</Deposit>
           </PriceField>
           <Description>
             <SubTitle>商品描述</SubTitle>
-            <DesWord> {product.description}</DesWord>
+            <DesWord>{product.description}</DesWord>
           </Description>
           <InfoField>
             <SubTitle>商品資訊</SubTitle>
@@ -150,12 +212,11 @@ const Single: React.FC<ProductDetailsProps> = ({
               <MdShoppingCart size={27} />
               加入購物車
             </RentBtn>
-            <InquiryBtn>
+            <InquiryBtn onClick={handleAddCurrentProductToInquiryBar}>
               <InquiryIcon />
               <span>加入詢問單</span>
             </InquiryBtn>
           </BtnField>
-          {/* 手風琴展開 */}
           <Accordion />
         </Detail>
       </InfoContainer>
@@ -167,16 +228,23 @@ const Single: React.FC<ProductDetailsProps> = ({
             <Row>
               <Cell $border></Cell>
               {comparison.map((item, index) => (
-                <ComparisonProduct key={index}>
-                  <ComparisonImg
-                    src={item.imgSrc || "/images/wheelChair.svg"}
-                    alt={item.name}
-                  />
-                  <ComparisonBtn>
-                    <MdShoppingCart size={24} />
-                    加入購物車
-                  </ComparisonBtn>
-                </ComparisonProduct>
+                <Link key={index} href={`/product/${item.productId}`} passHref>
+                  <ComparisonProduct key={index}>
+                    <ComparisonImg
+                      src={item.imgSrc || "/images/wheelChair.svg"}
+                      alt={item.name}
+                    />
+                    <ComparisonBtn
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleAddToCart(item.productId);
+                      }}
+                    >
+                      <MdShoppingCart size={24} />
+                      加入購物車
+                    </ComparisonBtn>
+                  </ComparisonProduct>
+                </Link>
               ))}
             </Row>
             <Row $bg>
@@ -193,7 +261,7 @@ const Single: React.FC<ProductDetailsProps> = ({
               <Cell $border>租金</Cell>
               {comparison.map((item, index) => (
                 <Cell $isEm $border key={index}>
-                  ${item.rent}
+                  ${item.rent.toLocaleString()}
                 </Cell>
               ))}
             </Row>
@@ -234,22 +302,29 @@ const Single: React.FC<ProductDetailsProps> = ({
         >
           {recommended.map((item, index) => (
             <CarouselItem key={index}>
-              <CarouselImg>
-                <img
-                  src={item.imgSrc || "/images/wheelChair.svg"}
-                  width={260}
-                  height={190}
-                  alt={item.name}
-                />
-              </CarouselImg>
-              <CarouselInfo>
-                <CarouselTitle>{item.name}</CarouselTitle>
-                <CarouselPrice>${item.rent}</CarouselPrice>
-              </CarouselInfo>
-              <CarouselBtn>
-                <InquiryIcon />
-                加入詢問單
-              </CarouselBtn>
+              <Link key={index} href={`/product/${item.productId}`} passHref>
+                <CarouselImg>
+                  <img
+                    src={item.imgSrc || "/images/wheelChair.svg"}
+                    width={260}
+                    height={190}
+                    alt={item.name}
+                  />
+                </CarouselImg>
+                <CarouselInfo>
+                  <CarouselTitle>{item.name}</CarouselTitle>
+                  <CarouselRent>${item.rent.toLocaleString()}</CarouselRent>
+                </CarouselInfo>
+                <CarouselBtn
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleAddCarouselProductToInquiryBar(item.productId);
+                  }}
+                >
+                  <InquiryIcon />
+                  加入詢問單
+                </CarouselBtn>
+              </Link>
             </CarouselItem>
           ))}
         </Slider>

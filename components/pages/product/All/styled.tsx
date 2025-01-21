@@ -80,7 +80,6 @@ export const Tab = styled.div<TabProps>`
   width: 100%;
   height: 88px;
   overflow: hidden;
-  cursor: pointer;
   @media (${Desktop}) {
     max-width: 167px;
   }
@@ -94,6 +93,7 @@ export const Tab = styled.div<TabProps>`
 
   &:hover {
     justify-content: start;
+    cursor: pointer;
   }
 
   img {
@@ -153,6 +153,7 @@ export const ImgWrapper = styled.div`
   align-items: center;
   overflow: hidden;
   position: relative;
+  cursor: pointer;
 `;
 
 export const Img = styled.img`
@@ -180,7 +181,10 @@ export const Overlay = styled.div`
   border-radius: 0 0 10px 10px;
   transform: translateY(100%);
   opacity: 0;
-  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  cursor: pointer;
+  transition:
+    transform 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
 `;
 
 export const Radios = styled.div`
@@ -188,6 +192,7 @@ export const Radios = styled.div`
 `;
 
 export const Radio = styled.div`
+  cursor: pointer;
   padding: 8px 12px;
   display: flex;
   align-items: center;
@@ -197,14 +202,19 @@ export const Radio = styled.div`
   &:last-child {
     border-bottom: none;
   }
+  &:hover {
+    background-color: #f7f7f7;
+  }
 `;
 
 export const RadioIcon = styled.div`
   display: flex;
+  cursor: pointer;
 `;
 
 export const RadioText = styled.div`
   display: flex;
+  cursor: pointer;
 `;
 
 export const FilterWrapper = styled.div`

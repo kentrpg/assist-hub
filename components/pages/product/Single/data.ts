@@ -5,8 +5,8 @@ export type ProductInfo = {
 };
 
 export type ProductImage = {
-  preivew: string;
-  preivewAlt: string;
+  preview: string;
+  previewAlt: string;
   list: string[];
   listAlt: string[];
 };
@@ -27,6 +27,7 @@ export type ProductItem = {
 };
 
 export type ComparisonItem = {
+  productId: number;
   imgSrc: string;
   name: string;
   rent: number;
@@ -35,6 +36,7 @@ export type ComparisonItem = {
 };
 
 export type RecommendedItem = {
+  productId: number;
   imgSrc: string;
   name: string;
   rent: number;

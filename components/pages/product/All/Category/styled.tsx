@@ -65,7 +65,7 @@ export const Card = styled.div<CardProps>`
 export const CardImg = styled.img`
   width: 100%;
   max-height: 190px;
-  height: 100%;
+  height: 190px; 
   object-fit: contain;
 `;
 

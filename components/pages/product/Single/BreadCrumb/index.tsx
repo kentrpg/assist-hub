@@ -7,7 +7,16 @@ type BreadCrumbProps = {
   product: ProductItem;
 };
 
+const typeMapping: Record<string, string> = {
+  wheelChair: "行動輪椅",
+  oxygen: "呼吸照護",
+  crutch: "拐杖步行",
+  bed: "臥室寢具",
+};
+
 const BreadCrumb: React.FC<BreadCrumbProps> = ({ product }) => {
+  const translatedType = typeMapping[product.type] || "未知類型"; 
+
   return (
     <BreadCrumbContainer>
       <Ol>
@@ -16,7 +25,7 @@ const BreadCrumb: React.FC<BreadCrumbProps> = ({ product }) => {
         </Li>
         <MdChevronRight color="#888888" size={24} />
         <Li>
-          <Link href={`/product?type=${product.type}`}>行動輪椅</Link>
+          <Link href={`/product?type=${product.type}`}>{translatedType}</Link>
         </Li>
         <MdChevronRight color="#888888" size={24} />
         <Li>{product.name}</Li>

@@ -3,10 +3,13 @@ import All from "@/components/pages/product/All";
 import { MainWrapper } from "@/styles/wrappers";
 import { ProductItem } from "@/components/pages/product/All/data";
 import getProducts from "@/utils/api/getProducts";
+import InquiryBar from "@/components/ui/InquiryBar";
 
 type AllPageProps = {
   products: ProductItem[];
 };
+
+
 
 export const getServerSideProps: GetServerSideProps<AllPageProps> = async (
   context,
@@ -39,8 +42,32 @@ const Product: NextPage<AllPageProps> = ({ products }) => {
   return (
     <MainWrapper>
       <All products={products} />
+      <InquiryBar />
     </MainWrapper>
   );
 };
 
 export default Product;
+
+
+// export const getServerSideProps: GetServerSideProps<
+//   AllPageProps
+// > = async () => {
+//   try {
+//     const result = await getProducts();
+
+//     if (!result?.status || !Array.isArray(result?.data)) {
+//       console.error("API 返回錯誤或數據格式不正確:", result);
+//       return { notFound: true };
+//     }
+
+//     return {
+//       props: {
+//         products: result.data,
+//       },
+//     };
+//   } catch (error) {
+//     console.error("getServerSideProps 發生錯誤:", error);
+//     return { notFound: true };
+//   }
+// };

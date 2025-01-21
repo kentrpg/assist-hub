@@ -6,11 +6,13 @@ export type ProductItem = {
   rent: number;
   imgSrc: string;
   imgAlt: string;
+  features: string[];
+  description: string;
 };
 
 export const tabsData = [
   { label: "行動輪椅", value: "wheelChair" },
-  { label: "柺杖步行", value: "crutch" },
+  { label: "拐杖步行", value: "crutch" },
   { label: "臥室寢具", value: "bed" },
   { label: "呼吸照護", value: "oxygen" },
 ];

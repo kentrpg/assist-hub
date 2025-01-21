@@ -4,13 +4,13 @@ import { NODE_ENV } from "@/constants/environment";
 import { validateResponseType } from "@/utils/typeGuards";
 import { get_inquirys } from "@/constants/apiPath";
 import {
-  ResultGetInquirys,
-  ResultGetInquirysType,
-} from "@/types/getMemberInquirys";
+  ResultGetInquiries,
+  ResultGetInquiriesType,
+} from "@/types/getMemberInquiries";
 
 export const getInquirys = async (
   token: string,
-): Promise<ResultGetInquirysType> => {
+): Promise<ResultGetInquiriesType> => {
   const parsedUrl = new URL(get_inquirys);
   const options = {
     method: "GET",
@@ -43,7 +43,7 @@ export const getInquirys = async (
   const json = await res.json();
 
   if (NODE_ENV === "development") {
-    const validation = validateResponseType(json, ResultGetInquirys);
+    const validation = validateResponseType(json, ResultGetInquiries);
 
     !validation.isValid &&
       console.error("API Response validation failed:", validation.errors);

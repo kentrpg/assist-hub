@@ -1,6 +1,6 @@
 import { Error } from "@/types/apiRoutes";
 
-export const ResultGetInquirys = {
+export const ResultGetInquiries = {
   statusCode: 0,
   status: true,
   message: "",
@@ -31,10 +31,10 @@ export const ResultGetInquirys = {
   ],
 };
 
-export type ResultGetInquirysType = {
+export type ResultGetInquiriesType = {
   statusCode: number;
   status: boolean;
   message: string;
-  data: typeof ResultGetInquirys.data | undefined;
+  data: typeof ResultGetInquiries.data | undefined;
   error: Error | null;
 };

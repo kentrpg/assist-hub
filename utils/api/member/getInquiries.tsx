@@ -2,16 +2,16 @@ import { Error } from "@/types/apiRoutes";
 import { catchError } from "@/utils/handleErrors";
 import { NODE_ENV } from "@/constants/environment";
 import { validateResponseType } from "@/utils/typeGuards";
-import { get_inquirys } from "@/constants/apiPath";
+import { get_inquiries } from "@/constants/apiPath";
 import {
   ResultGetInquiries,
   ResultGetInquiriesType,
 } from "@/types/getMemberInquiries";
 
-export const getInquirys = async (
+export const getInquiries = async (
   token: string,
 ): Promise<ResultGetInquiriesType> => {
-  const parsedUrl = new URL(get_inquirys);
+  const parsedUrl = new URL(get_inquiries);
   const options = {
     method: "GET",
     headers: {
@@ -58,4 +58,4 @@ export const getInquirys = async (
   };
 };
 
-export default getInquirys;
+export default getInquiries;

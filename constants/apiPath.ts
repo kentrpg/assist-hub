@@ -23,7 +23,7 @@ export const get_products = `${baseUrl}${basePath}/products`;
 export const get_product = `${baseUrl}${basePath}/products/:id`;
 
 export const post_inquiry = `${baseUrl}${basePath}/inquiry`;
-export const get_inquirys = `${baseUrl}${basePath}/member/inquiries`;
+export const get_inquiries = `${baseUrl}${basePath}/member/inquiries`;
 export const post_member_inquiry = `${baseUrl}${basePath}/member/inquiry`;
 export const get_inquiry = `${baseUrl}${basePath}/inquiry/:id`;
 export const get_suggest = `${baseUrl}${basePath}/suggest/:id`;

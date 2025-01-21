@@ -56,6 +56,8 @@ const Category: React.FC<ProductCategoryProps> = ({
         imgSrc: product.imgSrc,
         name: product.name,
         rent: product.rent,
+        features: product.features,
+        description: product.description,
       })
     );
     alert("✅ 商品成功加入詢問單！");

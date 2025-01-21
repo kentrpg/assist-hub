@@ -99,6 +99,8 @@ const Single: React.FC<ProductDetailsProps> = ({
         imgSrc: product.image.preview,
         name: product.name,
         rent: product.rent,
+        features: product.features,
+        description: product.description,
       }),
     );
     alert("✅ 商品成功加入詢問單！");
@@ -124,6 +126,8 @@ const Single: React.FC<ProductDetailsProps> = ({
           imgSrc: productToAdd.imgSrc,
           name: productToAdd.name,
           rent: productToAdd.rent,
+          features: product.features,
+          description: product.description,
         }),
       );
       alert("✅ 商品成功加入詢問單！");

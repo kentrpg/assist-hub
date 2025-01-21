@@ -46,7 +46,6 @@ const Auth = ({ method }: { method: string }) => {
       </Head>
       <MainWrapper>
         {method === "register" && <Register />}
-        {method === "" && <Signin />}
         {method === "signin" && <Signin />}
       </MainWrapper>
     </>

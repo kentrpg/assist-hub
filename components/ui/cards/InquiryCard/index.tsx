@@ -1,4 +1,3 @@
-import { type InquiryCardProps } from "@/components/pages/inquiry/data";
 import { InquiryCheck } from "@/utils/react-icons/CheckIcon";
 import {
   Card,
@@ -17,18 +16,18 @@ import {
   PriceUnit,
 } from "./styled";
 import { ImageWrapper } from "@/components/ui/images";
-import useFormatCurrency from "@/hooks/useFormatCurrency";
+import { formatCurrency } from "@/helpers/format/currency";
+import { InquiryProduct } from "@/types/getInquiry";
 
 const InquiryCard = ({
   $color,
   name,
   description,
-  price,
+  rent,
   imgSrc,
+  imgAlt,
   features,
-}: InquiryCardProps) => {
-  const formatPrice = useFormatCurrency(price);
-
+}: InquiryProduct) => {
   return (
     <Card $color={$color}>
       <FlexFullHeight>
@@ -39,12 +38,12 @@ const InquiryCard = ({
               <Description>{description}</Description>
             </Details>
             <Price>
-              {formatPrice}
+              {formatCurrency(rent)}
               <PriceUnit>/月</PriceUnit>
             </Price>
           </DetailsWrapper>
           <ImageWrapper>
-            <Image src={imgSrc} alt={name} />
+            <Image src={imgSrc} alt={imgAlt} />
           </ImageWrapper>
         </CardContent>
         <Features>

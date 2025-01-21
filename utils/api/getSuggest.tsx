@@ -6,7 +6,7 @@ import { get_suggest } from "@/constants/apiPath";
 import { ResultGetSuggest, ResultGetSuggestType } from "@/types/getSuggest";
 
 export const getSuggest = async (
-  suggestId: string,
+  suggestId: string
 ): Promise<ResultGetSuggestType> => {
   const parsedUrl = new URL(get_suggest.replace(":id", suggestId));
   const options = {

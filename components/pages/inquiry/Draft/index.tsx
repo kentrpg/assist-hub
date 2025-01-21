@@ -10,14 +10,15 @@ import {
 } from "../styled";
 import { PageBackButton } from "@/components/ui/circulars";
 import { MdArrowBack } from "react-icons/md";
-import { inquiryCardColors, draftInquiry } from "../data";
+import { inquiryCardColors } from "../data";
 import { FlexAlignCenter } from "@/styles/flex";
 import InquiryCard from "@/components/ui/cards/InquiryCard";
 import DashedCard from "@/components/ui/cards/DashedCard";
 import Tabs from "@/components/ui/Tabs";
+import { InquiryPageProps } from "@/types/postInquiry";
 
-const DraftInquiry = () => {
-  const cardSlots = Array.from({ length: 3 - draftInquiry.length });
+const DraftInquiry = ({ data }: { data: InquiryPageProps }) => {
+  const cardSlots = Array.from({ length: 3 - data.length });
 
   return (
     <Container>
@@ -30,17 +31,22 @@ const DraftInquiry = () => {
       <Assistive>
         <SubTitle>您已選擇的輔具</SubTitle>
         <CardGroup>
-          {draftInquiry.map(
-            ({ id, name, description, price, imgSrc, features }, index) => (
+          {data.map(
+            (
+              { id, name, description, rent, imgSrc, imgAlt, features },
+              index
+            ) => (
               <InquiryCard
                 key={id}
+                id={id}
                 $color={inquiryCardColors[index]}
-                price={price}
-                imgSrc={`/images/${imgSrc}`}
+                rent={rent}
+                imgSrc={imgSrc}
+                imgAlt={imgAlt}
                 name={name}
                 description={description}
                 features={features}
-              ></InquiryCard>
+              />
             )
           )}
           {cardSlots.map((_, index) => (

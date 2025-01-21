@@ -14,23 +14,33 @@ import {
   Description,
   FeatureList,
   RecommendDescription,
-  Reasons,
   RentButton,
   Reason,
 } from "./styled";
-
 import { PageBackButton } from "@/components/ui/circulars";
 import { MdArrowBack, MdShoppingCart } from "react-icons/md";
 import InquiryDetail from "@/components/pages/inquiry/Summary";
-import { suggestInfoMapping } from "@/components/pages/inquiry/Summary/data";
-import { suggestInfo, assistiveRecommendations } from "./data";
 import { FeatureBadge, PriceBadge } from "@/components/ui/badges";
 import { SuggestCheck } from "@/utils/react-icons/CheckIcon";
-import { FlexAlignCenter } from "@/styles/flex";
-import useFormatCurrency from "@/hooks/useFormatCurrency";
+import { formatCurrency } from "@/helpers/format/currency";
+import { SuggestPageProps } from "@/types/getSuggest";
 
-const Suggest = () => {
-  const formatCurrency = useFormatCurrency;
+const Suggest = ({
+  suggestId,
+  suggestCode: inquiryCode,
+  createdStamp,
+  level,
+  additionalInfo,
+  products,
+}: SuggestPageProps) => {
+  console.log("suggest data", {
+    suggestId,
+    inquiryCode,
+    createdStamp,
+    level,
+    additionalInfo,
+    products,
+  });
 
   return (
     <Container>
@@ -40,23 +50,37 @@ const Suggest = () => {
         </PageBackButton>
         <Title>建議單</Title>
       </Header>
-      <InquiryDetail data={suggestInfo} mapping={suggestInfoMapping} />
+      <InquiryDetail
+        data={{ inquiryCode, createdStamp, level, additionalInfo }}
+      />
       <Assistive>
         <SubTitle>店家推薦輔具</SubTitle>
         <RecommendationList>
-          {assistiveRecommendations.map(
-            ({ id, name, description, price, imgSrc, features, reasons }) => (
-              <Card key={id}>
+          {products.map(
+            (
+              {
+                id,
+                name,
+                description,
+                rent,
+                imgSrc,
+                imgAlt,
+                features,
+                reasons,
+              },
+              index
+            ) => (
+              <Card key={`${id}-${index}`}>
                 <ImageWrapper>
-                  <Image src={`/images/${imgSrc}`} alt={name} />
-                  <PriceBadge>{formatCurrency(price)}/ 月</PriceBadge>
+                  <Image src={imgSrc} alt={imgAlt} />
+                  <PriceBadge>{formatCurrency(rent)}/ 月</PriceBadge>
                 </ImageWrapper>
                 <Info>
                   <Name>{name}</Name>
                   <Description>{description}</Description>
                   <FeatureList>
-                    {features.map((feature, index) => (
-                      <FeatureBadge key={index}>
+                    {features.map((feature, featureIndex) => (
+                      <FeatureBadge key={`${id}-${featureIndex}`}>
                         <SuggestCheck size={24} />
                         {feature}
                       </FeatureBadge>
@@ -65,20 +89,14 @@ const Suggest = () => {
                 </Info>
                 <RecommendDescription>
                   <Name>推薦原因</Name>
-                  <Reasons>
-                    {reasons.map((reason, index) => (
-                      <Reason key={index}>{reason}</Reason>
-                    ))}
-                  </Reasons>
-                  <FlexAlignCenter>
-                    <RentButton>
-                      <MdShoppingCart size={24} />
-                      立即租賃
-                    </RentButton>
-                  </FlexAlignCenter>
+                  <Reason value={reasons} readOnly />
+                  <RentButton>
+                    <MdShoppingCart size={24} />
+                    加入購物車
+                  </RentButton>
                 </RecommendDescription>
               </Card>
-            ),
+            )
           )}
         </RecommendationList>
       </Assistive>

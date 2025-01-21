@@ -6,6 +6,8 @@ export type ProductItem = {
   rent: number;
   imgSrc: string;
   imgAlt: string;
+  features: string[];
+  description: string;
 };
 
 export const tabsData = [

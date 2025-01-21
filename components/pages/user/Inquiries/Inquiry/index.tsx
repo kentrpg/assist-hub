@@ -8,28 +8,36 @@ type InquiryRowProps = {
 };
 
 const Inquiry: React.FC<InquiryRowProps> = ({ inquiry }) => {
-  const { id, products, createdDate, isSuggest, status } = inquiry;
-
+  const {
+    inquiryId,
+    inquiryCode,
+    createdDate,
+    createdStamp,
+    isReplied,
+    images,
+    suggetsId,
+    suggetsCode,
+  } = inquiry;
   return (
-    <ContentRow key={id}>
-      <Grid>{id}</Grid>
+    <ContentRow key={inquiryId}>
+      <Grid>{inquiryCode}</Grid>
       <Grid>
         <ProductImages>
-          {products.map((product, index) => (
-            <img key={index} src={product} alt={`Product ${index + 1}`} />
+          {images.map((image, index) => (
+            <img key={index} src={image.src} alt={image.alt} />
           ))}
         </ProductImages>
       </Grid>
-      <Grid>{createdDate}</Grid>
-      <Grid $isSuggest={isSuggest}>{status}</Grid>
+      <Grid>{createdStamp}</Grid>
+      <Grid $isSuggest={isReplied}>{isReplied ? "已回覆" : "未回覆"}</Grid>
       <Grid>
         <Icon>
-          <MdFileOpen size={20} color="#FFFFFF" />
+          <MdFileOpen size={16} color="#FFFFFF" />
         </Icon>
       </Grid>
       <Grid>
         <Icon>
-          <MdFileOpen size={20} color="#FFFFFF" />
+          <MdFileOpen size={16} color="#FFFFFF" />
         </Icon>
       </Grid>
     </ContentRow>

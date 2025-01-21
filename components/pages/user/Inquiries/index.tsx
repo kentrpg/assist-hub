@@ -7,10 +7,16 @@ import {
   Grid,
 } from "./styled";
 import Inquiry from "./Inquiry";
-import { inquiries } from "./data";
 import Empty from "./Empty";
+import { InquiryData } from "@/components/pages/user/Inquiries/data";
 
-const Inquiries: React.FC = () => {
+type InquiriesProps = {
+  inquiriesData?: InquiryData[];
+};
+
+const Inquiries: React.FC<InquiriesProps> = ({ inquiriesData }) => {
+  const inquiries = inquiriesData || [];
+
   return (
     <InquiryContainer>
       <Title>詢問單</Title>
@@ -27,7 +33,7 @@ const Inquiries: React.FC = () => {
             <Grid>建議單</Grid>
           </HeaderRow>
           {inquiries.map((inquiry) => (
-            <Inquiry key={inquiry.id} inquiry={inquiry} />
+            <Inquiry key={inquiry.inquiryId} inquiry={inquiry} />
           ))}
         </GridContainer>
       )}

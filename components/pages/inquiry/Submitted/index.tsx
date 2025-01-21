@@ -39,6 +39,7 @@ const SubmittedInquiry = ({ data }: InquiryPageProps) => {
             ) => (
               <InquiryCard
                 key={id}
+                id={id}
                 $color={inquiryCardColors[index]}
                 rent={rent}
                 imgSrc={imgSrc}

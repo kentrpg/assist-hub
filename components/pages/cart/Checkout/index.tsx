@@ -61,6 +61,7 @@ import {
   selectActiveCartItem,
   clearActiveCartId,
 } from "@/utils/redux/slices/cart";
+import { CartItem } from "@/components/pages/cart/ProductCard/data";
 import { Loading } from "@/components/ui/Loading";
 import { RootState } from "@/utils/redux/store";
 import { isValid, hasError } from "@/helpers/api/status";
@@ -94,7 +95,7 @@ const Checkout = () => {
     handleSubmit,
     watch,
     clearErrors,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isSubmitSuccessful },
   } = methods;
 
   const { renderError } = useRenderError({
@@ -102,11 +103,19 @@ const Checkout = () => {
     errorMessages,
   });
 
+  const isEmptyCartNotSubmitting = (
+    cart: CartItem | undefined,
+    isSubmitting: boolean,
+    isSubmitSuccessful: boolean
+  ) => {
+    return !cart && !isSubmitting && !isSubmitSuccessful;
+  };
+
   useEffect(() => {
-    if (!cart && !isSubmitting) {
+    if (isEmptyCartNotSubmitting(cart, isSubmitting, isSubmitSuccessful)) {
       router.push("/cart");
     }
-  }, [cart, router, isSubmitting]);
+  }, [cart, router, isSubmitting, isSubmitSuccessful]);
 
   if (!cart || !user) {
     return <Loading />;

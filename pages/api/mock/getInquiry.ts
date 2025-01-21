@@ -19,7 +19,7 @@ export default async function handler(
         "additionalInfo": "phc測試note02",
         "products": [
           {
-            "id": "1",
+            "id": 1,
             "name": "電動輪椅",
             "description": "輕量化鋁合金金屬設計",
             "rent": 2000,
@@ -28,7 +28,7 @@ export default async function handler(
             "features": ["支撐性高", "輕量化設計", "S曲面型坐墊"],
           },
           {
-            "id": "2",
+            "id": 2,
             "name": "腋下拐",
             "description": "輕量化鋁合金金屬設計",
             "rent": 1000,
@@ -37,7 +37,7 @@ export default async function handler(
             "features": ["支撐性高", "輕量化設計", "可調節適合高度"],
           },
           {
-            "id": "3",
+            "id": 3,
             "name": "電動輪椅",
             "description": "輕量化鋁合金金屬設計",
             "rent": 2000,
@@ -46,7 +46,7 @@ export default async function handler(
             "features": ["支撐性高", "輕量化設計"],
           },
           {
-            "id": "4",
+            "id": 4,
             "name": "電動輪椅",
             "description": "輕量化鋁合金金屬設計",
             "rent": 2000,
@@ -55,7 +55,7 @@ export default async function handler(
             "features": ["支撐性高", "輕量化設計", "S曲面型坐墊"],
           },
           {
-            "id": "5",
+            "id": 5,
             "name": "電動輪椅",
             "description": "輕量化鋁合金金屬設計輕量化鋁合金金屬設計輕量化鋁合金金屬設計",
             "rent": 2000,

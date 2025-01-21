@@ -1,4 +1,3 @@
-import { type InquiryCardProps } from "@/components/pages/inquiry/data";
 import { InquiryCheck } from "@/utils/react-icons/CheckIcon";
 import {
   Card,
@@ -18,6 +17,7 @@ import {
 } from "./styled";
 import { ImageWrapper } from "@/components/ui/images";
 import { formatCurrency } from "@/helpers/format/currency";
+import { InquiryProduct } from "@/types/getInquiry";
 
 const InquiryCard = ({
   $color,
@@ -27,7 +27,7 @@ const InquiryCard = ({
   imgSrc,
   imgAlt,
   features,
-}: InquiryCardProps) => {
+}: InquiryProduct) => {
   return (
     <Card $color={$color}>
       <FlexFullHeight>

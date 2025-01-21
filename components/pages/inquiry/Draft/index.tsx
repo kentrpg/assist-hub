@@ -38,6 +38,7 @@ const DraftInquiry = ({ data }: { data: InquiryPageProps }) => {
             ) => (
               <InquiryCard
                 key={id}
+                id={id}
                 $color={inquiryCardColors[index]}
                 rent={rent}
                 imgSrc={imgSrc}
@@ -45,7 +46,7 @@ const DraftInquiry = ({ data }: { data: InquiryPageProps }) => {
                 name={name}
                 description={description}
                 features={features}
-              ></InquiryCard>
+              />
             )
           )}
           {cardSlots.map((_, index) => (

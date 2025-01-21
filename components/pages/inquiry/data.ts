@@ -3,45 +3,12 @@ import type { Color, ColorsType } from "@/types/uiProps";
 
 export const inquiryCardColors: ColorsType[] = ["accent", "primary", "secondary", "secondary", "accent", "primary", "primary", "secondary", "accent"];
 
-type BaseInquiryCard = {
-  id: string;
-  name: string;
-  description: string;
-  rent: number;
-  imgSrc: string;
-  imgAlt: string;
-  features: string[];
-};
-
 export type InquiryInfo = {
   inquiryCode: string;
   createdStamp: string;
   level: string;
   additionalInfo?: string;
 };
-
-export type InquiryCardProps = Omit<BaseInquiryCard, "id"> & Color;
-
-export const draftInquiry: BaseInquiryCard[] = [
-  {
-    id: "1",
-    name: "電動輪椅",
-    description: "輕量化鋁合金金屬設計",
-    rent: 2000,
-    imgSrc: "device1.png",
-    imgAlt: "電動輪椅",
-    features: ["支撐性高", "輕量化設計", "S曲面型坐墊"],
-  },
-  {
-    id: "2",
-    name: "腋下拐",
-    description: "輕量化鋁合金金屬設計",
-    rent: 1889.87,
-    imgSrc: "device2.png",
-    imgAlt: "腋下拐",
-    features: ["支撐性高", "輕量化設計", "可調節適合高度"],
-  }
-];
 
 // for inquiryInfo section
 export const inquiryInfo: InquiryInfoProps = {
@@ -53,8 +20,6 @@ export const inquiryInfo: InquiryInfoProps = {
 
 export type InquiryDetailProps = {
   data: InquiryInfo;
-  // mapping: Record<keyof InquiryInfo, string>;
-  // levelMapping: Record<string, string>;
 };
 
 // for InquiryStep page

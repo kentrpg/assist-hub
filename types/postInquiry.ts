@@ -25,7 +25,9 @@ export type ResultPostInquiryType = {
   error: Error | null;
 };
 
-export type InquiryPageProps = typeof ResultPostInquiry["data"];
+type InquiryProduct = (typeof ResultPostInquiry.data)[number];
+
+export type InquiryPageProps = InquiryProduct[];
 
 export type RequestPostInquiryType = {
   productIds: number[];

@@ -30,8 +30,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
 
   // TBD: 之後接 Redux inquiry slice store
   const inquiryData: RequestPostInquiryType = {
-    // productIds: [21, 12],
-    productIds: [],
+    productIds: [21, 12],
+    // productIds: [],
   };
 
   if (inquiryData.productIds.length === 0) {

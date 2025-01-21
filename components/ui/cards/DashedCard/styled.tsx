@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { CardRadius } from "@/styles/borderRadius";
-import { SecondaryIconButton } from "@/components/ui/buttons/Layout";
+import { SecondaryIconButton } from "@/styles/link";
 import { StretchedLink } from "@/components/ui/StretchedLink";
 
 export const YellowDashedCard = styled.div`
@@ -49,6 +49,6 @@ export const YellowDashedCard = styled.div`
   padding: 60px 10px;
 `;
 
-export const Button = styled(SecondaryIconButton)`
+export const ActionButton = styled(SecondaryIconButton)`
   ${StretchedLink};
 `;

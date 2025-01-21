@@ -5,7 +5,6 @@ import {
   TitleGroup as Group,
 } from "@/components/ui/titles";
 import { FlexAlignCenter } from "@/styles/flex";
-import { MdArrowForward } from "react-icons/md";
 import {
   Step,
   Card,
@@ -16,7 +15,7 @@ import {
 } from "./styled";
 import { AddInquirySteps } from "./data";
 import { InquiryStepCircle } from "@/components/ui/circulars";
-import { PrimaryIconButton } from "@/components/ui/buttons/Layout";
+import { PrimaryButton } from "@/styles/link";
 
 const InquiryEmpty = () => {
   return (
@@ -38,10 +37,7 @@ const InquiryEmpty = () => {
         ))}
       </Step>
       <FlexAlignCenter>
-        <PrimaryIconButton>
-          瀏覽輔具
-          <MdArrowForward size={27} />
-        </PrimaryIconButton>
+        <PrimaryButton href="/product">瀏覽輔具</PrimaryButton>
       </FlexAlignCenter>
     </Container>
   );

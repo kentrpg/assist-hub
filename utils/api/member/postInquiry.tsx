@@ -11,9 +11,8 @@ import {
 
 export const postInquiry = async (
   token: string,
-  data: RequestPostInquiryType
+  data: RequestPostInquiryType,
 ): Promise<ResultPostInquiryType> => {
-  console.log("postInquiry data", data);
   const parsedUrl = new URL(post_member_inquiry);
   const options = {
     method: "POST",
@@ -26,8 +25,6 @@ export const postInquiry = async (
   };
 
   const [res, error] = await catchError(fetch(parsedUrl, options));
-
-  console.log("res", res, error);
 
   if (error) {
     console.log("error", error);
@@ -47,8 +44,6 @@ export const postInquiry = async (
   }
 
   const json = await res.json();
-
-  console.log("json", json);
 
   if (NODE_ENV === "development") {
     const validation = validateResponseType(json, ResultPostInquiry);

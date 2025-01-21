@@ -1,4 +1,11 @@
-export const tabsData = [
+type TabData = {
+  id: string;
+  label: string;
+  imgSrc: string;
+  description: string;
+};
+
+export const tabsData: TabData[] = [
   {
     id: "1",
     label: "具平地跑跳能力",

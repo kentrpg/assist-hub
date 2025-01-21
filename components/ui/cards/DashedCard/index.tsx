@@ -1,13 +1,13 @@
 import { MdAdd } from "react-icons/md";
-import { YellowDashedCard, Button } from "./styled";
+import { YellowDashedCard, ActionButton } from "./styled";
 
 const DashedCard: React.FC = () => {
   return (
     <YellowDashedCard>
-      <Button>
+      <ActionButton href="/product">
         <MdAdd size={27} />
         新增輔具
-      </Button>
+      </ActionButton>
     </YellowDashedCard>
   );
 };

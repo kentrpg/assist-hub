@@ -6,8 +6,12 @@ import Layout from "@/components/layout/Layout";
 import Head from "next/head";
 import store from "@/utils/redux/store";
 import { Provider } from "react-redux";
+import { useRouter } from "next/router";
 
 export default function App({ Component, pageProps }: AppProps) {
+  const router = useRouter();
+  const isAdminPage = router.pathname.startsWith("/admin");
+
   return (
     <Provider store={store}>
       <Head>
@@ -17,9 +21,13 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <Layout>
+        {isAdminPage ? (
           <Component {...pageProps} />
-        </Layout>
+        ) : (
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        )}
       </ThemeProvider>
     </Provider>
   );

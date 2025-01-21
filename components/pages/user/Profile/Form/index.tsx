@@ -11,11 +11,12 @@ import Contact from "./sections/Contact";
 import Address from "./sections/Address";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/utils/redux/slices/user";
-import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
+import Loading from "@/components/ui/Loading";
 
 const Form: React.FC = () => {
   const user = useSelector((state: RootState) => state.user);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
   const methods = useForm<FormData>({
@@ -34,18 +35,21 @@ const Form: React.FC = () => {
   });
 
   useEffect(() => {
-    methods.reset({
-      name: user.name,
-      gender: user.gender,
-      dobStamp: user.dobStamp,
-      email: user.email,
-      phone: user.phone,
-      contactTime: user.contactTime,
-      addressZip: user.addressZip,
-      addressCity: user.addressCity,
-      addressDistrict: user.addressDistrict,
-      addressDetail: user.addressDetail,
-    });
+    if (user && Object.keys(user).length > 0) {
+      methods.reset({
+        name: user.name,
+        gender: user.gender,
+        dobStamp: user.dobStamp,
+        email: user.email,
+        phone: user.phone,
+        contactTime: user.contactTime,
+        addressZip: user.addressZip,
+        addressCity: user.addressCity,
+        addressDistrict: user.addressDistrict,
+        addressDetail: user.addressDetail,
+      });
+      setLoading(false);
+    }
   }, [user, methods]);
 
   const onSubmit = methods.handleSubmit(async (data) => {
@@ -76,30 +80,39 @@ const Form: React.FC = () => {
   });
 
   return (
-    <FormProvider {...methods}>
-      <FormInfo onSubmit={onSubmit}>
-        <Gender register={methods.register} errors={methods.formState.errors} />
-        <NameWithDob
-          register={methods.register}
-          errors={methods.formState.errors}
-        />
-        <EmailWithPw
-          register={methods.register}
-          errors={methods.formState.errors}
-        />
-        <Contact
-          register={methods.register}
-          errors={methods.formState.errors}
-        />
-        <Address
-          register={methods.register}
-          errors={methods.formState.errors}
-        />
-        <SaveBtn disabled={isSubmitting}>
-          {isSubmitting ? <LoaderSpinner /> : "儲存編輯"}
-        </SaveBtn>
-      </FormInfo>
-    </FormProvider>
+    <>
+      {loading ? (
+        <Loading />
+      ) : (
+        <FormProvider {...methods}>
+          <FormInfo onSubmit={onSubmit}>
+            <Gender
+              register={methods.register}
+              errors={methods.formState.errors}
+            />
+            <NameWithDob
+              register={methods.register}
+              errors={methods.formState.errors}
+            />
+            <EmailWithPw
+              register={methods.register}
+              errors={methods.formState.errors}
+            />
+            <Contact
+              register={methods.register}
+              errors={methods.formState.errors}
+            />
+            <Address
+              register={methods.register}
+              errors={methods.formState.errors}
+            />
+            <SaveBtn disabled={isSubmitting}>
+              {isSubmitting ? <Loading /> : "儲存編輯"}
+            </SaveBtn>
+          </FormInfo>
+        </FormProvider>
+      )}
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   InquiryContainer,
   Title,
@@ -9,18 +9,28 @@ import {
 import Inquiry from "./Inquiry";
 import Empty from "./Empty";
 import { InquiryData } from "@/components/pages/user/Inquiries/data";
+import Loading from "@/components/ui/Loading";
 
 type InquiriesProps = {
   inquiriesData?: InquiryData[];
 };
 
 const Inquiries: React.FC<InquiriesProps> = ({ inquiriesData }) => {
+  const [isLoading, setIsLoading] = useState(true);
   const inquiries = inquiriesData || [];
+
+  useEffect(() => {
+    if (inquiriesData !== undefined) {
+      setIsLoading(false);
+    }
+  }, [inquiriesData]);
 
   return (
     <InquiryContainer>
       <Title>詢問單</Title>
-      {inquiries.length === 0 ? (
+      {isLoading ? (
+        <Loading />
+      ) : inquiries.length === 0 ? (
         <Empty />
       ) : (
         <GridContainer>

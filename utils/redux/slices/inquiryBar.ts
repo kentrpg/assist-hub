@@ -5,6 +5,8 @@ export type InquiryBarState = Array<{
   imgSrc: string;
   name: string;
   rent: number;
+  features: string[];
+  description:string;
 }>;
 
 const initialState: InquiryBarState = [];
@@ -31,6 +33,8 @@ const inquiryBarSlice = createSlice({
         imgSrc: string;
         name: string;
         rent: number;
+        features: string[];
+        description:string;
       }>,
     ) => {
       if (state.length >= 3) {

@@ -30,6 +30,24 @@ export const SubTitle = styled.h2`
   margin-bottom: 40px;
 `;
 
+export const Card = styled.div`
+  position: relative;
+  flex: 0 0 calc((100% - 2 * 24px) / 3);
+`;
+
+export const DeleteButton = styled.button`
+  position: absolute;
+  top: 5px;
+  right: 7px;
+  font-size: 0px;
+  background-color: transparent;
+  color: ${({ theme }) => theme.colors.textMuted};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.grey200};
+  }
+`;
+
 export const CardGroup = styled.div`
   display: flex;
   flex-direction: column;

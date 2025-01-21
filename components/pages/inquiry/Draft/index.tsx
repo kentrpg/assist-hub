@@ -7,25 +7,30 @@ import {
   CardGroup,
   AccentButton,
   ActionAssessment,
+  Card,
+  DeleteButton,
 } from "../styled";
 import { PageBackButton } from "@/components/ui/circulars";
-import { MdArrowBack } from "react-icons/md";
+import { MdArrowBack, MdClose } from "react-icons/md";
 import { inquiryCardColors } from "../data";
 import { FlexAlignCenter } from "@/styles/flex";
 import InquiryCard from "@/components/ui/cards/InquiryCard";
 import DashedCard from "@/components/ui/cards/DashedCard";
 import Tabs from "@/components/ui/Tabs";
 import { InquiryPageProps } from "@/types/postInquiry";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/utils/redux/store";
 import { useEffect, useState } from "react";
 import { ResultPostInquiryType } from "@/types/postInquiry";
 import { hasError, isValid } from "@/helpers/api/status";
 import Empty from "@/components/pages/inquiry/Empty";
 import Loading from "@/components/ui/Loading";
+import { removeFromInquiryBar } from "@/utils/redux/slices/inquiryBar";
+import React from "react";
 
 const DraftInquiry = () => {
   const inquiryBar = useSelector((state: RootState) => state.inquiryBar);
+  const dispatch = useDispatch();
   const [inquiryData, setInquiryData] = useState<InquiryPageProps>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -58,9 +63,22 @@ const DraftInquiry = () => {
       setIsLoading(false);
     };
 
-    const isInquiryBarNotEmpty = inquiryBar.length > 0;
-    isInquiryBarNotEmpty && fetchInquiryData();
+    if (inquiryBar.length > 0 && inquiryData.length === 0) {
+      fetchInquiryData();
+    }
+  }, []);
+
+  useEffect(() => {
+    setInquiryData((prev) =>
+      prev.filter((item) =>
+        inquiryBar.some((barItem) => barItem.id === item.id),
+      ),
+    );
   }, [inquiryBar]);
+
+  const handleDelete = (id: number) => {
+    dispatch(removeFromInquiryBar(id));
+  };
 
   const cardSlots = Array.from({ length: 3 - inquiryData.length });
 
@@ -83,24 +101,18 @@ const DraftInquiry = () => {
       <Assistive>
         <SubTitle>您已選擇的輔具</SubTitle>
         <CardGroup>
-          {inquiryData.map(
-            (
-              { id, name, description, rent, imgSrc, imgAlt, features },
-              index,
-            ) => (
+          {inquiryData.map(({ id, ...props }, index) => (
+            <Card key={id}>
+              <DeleteButton onClick={() => handleDelete(id)}>
+                <MdClose size={24} />
+              </DeleteButton>
               <InquiryCard
-                key={id}
                 id={id}
+                {...props}
                 $color={inquiryCardColors[index]}
-                rent={rent}
-                imgSrc={imgSrc}
-                imgAlt={imgAlt}
-                name={name}
-                description={description}
-                features={features}
               />
-            ),
-          )}
+            </Card>
+          ))}
           {cardSlots.map((_, index) => (
             <DashedCard key={`empty-${index}`} />
           ))}

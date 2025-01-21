@@ -46,7 +46,7 @@ const Contact: React.FC<FormHooks> = ({ register, errors }) => {
             required: "請選擇方便聯繫的時間",
           })}
         >
-          <option value="">請選擇</option>
+          <option value="" disabled>請選擇</option>
           <option value="全天 09：00 - 21：00">全天 09：00 - 21：00</option>
           <option value="上午 09：00 - 12：00">上午 09：00 - 12：00</option>
           <option value="下午 12：00 - 18：00">下午 12：00 - 18：00</option>

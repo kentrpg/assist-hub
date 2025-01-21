@@ -5,6 +5,7 @@ import Orders from "@/components/pages/user/Orders";
 import Inquiries from "@/components/pages/user/Inquiries";
 import Details from "@/components/pages/user/Orders/Details";
 import { Order } from "@/components/pages/user/Orders/data";
+import { InquiryData } from "@/components/pages/user/Inquiries/data";
 import { ActiveTabType } from "@/components/pages/user/SideBar/data";
 import { Container } from "./styled";
 import { ResultGetMemberOrderType } from "@/types/getOrder";
@@ -12,17 +13,19 @@ import { ResultGetMemberOrderType } from "@/types/getOrder";
 type UserPageLayoutProps = {
   initialTab: ActiveTabType;
   ordersData?: Order[];
+  inquiriesData?: InquiryData[];
 };
 
 const UserPage: React.FC<UserPageLayoutProps> = ({
   initialTab,
   ordersData,
+  inquiriesData,
 }) => {
   const [activeTab, setActiveTab] = useState<ActiveTabType>(initialTab);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [orderData, setOrderData] = useState<
     ResultGetMemberOrderType["data"] | null
-  >(null); // 單個訂單型別
+  >(null);
 
   const handleViewOrder = async (order: Order) => {
     try {
@@ -71,7 +74,7 @@ const UserPage: React.FC<UserPageLayoutProps> = ({
       {activeTab === "detail" && selectedOrder && orderData && (
         <Details onBack={handleBackToOrders} orderData={orderData} />
       )}
-      {activeTab === "inquiry" && <Inquiries />}
+      {activeTab === "inquiry" && <Inquiries inquiriesData={inquiriesData} />}
     </Container>
   );
 };

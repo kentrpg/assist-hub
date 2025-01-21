@@ -1,9 +1,9 @@
-
 import React, { useState, useEffect } from "react";
 import { OrderContainer, Header, Tabs, Tab, Title, List } from "./styled";
 import Empty from "./Empty";
 import ListItem from "./ListItem";
 import { ResultGetMemberOrdersType } from "@/types/getOrders";
+import Loading from "@/components/ui/Loading";
 
 type Order = ResultGetMemberOrdersType["data"][0];
 
@@ -15,10 +15,9 @@ type OrdersProps = {
 type ActiveTab = "全部訂單" | "已結案";
 
 const Orders: React.FC<OrdersProps> = ({ setActiveOrder, ordersData }) => {
-
-  console.log("ordersData", ordersData);
   const [activeTab, setActiveTab] = useState<ActiveTab>("全部訂單");
   const [filteredOrders, setFilteredOrders] = useState<Order[]>([]);
+  const [loading, setLoading] = useState(true); // 新增 loading 狀態
 
   useEffect(() => {
     if (ordersData) {
@@ -28,6 +27,9 @@ const Orders: React.FC<OrdersProps> = ({ setActiveOrder, ordersData }) => {
         return false;
       });
       setFilteredOrders(filtered);
+      setLoading(false);
+    } else {
+      setLoading(true);
     }
   }, [activeTab, ordersData]);
 
@@ -51,7 +53,9 @@ const Orders: React.FC<OrdersProps> = ({ setActiveOrder, ordersData }) => {
         </Tabs>
       </Header>
       <List>
-        {filteredOrders.length === 0 ? (
+        {loading ? (
+          <Loading />
+        ) : filteredOrders.length === 0 ? (
           <Empty />
         ) : (
           filteredOrders.map((order) => (

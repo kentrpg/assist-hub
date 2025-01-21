@@ -60,7 +60,7 @@ export const ProductImages = styled.div`
   }
 `;
 
-export const Icon = styled.button`
+export const Icon = styled.button<StatusProps>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -68,8 +68,12 @@ export const Icon = styled.button`
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  cursor: pointer;
+  opacity: ${({ $isSuggest }) => ($isSuggest === false ? 0.5 : 1)};
+  pointer-events: ${({ $isSuggest }) =>
+    $isSuggest === false ? "none" : "auto"};
   &:hover {
-    background-color: #0d2d73;
+    background-color: "#0b2c6b";
+    cursor: ${({ $isSuggest }) =>
+      $isSuggest === false ? "not-allowed" : "pointer"};
   }
 `;

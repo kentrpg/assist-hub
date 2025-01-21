@@ -17,76 +17,65 @@ import { FlexAlignCenter } from "@/styles/flex";
 import InquiryCard from "@/components/ui/cards/InquiryCard";
 import DashedCard from "@/components/ui/cards/DashedCard";
 import Tabs from "@/components/ui/Tabs";
-import { InquiryPageProps } from "@/types/postInquiry";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/utils/redux/store";
-import { useEffect, useState } from "react";
-import { ResultPostInquiryType } from "@/types/postInquiry";
-import { hasError, isValid } from "@/helpers/api/status";
+import {
+  removeFromInquiryBar,
+  resetInquiryBar,
+} from "@/utils/redux/slices/inquiryBar";
+import {
+  selectUserInquiry,
+  resetUserInquiry,
+} from "@/utils/redux/slices/userInquiry";
 import Empty from "@/components/pages/inquiry/Empty";
-import Loading from "@/components/ui/Loading";
-import { removeFromInquiryBar } from "@/utils/redux/slices/inquiryBar";
-import React from "react";
+import { useRouter } from "next/router";
+import { hasError, isValid } from "@/helpers/api/status";
 
 const DraftInquiry = () => {
-  const inquiryBar = useSelector((state: RootState) => state.inquiryBar);
+  const router = useRouter();
   const dispatch = useDispatch();
-  const [inquiryData, setInquiryData] = useState<InquiryPageProps>([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchInquiryData = async () => {
-      setIsLoading(true);
-
-      const requestData = {
-        productIds: inquiryBar.map((item) => item.id),
-      };
-
-      const res = await fetch("/api/postInquiry", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestData),
-      });
-
-      const result: ResultPostInquiryType = await res.json();
-
-      if (hasError(result) || !isValid(result)) {
-        alert(`${result.message}，請稍後再試`);
-        setIsLoading(false);
-        return;
-      }
-
-      setInquiryData(result.data || []);
-      setIsLoading(false);
-    };
-
-    if (inquiryBar.length > 0 && inquiryData.length === 0) {
-      fetchInquiryData();
-    }
-  }, []);
-
-  useEffect(() => {
-    setInquiryData((prev) =>
-      prev.filter((item) =>
-        inquiryBar.some((barItem) => barItem.id === item.id),
-      ),
-    );
-  }, [inquiryBar]);
+  const inquiryBar = useSelector((state: RootState) => state.inquiryBar);
+  const userInquiry = useSelector(selectUserInquiry);
 
   const handleDelete = (id: number) => {
     dispatch(removeFromInquiryBar(id));
   };
 
-  const cardSlots = Array.from({ length: 3 - inquiryData.length });
+  const handleSubmit = async () => {
+    const { level, additionalInfo } = userInquiry;
+    const postInquiryData = {
+      productIds: inquiryBar.map((item) => item.id),
+      level,
+      additionalInfo,
+    };
 
-  if (isLoading) {
-    return <Loading />;
-  }
+    const res = await fetch("/api/member/postInquiry", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(postInquiryData),
+    });
 
-  if (!inquiryData.length) {
+    const result = await res.json();
+
+    if (hasError(result)) {
+      alert(result.message);
+      return;
+    }
+
+    if (isValid(result)) {
+      alert(result.message);
+      await router.push("/user/inquiry");
+      dispatch(resetInquiryBar());
+      dispatch(resetUserInquiry());
+    }
+  };
+
+  const cardSlots = Array.from({ length: 3 - inquiryBar.length });
+
+  if (!inquiryBar.length) {
     return <Empty />;
   }
 
@@ -101,7 +90,7 @@ const DraftInquiry = () => {
       <Assistive>
         <SubTitle>您已選擇的輔具</SubTitle>
         <CardGroup>
-          {inquiryData.map(({ id, ...props }, index) => (
+          {inquiryBar.map(({ id, ...props }, index) => (
             <Card key={id}>
               <DeleteButton onClick={() => handleDelete(id)}>
                 <MdClose size={24} />
@@ -123,7 +112,7 @@ const DraftInquiry = () => {
         <Tabs />
       </ActionAssessment>
       <FlexAlignCenter>
-        <AccentButton>送出詢問單</AccentButton>
+        <AccentButton onClick={handleSubmit}>送出詢問單</AccentButton>
       </FlexAlignCenter>
     </Container>
   );

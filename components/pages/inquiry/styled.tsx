@@ -1,7 +1,4 @@
-import {
-  AccentButton as AccentButtonStyle,
-  buttonSizes,
-} from "@/components/ui/buttons/Layout";
+import { PrimaryButton, buttonSizes } from "@/components/ui/buttons/Layout";
 import { Tablet } from "@/styles/container";
 import styled from "styled-components";
 
@@ -59,6 +56,6 @@ export const CardGroup = styled.div`
   }
 `;
 
-export const AccentButton = styled(AccentButtonStyle)`
+export const AccentButton = styled(PrimaryButton)`
   ${buttonSizes.xlarge};
 `;

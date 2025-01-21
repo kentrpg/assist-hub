@@ -21,6 +21,7 @@ import { RootState } from "@/utils/redux/store";
 import { useEffect, useState } from "react";
 import { ResultPostInquiryType } from "@/types/postInquiry";
 import { hasError, isValid } from "@/helpers/api/status";
+import Empty from "@/components/pages/inquiry/Empty";
 import Loading from "@/components/ui/Loading";
 
 const DraftInquiry = () => {
@@ -65,6 +66,10 @@ const DraftInquiry = () => {
 
   if (isLoading) {
     return <Loading />;
+  }
+
+  if (!inquiryData.length) {
+    return <Empty />;
   }
 
   return (

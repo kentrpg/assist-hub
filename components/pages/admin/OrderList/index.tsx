@@ -7,7 +7,7 @@ import {
 import {
   Container,
   Header,
-  SearchContainer,
+  TableToolbar,
   TabList,
   Tab,
   Badge,
@@ -129,7 +129,7 @@ const OrderList = () => {
             </Tab>
           ))}
         </TabList>
-        <SearchContainer>
+        <TableToolbar>
           <CountGroup>
             <CountLabel>顯示筆數</CountLabel>
             <CountSelect>
@@ -142,7 +142,7 @@ const OrderList = () => {
             </SelectArrowIcon>
           </CountGroup>
           <SearchInput placeholder="搜尋..." />
-        </SearchContainer>
+        </TableToolbar>
       </Header>
 
       <Table>

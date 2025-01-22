@@ -19,7 +19,7 @@ import {
   IconGroup,
   IconWrapper,
   NotificationBadge,
-  SearchContainer,
+  SearchGroup,
   SearchInput,
   SearchIcon,
   NavList,
@@ -61,12 +61,12 @@ const Sidebar: React.FC = () => {
         </IconGroup>
       </TopSection>
 
-      <SearchContainer>
+      <SearchGroup>
         <SearchIcon>
           <MdSearch size={20} />
         </SearchIcon>
         <SearchInput placeholder="找尋..." />
-      </SearchContainer>
+      </SearchGroup>
 
       <NavList>
         <NavItem>
@@ -98,8 +98,8 @@ const Sidebar: React.FC = () => {
         </NavItem>
         <NavItem>
           <NavLink
-            href="/admin/statistic"
-            active={(router.asPath === "/admin/statistic").toString()}
+            href="/admin/diagram"
+            active={(router.asPath === "/admin/diagram").toString()}
           >
             <MdBarChart size={20} />
             數據報表

@@ -71,7 +71,7 @@ export const NotificationBadge = styled.span`
   text-align: center;
 `;
 
-export const SearchContainer = styled.div`
+export const SearchGroup = styled.div`
   position: relative;
   margin-bottom: 20px;
 `;

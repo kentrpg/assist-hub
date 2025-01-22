@@ -33,44 +33,43 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 const AdminPage = ({ activeTab }: { activeTab: string }) => {
-  const adminControls = {
-    getTitle: () => {
-      switch (activeTab) {
-        case "order":
-          return "訂單列表";
-        case "user":
-          return "會員列表";
-        case "inquiry":
-          return "詢問列表";
-        case "diagram":
-          return "圖表列表";
-        default:
-          return "訂單列表";
-      }
-    },
-    getComponent: () => {
-      switch (activeTab) {
-        case "order":
-          return <OrderList />;
-        case "user":
-          return null; // 待實作
-        case "inquiry":
-          return null; // 待實作
-        case "diagram":
-          return null; // 待實作
-        default:
-          return <OrderList />;
-      }
-    },
+  const getPageTitle = () => {
+    switch (activeTab) {
+      case "order":
+        return "訂單列表";
+      case "user":
+        return "會員列表";
+      case "inquiry":
+        return "詢問列表";
+      case "diagram":
+        return "圖表列表";
+      default:
+        return "訂單列表";
+    }
+  };
+
+  const getPageContent = () => {
+    switch (activeTab) {
+      case "order":
+        return <OrderList />;
+      case "user":
+        return <OrderList />;
+      case "inquiry":
+        return <OrderList />;
+      case "diagram":
+        return <OrderList />;
+      default:
+        return <OrderList />;
+    }
   };
 
   return (
     <>
       <Head>
-        <title>{adminControls.getTitle()}</title>
-        <meta name="description" content={adminControls.getTitle()} />
+        <title>{getPageTitle()}</title>
+        <meta name="description" content={getPageTitle()} />
       </Head>
-      <Layout>{adminControls.getComponent()}</Layout>
+      <Layout>{getPageContent()}</Layout>
     </>
   );
 };

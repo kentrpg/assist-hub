@@ -14,7 +14,7 @@ export const Header = styled.div`
   margin-bottom: 20px;
 `;
 
-export const SearchContainer = styled.div`
+export const TableToolbar = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-end;

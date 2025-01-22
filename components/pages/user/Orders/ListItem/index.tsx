@@ -7,7 +7,7 @@ import {
   Info,
   Id,
   Created,
-  Price,
+  Total,
   Main,
   Finished,
   Status,
@@ -32,13 +32,14 @@ import {
   ColGroup,
   TableContainer,
 } from "./styled";
-import { ResultGetMemberOrdersType } from "@/types/getOrders";
-
-type Order = ResultGetMemberOrdersType["data"][0];
+import { formatDate } from "./data";
+import { adjustDate } from "./data";
+import { formatCurrency } from "@/helpers/format/currency";
+import { OrdersData } from "./data";
 
 type ListProps = {
-  order: Order;
-  onViewDetails: () => void; // 查看訂單詳情的回調函數
+  order: OrdersData;
+  onViewDetails: () => void;
 };
 
 const ListItem: React.FC<ListProps> = ({ order, onViewDetails }) => {
@@ -58,6 +59,7 @@ const ListItem: React.FC<ListProps> = ({ order, onViewDetails }) => {
       productImgAlt,
       rent,
       deposit,
+      fee,
       finalAmount,
       rentDate,
       rentStamp,
@@ -66,21 +68,36 @@ const ListItem: React.FC<ListProps> = ({ order, onViewDetails }) => {
     },
   } = order;
 
+  const shippingFee = shipping === "delivery" ? fee : 0;
+  const totalAmount = quantity * (rent + shippingFee + deposit);
+
   return (
     <Item>
-      <Header>
+      <Header $shipping={shipping}>
         <Major>
-          <Type>{shipping}</Type>
+          <Type>
+            {order.shipping === "delivery"
+              ? "宅配"
+              : order.shipping === "store"
+                ? "自取"
+                : "未知方式"}
+          </Type>
           <Info>
             <Id>訂單編號 {orderCode}</Id>
-            <Created>訂單時間 {createdStamp}</Created>
+            <Created>訂單時間 {formatDate(createdDate)}</Created>
           </Info>
         </Major>
-        <Price>元</Price>
+        <Total>{formatCurrency(totalAmount)}</Total>
       </Header>
       <Main>
-        <Finished>預計抵達日期{rentStamp}</Finished>
-        <Status>{orderStatus}</Status>
+        {shipping === "delivery" ? (
+          <Finished>預計抵達日期 {adjustDate(rentStamp)}</Finished>
+        ) : shipping === "store" ? (
+          <Finished>取件驗證碼: {orderCode}</Finished>
+        ) : (
+          <Finished>N/A</Finished>
+        )}
+        <Status>{order.orderStatus}</Status>
       </Main>
       <TableContainer>
         <Table>
@@ -115,8 +132,8 @@ const ListItem: React.FC<ListProps> = ({ order, onViewDetails }) => {
                 </Description>
               </Product>
               <Quantity>x{quantity}</Quantity>
-              <Rent>{rent}元</Rent>
-              <Others>{deposit}元</Others>
+              <Rent>{formatCurrency(rent)}</Rent>
+              <Others>{formatCurrency(deposit)}</Others>
               <BtnContainer>
                 <DetailsBtn onClick={onViewDetails}>查看訂單</DetailsBtn>
               </BtnContainer>

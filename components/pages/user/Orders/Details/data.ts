@@ -7,21 +7,30 @@ type OrderDetails = {
   rent: number;
   deposit: number;
   fee: number;
-  feeDeposit: number;
   finalAmount: number;
+  period: number;
   rentDate: string;
   rentStamp: string;
   returnDate: string;
   returnStamp: string;
+  payment: string;
 };
 
-export type Order = {
-  orderId: number;
+type shippingInfo = {
+  name: string;
+  phone: string;
+  email: string;
+  address: string;
+};
+
+export type OrderData = {
   orderStatus: string;
   shippingStatus: string;
   orderCode: string;
   createdDate: string;
   createdStamp: string;
+  note: string;
   shipping: string;
+  shippinginfo: shippingInfo;
   details: OrderDetails;
 };

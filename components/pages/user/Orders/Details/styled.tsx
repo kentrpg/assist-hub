@@ -175,3 +175,7 @@ export const P = styled.p<PProps>`
   word-break: break-word;
   overflow-wrap: anywhere;
 `;
+
+export const IconWrapper = styled.div`
+  
+`

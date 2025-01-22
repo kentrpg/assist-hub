@@ -3,10 +3,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export type InquiryBarState = Array<{
   id: number;
   imgSrc: string;
+  imgAlt: string;
   name: string;
   rent: number;
   features: string[];
-  description:string;
+  description: string;
 }>;
 
 const initialState: InquiryBarState = [];
@@ -31,10 +32,11 @@ const inquiryBarSlice = createSlice({
       action: PayloadAction<{
         id: number;
         imgSrc: string;
+        imgAlt: string;
         name: string;
         rent: number;
         features: string[];
-        description:string;
+        description: string;
       }>,
     ) => {
       if (state.length >= 3) {

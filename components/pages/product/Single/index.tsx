@@ -97,6 +97,7 @@ const Single: React.FC<ProductDetailsProps> = ({
       addToInquiryBar({
         id: product.id,
         imgSrc: product.image.preview,
+        imgAlt: product.image.previewAlt,
         name: product.name,
         rent: product.rent,
         features: product.features,
@@ -124,10 +125,11 @@ const Single: React.FC<ProductDetailsProps> = ({
         addToInquiryBar({
           id: productToAdd.productId,
           imgSrc: productToAdd.imgSrc,
+          imgAlt: productToAdd.imgSrc,
           name: productToAdd.name,
           rent: productToAdd.rent,
-          features: product.features,
-          description: product.description,
+          features: productToAdd.features,
+          description: productToAdd.description,
         }),
       );
       alert("✅ 商品成功加入詢問單！");

@@ -2,7 +2,7 @@ import { NextPage, GetServerSideProps } from "next";
 import React from "react";
 import UserPage from "@/components/pages/user/UserPage";
 import { Wrapper100 } from "@/styles/wrappers";
-import type { Order } from "@/components/pages/user/Orders/data";
+import type { OrdersData } from "@/components/pages/user/Orders/ListItem/data";
 import getOrders from "@/utils/api/member/getOrders";
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
@@ -31,7 +31,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 };
 
 type OrderPageProps = {
-  ordersData: Order[];
+  ordersData: OrdersData[];
 };
 
 const Order: NextPage<OrderPageProps> = ({ ordersData }) => {

@@ -1,12 +1,16 @@
 import styled from "styled-components";
 import { ExtraLarge, Desktop, Tablet, Mobile } from "@/styles/container";
 
+type HeaderProps = {
+  $shipping: "delivery" | "store";
+};
+
 export const Item = styled.div`
   border-radius: 5px;
   outline: 1px solid #888888;
 `;
 
-export const Header = styled.div`
+export const Header = styled.div<HeaderProps>`
   padding: 12px;
   border-radius: 5px 5px 0 0;
   display: flex;
@@ -14,6 +18,13 @@ export const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   position: relative;
+  background-color: ${({ $shipping }) =>
+    $shipping === "delivery"
+      ? "#FDEFEC"
+      : $shipping === "store"
+        ? "#FFF3D3"
+        : "#ffffff"};
+
   &::after {
     content: "";
     position: absolute;
@@ -23,6 +34,7 @@ export const Header = styled.div`
     height: 1px;
     background-color: #888888;
   }
+
   @media (${Mobile}) {
     padding: 24px;
     flex-direction: row;
@@ -38,6 +50,7 @@ export const Major = styled.div`
 `;
 
 export const Type = styled.h4`
+  white-space: nowrap;
   color: #08204d;
   font-size: 24px;
   font-weight: 500;
@@ -46,7 +59,7 @@ export const Type = styled.h4`
   }
 `;
 
-export const Price = styled.h4`
+export const Total = styled.h4`
   color: #08204d;
   font-size: 28px;
   font-weight: 500;
@@ -96,8 +109,6 @@ export const Main = styled.div`
 `;
 
 export const Finished = styled.span`
-  max-width: 165px;
-  width: 100%;
   font-weight: 400;
   font-size: 14px;
 `;
@@ -220,6 +231,11 @@ export const DetailsBtn = styled.button`
   height: 50px;
   cursor: pointer;
   border-radius: 30px;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    background-color: #0b2c6b;
+  }
 `;
 
 export const Description = styled.div`

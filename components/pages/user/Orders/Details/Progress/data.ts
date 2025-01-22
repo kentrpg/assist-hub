@@ -10,7 +10,7 @@ type Step = {
 
 export const steps: Step[] = [
   {
-    label: "確認訂單",
+    label: "待出貨",
     isCompleted: true,
     icon: React.createElement(MdListAlt, { size: 32, color: "#2ECC71" }),
   },

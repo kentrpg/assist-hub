@@ -4,7 +4,8 @@ import Profile from "@/components/pages/user/Profile";
 import Orders from "@/components/pages/user/Orders";
 import Inquiries from "@/components/pages/user/Inquiries";
 import Details from "@/components/pages/user/Orders/Details";
-import { Order } from "@/components/pages/user/Orders/data";
+import { OrdersData } from "@/components/pages/user/Orders/ListItem/data";
+import { OrderData } from "@/components/pages/user/Orders/Details/data";
 import { InquiryData } from "@/components/pages/user/Inquiries/data";
 import { ActiveTabType } from "@/components/pages/user/SideBar/data";
 import { Container } from "./styled";
@@ -12,7 +13,7 @@ import { ResultGetMemberOrderType } from "@/types/getOrder";
 
 type UserPageLayoutProps = {
   initialTab: ActiveTabType;
-  ordersData?: Order[];
+  ordersData?: OrdersData[];
   inquiriesData?: InquiryData[];
 };
 
@@ -22,12 +23,12 @@ const UserPage: React.FC<UserPageLayoutProps> = ({
   inquiriesData,
 }) => {
   const [activeTab, setActiveTab] = useState<ActiveTabType>(initialTab);
-  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [selectedOrder, setSelectedOrder] = useState<OrdersData | null>(null);
   const [orderData, setOrderData] = useState<
     ResultGetMemberOrderType["data"] | null
   >(null);
 
-  const handleViewOrder = async (order: Order) => {
+  const handleViewOrder = async (order: OrdersData) => {
     try {
       const res = await fetch("/api/member/getOrder", {
         method: "POST",
@@ -69,7 +70,10 @@ const UserPage: React.FC<UserPageLayoutProps> = ({
       <SideBar setActiveTab={setActiveTab} activeTab={activeTab} />
       {activeTab === "profile" && <Profile />}
       {activeTab === "order" && (
-        <Orders setActiveOrder={handleViewOrder} ordersData={ordersData} />
+        <Orders
+          setActiveOrder={handleViewOrder}
+          ordersData={ordersData || []}
+        />
       )}
       {activeTab === "detail" && selectedOrder && orderData && (
         <Details onBack={handleBackToOrders} orderData={orderData} />

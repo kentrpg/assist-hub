@@ -7,7 +7,7 @@ import {
   Info,
   Id,
   Created,
-  Price,
+  Total,
   Main,
   Finished,
   Status,
@@ -48,12 +48,15 @@ import {
   RentInfo,
 } from "./styled";
 import { MdArrowBack } from "react-icons/md";
-import { ResultGetMemberOrderType } from "@/types/getOrder";
 import Progress from "./Progress";
+import { formatDate } from "../ListItem/data";
+import { adjustDate } from "../ListItem/data";
+import { formatCurrency } from "@/helpers/format/currency";
+import { OrderData } from "./data";
 
 type DetailsProps = {
   onBack: () => void;
-  orderData: ResultGetMemberOrderType["data"];
+  orderData: OrderData;
 };
 
 const Details: React.FC<DetailsProps> = ({ onBack, orderData }) => {
@@ -83,7 +86,14 @@ const Details: React.FC<DetailsProps> = ({ onBack, orderData }) => {
       returnStamp,
       payment,
     } = {},
-  } = orderData || {};
+  } = orderData;
+
+  const validShipping: "delivery" | "store" =
+    shipping === "delivery" || shipping === "store" ? shipping : "delivery";
+
+  const shippingFee = shipping === "delivery" ? (fee ?? 0) : 0; 
+  const totalAmount =
+    (quantity ?? 0) * ((rent ?? 0) + shippingFee + (deposit ?? 0)); 
 
   return (
     <DetailContainer>
@@ -94,19 +104,35 @@ const Details: React.FC<DetailsProps> = ({ onBack, orderData }) => {
         <Title onClick={onBack}>全部訂單</Title>
       </BackToOrders>
       <Item>
-        <Header>
+        <Header $shipping={validShipping}>
           <Major>
-            <Type>{shipping}</Type>
+            <Type>
+              {shipping === "delivery"
+                ? "宅配"
+                : shipping === "store"
+                  ? "自取"
+                  : "未知方式"}
+            </Type>
             <Info>
               <Id>訂單編號 {orderCode}</Id>
-              <Created>訂單時間</Created>
+              <Created>
+                訂單時間 {createdDate ? formatDate(createdDate) : "N/A"}
+              </Created>
             </Info>
           </Major>
-          <Price>元</Price>
+          <Total>{formatCurrency(totalAmount)}</Total>
         </Header>
         <Main>
-          <Finished>{returnStamp}</Finished>
-          <Status>{orderStatus}</Status>
+          {shipping === "delivery" ? (
+            <Finished>
+              預計抵達日期 {rentStamp ? adjustDate(rentStamp) : "N/A"}
+            </Finished>
+          ) : shipping === "store" ? (
+            <Finished>取件驗證碼: {orderCode}</Finished>
+          ) : (
+            <Finished>N/A</Finished>
+          )}
+          <Status>{shippingStatus}</Status>
         </Main>
 
         {/* ProgressBar */}
@@ -145,9 +171,9 @@ const Details: React.FC<DetailsProps> = ({ onBack, orderData }) => {
                   </Description>
                 </Product>
                 <Quantity>x{quantity}</Quantity>
-                <Rent>{rent}元</Rent>
-                <Deposit>{deposit}元</Deposit>
-                <Fee>{fee}元</Fee>
+                <Rent>{formatCurrency(rent)}</Rent>
+                <Deposit>{formatCurrency(deposit)}</Deposit>
+                <Fee>{formatCurrency(shipping === "delivery" ? fee : 0)}</Fee>
               </Tr>
             </Tbody>
           </Table>
@@ -160,7 +186,7 @@ const Details: React.FC<DetailsProps> = ({ onBack, orderData }) => {
                 <Row>
                   <P $type="title">租賃日期</P>
                   <P $type="content">
-                    {rentStamp} 到 {returnStamp}
+                    {rentStamp}－{returnStamp}
                   </P>
                 </Row>
                 <Row>

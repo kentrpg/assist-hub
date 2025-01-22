@@ -10,7 +10,7 @@ import {
   InquiryBtn,
   DeleteBtn,
   IconWrapper,
-  EmptyCircle, 
+  EmptyCircle,
   EmptyCircleText,
 } from "./styled";
 import { MdOutlineClose } from "react-icons/md";
@@ -18,8 +18,11 @@ import { RootState } from "@/utils/redux/store";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { removeFromInquiryBar } from "@/utils/redux/slices/inquiryBar";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
-const InquiryBar = () => {
+const InquiryBar: React.FC = () => {
+  const router = useRouter();
   const inquiryBar = useSelector((state: RootState) => state.inquiryBar);
   const dispatch = useDispatch();
 
@@ -36,20 +39,26 @@ const InquiryBar = () => {
       <Products>
         {/* 已添加的商品 */}
         {inquiryBar.map((product) => (
-          <Product key={product.id}>
-            <DeleteBtn
-              onClick={() => dispatch(removeFromInquiryBar(product.id))}
-            >
-              <IconWrapper>
-                <MdOutlineClose size={16} color="white" />
-              </IconWrapper>
-            </DeleteBtn>
-            <Img src={product.imgSrc} alt={product.name} />
-            <Info>
-              <Name>{product.name}</Name>
-              <Rent>{product.rent}元</Rent>
-            </Info>
-          </Product>
+          <Link key={product.id} href={`/product/${product.id}`} passHref>
+            <Product key={product.id}>
+              <DeleteBtn
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  dispatch(removeFromInquiryBar(product.id));
+                }}
+              >
+                <IconWrapper>
+                  <MdOutlineClose size={16} color="white" />
+                </IconWrapper>
+              </DeleteBtn>
+              <Img src={product.imgSrc} alt={product.name} />
+              <Info>
+                <Name>{product.name}</Name>
+                <Rent>{product.rent}元</Rent>
+              </Info>
+            </Product>
+          </Link>
         ))}
 
         {/* 空的圈圈帶提示 */}
@@ -61,7 +70,22 @@ const InquiryBar = () => {
           </EmptyCircle>
         ))}
       </Products>
-      <InquiryBtn>前往詢問單</InquiryBtn>
+      <Link href={`/inquiry`} passHref>
+        <InquiryBtn
+          onClick={(e) => {
+            e.preventDefault(); // 阻止瀏覽器的默認行為（例如新分頁開啟）
+            if (!e.metaKey && !e.ctrlKey) {
+              // 確保不是通過 `Ctrl` 或 `Cmd` 點擊，然後執行路由跳轉
+              router.push("/inquiry");
+            }
+          }}
+          onContextMenu={(e) => {
+            e.preventDefault(); // 阻止右鍵功能
+          }}
+        >
+          前往詢問單
+        </InquiryBtn>
+      </Link>
     </BarContainer>
   );
 };

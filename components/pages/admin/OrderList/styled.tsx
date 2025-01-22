@@ -282,7 +282,7 @@ export const DropdownItem = styled.div<Color & { $isSelected: boolean }>`
         background: ${theme.colors[$color]};
       }
     }
-  `}
+  `};
 
   ${({ $isSelected, $color, theme }) =>
     $isSelected &&
@@ -293,7 +293,7 @@ export const DropdownItem = styled.div<Color & { $isSelected: boolean }>`
         background: ${theme.colors[$color]};
       }
     }
-  `}
+  `};
 `;
 
 export const DropdownCircle = styled.span`

@@ -37,9 +37,9 @@ const Category: React.FC<ProductCategoryProps> = ({
 
   const handleAddToInquiryBar = (
     product: ProductItem,
-    e: React.MouseEvent<HTMLButtonElement>
+    e: React.MouseEvent<HTMLButtonElement>,
   ) => {
-    e.preventDefault(); 
+    e.preventDefault();
     e.stopPropagation();
     if (inquiryBar.length >= 3) {
       alert("⚠️ 詢問單最多只能添加 3 個商品！");
@@ -54,11 +54,12 @@ const Category: React.FC<ProductCategoryProps> = ({
       addToInquiryBar({
         id: product.id,
         imgSrc: product.imgSrc,
+        imgAlt: product.imgAlt,
         name: product.name,
         rent: product.rent,
         features: product.features,
         description: product.description,
-      })
+      }),
     );
     alert("✅ 商品成功加入詢問單！");
   };
@@ -82,9 +83,7 @@ const Category: React.FC<ProductCategoryProps> = ({
                 <Name>{product.name}</Name>
                 <Rent>${product.rent.toLocaleString()}</Rent>
               </Info>
-              <CardBtn
-                onClick={(e) => handleAddToInquiryBar(product, e)}
-              >
+              <CardBtn onClick={(e) => handleAddToInquiryBar(product, e)}>
                 <InquiryIcon />
                 加入詢問單
               </CardBtn>

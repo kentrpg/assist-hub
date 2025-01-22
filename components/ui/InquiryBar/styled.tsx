@@ -62,6 +62,16 @@ export const InquiryBtn = styled.button`
   font-size: 18px;
   height: 47px;
   font-weight: 500;
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+
+  &:hover {
+    background-color: #0b2c6b;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    transform: scale(1.1);
+  }
 `;
 
 export const IconWrapper = styled.div`
@@ -72,18 +82,28 @@ export const IconWrapper = styled.div`
   background-color: #103f99;
   width: 24px;
   height: 24px;
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease; 
+
+  &:hover {
+    background-color: #0b2c6b;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    transform: scale(1.2); 
+  }
 `;
 
 export const DeleteBtn = styled.button`
   align-self: baseline;
   background-color: white;
+  border: none;
 `;
 
-// 空圈圈樣式
 export const EmptyCircle = styled.div`
   width: 50px;
   height: 50px;
-  border: 2px dashed #ccc; // 使用虛線
+  border: 2px dashed #ccc;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -92,9 +112,8 @@ export const EmptyCircle = styled.div`
   position: relative;
 `;
 
-// 圈圈內的文字樣式
 export const EmptyCircleText = styled.div`
   font-size: 24px;
   font-weight: 500;
-  color: #08204d; // 深藍色
+  color: #000000;
 `;

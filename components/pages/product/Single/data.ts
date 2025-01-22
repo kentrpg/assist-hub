@@ -38,8 +38,11 @@ export type ComparisonItem = {
 export type RecommendedItem = {
   productId: number;
   imgSrc: string;
+  imgAlt: string;
   name: string;
   rent: number;
+  features: string[];
+  description: string;
 };
 
 export type SinglePageProps = {

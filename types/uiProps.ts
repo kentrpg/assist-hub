@@ -35,6 +35,10 @@ export type Color = {
   $color: ColorsType;
 }
 
+export type BgColor = {
+  $bgColor: ColorsType;
+}
+
 export type Gap = {
   $gap: number;
 };

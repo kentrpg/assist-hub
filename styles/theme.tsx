@@ -22,6 +22,7 @@ export const colors = {
   success: "#2ECC71",
   border: "#E9E5DE",
   info: "#2F80ED",
+  infoLight: "#F3F5F9",
   lineLogo: "#06c755",
   fbLogo: "#3b579d",
   grey100: "#E9E5DE",

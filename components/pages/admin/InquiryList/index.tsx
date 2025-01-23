@@ -49,14 +49,68 @@ import { PriceBadge, FeatureBadge } from "@/components/ui/badges";
 import { formatCurrency } from "@/helpers/format/currency";
 import { SuggestCheck } from "@/utils/react-icons/CheckIcon";
 import { useState } from "react";
+import { mockData, mockProducts, ProductFilter, Products } from "./data";
 
 const InquiryList: React.FC = () => {
-  const [reason, setReason] = useState<string>(
-    "因為這款輪椅可調節，可折疊，適合需要部分支撐的患者使用。"
+  // TBD: mockData 要改為真的 API function: getSuggest（需要再測試 parmas ?inquiryId=89）
+  // const [products, setProducts] = useState<Products[]>(mockData);
+  const [products, setProducts] = useState<Products[]>([]);
+  const [productFilter, setProductFilter] = useState<ProductFilter[]>(
+    mockProducts
   );
 
-  const handleReasonChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setReason(e.target.value);
+  const handleReasonChange = (productId: number) => (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    const newProducts = products.map((product) =>
+      product.id === productId
+        ? { ...product, reasons: e.target.value }
+        : product
+    );
+    setProducts(newProducts);
+  };
+
+  const handleAddProduct = (product: ProductFilter) => {
+    const isProductExist = products.some((p) => p.id === product.id);
+
+    if (isProductExist) {
+      return;
+    }
+
+    const newProduct: Products = {
+      id: product.id,
+      name: product.name,
+      description: product.description,
+      rent: product.rent,
+      imgSrc: `http://52.172.145.130:8080/${product.image.preview}`,
+      imgAlt: product.image.previewAlt,
+      features: product.features,
+      reasons: "",
+    };
+
+    setProducts((prevProducts) => [...prevProducts, newProduct]);
+
+    console.log(productFilter);
+
+    setProductFilter((prevFilter) =>
+      prevFilter.filter((item) => item.id !== product.id)
+    );
+  };
+
+  const handleSubmit = () => {
+    const suggestInfo = {
+      suggestId: 48,
+      level: "2",
+      additionalInfo: "test",
+      isSubmitted: false,
+    };
+
+    const suggestProducts = {
+      suggestProductId: 14,
+      productId: 15,
+      reasons: "reasons 測試",
+    };
+    console.log(products);
   };
 
   return (
@@ -92,10 +146,38 @@ const InquiryList: React.FC = () => {
       </SectionWrapper>
 
       <SectionWrapper>
-        <SubTitle>已選擇推薦輔具 0/9</SubTitle>
+        <SubTitle>已選擇推薦輔具 {products.length}/9</SubTitle>
       </SectionWrapper>
 
       <SectionWrapper>
+        {products.map((product) => (
+          <Card key={product.id}>
+            <ImageWrapper>
+              <Image src={product.imgSrc} alt={product.imgAlt} />
+              <PriceBadge>{formatCurrency(product.rent)}/ 月</PriceBadge>
+            </ImageWrapper>
+            <Info>
+              <Name>{product.name}</Name>
+              <Description>{product.description}</Description>
+              <FeatureList>
+                {product.features.map((feature, index) => (
+                  <FeatureBadge key={index}>
+                    <SuggestCheck size={24} />
+                    {feature}
+                  </FeatureBadge>
+                ))}
+              </FeatureList>
+            </Info>
+            <RecommendDescription>
+              <Name>推薦原因</Name>
+              <Reason
+                value={product.reasons}
+                onChange={handleReasonChange(product.id)}
+                placeholder="請輸入推薦原因..."
+              />
+            </RecommendDescription>
+          </Card>
+        ))}
         <SelectedSection>
           <DashedCard>
             <Notice>
@@ -112,36 +194,6 @@ const InquiryList: React.FC = () => {
             </Notice>
           </DashedCard>
         </SelectedSection>
-        <Card>
-          <ImageWrapper>
-            <Image src="/images/wheelChair-7.webp" alt="鋁合金輪椅" />
-            <PriceBadge>{formatCurrency(1000)}/ 月</PriceBadge>
-          </ImageWrapper>
-          <Info>
-            <Name>鋁合金輪椅</Name>
-            <Description>
-              為需要部分支撐的患者設計，提供穩定的行走支援，增加日常活動的安全性和信心。
-            </Description>
-            <FeatureList>
-              <FeatureBadge>
-                <SuggestCheck size={24} />
-                可調節
-              </FeatureBadge>
-              <FeatureBadge>
-                <SuggestCheck size={24} />
-                可折疊
-              </FeatureBadge>
-            </FeatureList>
-          </Info>
-          <RecommendDescription>
-            <Name>推薦原因</Name>
-            <Reason
-              value={reason}
-              onChange={handleReasonChange}
-              placeholder="請輸入推薦原因..."
-            />
-          </RecommendDescription>
-        </Card>
       </SectionWrapper>
 
       <SectionWrapper>
@@ -170,38 +222,46 @@ const InquiryList: React.FC = () => {
             </Tr>
           </Thead>
           <Tbody>
-            <Tr>
-              <Td>
-                <ProductImage
-                  src="/images/wheelChair-7.webp"
-                  alt="鋁合金輪椅"
-                />
-              </Td>
-              <Td>
-                <ProductName>Apple Watch Series 4</ProductName>
-              </Td>
-              <Td>
-                <ProductPrice>$690.00</ProductPrice>
-              </Td>
-              <Td>
-                <ProductMaterial>鋁合金</ProductMaterial>
-              </Td>
-              <Td>
-                <ProductFeature>體積小、支撐性高、可調節</ProductFeature>
-              </Td>
-              <Td>
-                <AddButton>
-                  <MdAdd size={24} />
-                </AddButton>
-              </Td>
-            </Tr>
+            {productFilter.map((product) => (
+              <Tr key={product.id}>
+                <Td>
+                  <ProductImage
+                    src={`http://52.172.145.130:8080/${product.image.preview}`}
+                    alt={product.image.previewAlt}
+                  />
+                </Td>
+                <Td>
+                  <ProductName>{product.name}</ProductName>
+                </Td>
+                <Td>
+                  <ProductPrice>{formatCurrency(product.rent)}</ProductPrice>
+                </Td>
+                <Td>
+                  <ProductMaterial>
+                    {product.info?.find((info) => info.infokey === "material")
+                      ?.infovalue || ""}
+                  </ProductMaterial>
+                </Td>
+                <Td>
+                  <ProductFeature>{product.features.join("、")}</ProductFeature>
+                </Td>
+                <Td>
+                  <AddButton
+                    onClick={() => handleAddProduct(product)}
+                    disabled={products.length > 2}
+                  >
+                    <MdAdd size={24} />
+                  </AddButton>
+                </Td>
+              </Tr>
+            ))}
           </Tbody>
         </ProductTable>
       </SectionWrapper>
 
       <SectionWrapper>
         <FlexAlignCenter>
-          <SubmitButton>送出建議書</SubmitButton>
+          <SubmitButton onClick={handleSubmit}>送出建議書</SubmitButton>
         </FlexAlignCenter>
       </SectionWrapper>
     </Container>

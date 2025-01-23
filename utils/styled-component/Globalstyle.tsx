@@ -56,9 +56,9 @@ const GlobalStyle = createGlobalStyle`
 
   a, label, button, select, textarea {
     cursor: pointer;
-    & * {
+    /* & * {
       cursor: pointer;
-    }
+    } */
   }
 
   input,

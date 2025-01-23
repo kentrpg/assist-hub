@@ -126,6 +126,10 @@ export const Card = styled.div`
   background-color: ${({ theme }) => theme.colors.secondaryBg};
   padding: 16px;
 
+  & + & {
+    margin-top: 30px;
+  }
+
   @media ${Mobile} {
     flex-direction: row;
     flex-wrap: wrap;
@@ -149,20 +153,14 @@ export const ImageWrapper = styled.div`
   row-gap: 10px;
   @media ${Tablet} {
     flex: 0 0 19.22%; /* 204px / 1061px */
-    max-width: 19.22%;
+    max-width: 200px;
   }
 `;
 
 export const Image = styled.img`
   width: 100%;
-  max-width: 100px;
+  max-width: 200px;
   height: auto;
-  @media ${Mobile} {
-    max-width: 130px;
-  }
-  @media ${Tablet} {
-    max-width: 150px;
-  }
 `;
 
 export const Info = styled.div`
@@ -269,6 +267,7 @@ export const DashedCard = styled.div`
   background-size: 1px 100%, 100% 1px, 1px 100%, 100% 1px;
   background-position: 0 0, 0 0, 100% 0, 0 100%;
   background-repeat: no-repeat;
+  margin-top: 30px;
   padding: 33px 10px;
 `;
 
@@ -356,7 +355,7 @@ export const Th = styled.th`
 `;
 
 export const Td = styled.td`
-  padding: 12px;
+  padding: 9px 12px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
 
   &:nth-child(3) {
@@ -388,7 +387,7 @@ export const ProductFeature = styled.div`
   color: ${({ theme }) => theme.colors.textSecondary};
 `;
 
-export const AddButton = styled.button`
+export const AddButton = styled.button<{ disabled?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -396,6 +395,17 @@ export const AddButton = styled.button`
   color: white;
   ${ButtonRadius};
   ${ButtonHoverTransition};
+
+  ${({ disabled }) =>
+    disabled &&
+    `
+    cursor: not-allowed;
+    opacity: 0.5;
+    &:hover {
+      transform: none;
+      cursor: not-allowed;
+    }
+  `}
 `;
 
 export const SubmitButton = styled(SecondaryButton)`

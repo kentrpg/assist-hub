@@ -30,9 +30,10 @@ export const CardContent = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  flex-grow: 1;
   column-gap: 8px;
-  margin-bottom: 16px;
+  flex: 0 0 auto;
+  /* flex-grow: 1; */
+  /* margin-bottom: 16px; */
 
   @media ${Tablet} {
     flex-direction: column;
@@ -63,7 +64,18 @@ export const Description = styled.p`
   font-size: 14px;
   color: ${({ theme }) => theme.colors.textSecondary};
   ${chineseTextStyle};
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
+
+// export const Description = styled.p`
+//   font-size: 14px;
+//   color: ${({ theme }) => theme.colors.textSecondary};
+//   ${chineseTextStyle};
+// `;
 
 export const Price = styled.p`
   color: ${({ theme }) => theme.colors.textPrimary};
@@ -83,7 +95,11 @@ export const Image = styled.img`
 `;
 
 export const Features = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   border-top: 1px solid ${({ theme }) => theme.colors.textMuted};
+  margin-top: 16px; // TBD
   padding: 16px 0;
 `;
 
@@ -96,14 +112,14 @@ export const FeatureTitle = styled.h4`
 
 export const FeatureGroup = styled.ul`
   display: flex;
+  flex: 1;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: start;
   gap: 16px;
+
   @media ${Tablet} {
     flex-direction: column;
-    justify-content: center;
   }
   @media ${Desktop} {
     align-items: start;

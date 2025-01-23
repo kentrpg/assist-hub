@@ -59,7 +59,7 @@ const Signin: React.FC = () => {
       switch (result.statusCode) {
         case 200:
           result.data && dispatch(setUser(result.data));
-          router.push("/user/profile");
+          router.push("/cart");
           break;
         case 404:
           setError("email", { type: "manual", message: "帳號或密碼錯誤" });

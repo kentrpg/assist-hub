@@ -21,9 +21,6 @@ const SubmittedInquiry = ({ data }: InquiryPageProps) => {
   return (
     <Container>
       <Header>
-        <PageBackButton>
-          <MdArrowBack size={20} />
-        </PageBackButton>
         <Title>詢問單</Title>
       </Header>
       <InquiryDetail

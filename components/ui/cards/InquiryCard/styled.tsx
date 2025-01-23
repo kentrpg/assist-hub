@@ -31,7 +31,9 @@ export const CardContent = styled.div`
   flex-direction: row;
   justify-content: space-between;
   flex-grow: 1;
+  column-gap: 8px;
   margin-bottom: 16px;
+
   @media ${Tablet} {
     flex-direction: column;
   }
@@ -61,6 +63,12 @@ export const Name = styled.h3`
 export const Description = styled.p`
   font-size: 14px;
   color: ${({ theme }) => theme.colors.textSecondary};
+  text-align: justify;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  white-space: pre-line;
+  letter-spacing: 0.5px;
+  text-align-last: left;
 `;
 
 export const Price = styled.p`
@@ -75,10 +83,10 @@ export const PriceUnit = styled.span`
 `;
 
 export const Image = styled.img`
-  height: auto;
-  width: 100%;
-  min-width: 135px;
+  width: 135px;
+  height: 135px;
   object-fit: contain;
+  object-position: center;
 `;
 
 export const Features = styled.div`

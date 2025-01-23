@@ -72,8 +72,9 @@ const InquiryList: React.FC = () => {
 
   const handleAddProduct = (product: ProductFilter) => {
     const isProductExist = products.some((p) => p.id === product.id);
+    const isMaximum = products.length > 2;
 
-    if (isProductExist) {
+    if (isProductExist || isMaximum) {
       return;
     }
 

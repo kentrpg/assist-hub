@@ -17,8 +17,9 @@ export const Card = styled.div`
 
 export const Group = styled.div`
   display: flex;
-  gap: 20px;
   flex-direction: column;
+  flex-wrap: wrap;
+  gap: 18px;
   @media ${Mobile} {
     flex-direction: row;
   }
@@ -27,20 +28,17 @@ export const Group = styled.div`
 export const Field = styled.div`
   display: flex;
   align-items: center;
-  flex: 1 1 auto;
-  &:first-child {
-    flex-shrink: 0;
-    max-width: 211px;
-  }
+`;
 
-  &:last-child {
-    flex-grow: 1;
-    word-break: break-word;
-  }
+export const Additionalinfo = styled.div`
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  word-break: break-word;
+  width: 100%;
 `;
 
 export const Label = styled.span`
-  min-width: 64px;
   font-size: 14px;
   font-weight: 700;
   color: ${({ theme }) => theme.colors.textPrimary};

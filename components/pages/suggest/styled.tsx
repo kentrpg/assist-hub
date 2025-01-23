@@ -1,6 +1,7 @@
 import { PrimaryButton, buttonGapSizes } from "@/components/ui/buttons/Layout";
 import { InputRadius } from "@/styles/borderRadius";
 import { Tablet, Mobile } from "@/styles/container";
+import { chineseTextStyle } from "@/styles/textFormatting";
 import { H6 } from "@/styles/typography";
 import styled from "styled-components";
 
@@ -112,7 +113,7 @@ export const Name = styled.h3`
 export const Description = styled.p`
   font-size: 16px;
   color: ${({ theme }) => theme.colors.textSecondary};
-  margin: 0;
+  ${chineseTextStyle};
 `;
 
 export const FeatureList = styled.div`

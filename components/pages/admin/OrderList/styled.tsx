@@ -209,9 +209,12 @@ export const PageButton = styled.button<{ $active?: boolean }>`
   cursor: pointer;
   font-size: 14px;
 
-  &:hover {
-    border-color: ${({ theme }) => theme.colors.primary};
-    color: ${({ theme }) => theme.colors.primary};
+  &:first-child,
+  &:last-child {
+    &:hover:not(:disabled) {
+      border-color: ${({ theme }) => theme.colors.primary};
+      color: ${({ theme }) => theme.colors.primary};
+    }
   }
 
   &:disabled {

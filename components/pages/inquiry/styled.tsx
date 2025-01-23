@@ -27,11 +27,6 @@ export const SubTitle = styled.h2`
   margin-bottom: 40px;
 `;
 
-export const Card = styled.div`
-  position: relative;
-  flex: 0 0 calc((100% - 2 * 24px) / 3);
-`;
-
 export const DeleteButton = styled.button`
   position: absolute;
   top: 5px;
@@ -46,14 +41,29 @@ export const DeleteButton = styled.button`
 `;
 
 export const CardGroup = styled.div`
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 24px;
+  margin: 20px 0;
+
+  & > * {
+    height: 100%;
+    display: flex;
+  }
+
+  & > div > div {
+    flex: 1;
+  }
+
+  @media ${Tablet} {
+    grid-template-columns: repeat(3, 1fr);
+  }
+`;
+
+export const Card = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  gap: 24px;
-  margin-bottom: 40px;
-  @media ${Tablet} {
-    flex-direction: row;
-  }
 `;
 
 export const AccentButton = styled(PrimaryButton)`

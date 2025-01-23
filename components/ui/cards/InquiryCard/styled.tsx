@@ -5,6 +5,7 @@ import type { Color } from "@/types/uiProps";
 import styled from "styled-components";
 
 export const Card = styled.div<Color>`
+  height: 100%;
   flex: 0 0 calc((100% - 2 * 24px) / 3);
   border: 1px solid transparent;
   ${CardRadius};
@@ -32,8 +33,6 @@ export const CardContent = styled.div`
   justify-content: space-between;
   column-gap: 8px;
   flex: 0 0 auto;
-  /* flex-grow: 1; */
-  /* margin-bottom: 16px; */
 
   @media ${Tablet} {
     flex-direction: column;
@@ -56,6 +55,11 @@ export const Details = styled.div`
 `;
 
 export const Name = styled.h3`
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: ${({ theme }) => theme.colors.textPrimary};
   margin-bottom: 4px;
 `;
@@ -69,13 +73,19 @@ export const Description = styled.p`
   -webkit-line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
-`;
 
-// export const Description = styled.p`
-//   font-size: 14px;
-//   color: ${({ theme }) => theme.colors.textSecondary};
-//   ${chineseTextStyle};
-// `;
+  @media ${Tablet} {
+    -webkit-line-clamp: 3;
+  }
+  @media ${Desktop} {
+    &::before {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 8px;
+    }
+  }
+`;
 
 export const Price = styled.p`
   color: ${({ theme }) => theme.colors.textPrimary};

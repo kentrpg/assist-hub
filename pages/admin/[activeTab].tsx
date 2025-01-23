@@ -2,6 +2,7 @@ import Head from "next/head";
 import Layout from "@/components/pages/admin/Layout";
 import OrderList from "@/components/pages/admin/OrderList";
 import { GetStaticPaths, GetStaticProps } from "next";
+import InquiryList from "@/components/pages/admin/InquiryList";
 
 const whitelist = ["order", "user", "inquiry", "diagram"];
 
@@ -55,7 +56,7 @@ const AdminPage = ({ activeTab }: { activeTab: string }) => {
       case "user":
         return <OrderList />;
       case "inquiry":
-        return <OrderList />;
+        return <InquiryList />;
       case "diagram":
         return <OrderList />;
       default:

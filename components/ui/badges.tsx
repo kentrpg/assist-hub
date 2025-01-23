@@ -14,6 +14,7 @@ const Badge = styled.span`
 
 export const PriceBadge = styled(Badge)`
   border: 1px solid ${({ theme }) => theme.colors.primary};
+  background-color: transparent;
   color: ${({ theme }) => theme.colors.primary};
   font-weight: 700;
 `;
@@ -21,6 +22,7 @@ export const PriceBadge = styled(Badge)`
 export const FeatureBadge = styled(Badge)`
   gap: 4px;
   border: 1px solid ${({ theme }) => theme.colors.textMuted};
+  background-color: transparent;
   color: ${({ theme }) => theme.colors.textMuted};
 `;
 

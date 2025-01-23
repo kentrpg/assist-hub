@@ -1,6 +1,6 @@
 import { CardRadius } from "@/styles/borderRadius";
 import { Desktop, Tablet } from "@/styles/container";
-import { H5, H6 } from "@/styles/typography";
+import { chineseTextStyle } from "@/styles/textFormatting";
 import type { Color } from "@/types/uiProps";
 import styled from "styled-components";
 
@@ -55,7 +55,6 @@ export const Details = styled.div`
 `;
 
 export const Name = styled.h3`
-  ${H6};
   color: ${({ theme }) => theme.colors.textPrimary};
   margin-bottom: 4px;
 `;
@@ -63,16 +62,10 @@ export const Name = styled.h3`
 export const Description = styled.p`
   font-size: 14px;
   color: ${({ theme }) => theme.colors.textSecondary};
-  text-align: justify;
-  word-break: break-all;
-  overflow-wrap: break-word;
-  white-space: pre-line;
-  letter-spacing: 0.5px;
-  text-align-last: left;
+  ${chineseTextStyle};
 `;
 
 export const Price = styled.p`
-  ${H5};
   color: ${({ theme }) => theme.colors.textPrimary};
 `;
 

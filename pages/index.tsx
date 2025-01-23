@@ -1,14 +1,8 @@
-export default function Home() {
-  return (
-    <div
-      style={{ height: "100%", textAlign: "center", alignContent: "center" }}
-    >
-      <img
-        src="/images/chairman.svg"
-        style={{
-          verticalAlign: "middle",
-        }}
-      />
-    </div>
-  );
-}
+import { NextPage } from "next";
+import Home from "@/components/pages/Home";
+
+const HomePage: NextPage = () => {
+  return <Home />;
+};
+
+export default HomePage;

@@ -1,7 +1,15 @@
 import { levelMapping } from "@/helpers/mapping/levelMapping";
 import { inquiryInfoMapping } from "@/helpers/mapping/inquiryInfoMapping";
 import { InquiryDetailProps } from "../data";
-import { Wrapper, Card, Group, Field, Label, Value } from "./styled";
+import {
+  Wrapper,
+  Card,
+  Group,
+  Field,
+  Label,
+  Value,
+  Additionalinfo,
+} from "./styled";
 
 const InquiryDetail = ({ data }: InquiryDetailProps) => {
   return (
@@ -16,16 +24,14 @@ const InquiryDetail = ({ data }: InquiryDetailProps) => {
             <Label>{inquiryInfoMapping.createdStamp}</Label>
             <Value>{data.createdStamp}</Value>
           </Field>
-        </Group>
-        <Group>
           <Field>
             <Label>{inquiryInfoMapping.level}</Label>
             <Value>{levelMapping[data.level]}</Value>
           </Field>
-          <Field>
+          <Additionalinfo>
             <Label>{inquiryInfoMapping.additionalInfo}</Label>
             <Value>{data.additionalInfo}</Value>
-          </Field>
+          </Additionalinfo>
         </Group>
       </Card>
     </Wrapper>

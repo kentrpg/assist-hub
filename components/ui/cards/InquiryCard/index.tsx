@@ -2,6 +2,7 @@ import { InquiryCheck } from "@/utils/react-icons/CheckIcon";
 import {
   Card,
   CardContent,
+  ContentWrapper,
   Description,
   Details,
   DetailsWrapper,
@@ -32,19 +33,21 @@ const InquiryCard = ({
     <Card $color={$color}>
       <FlexFullHeight>
         <CardContent>
-          <DetailsWrapper>
-            <Details>
-              <Name>{name}</Name>
-              <Description>{description}</Description>
-            </Details>
-            <Price>
-              {formatCurrency(rent)}
-              <PriceUnit>/月</PriceUnit>
-            </Price>
-          </DetailsWrapper>
-          <ImageWrapper>
-            <Image src={imgSrc} alt={imgAlt} />
-          </ImageWrapper>
+          <Name>{name}</Name>
+          <ContentWrapper>
+            <DetailsWrapper>
+              <Details>
+                <Description>{description}</Description>
+              </Details>
+              <Price>
+                {formatCurrency(rent)}
+                <PriceUnit>/月</PriceUnit>
+              </Price>
+            </DetailsWrapper>
+            <ImageWrapper>
+              <Image src={imgSrc} alt={imgAlt} />
+            </ImageWrapper>
+          </ContentWrapper>
         </CardContent>
         <Features>
           <FeatureTitle>輔具特色</FeatureTitle>

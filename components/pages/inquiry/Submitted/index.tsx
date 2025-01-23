@@ -1,8 +1,7 @@
 import { Header, Title, SubTitle, Assistive, CardGroup } from "../styled";
 import { Container1116 as Container } from "@/styles/container";
 import { FlexAlignCenter } from "@/styles/flex";
-import { MdArrowBack, MdOutlineShare } from "react-icons/md";
-import { PageBackButton } from "@/components/ui/circulars";
+import { MdOutlineShare } from "react-icons/md";
 import { PrimaryIconButton } from "@/components/ui/buttons/Layout";
 import { inquiryCardColors } from "../data";
 import InquiryCard from "@/components/ui/cards/InquiryCard";

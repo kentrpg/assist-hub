@@ -10,8 +10,7 @@ import {
   Card,
   DeleteButton,
 } from "../styled";
-import { PageBackButton } from "@/components/ui/circulars";
-import { MdArrowBack, MdClose } from "react-icons/md";
+import { MdClose } from "react-icons/md";
 import { inquiryCardColors } from "../data";
 import { FlexAlignCenter } from "@/styles/flex";
 import InquiryCard from "@/components/ui/cards/InquiryCard";
@@ -82,9 +81,6 @@ const DraftInquiry = () => {
   return (
     <Container>
       <Header>
-        <PageBackButton>
-          <MdArrowBack size={20} />
-        </PageBackButton>
         <Title>詢問單</Title>
       </Header>
       <Assistive>

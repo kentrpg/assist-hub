@@ -1,5 +1,5 @@
 import { PrimaryButton, buttonSizes } from "@/components/ui/buttons/Layout";
-import { Tablet } from "@/styles/container";
+import { Desktop, Tablet } from "@/styles/container";
 import styled from "styled-components";
 
 export const Header = styled.header`
@@ -30,13 +30,18 @@ export const SubTitle = styled.h2`
 export const DeleteButton = styled.button`
   position: absolute;
   top: 5px;
-  right: 7px;
+  right: 5px;
   font-size: 0px;
   background-color: transparent;
   color: ${({ theme }) => theme.colors.textMuted};
 
   &:hover {
     color: ${({ theme }) => theme.colors.grey200};
+  }
+
+  @media ${Desktop} {
+    top: 8px;
+    right: 9px;
   }
 `;
 

@@ -1,4 +1,5 @@
 import { Error } from "@/types/apiRoutes";
+import { features } from "process";
 
 export const ResultGetProducts = {
   statusCode: 200,
@@ -10,27 +11,12 @@ export const ResultGetProducts = {
       type: "wheelChair",
       name: "手動輪椅01",
       level: "1",
-      rent: 500.00,
-      imgSrc: "http://52.172.145.130:8080/picture/test/wheelChair/wheelChair-1-Copy.jpg",
+      rent: 500.0,
+      imgSrc:
+        "http://52.172.145.130:8080/picture/test/wheelChair/wheelChair-1-Copy.jpg",
       imgAlt: "手動輪椅01",
-    },
-    {
-      id: 13,
-      type: "wheelChair",
-      name: "手動輪椅02",
-      level: "2",
-      rent: 550.00,
-      imgSrc: "",
-      imgAlt: "手動輪椅02",
-    },
-    {
-      id: 14,
-      type: "wheelChair",
-      name: "手動輪椅03",
-      level: "1",
-      rent: 650.00,
-      imgSrc: "",
-      imgAlt: "手動輪椅03",
+      features: ["可折疊", "可調整坐墊高度", "可調整扶手高度"],
+      description: "手動輪椅01",
     },
   ],
 };

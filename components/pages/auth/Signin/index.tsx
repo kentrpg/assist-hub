@@ -2,7 +2,6 @@ import { useState, Fragment } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/utils/redux/slices/user";
-import { useRouter } from "next/router";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import FormField from "@/utils/react-hook-form/FloatingLabel";
 import { RegisterField } from "@/utils/react-hook-form/types";
@@ -39,7 +38,6 @@ const Signin: React.FC = () => {
   });
 
   const [showPassword, setShowPassword] = useState(false);
-  const router = useRouter();
   const theme = useTheme();
 
   const onSubmit: SubmitHandler<SignInInputs> = async (data) => {
@@ -53,13 +51,11 @@ const Signin: React.FC = () => {
 
     const result = await res.json();
 
-    console.log("result", result);
-
     if (Object.is(result.error, null)) {
       switch (result.statusCode) {
         case 200:
           result.data && dispatch(setUser(result.data));
-          router.push("/user/profile");
+          window.location.href = "/user/profile";
           break;
         case 404:
           setError("email", { type: "manual", message: "帳號或密碼錯誤" });

@@ -22,6 +22,8 @@ export const postOrder = async (
 
   const [res, error] = await catchError(fetch(parsedUrl, options));
 
+  console.log("res", res, error);
+
   if (error) {
     console.log("error", error);
 

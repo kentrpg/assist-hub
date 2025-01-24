@@ -4,6 +4,7 @@ import { userReducer } from "@/utils/redux/slices/user";
 import { cartReducer } from "@/utils/redux/slices/cart";
 import { inquiryBarReducer } from "@/utils/redux/slices/inquiryBar";
 import { userInquiryReducer } from "@/utils/redux/slices/userInquiry";
+import { linePayReducer } from "../slices/linePay";
 
 const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ const store = configureStore({
     cart: cartReducer,
     inquiryBar: inquiryBarReducer,
     userInquiry: userInquiryReducer,
+    linePay: linePayReducer,
   },
 });
 

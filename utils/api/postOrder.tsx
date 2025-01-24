@@ -7,7 +7,7 @@ import { validateResponseType } from "../typeGuards";
 
 export const postOrder = async (
   token: string,
-  data: ResultCheckoutType
+  data: ResultCheckoutType,
 ): Promise<Result> => {
   const parsedUrl = new URL(post_orders);
   const options = {
@@ -54,7 +54,7 @@ export const postOrder = async (
     statusCode: json.statusCode,
     status: json.status,
     message: json.message,
-    data: undefined,
+    data: json.data,
     error: null,
   };
 };

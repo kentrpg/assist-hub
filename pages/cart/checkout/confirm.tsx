@@ -7,50 +7,61 @@ import Head from "next/head";
 import Approval from "./approval";
 import Declined from "@/components/pages/cart/Checkout/Declined";
 import { hasError, isValid } from "@/helpers/api/status";
-import { PaymentResult, PaymentStatus } from "@/components/pages/cart/Checkout/PaymentConfirm/data";
+import {
+  PaymentResult,
+  PaymentStatus,
+} from "@/components/pages/cart/Checkout/PaymentConfirm/data";
 
 const ConfirmPage = () => {
   const router = useRouter();
   const [paymentStatus, setPaymentStatus] = useState<PaymentStatus>("loading");
-  const [paymentResult, setPaymentResult] = useState<PaymentResult | null>(null);
+  const [paymentResult, setPaymentResult] = useState<PaymentResult | null>(
+    null,
+  );
 
   useEffect(() => {
     if (!router.isReady) return;
 
-    const { transactionId, finalAmount } = router.query;
-    console.log(`transactionId: ${transactionId}, finalAmount: ${finalAmount}`);
-
     const confirmPayment = async () => {
-      if (!transactionId || !finalAmount) {
-        router.push("/404");
-        return;
-      }
+      try {
+        const queryString = router.asPath.split("?")[1] || "";
 
-      const searchParams = new URLSearchParams({
-        transactionId: transactionId as string,
-        finalAmount: finalAmount as string,
-      });
+        console.log("queryString", queryString);
 
-      const response = await fetch(`/api/tesx?${searchParams.toString()}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+        const response = await fetch(
+          `/api/line/getLinepayConfirm?${queryString}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          },
+        );
 
-      const result = await response.json();
+        const result = await response.json();
+        setPaymentResult(result);
+        console.log("result", result);
 
-      setPaymentResult(result);
-      console.log("result", result);
+        isValid(result) && setPaymentStatus("success");
 
-      if (hasError(result)) {
-        setPaymentStatus("invalid");
-        console.error("付款異常:", result.error);
-      }
-
-      if (isValid(result)) {
-        setPaymentStatus("success");
-      } else {
+        switch (result.statusCode) {
+          case 404:
+          case 405:
+            router.push("/404");
+            break;
+          case 400:
+            setPaymentStatus("failed");
+            break;
+          case 500:
+          default:
+            console.error(
+              `未預期的狀態碼: ${result.statusCode}, ${result.error}`,
+            );
+            setPaymentStatus("invalid");
+            break;
+        }
+      } catch (error) {
+        console.error("付款確認失敗:", error);
         setPaymentStatus("failed");
       }
     };

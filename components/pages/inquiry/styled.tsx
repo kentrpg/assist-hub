@@ -1,5 +1,5 @@
 import { PrimaryButton, buttonSizes } from "@/components/ui/buttons/Layout";
-import { Tablet } from "@/styles/container";
+import { Desktop, Tablet } from "@/styles/container";
 import styled from "styled-components";
 
 export const Header = styled.header`
@@ -27,15 +27,10 @@ export const SubTitle = styled.h2`
   margin-bottom: 40px;
 `;
 
-export const Card = styled.div`
-  position: relative;
-  flex: 0 0 calc((100% - 2 * 24px) / 3);
-`;
-
 export const DeleteButton = styled.button`
   position: absolute;
   top: 5px;
-  right: 7px;
+  right: 5px;
   font-size: 0px;
   background-color: transparent;
   color: ${({ theme }) => theme.colors.textMuted};
@@ -43,17 +38,37 @@ export const DeleteButton = styled.button`
   &:hover {
     color: ${({ theme }) => theme.colors.grey200};
   }
+
+  @media ${Desktop} {
+    top: 8px;
+    right: 9px;
+  }
 `;
 
 export const CardGroup = styled.div`
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 24px;
+  margin: 20px 0;
+
+  & > * {
+    height: 100%;
+    display: flex;
+  }
+
+  & > div > div {
+    flex: 1;
+  }
+
+  @media ${Tablet} {
+    grid-template-columns: repeat(3, 1fr);
+  }
+`;
+
+export const Card = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  gap: 24px;
-  margin-bottom: 40px;
-  @media ${Tablet} {
-    flex-direction: row;
-  }
 `;
 
 export const AccentButton = styled(PrimaryButton)`

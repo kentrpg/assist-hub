@@ -45,9 +45,6 @@ const Suggest = ({
   return (
     <Container>
       <Header>
-        <PageBackButton>
-          <MdArrowBack size={20} />
-        </PageBackButton>
         <Title>建議單</Title>
       </Header>
       <InquiryDetail

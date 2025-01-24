@@ -7,6 +7,8 @@ import { useRouter } from "next/router";
 
 const PaymentConfirm = () => {
   const { transactionId, finalAmount } = useSelector(selectLinePay);
+  console.log(transactionId, finalAmount);
+
   const dispatch = useDispatch();
   const router = useRouter();
   const [data, setData] = useState<any>(null);
@@ -32,12 +34,18 @@ const PaymentConfirm = () => {
           },
         );
 
+        console.log(result);
+
         const responseData = await result.json();
         setData(responseData);
+
+        console.log(responseData);
 
         const redirectPath = isValid(responseData)
           ? `${router.asPath}/approval`
           : `${router.asPath}/declined`;
+
+        console.log(redirectPath);
 
         router.push(redirectPath);
       } catch (error) {

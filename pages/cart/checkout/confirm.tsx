@@ -42,9 +42,12 @@ const ConfirmPage = () => {
         setPaymentResult(result);
         console.log("result", result);
 
-        isValid(result) && setPaymentStatus("success");
+        // isValid(result) && setPaymentStatus("success");
 
         switch (result.statusCode) {
+          case 200:
+            setPaymentStatus("success");
+            break;
           case 404:
           case 405:
             router.push("/404");

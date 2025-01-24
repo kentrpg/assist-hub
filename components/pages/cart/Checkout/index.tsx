@@ -201,9 +201,6 @@ const Checkout = () => {
         finalAmount: result.data.linePay.finalAmount,
       }),
     );
-    // const redirectPath = isValid(result)
-    //   ? `${router.asPath}/approval`
-    //   : `${router.asPath}/declined`;
 
     console.log("redirectPath", redirectPath);
     alert(`付款${isValid(result) ? "成功" : "失敗"}，訂單已送出`);

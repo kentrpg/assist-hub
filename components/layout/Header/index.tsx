@@ -20,13 +20,12 @@ import {
   LogoWrapperMobile,
 } from "./styled";
 
-import { signOut } from "@/utils/api/auth/signout";
-// import { OutlineButton } from "@/components/ui/buttons/Layout";
 import { useState } from "react";
 import { useBreakpoint } from "@/hooks/useBreakpoint";
 import { breakpoints } from "@/styles/container";
 import { ImageLink as LogoWrapperDesktop } from "@/components/ui/images";
 import Link from "next/link";
+import { isValid } from "@/helpers/api/status";
 
 const Header = () => {
   const router = useRouter();
@@ -38,18 +37,18 @@ const Header = () => {
   };
   // ===測試 middleware 驗證===
   const handleLogout = async () => {
-    try {
-      const response = await signOut();
-      console.log(response);
-      switch (response.status) {
-        case 200:
-          router.push("/auth/signin");
-          break;
-        default:
-          console.error("登出失敗");
-      }
-    } catch (error) {
-      console.error("登出錯誤:", error);
+    const res = await fetch("/api/auth/signout", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const result = await res.json();
+    console.log("signout result", result);
+    if (isValid(result)) {
+      alert("登出成功");
+      router.push("/");
+    } else {
+      alert(`登出失敗: ${result.message}`);
     }
   };
   // ===測試 middleware 驗證===
@@ -118,7 +117,14 @@ const Header = () => {
         </Navbar>
 
         <ActionButtonGroup>
-          {/* <OutlineButton onClick={handleLogout}>登出</OutlineButton> */}
+          <button
+            onClick={handleLogout}
+            style={{
+              backgroundColor: "transparent",
+            }}
+          >
+            登出
+          </button>
           <Link href="/cart" passHref>
             <CartButton>
               <MdShoppingCart size={24} />

@@ -44,3 +44,15 @@ export const AccentButton = styled(NextLink)`
   ${BaseButton};
   ${buttonVariants.accent};
 `;
+
+export const OutlineButton = styled(NextLink)`
+  ${BaseButton};
+  ${HstackLayout};
+  ${buttonGapSizes.large};
+  outline: 1px solid ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.textSecondary};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.primaryLight};
+  }
+`;

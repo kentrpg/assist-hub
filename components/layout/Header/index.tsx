@@ -29,6 +29,7 @@ import { ImageLink as LogoWrapperDesktop } from "@/components/ui/images";
 import Link from "next/link";
 
 const Header = () => {
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const isTablet = useBreakpoint(breakpoints.md);
 
@@ -36,7 +37,6 @@ const Header = () => {
     setMenuOpen((prevState) => !prevState);
   };
   // ===測試 middleware 驗證===
-  const router = useRouter();
   const handleLogout = async () => {
     try {
       const response = await signOut();
@@ -95,7 +95,7 @@ const Header = () => {
         </LogoWrapperMobile> */}
         <Navbar $menuOpen={menuOpen}>
           {isTablet && (
-            <LogoWrapperDesktop href="/">
+            <LogoWrapperDesktop href="/" passHref>
               <Logo
                 src="/images/logo.png"
                 alt="輔具租賃網"
@@ -105,31 +105,39 @@ const Header = () => {
             </LogoWrapperDesktop>
           )}
           <NavLinks>
-            <NavLink href="/product" $active={true}>
+            <NavLink href="/product" $active={router.pathname === "/product"}>
               所有輔具
             </NavLink>
-            <NavLink href="#">常見問題</NavLink>
-            <NavLink href="/inquiry">詢問單</NavLink>
+            <NavLink href="/faq" $active={router.pathname === "/faq"}>
+              常見問題
+            </NavLink>
+            <NavLink href="/inquiry" $active={router.pathname === "/inquiry"}>
+              詢問單
+            </NavLink>
           </NavLinks>
         </Navbar>
 
         <ActionButtonGroup>
           {/* <OutlineButton onClick={handleLogout}>登出</OutlineButton> */}
-          <CartButton as={Link} href="/cart">
-            <MdShoppingCart size={24} />
-            <ButtonText>購物車</ButtonText>
-          </CartButton>
+          <Link href="/cart" passHref>
+            <CartButton>
+              <MdShoppingCart size={24} />
+              <ButtonText>購物車</ButtonText>
+            </CartButton>
+          </Link>
           <SearchButton>
             <MdSearch size={24} />
             <ButtonText>搜尋輔具</ButtonText>
           </SearchButton>
-          <AccountButton as={Link} href="/user/profile">
-            <Avatar
-              isLoggedIn={false}
-              imageSrc="/images/avatar-placeholder.png"
-            />
-            <ButtonText>我的帳戶</ButtonText>
-          </AccountButton>
+          <Link href="/user/profile" passHref>
+            <AccountButton>
+              <Avatar
+                isLoggedIn={false}
+                imageSrc="/images/avatar-placeholder.png"
+              />
+              <ButtonText>我的帳戶</ButtonText>
+            </AccountButton>
+          </Link>
         </ActionButtonGroup>
       </Container>
     </Wrapper>

@@ -135,9 +135,8 @@ const Checkout = () => {
     console.log("Form submitted:", data);
     setIsOrderSubmitting(true);
 
-    const confirmUrl = NODE_ENV === "development" ? BASE_URL : BASE_URL_VM;
     const checkoutData = {
-      confirmUrl: `${confirmUrl}/cart/checkout/confirm`,
+      confirmUrl: `${BASE_URL}/cart/checkout/confirm`,
       product: {
         id: cart.cartId,
         name: cart.name,

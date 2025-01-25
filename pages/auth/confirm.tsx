@@ -4,6 +4,7 @@ import Head from "next/head";
 import { GetServerSideProps } from "next";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { isValid } from "@/helpers/api/status";
 
 type LineLoginError = {
   error: string;
@@ -14,10 +15,12 @@ type Props = {
   isSuccess: boolean;
   error?: LineLoginError;
   code?: string;
+  fullQuery?: string;
 };
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({
   query,
+  resolvedUrl,
 }) => {
   // 檢查是否有錯誤
   if (query.error) {
@@ -46,7 +49,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
   }
 
   // 驗證 state 參數（防止 CSRF 攻擊）
-  const expectedState = "12345abcde"; // 注意：這應該是動態生成的值
+  const expectedState = "12345abcde";
   if (query.state !== expectedState) {
     return {
       props: {
@@ -59,54 +62,54 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
     };
   }
 
+  // 取得 query string
+  const queryIndex = resolvedUrl.indexOf("?");
+  const fullQuery = queryIndex !== -1 ? resolvedUrl.slice(queryIndex) : "";
+
   // 成功取得授權碼
   return {
     props: {
       isSuccess: true,
       code: query.code as string,
+      fullQuery,
     },
   };
 };
 
-const ConfirmPage = ({ isSuccess, error, code }: Props) => {
+const ConfirmPage = ({ isSuccess, error, code, fullQuery }: Props) => {
   const router = useRouter();
 
-  console.log("ConfirmPage", isSuccess, error, code);
+  console.log("ConfirmPage", isSuccess, error, code, fullQuery);
 
   useEffect(() => {
-    if (!isSuccess) {
-      // 登入失敗，重定向到登入頁面
-      setTimeout(() => {
-        router.push("/auth/signin");
-      }, 3000);
-      return;
-    }
+    // if (!isSuccess) {
+    //   setTimeout(() => {
+    //     router.push("/auth/signin");
+    //   }, 3000);
+    //   return;
+    // }
 
     const getAccessToken = async () => {
-      try {
-        const response = await fetch("/api/auth/signin", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ code }),
-        });
+      const response = await fetch("/api/getLineCallback", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ queryString: fullQuery }),
+      });
 
-        if (response.ok) {
-          // 登入成功，重定向到個人資料頁面
-          router.push("/user/profile");
-        } else {
-          // 處理錯誤
-          router.push("/auth/signin");
-        }
-      } catch (err) {
-        console.error("獲取存取令牌失敗:", err);
+      const result = await response.json();
+
+      if (isValid(result)) {
+        router.push("/user/profile");
+      } else {
+        alert(`${result.error}, ${result.message}`);
         router.push("/auth/signin");
       }
     };
 
     getAccessToken();
-  }, [isSuccess, error, code, router]);
+  }, [isSuccess, error, code, fullQuery, router]);
 
   return (
     <>

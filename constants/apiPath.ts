@@ -35,3 +35,4 @@ export const put_admin_suggest_product = `${baseUrl}${basePath}/admin/suggest/pr
 export const get_admin_suggest = `${baseUrl}${basePath}/admin/suggest`;
 
 export const post_linepay_confirm = `${baseUrl}${basePath}/linepay/confirm`;
+export const get_linepay_callback = `${baseUrl}/api/account/linecallback`;

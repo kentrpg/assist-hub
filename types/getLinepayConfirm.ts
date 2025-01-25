@@ -1,8 +1,13 @@
 import { Error } from "@/types/apiRoutes";
 
+export type RequestGetLinepayConfirmQueryType = {
+  transactionId: string;
+  orderId: string;
+};
+
 export type RequestGetLinepayConfirmType = {
   transactionId: string;
-  finalAmount: string;
+  orderId: number;
 };
 
 export const ResultGetLinepayConfirm = {

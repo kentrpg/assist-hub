@@ -1,4 +1,4 @@
-import { Result, Response, ResultCheckoutType } from "@/types/postOrder";
+import { Result, Response, RequestCheckoutType } from "@/types/postOrder";
 import { catchError } from "../handleErrors";
 import { Error } from "@/types/apiRoutes";
 import { post_orders } from "@/constants/apiPath";
@@ -7,7 +7,7 @@ import { validateResponseType } from "../typeGuards";
 
 export const postOrder = async (
   token: string,
-  data: ResultCheckoutType,
+  data: RequestCheckoutType,
 ): Promise<Result> => {
   const parsedUrl = new URL(post_orders);
   const options = {

@@ -21,7 +21,8 @@ export type Result<T = unknown> = {
   error?: Error | null;
 };
 
-export const ResultCheckout = {
+export const RequestCheckout = {
+  "confirmUrl": "url",
   "product": {
     "id": 20,
     "name": "鋁製躺式輪椅",
@@ -51,4 +52,4 @@ export const ResultCheckout = {
   }
 };
 
-export type ResultCheckoutType = typeof ResultCheckout;
+export type RequestCheckoutType = typeof RequestCheckout;

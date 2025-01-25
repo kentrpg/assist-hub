@@ -42,8 +42,6 @@ const ConfirmPage = () => {
         setPaymentResult(result);
         console.log("result", result);
 
-        // isValid(result) && setPaymentStatus("success");
-
         switch (result.statusCode) {
           case 200:
             setPaymentStatus("success");

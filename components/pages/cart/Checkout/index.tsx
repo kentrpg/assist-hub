@@ -65,6 +65,7 @@ import { CartItem } from "@/components/pages/cart/ProductCard/data";
 import { Loading } from "@/components/ui/Loading";
 import { RootState } from "@/utils/redux/store";
 import { isValid, hasError } from "@/helpers/api/status";
+import { setLinePay } from "@/utils/redux/slices/linePay";
 
 const Checkout = () => {
   const dispatch = useDispatch();
@@ -106,7 +107,7 @@ const Checkout = () => {
   const isEmptyCartNotSubmitting = (
     cart: CartItem | undefined,
     isSubmitting: boolean,
-    isSubmitSuccessful: boolean
+    isSubmitSuccessful: boolean,
   ) => {
     return !cart && !isSubmitting && !isSubmitSuccessful;
   };
@@ -124,7 +125,7 @@ const Checkout = () => {
   const orderControls = {
     finalAmount: cart.fee + cart.amount,
     contractDate: `${useDateFormatter(cart.rentStamp)} - ${useDateFormatter(
-      cart.returnStamp
+      cart.returnStamp,
     )}`,
     formatAmount: formatCurrency,
   };
@@ -157,8 +158,7 @@ const Checkout = () => {
           email: data.email,
           addressZIP: data.addressZIP,
           addressCity: data.addressCity,
-          addressDistinct: data.addressDistrict,
-          // TBD: 後續 API 有更新錯誤在改回來 addressDistrict: data.addressDistrict,
+          addressDistrict: data.addressDistrict,
           addressDetail: data.addressDetail,
         },
       },
@@ -175,6 +175,8 @@ const Checkout = () => {
 
     const result = await res.json();
 
+    console.log("result", result);
+
     if (hasError(result)) {
       console.error("Error:", result.error);
       alert(`${result.message}，請重新整理稍後重新下單`);
@@ -189,11 +191,17 @@ const Checkout = () => {
       setIsOrderSubmitting(false);
       return;
     }
+    const redirectPath = result.data.linePay.PaymentUrl.web;
 
-    const redirectPath = isValid(result)
-      ? `${router.asPath}/approval`
-      : `${router.asPath}/declined`;
+    dispatch(
+      setLinePay({
+        webUrl: redirectPath,
+        transactionId: result.data.linePay.transactionId,
+        finalAmount: result.data.linePay.finalAmount,
+      }),
+    );
 
+    console.log("redirectPath", redirectPath);
     alert(`付款${isValid(result) ? "成功" : "失敗"}，訂單已送出`);
 
     dispatch(clearActiveCartId());

@@ -45,7 +45,7 @@ export const ResultCheckout = {
       "email": "test123@hexschool.com",
       "addressZIP": "800",
       "addressCity": "高雄市",
-      "addressDistinct": "新興區",
+      "addressDistrict": "新興區",
       "addressDetail": "民生一路123號"
     }
   }

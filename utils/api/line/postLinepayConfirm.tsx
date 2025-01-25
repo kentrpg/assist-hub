@@ -1,19 +1,22 @@
-import { Result, Response, ResultCheckoutType } from "@/types/postOrder";
-import { catchError } from "../handleErrors";
 import { Error } from "@/types/apiRoutes";
-import { post_orders } from "@/constants/apiPath";
+import { catchError } from "@/utils/handleErrors";
 import { NODE_ENV } from "@/constants/environment";
-import { validateResponseType } from "../typeGuards";
+import { validateResponseType } from "@/utils/typeGuards";
+import { post_linepay_confirm } from "@/constants/apiPath";
+import {
+  ResultPostLinepayConfirm,
+  RequestPostLinepayConfirmType,
+  ResultPostLinepayConfirmType,
+} from "@/types/postLinepayConfirm";
 
-export const postOrder = async (
-  token: string,
-  data: ResultCheckoutType,
-): Promise<Result> => {
-  const parsedUrl = new URL(post_orders);
+export const postLinepayConfirm = async (
+  data: RequestPostLinepayConfirmType,
+): Promise<ResultPostLinepayConfirmType> => {
+  console.log("data", data);
+  const parsedUrl = new URL(post_linepay_confirm);
   const options = {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${token}`,
       Accept: "application/json",
       "Content-Type": "application/json",
     },
@@ -21,8 +24,6 @@ export const postOrder = async (
   };
 
   const [res, error] = await catchError(fetch(parsedUrl, options));
-
-  console.log("res", res, error);
 
   if (error) {
     console.log("error", error);
@@ -44,7 +45,7 @@ export const postOrder = async (
   const json = await res.json();
 
   if (NODE_ENV === "development") {
-    const validation = validateResponseType(json, Response);
+    const validation = validateResponseType(json, ResultPostLinepayConfirm);
 
     !validation.isValid &&
       console.error("API Response validation failed:", validation.errors);
@@ -54,9 +55,9 @@ export const postOrder = async (
     statusCode: json.statusCode,
     status: json.status,
     message: json.message,
-    data: json.data,
+    data: undefined,
     error: null,
   };
 };
 
-export default postOrder;
+export default postLinepayConfirm;

@@ -32,3 +32,5 @@ export const post_admin_suggest_product = `${baseUrl}${basePath}/admin/suggest/p
 export const put_admin_suggest = `${baseUrl}${basePath}/admin/suggest`;
 export const put_admin_suggest_product = `${baseUrl}${basePath}/admin/suggest/product`;
 export const get_admin_suggest = `${baseUrl}${basePath}/admin/suggest`;
+
+export const post_linepay_confirm = `${baseUrl}${basePath}/linepay/confirm`;

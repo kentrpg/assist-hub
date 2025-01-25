@@ -6,7 +6,7 @@ const ApprovalPage = () => {
   return (
     <>
       <Head>
-        <title>訂單成立</title>
+        <title>付款成功</title>
         <meta name="description" content="訂單成立" />
       </Head>
       <MainWrapper>

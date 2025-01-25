@@ -12,6 +12,8 @@ export default async function handler(
   const { data, ...rest } = result;
   const { jwtToken, ...userData } = data || {};
 
+  console.log("signin api routes", result);
+
   if (isValid(rest) && jwtToken) {
     const cookieHeader = setAuthCookie(jwtToken);
     res.setHeader("Set-Cookie", cookieHeader);

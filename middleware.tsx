@@ -8,13 +8,25 @@ import { isValid } from "@/helpers/api/status";
  */
 
 export const config = {
-  matcher: ["/user/:path", "/cart", "/cart/:path*", "/inquiry"],
+  matcher: [
+    "/user/:path*",
+    "/cart",
+    "/cart/((?!checkout/confirm).)*",
+    "/inquiry",
+  ],
 };
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const token = request.cookies.get("token");
   console.log(`middleware start ${pathname} token: ${token}`);
+
+  if (pathname.startsWith("/auth") && token) {
+    const authResponse = await check(token.value);
+    if (isValid(authResponse)) {
+      return NextResponse.redirect(new URL("/user/profile", request.url));
+    }
+  }
 
   if (pathname.startsWith("/cart") || pathname.startsWith("/user")) {
     console.log(`middleware ${pathname} token: ${token}`);

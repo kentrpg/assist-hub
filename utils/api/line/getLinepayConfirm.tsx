@@ -20,12 +20,12 @@ export const getLinepayConfirm = async (
 
   if (isMissingRequiredParams) {
     return {
-      statusCode: 500,
+      statusCode: 405,
       status: false,
       message: "缺少必要參數",
       data: undefined,
       error: {
-        code: 500,
+        code: 405,
         message: "缺少 transactionId 或 finalAmount",
       },
     };

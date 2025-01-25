@@ -12,8 +12,9 @@ type SignIn = {
 };
 
 export const signIn = async (
-  data: SignIn
+  data: SignIn,
 ): Promise<Result<ResultSigninType["data"]>> => {
+  console.log("signin utils", data);
   const parsedUrl = new URL(post_auth_sign_in);
   const options = {
     method: "POST",
@@ -25,6 +26,8 @@ export const signIn = async (
   };
 
   const [res, error] = await catchError(fetch(parsedUrl, options));
+
+  console.log("signin res", res, error);
 
   if (error) {
     console.log("error", error);
@@ -44,6 +47,8 @@ export const signIn = async (
   }
 
   const json = await res.json();
+
+  console.log("signin json", json);
 
   if (NODE_ENV === "development") {
     const validation = validateResponseType(json, ResultSignin);

@@ -37,3 +37,10 @@ export const isEmptyData = <T>(response: ApiResponse<T>): boolean => {
 
   return false;
 };
+
+/**
+ * 檢查 API 回應是否為未授權
+ */
+export const isUnauthorized = <T>(response: ApiResponse<T>): boolean => {
+  return response.statusCode === 401;
+};

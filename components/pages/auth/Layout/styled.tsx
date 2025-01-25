@@ -1,7 +1,5 @@
-import {
-  PrimaryButton,
-  OutlineButton as BorderButton,
-} from "@/components/ui/buttons/Layout";
+import { PrimaryButton } from "@/components/ui/buttons/Layout";
+import { OutlineButton } from "@/styles/link";
 import { Container432 } from "@/styles/container";
 import styled from "styled-components";
 
@@ -32,6 +30,6 @@ export const Button = styled(PrimaryButton)`
   margin-top: 30px;
 `;
 
-export const OutlineButton = styled(BorderButton)`
+export const LineLoginButton = styled(OutlineButton)`
   margin-top: 8px;
 `;

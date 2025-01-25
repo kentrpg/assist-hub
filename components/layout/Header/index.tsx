@@ -20,15 +20,15 @@ import {
   LogoWrapperMobile,
 } from "./styled";
 
-import { signOut } from "@/utils/api/auth/signout";
-// import { OutlineButton } from "@/components/ui/buttons/Layout";
 import { useState } from "react";
 import { useBreakpoint } from "@/hooks/useBreakpoint";
 import { breakpoints } from "@/styles/container";
 import { ImageLink as LogoWrapperDesktop } from "@/components/ui/images";
 import Link from "next/link";
+import { isValid } from "@/helpers/api/status";
 
 const Header = () => {
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const isTablet = useBreakpoint(breakpoints.md);
 
@@ -36,20 +36,19 @@ const Header = () => {
     setMenuOpen((prevState) => !prevState);
   };
   // ===測試 middleware 驗證===
-  const router = useRouter();
   const handleLogout = async () => {
-    try {
-      const response = await signOut();
-      console.log(response);
-      switch (response.status) {
-        case 200:
-          router.push("/auth/signin");
-          break;
-        default:
-          console.error("登出失敗");
-      }
-    } catch (error) {
-      console.error("登出錯誤:", error);
+    const res = await fetch("/api/auth/signout", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const result = await res.json();
+    console.log("signout result", result);
+    if (isValid(result)) {
+      alert("登出成功");
+      router.push("/");
+    } else {
+      alert(`登出失敗: ${result.message}`);
     }
   };
   // ===測試 middleware 驗證===
@@ -95,7 +94,7 @@ const Header = () => {
         </LogoWrapperMobile> */}
         <Navbar $menuOpen={menuOpen}>
           {isTablet && (
-            <LogoWrapperDesktop href="/">
+            <LogoWrapperDesktop href="/" passHref>
               <Logo
                 src="/images/logo.png"
                 alt="輔具租賃網"
@@ -105,31 +104,46 @@ const Header = () => {
             </LogoWrapperDesktop>
           )}
           <NavLinks>
-            <NavLink href="/product" $active={true}>
+            <NavLink href="/product" $active={router.pathname === "/product"}>
               所有輔具
             </NavLink>
-            <NavLink href="#">常見問題</NavLink>
-            <NavLink href="/inquiry">詢問單</NavLink>
+            <NavLink href="/faq" $active={router.pathname === "/faq"}>
+              常見問題
+            </NavLink>
+            <NavLink href="/inquiry" $active={router.pathname === "/inquiry"}>
+              詢問單
+            </NavLink>
           </NavLinks>
         </Navbar>
 
         <ActionButtonGroup>
-          {/* <OutlineButton onClick={handleLogout}>登出</OutlineButton> */}
-          <CartButton as={Link} href="/cart">
-            <MdShoppingCart size={24} />
-            <ButtonText>購物車</ButtonText>
-          </CartButton>
+          <button
+            onClick={handleLogout}
+            style={{
+              backgroundColor: "transparent",
+            }}
+          >
+            登出
+          </button>
+          <Link href="/cart" passHref>
+            <CartButton>
+              <MdShoppingCart size={24} />
+              <ButtonText>購物車</ButtonText>
+            </CartButton>
+          </Link>
           <SearchButton>
             <MdSearch size={24} />
             <ButtonText>搜尋輔具</ButtonText>
           </SearchButton>
-          <AccountButton as={Link} href="/user/profile">
-            <Avatar
-              isLoggedIn={false}
-              imageSrc="/images/avatar-placeholder.png"
-            />
-            <ButtonText>我的帳戶</ButtonText>
-          </AccountButton>
+          <Link href="/user/profile" passHref>
+            <AccountButton>
+              <Avatar
+                isLoggedIn={false}
+                imageSrc="/images/avatar-placeholder.png"
+              />
+              <ButtonText>我的帳戶</ButtonText>
+            </AccountButton>
+          </Link>
         </ActionButtonGroup>
       </Container>
     </Wrapper>

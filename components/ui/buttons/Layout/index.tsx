@@ -88,18 +88,6 @@ export const BaseButton = css`
   }
 `;
 
-export const OutlineButton = styled.button`
-  ${BaseButton};
-  ${HstackLayout};
-  ${buttonGapSizes.large};
-  outline: 1px solid ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.textSecondary};
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.primaryLight};
-  }
-`;
-
 export const CtaButton = styled.button`
   ${BaseButton};
   ${buttonVariants.accent};

@@ -12,23 +12,26 @@ import {
 export const getLinepayConfirm = async (
   data: RequestGetLinepayConfirmType,
 ): Promise<ResultGetLinepayConfirmType> => {
-  const { transactionId, finalAmount } = data;
-  const isMissingRequiredParams = !transactionId || !finalAmount;
+  const { transactionId, orderId } = data;
+  const isMissingRequiredParams = !transactionId || !orderId;
+
+  console.log("transactionId", transactionId);
+  console.log("orderId", orderId);
 
   if (isMissingRequiredParams) {
     return {
-      statusCode: 500,
+      statusCode: 405,
       status: false,
       message: "缺少必要參數",
       data: undefined,
       error: {
-        code: 500,
+        code: 405,
         message: "缺少 transactionId 或 finalAmount",
       },
     };
   }
 
-  console.log("data", data);
+  console.log("getLinepayConfirm data", data);
   const parsedUrl = new URL(post_linepay_confirm);
   const options = {
     method: "POST",

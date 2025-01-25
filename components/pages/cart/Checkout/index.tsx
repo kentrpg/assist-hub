@@ -66,6 +66,7 @@ import { Loading } from "@/components/ui/Loading";
 import { RootState } from "@/utils/redux/store";
 import { isValid, hasError } from "@/helpers/api/status";
 import { setLinePay } from "@/utils/redux/slices/linePay";
+import { BASE_URL, BASE_URL_VM, NODE_ENV } from "@/constants/environment";
 
 const Checkout = () => {
   const dispatch = useDispatch();
@@ -135,6 +136,7 @@ const Checkout = () => {
     setIsOrderSubmitting(true);
 
     const checkoutData = {
+      confirmUrl: `${BASE_URL}/cart/checkout/confirm`,
       product: {
         id: cart.cartId,
         name: cart.name,

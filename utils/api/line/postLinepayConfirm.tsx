@@ -12,7 +12,6 @@ import {
 export const postLinepayConfirm = async (
   data: RequestPostLinepayConfirmType,
 ): Promise<ResultPostLinepayConfirmType> => {
-  console.log("data", data);
   const parsedUrl = new URL(post_linepay_confirm);
   const options = {
     method: "POST",

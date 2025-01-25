@@ -2,7 +2,7 @@ import { Error } from "@/types/apiRoutes";
 
 export type RequestPostLinepayConfirmType = {
   transactionId: string;
-  finalAmount: string;
+  orderId: number;
 };
 
 export const ResultPostLinepayConfirm = {

@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const PageLayout = styled.div`
   height: 100dvh;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
 `;

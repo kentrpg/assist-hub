@@ -21,6 +21,8 @@ import {
 } from "../Layout/styled";
 import { Remember } from "./styled";
 import { ErrorMessage } from "@/utils/react-hook-form/FormError/styled";
+import { BASE_URL, LINE_REDIRECT_URI } from "@/constants/environment";
+import { hasError } from "@/helpers/api/status";
 
 const Signin: React.FC = () => {
   const dispatch = useDispatch();
@@ -51,34 +53,35 @@ const Signin: React.FC = () => {
 
     const result = await res.json();
 
-    if (Object.is(result.error, null)) {
-      switch (result.statusCode) {
-        case 200:
-          result.data && dispatch(setUser(result.data));
-          window.location.href = "/user/profile";
-          break;
-        case 404:
-          setError("email", { type: "manual", message: "帳號或密碼錯誤" });
-          break;
-        case 400:
-          setError("password", { type: "manual", message: "密碼格式錯誤" });
-          break;
-        case 403:
-          setError("password", { type: "manual", message: "帳號或密碼錯誤" });
-          break;
-        default:
-          setError("root.serverError", {
-            type: result.statusCode.toString(),
-            message: "系統發生未預期的錯誤，請刷新整理頁面後再嘗試",
-          });
-          break;
-      }
-    } else {
-      setError("email", { message: "找不到帳號" });
+    if (hasError(result)) {
       setError("root.serverError", {
         type: result.statusCode.toString(),
         message: result.message || "伺服器錯誤，請稍後再試",
       });
+      console.log("hasError", result.error);
+      return;
+    }
+    
+    switch (result.statusCode) {
+      case 200:
+        result.data && dispatch(setUser(result.data));
+        window.location.href = "/user/profile";
+        break;
+      case 404:
+        setError("email", { type: "manual", message: "帳號或密碼錯誤" });
+        break;
+      case 400:
+        setError("password", { type: "manual", message: "密碼格式錯誤" });
+        break;
+      case 403:
+        setError("password", { type: "manual", message: "帳號或密碼錯誤" });
+        break;
+      default:
+        setError("root.serverError", {
+          type: result.statusCode.toString(),
+          message: "系統發生未預期的錯誤，請刷新整理頁面後再嘗試",
+        });
+        break;
     }
   };
 
@@ -123,7 +126,9 @@ const Signin: React.FC = () => {
         >
           {isSubmitting ? <LoaderSpinner /> : "登入"}
         </Button>
-        <LineLoginButton href="https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2006800464&redirect_uri=http://52.172.145.130:8080/auth/confirm&state=12345abcde&scope=profile%20openid%20email&nonce=09876xyz">
+        <LineLoginButton
+          href={`https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2006800464&redirect_uri=${BASE_URL}/auth/confirm&state=12345abcde&scope=profile%20openid%20email&nonce=09876xyz`}
+        >
           <IconWrapper $size={31} $backgroundColor="white" $borderRadius={5}>
             <FaLine size={31} fill={theme.colors.lineLogo} />
           </IconWrapper>

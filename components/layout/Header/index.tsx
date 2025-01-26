@@ -35,6 +35,11 @@ const Header = () => {
   const toggleMenu = () => {
     setMenuOpen((prevState) => !prevState);
   };
+
+  const toggleDropdown = () => {
+    console.log("toggleDropdown");
+    // setDropdownOpen((prevState) => !prevState);
+  };
   // ===測試 middleware 驗證===
   const handleLogout = async () => {
     const res = await fetch("/api/auth/signout", {
@@ -135,15 +140,15 @@ const Header = () => {
             <MdSearch size={24} />
             <ButtonText>搜尋輔具</ButtonText>
           </SearchButton>
-          <Link href="/user/profile" passHref>
-            <AccountButton>
-              <Avatar
-                isLoggedIn={false}
-                imageSrc="/images/avatar-placeholder.png"
-              />
-              <ButtonText>我的帳戶</ButtonText>
-            </AccountButton>
-          </Link>
+          {/* <Link href="/user/profile" passHref> */}
+          <AccountButton onClick={() => toggleDropdown()}>
+            <Avatar
+              isLoggedIn={false}
+              imageSrc="/images/avatar-placeholder.png"
+            />
+            <ButtonText>我的帳戶</ButtonText>
+          </AccountButton>
+          {/* </Link> */}
         </ActionButtonGroup>
       </Container>
     </Wrapper>

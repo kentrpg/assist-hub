@@ -11,12 +11,7 @@ export default async function handler(
   const methodError = await validateMethod("GET")(req, res);
   if (methodError) return methodError;
 
-  const { transactionId, orderId } = req.query;
-
-  const result = await getLinepayConfirm({
-    transactionId,
-    orderId: Number(orderId),
-  });
+  const result = await getLinepayConfirm(req.query);
 
   return res.json(result);
 }

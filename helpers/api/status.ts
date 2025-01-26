@@ -1,3 +1,4 @@
+import { AuthenticationResponse } from "@/types/apiRoutes";
 import { ApiResponse } from "./types";
 
 /**
@@ -43,4 +44,13 @@ export const isEmptyData = <T>(response: ApiResponse<T>): boolean => {
  */
 export const isUnauthorized = <T>(response: ApiResponse<T>): boolean => {
   return response.statusCode === 401;
+};
+
+/**
+ * 檢查 API 回應是否有 jwtToken 決定驗證是否成功
+ */
+export const isAuthenticationUnsuccessful = <T extends AuthenticationResponse>(
+  response: ApiResponse<T>
+): boolean => {
+  return !isValid(response) || !response.data?.jwtToken;
 };

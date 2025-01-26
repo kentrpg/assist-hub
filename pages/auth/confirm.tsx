@@ -4,126 +4,81 @@ import Head from "next/head";
 import { GetServerSideProps } from "next";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-
-type LineLoginError = {
-  error: string;
-  error_description: string;
-};
+import { hasError, isValid } from "@/helpers/api/status";
 
 type Props = {
-  isSuccess: boolean;
-  error?: LineLoginError;
-  code?: string;
+  fullQuery: string;
 };
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({
-  query,
+  resolvedUrl,
 }) => {
-  // 檢查是否有錯誤
-  if (query.error) {
-    return {
-      props: {
-        isSuccess: false,
-        error: {
-          error: query.error as string,
-          error_description: (query.error_description as string) || "未知錯誤",
-        },
-      },
-    };
-  }
+  const queryIndex = resolvedUrl.indexOf("?");
+  const fullQuery = queryIndex !== -1 ? resolvedUrl.slice(queryIndex) : "";
 
-  // 檢查必要參數
-  if (!query.code || !query.state) {
-    return {
-      props: {
-        isSuccess: false,
-        error: {
-          error: "invalid_request",
-          error_description: "缺少必要參數",
-        },
-      },
-    };
-  }
+  console.log("fullQuery", fullQuery);
 
-  // 驗證 state 參數（防止 CSRF 攻擊）
-  const expectedState = "12345abcde"; // 注意：這應該是動態生成的值
-  if (query.state !== expectedState) {
-    return {
-      props: {
-        isSuccess: false,
-        error: {
-          error: "invalid_state",
-          error_description: "無效的 state 參數",
-        },
-      },
-    };
-  }
-
-  // 成功取得授權碼
   return {
     props: {
-      isSuccess: true,
-      code: query.code as string,
+      fullQuery,
     },
   };
 };
 
-const ConfirmPage = ({ isSuccess, error, code }: Props) => {
+const ConfirmPage = ({ fullQuery }: Props) => {
   const router = useRouter();
 
-  console.log("ConfirmPage", isSuccess, error, code);
+  console.log("ConfirmPage", fullQuery);
 
   useEffect(() => {
-    if (!isSuccess) {
-      // 登入失敗，重定向到登入頁面
-      setTimeout(() => {
-        router.push("/auth/signin");
-      }, 3000);
-      return;
-    }
+    console.log("confirm useEffect start");
 
     const getAccessToken = async () => {
-      try {
-        const response = await fetch("/api/auth/signin", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ code }),
-        });
+      console.log("getAccessToken start");
+      const response = await fetch(`/api/getLineCallback${fullQuery}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-        if (response.ok) {
-          // 登入成功，重定向到個人資料頁面
-          router.push("/user/profile");
-        } else {
-          // 處理錯誤
-          router.push("/auth/signin");
-        }
-      } catch (err) {
-        console.error("獲取存取令牌失敗:", err);
+      const result = await response.json();
+      console.log("result", result);
+
+      if (hasError(result)) {
+        alert(`${result.error}, ${result.message}`);
+        router.push("/404");
+      }
+
+      if (isValid(result)) {
+        window.location.href = "/user/profile";
+      } else {
+        alert(`${result.message}, 請稍候再試`);
+        console.error(result.error);
         router.push("/auth/signin");
       }
     };
 
     getAccessToken();
-  }, [isSuccess, error, code, router]);
+    console.log("confirm useEffect end");
+  }, [fullQuery, router]);
 
   return (
     <>
       <Head>
-        <title>{isSuccess ? "登入中" : "登入失敗"}</title>
-        <meta name="description" content={isSuccess ? "登入中" : "登入失敗"} />
+        <title>登入中</title>
+        <meta name="description" content="登入中" />
       </Head>
       <MainWrapper>
-        {isSuccess ? (
-          <Loading />
+        <Loading />
+        {/* {isSuccess ? (
         ) : (
           <div>
             <h1>登入失敗</h1>
             <p>{error?.error_description}</p>
             <p>即將返回登入頁面...</p>
           </div>
-        )}
+        )} */}
       </MainWrapper>
     </>
   );

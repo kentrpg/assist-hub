@@ -116,7 +116,7 @@ const All: React.FC<AllProps> = ({ products }) => {
                 onClick={() => handleTabClick(index)}
               >
                 <ImgWrapper>
-                  <Img src={`/images/${tab.value}.png`} alt={tab.label} />
+                  <Img src={`/images/${tab.value}.webp`} alt={tab.label} />
                 </ImgWrapper>
                 <Overlay>{tab.label}</Overlay>
               </Tab>

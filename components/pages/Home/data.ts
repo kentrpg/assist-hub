@@ -127,18 +127,35 @@ export const brands: Brand[] = [
   },
 ];
 
-export type BodyPartId = "shoulder" | "waist" | "leg" | "knee";
+export type BodyPartId =
+  | "spine"
+  | "waist"
+  | "hip"
+  | "knee"
+  | "ankle"
+  | "shoulder"
+  | "arm"
+  | "wrist"
+  | "neck";
 
 export type BodyPart = {
   id: BodyPartId;
   name: string;
 };
 
-export const bodyParts: BodyPart[] = [
-  { id: "shoulder", name: "脊椎" },
+export const bodyPartsLeft: BodyPart[] = [
+  { id: "spine", name: "脊椎" },
   { id: "waist", name: "腰部" },
-  { id: "leg", name: "髖部" },
+  { id: "hip", name: "髖部" },
   { id: "knee", name: "膝蓋" },
+  { id: "ankle", name: "腳踝" },
+];
+
+export const bodyPartsRight: BodyPart[] = [
+  { id: "neck", name: "頭頸" },
+  { id: "shoulder", name: "肩部" },
+  { id: "arm", name: "手臂" },
+  { id: "wrist", name: "手腕" },
 ];
 
 export type Category = {
@@ -148,16 +165,34 @@ export type Category = {
 };
 
 export const categories: Record<BodyPartId, Category[]> = {
-  shoulder: [
+  spine: [
     { name: "行動輪椅", imgSrc: "/images/wheelChair.webp", type: "wheelChair" },
     { name: "臥室寢具", imgSrc: "/images/bed.webp", type: "bed" },
   ],
   waist: [
     { name: "拐杖步行", imgSrc: "/images/crutch.webp", type: "crutch" },
-    { name: "如廁沐浴", imgSrc: "/images/oxygen.webp", type: "oxygen" },
+    { name: "行動輪椅", imgSrc: "/images/wheelChair.webp", type: "wheelChair" },
+    { name: "呼吸照護", imgSrc: "/images/oxygen.webp", type: "oxygen" },
   ],
-  leg: [
+  hip: [
     { name: "輪椅輔助", imgSrc: "/images/wheelChair.webp", type: "wheelChair" },
+    { name: "拐杖步行", imgSrc: "/images/crutch.webp", type: "crutch" },
   ],
-  knee: [{ name: "復健支架", imgSrc: "/images/crutch.webp", type: "crutch" }],
+  knee: [{ name: "拐杖步行", imgSrc: "/images/crutch.webp", type: "crutch" }],
+  ankle: [
+    { name: "行動輪椅", imgSrc: "/images/wheelChair.webp", type: "wheelChair" },
+    { name: "拐杖步行", imgSrc: "/images/crutch.webp", type: "crutch" },
+  ],
+  neck: [
+    { name: "行動輪椅", imgSrc: "/images/wheelChair.webp", type: "wheelChair" },
+    { name: "臥室寢具", imgSrc: "/images/bed.webp", type: "bed" },
+  ],
+  shoulder: [
+    { name: "行動輪椅", imgSrc: "/images/wheelChair.webp", type: "wheelChair" },
+    { name: "臥室寢具", imgSrc: "/images/bed.webp", type: "bed" },
+  ],
+  arm: [
+    { name: "行動輪椅", imgSrc: "/images/wheelChair.webp", type: "wheelChair" },
+  ],
+  wrist: [{ name: "拐杖步行", imgSrc: "/images/crutch.webp", type: "crutch" }],
 };

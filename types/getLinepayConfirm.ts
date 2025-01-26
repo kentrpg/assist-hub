@@ -1,8 +1,8 @@
 import { Error } from "@/types/apiRoutes";
 
 export type RequestGetLinepayConfirmQueryType = {
-  transactionId: string;
-  orderId: string;
+  transactionId?: string;
+  orderId?: string;
 };
 
 export type RequestGetLinepayConfirmType = {
@@ -16,10 +16,12 @@ export const ResultGetLinepayConfirm = {
   "message": "LinePay訂單確認失敗"
 };
 
-export type ResultGetLinepayConfirmType = {
+export type ResponseGetLinepayConfirm = {
   statusCode: number;
   status: boolean;
   message: string;
-  data: undefined;
+  data: typeof ResultGetLinepayConfirm | undefined;
   error: Error | null;
 };
+
+export type ResultGetLinepayConfirmType = ResponseGetLinepayConfirm;

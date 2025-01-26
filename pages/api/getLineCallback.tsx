@@ -1,10 +1,7 @@
-import { isAuthenticationUnsuccessful, isValid } from "@/helpers/api/status";
+import { isAuthenticationUnsuccessful } from "@/helpers/api/status";
 import { validateMethod } from "@/helpers/api/validateMethod";
 import { setAuthCookie } from "@/helpers/cookies";
-import {
-  RequestGetLineCallbackQueryType,
-  ResultGetLineCallback,
-} from "@/types/getLinecallback";
+import { RequestGetLineCallbackQueryType } from "@/types/getLinecallback";
 import getLineCallback from "@/utils/api/getLineCallback";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Result } from "@/types/postOrder";
@@ -16,18 +13,19 @@ export default async function handler(
   const methodError = await validateMethod("GET")(req, res);
   if (methodError) return methodError;
 
-  const queryString = req.url?.split("?")[1] || "";
-  const result = await getLineCallback(queryString);
+  const result = await getLineCallback(req.query);
 
   if (isAuthenticationUnsuccessful(result)) {
     return res.json(result);
   }
-  
-  const cookieHeader = setAuthCookie(result.data.jwtToken);
-  res.setHeader("Set-Cookie", cookieHeader);
 
   const { data, ...rest } = result;
   const { jwtToken, ...userData } = data || {};
+
+  if (jwtToken) {
+    const cookieHeader = setAuthCookie(jwtToken);
+    res.setHeader("Set-Cookie", cookieHeader);
+  }
 
   return res.json({
     ...rest,

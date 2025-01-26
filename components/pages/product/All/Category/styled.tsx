@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import theme from "@/styles/theme";
+import Link from "next/link";
 import {
   Container1344,
   ExtraLarge,
@@ -50,6 +51,7 @@ export const Card = styled.div<CardProps>`
   border-radius: 10px;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
@@ -65,7 +67,7 @@ export const Card = styled.div<CardProps>`
 export const CardImg = styled.img`
   width: 100%;
   max-height: 190px;
-  height: 190px; 
+  height: 190px;
   object-fit: contain;
 `;
 
@@ -114,9 +116,11 @@ export const Name = styled.span`
   color: #08204d;
   font-size: 14px;
   font-weight: 500;
+  cursor: pointer;
 `;
 
 export const Rent = styled.span`
   font-size: 20px;
   font-weight: 700;
+  cursor: pointer;
 `;

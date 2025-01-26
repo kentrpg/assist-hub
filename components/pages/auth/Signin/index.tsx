@@ -21,7 +21,7 @@ import {
 } from "../Layout/styled";
 import { Remember } from "./styled";
 import { ErrorMessage } from "@/utils/react-hook-form/FormError/styled";
-import { LINE_REDIRECT_URI } from "@/constants/environment";
+import { BASE_URL, LINE_REDIRECT_URI } from "@/constants/environment";
 
 const Signin: React.FC = () => {
   const dispatch = useDispatch();
@@ -124,7 +124,9 @@ const Signin: React.FC = () => {
         >
           {isSubmitting ? <LoaderSpinner /> : "登入"}
         </Button>
-        <LineLoginButton href={`${LINE_REDIRECT_URI}`}>
+        <LineLoginButton
+          href={`https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2006800464&redirect_uri=${BASE_URL}/auth/confirm&state=12345abcde&scope=profile%20openid%20email&nonce=09876xyz`}
+        >
           <IconWrapper $size={31} $backgroundColor="white" $borderRadius={5}>
             <FaLine size={31} fill={theme.colors.lineLogo} />
           </IconWrapper>

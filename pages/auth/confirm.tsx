@@ -22,7 +22,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
   query,
   resolvedUrl,
 }) => {
-  // 檢查是否有錯誤
   if (query.error) {
     return {
       props: {
@@ -36,6 +35,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
   }
 
   // 檢查必要參數
+  console.log("query.code", query.code);
+  console.log("query.state", query.state);
   if (!query.code || !query.state) {
     return {
       props: {
@@ -48,23 +49,12 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
     };
   }
 
-  // 驗證 state 參數（防止 CSRF 攻擊）
-  const expectedState = "12345abcde";
-  if (query.state !== expectedState) {
-    return {
-      props: {
-        isSuccess: false,
-        error: {
-          error: "invalid_state",
-          error_description: "無效的 state 參數",
-        },
-      },
-    };
-  }
-
   // 取得 query string
   const queryIndex = resolvedUrl.indexOf("?");
   const fullQuery = queryIndex !== -1 ? resolvedUrl.slice(queryIndex) : "";
+
+  console.log("fullQuery", fullQuery);
+  console.log("query", query);
 
   // 成功取得授權碼
   return {
@@ -88,18 +78,19 @@ const ConfirmPage = ({ isSuccess, error, code, fullQuery }: Props) => {
     //   }, 3000);
     //   return;
     // }
+    console.log("confirm useEffect start");
 
     const getAccessToken = async () => {
-      const response = await fetch("/api/getLineCallback", {
+      console.log("getAccessToken start");
+      const response = await fetch(`/api/getLineCallback${fullQuery}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ queryString: fullQuery }),
       });
 
       const result = await response.json();
-
+      console.log("result", result);
       if (isValid(result)) {
         router.push("/user/profile");
       } else {
@@ -109,6 +100,7 @@ const ConfirmPage = ({ isSuccess, error, code, fullQuery }: Props) => {
     };
 
     getAccessToken();
+    console.log("confirm useEffect end");
   }, [isSuccess, error, code, fullQuery, router]);
 
   return (

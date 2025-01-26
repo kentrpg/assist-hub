@@ -117,3 +117,13 @@ export const InputOutline = css`
     ${InputFieldAutofill};
   }
 `;
+
+// Dropdown
+export const DropdownShadow = css`
+  box-shadow: 2px 0 10px 1px rgba(0, 0, 0, 0.1);
+`;
+
+export const DropdownTransition = ($isOpen: boolean) => css`
+  transition: height 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.15s ease-in-out, visibility 0s linear ${$isOpen ? "0s" : "0.25s"};
+`;

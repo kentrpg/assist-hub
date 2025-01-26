@@ -1,13 +1,19 @@
 import styled, { css } from "styled-components";
 import { Container1344, Desktop, Tablet } from "@/styles/container";
 import Link from "next/link";
-import { ShadowLow, NavLinkHover } from "@/styles/effect";
-import { RoundedFull } from "@/styles/borderRadius";
+import {
+  ShadowLow,
+  NavLinkHover,
+  ButtonHoverTransition,
+  DropdownShadow,
+} from "@/styles/effect";
+import { InputRadius, RoundedFull } from "@/styles/borderRadius";
 import {
   AccentIconButton,
   PrimaryIconButton,
   SecondaryIconButton,
 } from "@/components/ui/buttons/Layout";
+import { DropdownTransition } from "@/styles/effect";
 
 export const Wrapper = styled.header`
   width: 100%;
@@ -134,7 +140,7 @@ export const SearchButton = styled(AccentIconButton)`
   ${BaseButton};
 `;
 
-export const AccountButton = styled(PrimaryIconButton)`
+export const TriggerButton = styled(PrimaryIconButton)`
   ${BaseButton};
 `;
 
@@ -227,4 +233,65 @@ export const Overlay = styled.div<{ $menuOpen: boolean }>`
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 8;
   pointer-events: ${({ $menuOpen }) => ($menuOpen ? "auto" : "none")};
+`;
+
+export const DropdownWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+`;
+
+export const DropdownContainer = styled.div<{ $isOpen: boolean }>`
+  position: absolute;
+  top: 110%;
+  right: 0;
+  height: ${({ $isOpen }) => ($isOpen ? "124px" : "0")};
+  width: 160px;
+  background: ${({ theme }) => theme.colors.white};
+  ${InputRadius};
+  overflow: hidden;
+  ${({ $isOpen }) => DropdownTransition($isOpen)};
+  opacity: ${({ $isOpen }) => ($isOpen ? "1" : "0")};
+  visibility: ${({ $isOpen }) => ($isOpen ? "visible" : "hidden")};
+  ${DropdownShadow};
+  z-index: 1;
+  padding: 8px 0;
+`;
+
+export const DropdownList = styled.ul`
+  font-size: 14px;
+`;
+
+export const DropdownItem = styled.li<{ $active?: boolean }>`
+  ${ButtonHoverTransition};
+
+  ${({ $active, theme }) =>
+    $active &&
+    css`
+      background-color: ${theme.colors.primary};
+      color: ${theme.colors.white};
+    `}
+
+  ${({ $active, theme }) =>
+    !$active &&
+    css`
+      &:hover {
+        background-color: ${theme.colors.infoLight};
+      }
+    `}
+`;
+
+const DropdownItemBase = css`
+  text-align: left;
+  color: inherit;
+  padding: 8px 16px;
+`;
+
+export const DropdownItemButton = styled.button`
+  ${DropdownItemBase};
+  border: none;
+  background: none;
+`;
+
+export const DropdownItemLink = styled(Link)`
+  ${DropdownItemBase};
 `;

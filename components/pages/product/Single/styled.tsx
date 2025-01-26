@@ -174,7 +174,7 @@ export const InquiryBtn = styled.button`
   &:hover {
     max-width: 100%;
     width: 100%;
-    color: black;
+    color: white;
     background-color: #b28f12;
     span {
       display: inline-block;
@@ -293,6 +293,7 @@ export const ComparisonProduct = styled.div`
   border-left: 1px solid #e9e5de;
   overflow: hidden;
   position: relative;
+  cursor: pointer;
 `;
 
 export const ComparisonImg = styled.img`
@@ -365,6 +366,9 @@ export const RecommendedContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    :hover {
+      cursor: pointer;
+    }
   }
 
   .slick-slide img {
@@ -446,6 +450,7 @@ export const CarouselItem = styled.div`
   padding: 20px;
   position: relative;
   overflow: hidden;
+
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;

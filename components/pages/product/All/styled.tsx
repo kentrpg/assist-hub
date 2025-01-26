@@ -11,6 +11,12 @@ type TabProps = {
   $isSelected?: boolean;
 };
 
+export const NoProductsMessage = styled.p`
+  text-align: center;
+  font-size: 16px;
+  color: #888888;
+`;
+
 export const Container = styled(Container1344)`
   display: flex;
   flex-direction: column;

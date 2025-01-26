@@ -17,6 +17,7 @@ import {
   ImgWrapper,
   RadioIcon,
   RadioText,
+  NoProductsMessage,
 } from "./styled";
 import { ProductItem, tabsData, radioOptions } from "./data";
 import { MdInfo, MdRadioButtonChecked, MdOutlineCircle } from "react-icons/md";
@@ -36,7 +37,7 @@ const All: React.FC<AllProps> = ({ products }) => {
   useEffect(() => {
     if (router.query.type) {
       const typeIndex = tabsData.findIndex(
-        (tab) => tab.value === router.query.type
+        (tab) => tab.value === router.query.type,
       );
       if (typeIndex !== -1) {
         setSelectedTab(typeIndex);
@@ -77,7 +78,7 @@ const All: React.FC<AllProps> = ({ products }) => {
         query: newQuery,
       },
       undefined,
-      { shallow: true }
+      { shallow: true },
     );
   };
 
@@ -99,7 +100,7 @@ const All: React.FC<AllProps> = ({ products }) => {
         query: newQuery,
       },
       undefined,
-      { shallow: true }
+      { shallow: true },
     );
   };
 
@@ -148,34 +149,42 @@ const All: React.FC<AllProps> = ({ products }) => {
         </LevelWrapper>
       </SideBar>
       <FilterWrapper>
-        <Category
-          title="行動輪椅"
-          color="primary"
-          bgColor="primaryLight"
-          type="wheelChair"
-          products={filteredProducts}
-        />
-        <Category
-          title="拐杖步行"
-          color="accent"
-          bgColor="accentLight"
-          type="crutch"
-          products={filteredProducts}
-        />
-        <Category
-          title="臥室寢具"
-          color="primary"
-          bgColor="primaryLight"
-          type="bed"
-          products={filteredProducts}
-        />
-        <Category
-          title="呼吸照護"
-          color="accent"
-          bgColor="accentLight"
-          type="oxygen"
-          products={filteredProducts}
-        />
+        {selectedTab !== null &&
+        selectedLevel !== "" &&
+        filteredProducts.length === 0 ? (
+          <NoProductsMessage> 抱歉，沒有符合條件的商品。</NoProductsMessage>
+        ) : (
+          <>
+            <Category
+              title="行動輪椅"
+              color="primary"
+              bgColor="primaryLight"
+              type="wheelChair"
+              products={filteredProducts}
+            />
+            <Category
+              title="拐杖步行"
+              color="accent"
+              bgColor="accentLight"
+              type="crutch"
+              products={filteredProducts}
+            />
+            <Category
+              title="臥室寢具"
+              color="primary"
+              bgColor="primaryLight"
+              type="bed"
+              products={filteredProducts}
+            />
+            <Category
+              title="呼吸照護"
+              color="accent"
+              bgColor="accentLight"
+              type="oxygen"
+              products={filteredProducts}
+            />
+          </>
+        )}
       </FilterWrapper>
     </Container>
   );

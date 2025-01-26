@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -54,6 +54,7 @@ import { RootState } from "@/utils/redux/store";
 import { useDispatch } from "react-redux";
 import { addToInquiryBar } from "@/utils/redux/slices/inquiryBar";
 import Link from "next/link";
+import { Loading } from "@/components/ui/Loading";
 
 const CustomPrevArrow = ({ onClick }: { onClick?: () => void }) => (
   <div className="slick-prev" onClick={onClick}>
@@ -79,6 +80,7 @@ const Single: React.FC<ProductDetailsProps> = ({
   recommended,
 }) => {
   console.log("product", product);
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
   const inquiryBar = useSelector((state: RootState) => state.inquiryBar);
@@ -139,6 +141,9 @@ const Single: React.FC<ProductDetailsProps> = ({
   };
 
   const handleAddToCart = async (productId: number) => {
+    if (isLoading) return; // 如果正在處理，則不再繼續執行
+
+    setIsLoading(true); // 設定為正在處理
     console.log("handleAddToCart", productId);
 
     try {
@@ -167,6 +172,8 @@ const Single: React.FC<ProductDetailsProps> = ({
     } catch (error) {
       console.error("加入購物車時發生錯誤：", error);
       alert("❌ 加入購物車時發生錯誤，請稍後再試！");
+    } finally {
+      setIsLoading(false); // 完成後將 loading 設為 false
     }
   };
 
@@ -212,7 +219,7 @@ const Single: React.FC<ProductDetailsProps> = ({
           <BtnField>
             <RentBtn onClick={() => handleAddToCart(product.id)}>
               <MdShoppingCart size={27} />
-              加入購物車
+              {isLoading ? <Loading /> : "加入購物車"}
             </RentBtn>
             <InquiryBtn onClick={handleAddCurrentProductToInquiryBar}>
               <InquiryIcon />
@@ -230,7 +237,12 @@ const Single: React.FC<ProductDetailsProps> = ({
             <Row>
               <Cell $border></Cell>
               {comparison.map((item, index) => (
-                <Link key={index} href={`/product/${item.productId}`} passHref>
+                <Link
+                  key={index}
+                  href={`/product/${item.productId}`}
+                  passHref
+                  target="_blank"
+                >
                   <ComparisonProduct key={index}>
                     <ComparisonImg
                       src={item.imgSrc || "/images/wheelChair.svg"}
@@ -304,7 +316,12 @@ const Single: React.FC<ProductDetailsProps> = ({
         >
           {recommended.map((item, index) => (
             <CarouselItem key={index}>
-              <Link key={index} href={`/product/${item.productId}`} passHref>
+              <Link
+                key={index}
+                href={`/product/${item.productId}`}
+                passHref
+                target="_blank"
+              >
                 <CarouselImg>
                   <img
                     src={item.imgSrc || "/images/wheelChair.svg"}

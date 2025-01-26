@@ -32,8 +32,10 @@ export const GridContainer = styled.div`
   grid-template-rows: auto auto;
   border: 1px solid #888888;
   border-radius: 5px;
-  overflow: hidden;
   overflow-x: scroll;
+  @media (${Desktop}) {
+    overflow-x: hidden;
+  }
 `;
 
 export const HeaderRow = styled.div`

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react"; // 引入 useRef
 import { MdArrowForward } from "react-icons/md";
 import Link from "next/link";
 import {
@@ -25,7 +25,6 @@ import {
   StepTitle,
   StepDes,
   StepsIcon,
-  StepsBtn,
   CooperationContainer,
   CooperationHeader,
   CooperationSpan,
@@ -46,20 +45,34 @@ import {
   TypeTab,
   TypeImg,
   BodyBtn,
-  BodyBtns,
+  BodyBtnsRight,
+  BodyBtnsLeft,
+  BodyPrompt,
+  BannerImage,
 } from "./styled";
 import {
   solutions,
   steps,
   brands,
-  bodyParts,
+  bodyPartsLeft,
+  bodyPartsRight,
   categories,
   BodyPartId,
 } from "./data";
 
 const Home: React.FC = () => {
   const [activeCard, setActiveCard] = useState(0);
-  const [activeTab, setActiveTab] = useState<BodyPartId | null>(null); 
+  const [activeTab, setActiveTab] = useState<BodyPartId | null>(null);
+
+  // 1. 創建 ref
+  const bodyContainerRef = useRef<HTMLDivElement | null>(null);
+
+  // 2. 滾動至 BodyContainer
+  const scrollToBodyContainer = () => {
+    if (bodyContainerRef.current) {
+      bodyContainerRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <Container>
@@ -70,7 +83,8 @@ const Home: React.FC = () => {
             <br /> 一鍵解決您的行動需求
           </BannerTitle>
           <BannerDes>提供最適合的輔具，讓您或家人生活更輕鬆</BannerDes>
-          <BannerBtn>免費快速適配</BannerBtn>
+          {/* 3. 讓按鈕點擊觸發滾動 */}
+          <BannerBtn onClick={scrollToBodyContainer}>免費快速適配</BannerBtn>
         </BannerContent>
       </Banner>
       <SolutionContainer>
@@ -111,16 +125,17 @@ const Home: React.FC = () => {
             </Step>
           ))}
         </StepsMain>
-        <StepsBtn>預約租賃</StepsBtn>
       </StepsContainer>
-      <BodyContainer>
+      {/* 4. 設定 ref */}
+      <BodyContainer ref={bodyContainerRef}>
         <BodyHeader>點選受傷部位，快速適配輔具</BodyHeader>
         <BodyContent>
           {/* 左側選擇按鈕 */}
           <BodyTabs>
-            <BodyBtns>
-              {bodyParts.map((part) => (
+            <BodyBtnsLeft>
+              {bodyPartsLeft.map((part) => (
                 <BodyBtn
+                  $isActive={activeTab === part.id}
                   key={part.id}
                   onClick={() =>
                     setActiveTab((prevTab) =>
@@ -131,8 +146,23 @@ const Home: React.FC = () => {
                   {part.name}
                 </BodyBtn>
               ))}
-            </BodyBtns>
+            </BodyBtnsLeft>
             <BodyImg src="/images/body.webp" alt="body" />
+            <BodyBtnsRight>
+              {bodyPartsRight.map((part) => (
+                <BodyBtn
+                  $isActive={activeTab === part.id}
+                  key={part.id}
+                  onClick={() =>
+                    setActiveTab((prevTab) =>
+                      prevTab === part.id ? null : part.id,
+                    )
+                  }
+                >
+                  {part.name}
+                </BodyBtn>
+              ))}
+            </BodyBtnsRight>
           </BodyTabs>
           {/* 右側顯示分類 */}
           <TypeTabs>
@@ -152,7 +182,7 @@ const Home: React.FC = () => {
                   </TypeTab>
                 </Link>
               ))}
-            {!activeTab && <p>請選擇左側的受傷部位</p>}
+            {!activeTab && <BodyPrompt>請選擇受傷部位</BodyPrompt>}
           </TypeTabs>
         </BodyContent>
       </BodyContainer>
@@ -178,7 +208,9 @@ const Home: React.FC = () => {
             不論是臨時需求還是日常輔助，我們都能提供最貼心的服務。
           </GuideSpan>
         </GuideHeader>
-        <GuideBtn>探索所有輔具</GuideBtn>
+        <Link href="/product" passHref>
+          <GuideBtn>探索所有輔具</GuideBtn>
+        </Link>
       </GuideContainer>
     </Container>
   );

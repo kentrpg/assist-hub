@@ -9,7 +9,6 @@ export const GalleryContainer = styled.div`
 `;
 
 export const Main = styled.div`
-  background-color: #f9f8f6;
   display: flex;
   justify-content: center;
   align-items: center;

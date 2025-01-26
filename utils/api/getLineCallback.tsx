@@ -11,17 +11,12 @@ import { Error } from "@/types/apiRoutes";
 export const getLineCallback = async (
   queryString: string,
 ): Promise<ResultGetLineCallback> => {
-  console.log("queryString", queryString);
   const normalizedQueryString = queryString.startsWith("?")
     ? queryString
     : `?${queryString}`;
 
-  console.log("normalizedQueryString", normalizedQueryString);
-
   const baseUrl = get_linepay_callback;
   const fullUrl = `${baseUrl}${normalizedQueryString}`;
-
-  console.log("fullUrl", fullUrl);
 
   const parsedUrl = new URL(fullUrl);
   const options = {
@@ -33,8 +28,6 @@ export const getLineCallback = async (
   };
 
   const [res, error] = await catchError(fetch(parsedUrl, options));
-
-  console.log("res", res, error);
 
   if (error) {
     console.log("error", error);
@@ -54,8 +47,6 @@ export const getLineCallback = async (
   }
 
   const json = await res.json();
-
-  console.log("json", json);
 
   if (NODE_ENV === "development") {
     const validation = validateResponseType(json, ResponseGetLineCallback);

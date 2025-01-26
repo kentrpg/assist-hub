@@ -1,5 +1,10 @@
 import { Error } from "@/types/apiRoutes";
 
+export type RequestGetLineCallbackQueryType = {
+  code: string;
+  state: string;
+};
+
 export type RequestGetLineCallback = {
   code: string;
   state: string;
@@ -24,7 +29,7 @@ export const ResponseGetLineCallback = {
     phone: "",
     addressZip: "",
     addressCity: "",
-    addressDistinct: "",
+    addressDistrict: "",
     addressDetail: "",
   }
 };

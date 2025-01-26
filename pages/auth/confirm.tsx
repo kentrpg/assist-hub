@@ -92,10 +92,10 @@ const ConfirmPage = ({ isSuccess, error, code, fullQuery }: Props) => {
       const result = await response.json();
       console.log("result", result);
       if (isValid(result)) {
-        router.push("/user/profile");
+        window.location.href = "/user/profile";
       } else {
         alert(`${result.error}, ${result.message}`);
-        router.push("/auth/signin");
+        window.location.href = "/auth/signin";
       }
     };
 

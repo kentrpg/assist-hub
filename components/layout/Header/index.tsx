@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { MdShoppingCart, MdSearch } from "react-icons/md";
+import { MdShoppingCart, MdSearch, MdPerson } from "react-icons/md";
 import Avatar from "@/components/ui/Avatar";
 
 import {
@@ -172,12 +172,16 @@ const Header = () => {
             </CartButton>
           </Link>
           <DropdownWrapper>
-            <TriggerButton ref={triggerButtonRef} onClick={toggleAccountMenu}>
+            {/* <TriggerButton ref={triggerButtonRef} onClick={toggleAccountMenu}>
               <Avatar
                 isLoggedIn={false}
                 imageSrc="/images/avatar-placeholder.png"
               />
               <ButtonText>我的帳戶</ButtonText>
+            </TriggerButton> */}
+            <TriggerButton ref={triggerButtonRef} onClick={toggleAccountMenu}>
+              <MdPerson size={24} />
+              <ButtonText>登入</ButtonText>
             </TriggerButton>
             <DropdownContainer $isOpen={isDropdownToggled}>
               <DropdownList>

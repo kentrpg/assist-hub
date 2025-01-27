@@ -125,14 +125,14 @@ const BaseButton = css`
   color: ${({ theme }) => theme.colors.white};
   padding: 13px;
   @media ${Desktop} {
-    padding: 14px 27px;
+    padding: 14px 25px;
   }
 `;
 
 export const CartButton = styled(SecondaryIconButton)`
   ${BaseButton};
   @media ${Desktop} {
-    padding: 14px 35px;
+    padding: 14px 33px;
   }
 `;
 
@@ -142,6 +142,9 @@ export const SearchButton = styled(AccentIconButton)`
 
 export const TriggerButton = styled(PrimaryIconButton)`
   ${BaseButton};
+  @media ${Desktop} {
+    padding: 14px 41px;
+  }
 `;
 
 export const ButtonText = styled.span`
@@ -238,14 +241,17 @@ export const Overlay = styled.div<{ $menuOpen: boolean }>`
 export const DropdownWrapper = styled.div`
   position: relative;
   display: inline-block;
+  cursor: pointer;
+  padding-bottom: 10px;
 `;
 
 export const DropdownContainer = styled.div<{ $isOpen: boolean }>`
-  position: absolute;
-  top: 110%;
-  right: 0;
   height: ${({ $isOpen }) => ($isOpen ? "124px" : "0")};
   width: 160px;
+  position: absolute;
+  top: 100%;
+  right: 50%;
+  transform: translateX(50%);
   background: ${({ theme }) => theme.colors.white};
   ${InputRadius};
   overflow: hidden;
@@ -254,6 +260,7 @@ export const DropdownContainer = styled.div<{ $isOpen: boolean }>`
   visibility: ${({ $isOpen }) => ($isOpen ? "visible" : "hidden")};
   ${DropdownShadow};
   z-index: 1;
+  cursor: pointer;
   padding: 8px 0;
 `;
 
@@ -281,6 +288,7 @@ export const DropdownItem = styled.li<{ $active?: boolean }>`
 `;
 
 const DropdownItemBase = css`
+  width: 100%;
   text-align: left;
   color: inherit;
   padding: 8px 16px;

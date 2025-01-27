@@ -23,7 +23,12 @@ const Container = styled.div`
     padding-right: 24px;
   }
 
-  @media ${ExtraLarge} {
+  @media ${Desktop} {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  @media (min-width: ${breakpoints.xl + 24}px) {
     padding-left: 0;
     padding-right: 0;
   }

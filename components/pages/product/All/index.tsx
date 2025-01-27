@@ -22,6 +22,7 @@ import {
 import { ProductItem, tabsData, radioOptions } from "./data";
 import { MdInfo, MdRadioButtonChecked, MdOutlineCircle } from "react-icons/md";
 import Category from "./Category";
+import Tooltip from "@/components/ui/Tooltip";
 
 type AllProps = {
   products: ProductItem[];
@@ -127,7 +128,7 @@ const All: React.FC<AllProps> = ({ products }) => {
         <LevelWrapper>
           <Level>
             動作功能分級表
-            <MdInfo color="#103F99" size={24} />
+            <Tooltip text="依照活動能力，對應粗大動作功能分級表找到合適輔具。" />
           </Level>
           <Radios>
             {radioOptions.map((option) => (

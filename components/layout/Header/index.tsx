@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { MdShoppingCart, MdSearch, MdPerson } from "react-icons/md";
 import Avatar from "@/components/ui/Avatar";
+import { checkAuthStatus } from "@/helpers/cookies";
 
 import {
   Wrapper,
@@ -38,7 +39,17 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const isTablet = useBreakpoint(breakpoints.md);
   const [isDropdownToggled, setIsDropdownToggled] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const triggerButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const isAuthenticated = await checkAuthStatus();
+      setIsLoggedIn(isAuthenticated);
+    };
+
+    checkAuth();
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -75,7 +86,7 @@ const Header = () => {
     console.log("signout result", result);
     if (isValid(result)) {
       alert("登出成功");
-      router.push("/");
+      window.location.href = "/";
     } else {
       alert(`登出失敗: ${result.message}`);
     }
@@ -172,17 +183,20 @@ const Header = () => {
             </CartButton>
           </Link>
           <DropdownWrapper>
-            {/* <TriggerButton ref={triggerButtonRef} onClick={toggleAccountMenu}>
-              <Avatar
-                isLoggedIn={false}
-                imageSrc="/images/avatar-placeholder.png"
-              />
-              <ButtonText>我的帳戶</ButtonText>
-            </TriggerButton> */}
-            <TriggerButton ref={triggerButtonRef} onClick={toggleAccountMenu}>
-              <MdPerson size={24} />
-              <ButtonText>登入</ButtonText>
-            </TriggerButton>
+            {isLoggedIn ? (
+              <TriggerButton ref={triggerButtonRef} onClick={toggleAccountMenu}>
+                <Avatar
+                  isLoggedIn={true}
+                  imageSrc="/images/avatar-placeholder.png"
+                />
+                <ButtonText>我的帳戶</ButtonText>
+              </TriggerButton>
+            ) : (
+              <TriggerButton ref={triggerButtonRef} onClick={toggleAccountMenu}>
+                <MdPerson size={24} />
+                <ButtonText>登入</ButtonText>
+              </TriggerButton>
+            )}
             <DropdownContainer $isOpen={isDropdownToggled}>
               <DropdownList>
                 {dropdownItems.map((item) => (

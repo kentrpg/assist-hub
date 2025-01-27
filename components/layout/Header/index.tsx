@@ -33,23 +33,13 @@ import { breakpoints } from "@/styles/container";
 import { ImageLink as LogoWrapperDesktop } from "@/components/ui/images";
 import Link from "next/link";
 import { isValid } from "@/helpers/api/status";
-
-const Header = () => {
+import { HeaderProps } from "./data";
+const Header = ({ isAuthenticated }: HeaderProps) => {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const isTablet = useBreakpoint(breakpoints.md);
   const [isDropdownToggled, setIsDropdownToggled] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const triggerButtonRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      const isAuthenticated = await checkAuthStatus();
-      setIsLoggedIn(isAuthenticated);
-    };
-
-    checkAuth();
-  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -72,7 +62,6 @@ const Header = () => {
   };
 
   const toggleAccountMenu = () => {
-    console.log("toggleAccountMenu");
     setIsDropdownToggled((prev) => !prev);
   };
 
@@ -83,10 +72,10 @@ const Header = () => {
     });
 
     const result = await res.json();
-    console.log("signout result", result);
     if (isValid(result)) {
       alert("登出成功");
-      window.location.href = "/";
+      // window.location.href = "/";
+      router.push("/");
     } else {
       alert(`登出失敗: ${result.message}`);
     }
@@ -183,12 +172,9 @@ const Header = () => {
             </CartButton>
           </Link>
           <DropdownWrapper>
-            {isLoggedIn ? (
+            {isAuthenticated ? (
               <TriggerButton ref={triggerButtonRef} onClick={toggleAccountMenu}>
-                <Avatar
-                  isLoggedIn={true}
-                  imageSrc="/images/avatar-placeholder.png"
-                />
+                <Avatar />
                 <ButtonText>我的帳戶</ButtonText>
               </TriggerButton>
             ) : (

@@ -14,6 +14,7 @@ import {
   SecondaryIconButton,
 } from "@/components/ui/buttons/Layout";
 import { DropdownTransition } from "@/styles/effect";
+import { DropdownHeight, DropdownWidth } from "@/constants/layout";
 
 export const Wrapper = styled.header`
   width: 100%;
@@ -116,6 +117,7 @@ export const NavLink = styled(Link)<{ $active?: boolean }>`
 
 export const ActionButtonGroup = styled.div`
   display: flex;
+  align-items: start;
   gap: 10px;
 `;
 
@@ -124,9 +126,6 @@ const BaseButton = css`
   font-weight: 700;
   color: ${({ theme }) => theme.colors.white};
   padding: 13px;
-  @media ${Desktop} {
-    padding: 14px 25px;
-  }
 `;
 
 export const CartButton = styled(SecondaryIconButton)`
@@ -138,6 +137,9 @@ export const CartButton = styled(SecondaryIconButton)`
 
 export const SearchButton = styled(AccentIconButton)`
   ${BaseButton};
+  @media ${Desktop} {
+    padding: 14px 25px;
+  }
 `;
 
 export const TriggerButton = styled(PrimaryIconButton)`
@@ -246,12 +248,13 @@ export const DropdownWrapper = styled.div`
 `;
 
 export const DropdownContainer = styled.div<{ $isOpen: boolean }>`
-  height: ${({ $isOpen }) => ($isOpen ? "124px" : "0")};
-  width: 160px;
+  height: ${({ $isOpen }) =>
+    $isOpen ? `${DropdownHeight.expanded}px` : `${DropdownHeight.collapsed}px`};
+  width: ${DropdownWidth}px;
   position: absolute;
   top: 100%;
-  right: 50%;
-  transform: translateX(50%);
+  right: 0;
+  transform: translateX(0);
   background: ${({ theme }) => theme.colors.white};
   ${InputRadius};
   overflow: hidden;
@@ -262,6 +265,11 @@ export const DropdownContainer = styled.div<{ $isOpen: boolean }>`
   z-index: 1;
   cursor: pointer;
   padding: 8px 0;
+
+  @media ${Desktop} {
+    right: 50%;
+    transform: translateX(50%);
+  }
 `;
 
 export const DropdownList = styled.ul`

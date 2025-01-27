@@ -39,10 +39,20 @@ export const Icon = styled.button`
   font-size: 0;
   background-color: transparent;
   color: ${({ theme }) => theme.colors.primary};
+  outline: none;
 
-  &:hover + ${Container} {
-    opacity: 1;
-    visibility: visible;
+  @media (hover: hover) {
+    &:hover + ${Container} {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  @media (hover: none) {
+    &:focus-within + ${Container} {
+      opacity: 1;
+      visibility: visible;
+    }
   }
 `;
 

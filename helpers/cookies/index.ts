@@ -1,7 +1,6 @@
 import { serialize } from "cookie";
 import { NODE_ENV } from "@/constants/environment";
 import type { CookieOptions, AuthCookieConfig, BaseCookieOptions } from "./types";
-import { isValid } from "../api/status";
 
 const defaultAuthConfig: AuthCookieConfig = {
   name: "token",
@@ -28,16 +27,3 @@ export const setAuthCookie = (
 
   return serialize(name, token, cookieOptions);
 };
-
-export const checkAuthStatus = async (): Promise<boolean> => {
-  const result = await fetch("/api/auth/check", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  const json = await result.json();
-  const isTokenValid = isValid(json);
-  return isTokenValid;
-}; 

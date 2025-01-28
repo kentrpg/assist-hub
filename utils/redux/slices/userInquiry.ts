@@ -29,8 +29,15 @@ const userInquirySlice = createSlice({
 export const { setUserInquiry, resetUserInquiry } = userInquirySlice.actions;
 export const userInquiryReducer = userInquirySlice.reducer;
 
-export const selectUserInquiry = createSelector(
-  [(state: RootState) => state.userInquiry],
-  (userInquiry) => userInquiry
+export const selectUserInquiry = (state: RootState): UserInquiryState => state.userInquiry;
+
+export const selectUserInquiryLevel = createSelector(
+  [selectUserInquiry],
+  (userInquiry) => userInquiry.level
+);
+
+export const selectUserInquiryAdditionalInfo = createSelector(
+  [selectUserInquiry],
+  (userInquiry) => userInquiry.additionalInfo
 );
 

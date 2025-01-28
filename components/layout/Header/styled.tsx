@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/buttons/Layout";
 import { DropdownTransition } from "@/styles/effect";
 import { DropdownHeight, DropdownWidth } from "@/constants/layout";
+import { Padding } from "@/types/uiProps";
 
 export const Wrapper = styled.header`
   width: 100%;
@@ -142,10 +143,10 @@ export const SearchButton = styled(AccentIconButton)`
   }
 `;
 
-export const TriggerButton = styled(PrimaryIconButton)`
+export const TriggerButton = styled(PrimaryIconButton)<Padding>`
   ${BaseButton};
   @media ${Desktop} {
-    padding: 14px 41px;
+    padding: ${({ $padding }) => $padding};
   }
 `;
 
@@ -308,6 +309,6 @@ export const DropdownItemButton = styled.button`
   background: none;
 `;
 
-export const DropdownItemLink = styled(Link)`
+export const DropdownItemLink = styled.a`
   ${DropdownItemBase};
 `;

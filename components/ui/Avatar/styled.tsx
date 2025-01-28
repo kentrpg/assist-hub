@@ -1,4 +1,5 @@
 import { RoundedFull } from "@/styles/borderRadius";
+import { IsDefault } from "@/types/uiProps";
 import styled from "styled-components";
 
 export const AvatarWrapper = styled.div`
@@ -9,11 +10,11 @@ export const AvatarWrapper = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.white};
 `;
 
-export const DefaultAvatar = styled.div`
+export const DefaultAvatar = styled.div<IsDefault>`
   width: 100%;
   height: 100%;
   display: flex;
-  align-items: center;
+  align-items: ${({ $isDefault }) => ($isDefault ? "flex-end" : "center")};
   justify-content: center;
   background-color: ${({ theme }) => theme.colors.grey200};
   font-size: 16px;

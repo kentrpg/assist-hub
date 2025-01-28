@@ -26,35 +26,24 @@ import {
   DropdownItemLink,
 } from "./styled";
 
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { useBreakpoint } from "@/hooks/useBreakpoint";
 import { breakpoints } from "@/styles/container";
 import { ImageLink as LogoWrapperDesktop } from "@/components/ui/images";
 import Link from "next/link";
 import { isValid } from "@/helpers/api/status";
 import { HeaderProps } from "./data";
-const Header = ({ isAuthenticated }: HeaderProps) => {
+import { useOutsideClick } from "@/hooks/useOutsideClick";
+
+const Header = ({ isAuthenticated, isLoading }: HeaderProps) => {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const isTablet = useBreakpoint(breakpoints.md);
   const [isDropdownToggled, setIsDropdownToggled] = useState(false);
-  const triggerButtonRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        triggerButtonRef.current &&
-        !triggerButtonRef.current.contains(event.target as Node)
-      ) {
-        setIsDropdownToggled(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  const triggerButtonRef = useOutsideClick(
+    () => setIsDropdownToggled(false),
+    true,
+  );
 
   const toggleMenu = () => {
     setMenuOpen((prevState) => !prevState);
@@ -62,6 +51,12 @@ const Header = ({ isAuthenticated }: HeaderProps) => {
 
   const toggleAccountMenu = () => {
     setIsDropdownToggled((prev) => !prev);
+  };
+
+  const handleSignin = () => {
+    const path = router.pathname;
+    if (path === "/auth/signin") return;
+    router.push("/auth/signin");
   };
 
   const handleLogout = async () => {
@@ -159,6 +154,8 @@ const Header = ({ isAuthenticated }: HeaderProps) => {
         </Navbar>
 
         <ActionButtonGroup>
+          <a href="/user/profile">user</a>
+          <a href="/user/order">order</a>
           <SearchButton>
             <MdSearch size={24} />
             <ButtonText>快速適配</ButtonText>
@@ -171,12 +168,20 @@ const Header = ({ isAuthenticated }: HeaderProps) => {
           </Link>
           <DropdownWrapper>
             {isAuthenticated ? (
-              <TriggerButton ref={triggerButtonRef} onClick={toggleAccountMenu}>
-                <Avatar />
+              <TriggerButton
+                ref={triggerButtonRef}
+                onClick={toggleAccountMenu}
+                $padding="14px 25px"
+              >
+                {!isLoading && <Avatar />}
                 <ButtonText>我的帳戶</ButtonText>
               </TriggerButton>
             ) : (
-              <TriggerButton ref={triggerButtonRef} onClick={toggleAccountMenu}>
+              <TriggerButton
+                ref={triggerButtonRef}
+                onClick={handleSignin}
+                $padding="14px 41px"
+              >
                 <MdPerson size={24} />
                 <ButtonText>登入</ButtonText>
               </TriggerButton>

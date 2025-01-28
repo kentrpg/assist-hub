@@ -6,7 +6,7 @@ const Avatar = () => {
   const user = useSelector((state: RootState) => state.user);
   const name = user.name;
 
-  const firstLetter = name.charAt(0);
+  const firstLetter = name.charAt(0) || "U";
 
   /**
    * 使用 Unicode 範圍檢測 CJK 統一表意文字

@@ -35,7 +35,7 @@ import { isValid } from "@/helpers/api/status";
 import { HeaderProps } from "./data";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 
-const Header = ({ isAuthenticated }: HeaderProps) => {
+const Header = ({ isAuthenticated, isLoading }: HeaderProps) => {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const isTablet = useBreakpoint(breakpoints.md);
@@ -154,6 +154,8 @@ const Header = ({ isAuthenticated }: HeaderProps) => {
         </Navbar>
 
         <ActionButtonGroup>
+          <a href="/user/profile">user</a>
+          <a href="/user/order">order</a>
           <SearchButton>
             <MdSearch size={24} />
             <ButtonText>快速適配</ButtonText>
@@ -171,7 +173,7 @@ const Header = ({ isAuthenticated }: HeaderProps) => {
                 onClick={toggleAccountMenu}
                 $padding="14px 25px"
               >
-                <Avatar />
+                {!isLoading && <Avatar />}
                 <ButtonText>我的帳戶</ButtonText>
               </TriggerButton>
             ) : (

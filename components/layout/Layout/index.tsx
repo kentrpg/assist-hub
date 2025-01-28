@@ -1,12 +1,7 @@
-import Header from "../Header";
-import Footer from "../Footer";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 import { PageLayout, MainContent } from "./styled";
-
-type LayoutProps = {
-  children: React.ReactNode;
-  isAuthenticated: boolean;
-};
-
+import { LayoutProps } from "./data";
 export default function Layout({ children, isAuthenticated }: LayoutProps) {
   return (
     <PageLayout>

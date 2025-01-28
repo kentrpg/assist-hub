@@ -2,21 +2,12 @@ import type { AppProps } from "next/app";
 import GlobalStyle from "@/utils/styled-component/Globalstyle";
 import { ThemeProvider } from "styled-components";
 import theme from "@/styles/theme";
-import Layout from "@/components/layout/Layout";
 import Head from "next/head";
 import store from "@/utils/redux/store";
 import { Provider } from "react-redux";
-import { useRouter } from "next/router";
-import type { AppContext } from "next/app";
+import AuthProvider from "@/components/auth/AuthProvider";
 
-type CustomAppProps = AppProps & {
-  isAuthenticated: boolean;
-};
-
-function App({ Component, pageProps, isAuthenticated }: CustomAppProps) {
-  const router = useRouter();
-  const isAdminPage = router.pathname.startsWith("/admin");
-
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <Head>
@@ -26,44 +17,10 @@ function App({ Component, pageProps, isAuthenticated }: CustomAppProps) {
       </Head>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        {isAdminPage ? (
+        <AuthProvider>
           <Component {...pageProps} />
-        ) : (
-          <Layout isAuthenticated={isAuthenticated}>
-            <Component {...pageProps} />
-          </Layout>
-        )}
+        </AuthProvider>
       </ThemeProvider>
     </Provider>
   );
 }
-
-const getTokenFromCookie = (cookieString: string): string | undefined => {
-  return cookieString
-    .split("; ")
-    .find((row) => row.startsWith("token="))
-    ?.split("=")[1];
-};
-
-const isValidToken = (token: string | undefined): boolean => {
-  return !!token && token !== "";
-};
-
-App.getInitialProps = async ({ ctx }: AppContext) => {
-  if (ctx.req) {
-    const cookieString = ctx.req.headers.cookie || "";
-    const token = getTokenFromCookie(cookieString);
-    return {
-      isAuthenticated: isValidToken(token),
-    };
-  }
-
-  const res = await fetch("/api/getToken");
-  const data = await res.json();
-
-  return {
-    isAuthenticated: data.status,
-  };
-};
-
-export default App;

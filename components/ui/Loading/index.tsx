@@ -1,16 +1,9 @@
-import { LoadingWrapper, LoadingImage } from "./styled";
+import { LoadingWrapper, Spinner } from "./styled";
 
-export const Loading = () => {
+export default function Loading() {
   return (
     <LoadingWrapper>
-      <LoadingImage
-        src="/images/chairman.svg"
-        alt="Loading..."
-        width={100}
-        height={100}
-      />
+      <Spinner />
     </LoadingWrapper>
   );
-};
-
-export default Loading;
+}

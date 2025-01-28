@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import { MdShoppingCart, MdSearch, MdPerson } from "react-icons/md";
 import Avatar from "@/components/ui/Avatar";
-import { checkAuthStatus } from "@/helpers/cookies";
 
 import {
   Wrapper,
@@ -74,8 +73,7 @@ const Header = ({ isAuthenticated }: HeaderProps) => {
     const result = await res.json();
     if (isValid(result)) {
       alert("登出成功");
-      // window.location.href = "/";
-      router.push("/");
+      window.location.href = "/";
     } else {
       alert(`登出失敗: ${result.message}`);
     }

@@ -13,6 +13,7 @@ export const config = {
     "/cart",
     "/cart/((?!checkout/confirm).)*",
     "/inquiry",
+    "/auth/:path*",
   ],
 };
 
@@ -21,7 +22,12 @@ export async function middleware(request: NextRequest) {
   const token = request.cookies.get("token");
   console.log(`middleware start ${pathname} token: ${token}`);
 
-  if (pathname.startsWith("/auth") && token) {
+  if (
+    pathname.startsWith("/auth") &&
+    !pathname.startsWith("/auth/confirm") &&
+    token
+  ) {
+    console.log("middleware auth");
     const authResponse = await check(token.value);
     if (isValid(authResponse)) {
       return NextResponse.redirect(new URL("/user/profile", request.url));

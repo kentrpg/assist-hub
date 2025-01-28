@@ -7,7 +7,6 @@ export function validateResponseType<T extends object>(
   response: unknown,
   schema: T
 ): ValidationResult<T> {
-  console.log("response", response);
   if (typeof response !== "object" || response === null) {
     return {
       isValid: false,

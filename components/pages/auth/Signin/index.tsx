@@ -21,8 +21,8 @@ import {
 } from "../Layout/styled";
 import { Remember } from "./styled";
 import { ErrorMessage } from "@/utils/react-hook-form/FormError/styled";
-import { BASE_URL, LINE_REDIRECT_URI } from "@/constants/environment";
-import { hasError } from "@/helpers/api/status";
+import { BASE_URL } from "@/constants/environment";
+import { hasError, isEmptyData } from "@/helpers/api/status";
 
 const Signin: React.FC = () => {
   const dispatch = useDispatch();
@@ -61,10 +61,10 @@ const Signin: React.FC = () => {
       console.log("hasError", result.error);
       return;
     }
-    
+
     switch (result.statusCode) {
       case 200:
-        result.data && dispatch(setUser(result.data));
+        !isEmptyData(result) && dispatch(setUser(result.data));
         window.location.href = "/user/profile";
         break;
       case 404:

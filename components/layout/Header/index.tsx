@@ -32,8 +32,8 @@ import { breakpoints } from "@/styles/container";
 import { ImageLink as LogoWrapperDesktop } from "@/components/ui/images";
 import Link from "next/link";
 import { isValid } from "@/helpers/api/status";
-
-const Header = () => {
+import { HeaderProps } from "./data";
+const Header = ({ isAuthenticated }: HeaderProps) => {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const isTablet = useBreakpoint(breakpoints.md);
@@ -61,7 +61,6 @@ const Header = () => {
   };
 
   const toggleAccountMenu = () => {
-    console.log("toggleAccountMenu");
     setIsDropdownToggled((prev) => !prev);
   };
 
@@ -72,10 +71,9 @@ const Header = () => {
     });
 
     const result = await res.json();
-    console.log("signout result", result);
     if (isValid(result)) {
       alert("登出成功");
-      router.push("/");
+      window.location.href = "/";
     } else {
       alert(`登出失敗: ${result.message}`);
     }
@@ -172,17 +170,17 @@ const Header = () => {
             </CartButton>
           </Link>
           <DropdownWrapper>
-            {/* <TriggerButton ref={triggerButtonRef} onClick={toggleAccountMenu}>
-              <Avatar
-                isLoggedIn={false}
-                imageSrc="/images/avatar-placeholder.png"
-              />
-              <ButtonText>我的帳戶</ButtonText>
-            </TriggerButton> */}
-            <TriggerButton ref={triggerButtonRef} onClick={toggleAccountMenu}>
-              <MdPerson size={24} />
-              <ButtonText>登入</ButtonText>
-            </TriggerButton>
+            {isAuthenticated ? (
+              <TriggerButton ref={triggerButtonRef} onClick={toggleAccountMenu}>
+                <Avatar />
+                <ButtonText>我的帳戶</ButtonText>
+              </TriggerButton>
+            ) : (
+              <TriggerButton ref={triggerButtonRef} onClick={toggleAccountMenu}>
+                <MdPerson size={24} />
+                <ButtonText>登入</ButtonText>
+              </TriggerButton>
+            )}
             <DropdownContainer $isOpen={isDropdownToggled}>
               <DropdownList>
                 {dropdownItems.map((item) => (

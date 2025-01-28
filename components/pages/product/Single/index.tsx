@@ -54,7 +54,7 @@ import { RootState } from "@/utils/redux/store";
 import { useDispatch } from "react-redux";
 import { addToInquiryBar } from "@/utils/redux/slices/inquiryBar";
 import Link from "next/link";
-import { Loading } from "@/components/ui/Loading";
+import Loading from "@/components/ui/Loading";
 
 const CustomPrevArrow = ({ onClick }: { onClick?: () => void }) => (
   <div className="slick-prev" onClick={onClick}>

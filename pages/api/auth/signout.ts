@@ -9,12 +9,11 @@ export default async function handler(
   res: NextApiResponse<ResultSignoutType>
 ) {
   const result = await signOut(req.cookies.token || "");
-  const jwtToken = result.data?.jwtToken;
   
   const shouldClearAuthCookie = isValid(result) && !isUnauthorized(result);
 
   if (shouldClearAuthCookie) {
-    const cookieHeader = setAuthCookie(jwtToken || "");
+    const cookieHeader = setAuthCookie("");
     res.setHeader("Set-Cookie", cookieHeader);
   }
   

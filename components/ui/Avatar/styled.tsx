@@ -15,8 +15,8 @@ export const DefaultAvatar = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #e5e7eb;
+  background-color: ${({ theme }) => theme.colors.grey200};
   font-size: 16px;
   font-weight: 500;
-  color: #374151;
+  color: ${({ theme }) => theme.colors.white};
 `;

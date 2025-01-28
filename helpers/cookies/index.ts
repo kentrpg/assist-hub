@@ -1,6 +1,6 @@
 import { serialize } from "cookie";
 import { NODE_ENV } from "@/constants/environment";
-import type { CookieOptions, AuthCookieConfig, BaseCookieOptions } from './types';
+import type { CookieOptions, AuthCookieConfig, BaseCookieOptions } from "./types";
 
 const defaultAuthConfig: AuthCookieConfig = {
   name: "token",
@@ -26,4 +26,4 @@ export const setAuthCookie = (
   };
 
   return serialize(name, token, cookieOptions);
-}; 
+};

@@ -62,11 +62,11 @@ import {
   clearActiveCartId,
 } from "@/utils/redux/slices/cart";
 import { CartItem } from "@/components/pages/cart/ProductCard/data";
-import { Loading } from "@/components/ui/Loading";
+import Loading from "@/components/ui/Loading";
 import { RootState } from "@/utils/redux/store";
 import { isValid, hasError } from "@/helpers/api/status";
 import { setLinePay } from "@/utils/redux/slices/linePay";
-import { BASE_URL, BASE_URL_VM, NODE_ENV } from "@/constants/environment";
+import { BASE_URL } from "@/constants/environment";
 
 const Checkout = () => {
   const dispatch = useDispatch();

@@ -64,6 +64,14 @@ const Header = ({ isAuthenticated }: HeaderProps) => {
     setIsDropdownToggled((prev) => !prev);
   };
 
+  const handleSignin = () => {
+    const path = router.pathname;
+    if (path === "/auth/signin") {
+      return;
+    }
+    router.push("/auth/signin");
+  };
+
   const handleLogout = async () => {
     const res = await fetch("/api/auth/signout", {
       method: "DELETE",
@@ -176,7 +184,7 @@ const Header = ({ isAuthenticated }: HeaderProps) => {
                 <ButtonText>我的帳戶</ButtonText>
               </TriggerButton>
             ) : (
-              <TriggerButton ref={triggerButtonRef} onClick={toggleAccountMenu}>
+              <TriggerButton ref={triggerButtonRef} onClick={handleSignin}>
                 <MdPerson size={24} />
                 <ButtonText>登入</ButtonText>
               </TriggerButton>

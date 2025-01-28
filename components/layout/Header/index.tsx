@@ -26,35 +26,24 @@ import {
   DropdownItemLink,
 } from "./styled";
 
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { useBreakpoint } from "@/hooks/useBreakpoint";
 import { breakpoints } from "@/styles/container";
 import { ImageLink as LogoWrapperDesktop } from "@/components/ui/images";
 import Link from "next/link";
 import { isValid } from "@/helpers/api/status";
 import { HeaderProps } from "./data";
+import { useOutsideClick } from "@/hooks/useOutsideClick";
+
 const Header = ({ isAuthenticated }: HeaderProps) => {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const isTablet = useBreakpoint(breakpoints.md);
   const [isDropdownToggled, setIsDropdownToggled] = useState(false);
-  const triggerButtonRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        triggerButtonRef.current &&
-        !triggerButtonRef.current.contains(event.target as Node)
-      ) {
-        setIsDropdownToggled(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  const triggerButtonRef = useOutsideClick(
+    () => setIsDropdownToggled(false),
+    true,
+  );
 
   const toggleMenu = () => {
     setMenuOpen((prevState) => !prevState);
@@ -66,9 +55,7 @@ const Header = ({ isAuthenticated }: HeaderProps) => {
 
   const handleSignin = () => {
     const path = router.pathname;
-    if (path === "/auth/signin") {
-      return;
-    }
+    if (path === "/auth/signin") return;
     router.push("/auth/signin");
   };
 
@@ -179,12 +166,20 @@ const Header = ({ isAuthenticated }: HeaderProps) => {
           </Link>
           <DropdownWrapper>
             {isAuthenticated ? (
-              <TriggerButton ref={triggerButtonRef} onClick={toggleAccountMenu}>
+              <TriggerButton
+                ref={triggerButtonRef}
+                onClick={toggleAccountMenu}
+                $padding="14px 25px"
+              >
                 <Avatar />
                 <ButtonText>我的帳戶</ButtonText>
               </TriggerButton>
             ) : (
-              <TriggerButton ref={triggerButtonRef} onClick={handleSignin}>
+              <TriggerButton
+                ref={triggerButtonRef}
+                onClick={handleSignin}
+                $padding="14px 41px"
+              >
                 <MdPerson size={24} />
                 <ButtonText>登入</ButtonText>
               </TriggerButton>

@@ -23,6 +23,7 @@ import { Remember } from "./styled";
 import { ErrorMessage } from "@/utils/react-hook-form/FormError/styled";
 import { BASE_URL } from "@/constants/environment";
 import { hasError, isEmptyData } from "@/helpers/api/status";
+import { default_redirect, routes } from "@/constants/routes";
 
 const Signin: React.FC = () => {
   const dispatch = useDispatch();
@@ -62,10 +63,14 @@ const Signin: React.FC = () => {
       return;
     }
 
+    const redirectPath = result.data?.IsAdmin
+      ? default_redirect.admin
+      : default_redirect.user;
+
     switch (result.statusCode) {
       case 200:
         !isEmptyData(result) && dispatch(setUser(result.data));
-        window.location.href = "/user/profile";
+        window.location.href = redirectPath;
         break;
       case 404:
         setError("email", { type: "manual", message: "帳號或密碼錯誤" });
@@ -136,7 +141,7 @@ const Signin: React.FC = () => {
         </LineLoginButton>
         <FooterLinks>
           還沒有帳號嗎？
-          <UnderlineLink href="/auth/register">立即註冊</UnderlineLink>
+          <UnderlineLink href={routes.auth.register}>立即註冊</UnderlineLink>
         </FooterLinks>
       </Form>
     </Container>

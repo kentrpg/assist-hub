@@ -7,7 +7,6 @@ import {
   Container,
   Navbar,
   ActionButtonGroup,
-  CartButton,
   SearchButton,
   TriggerButton,
   Logo,
@@ -25,12 +24,11 @@ import {
   DropdownItemButton,
   DropdownItemLink,
 } from "./styled";
-
+import { CartButton } from "@/styles/alink";
 import { useState } from "react";
 import { useBreakpoint } from "@/hooks/useBreakpoint";
 import { breakpoints } from "@/styles/container";
 import { ImageLink as LogoWrapperDesktop } from "@/components/ui/images";
-import Link from "next/link";
 import { isValid } from "@/helpers/api/status";
 import { HeaderProps } from "./data";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
@@ -160,12 +158,10 @@ const Header = ({ isAuthenticated, isLoading }: HeaderProps) => {
             <MdSearch size={24} />
             <ButtonText>快速適配</ButtonText>
           </SearchButton>
-          <Link href="/cart" passHref>
-            <CartButton>
-              <MdShoppingCart size={24} />
-              <ButtonText>購物車</ButtonText>
-            </CartButton>
-          </Link>
+          <CartButton href="/cart">
+            <MdShoppingCart size={24} />
+            <ButtonText>購物車</ButtonText>
+          </CartButton>
           <DropdownWrapper>
             {isAuthenticated ? (
               <TriggerButton

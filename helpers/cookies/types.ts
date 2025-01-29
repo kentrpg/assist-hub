@@ -1,10 +1,20 @@
-import type { SerializeOptions } from "cookie";
+export type BaseCookieOptions = {
+  httpOnly: boolean;
+  secure: boolean;
+  path: string;
+  sameSite: "strict" | "lax" | "none";
+};
 
-export type BaseCookieOptions = Required<Pick<SerializeOptions, "httpOnly" | "secure" | "path" | "sameSite">>;
+export type CookieOptions = BaseCookieOptions & {
+  maxAge: number;
+};
 
-export type AuthCookieConfig = {
+type CookieConfig = {
   name: string;
   maxAge: number;
 };
 
-export type CookieOptions = BaseCookieOptions & Pick<AuthCookieConfig, "maxAge">;
+export type AuthCookieConfig = {
+  token: CookieConfig;
+  identity: CookieConfig;
+};

@@ -21,6 +21,7 @@ export type LineUserData = {
   addressCity: string;
   addressDistrict: string;
   addressDetail: string;
+  IsAdmin: boolean;
 };
 
 export type ResponseGetLineCallback = {

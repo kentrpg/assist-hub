@@ -23,8 +23,9 @@ export default async function handler(
   const { jwtToken, ...userData } = data || {};
 
   if (jwtToken) {
-    const cookieHeader = setAuthCookie(jwtToken);
-    res.setHeader("Set-Cookie", cookieHeader);
+    const identity = data?.IsAdmin ? "admin" : "user";
+    const cookieHeaders = setAuthCookie(identity, jwtToken);
+    res.setHeader("Set-Cookie", cookieHeaders);
   }
 
   return res.json({

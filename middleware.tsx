@@ -10,44 +10,31 @@ import { isValid } from "@/helpers/api/status";
 export const config = {
   matcher: [
     "/user/:path*",
-    "/cart",
-    "/cart/((?!checkout/confirm).)*",
-    "/inquiry",
-    "/auth/:path*",
+    "/admin/:path*",
+    "/cart/:path((?!checkout/confirm$).*)?",
   ],
 };
 
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-  const token = request.cookies.get("token");
-  console.log(`middleware start ${pathname} token: ${token}`);
+  const pathname = request.nextUrl.pathname;
+  console.log(`middleware ${pathname}`);
 
-  if (
-    pathname.startsWith("/auth") &&
-    !pathname.startsWith("/auth/confirm") &&
-    token
-  ) {
-    console.log("middleware auth");
-    const authResponse = await check(token.value);
-    if (isValid(authResponse)) {
-      return NextResponse.redirect(new URL("/user/profile", request.url));
-    }
+  const token = request.cookies.get("token");
+
+  if (!token?.value) {
+    return NextResponse.next();
   }
 
-  if (pathname.startsWith("/cart") || pathname.startsWith("/user")) {
-    console.log(`middleware ${pathname} token: ${token}`);
+  const authResponse = await check(token.value);
+  console.log(`authResponse ${authResponse}`);
 
-    if (!token) {
-      return NextResponse.redirect(new URL("/auth/signin", request.url));
-    }
-
-    const authResponse = await check(token.value);
-
-    if (isValid(authResponse)) {
-      return NextResponse.next();
-    } else {
-      return NextResponse.redirect(new URL("/auth/signin", request.url));
-    }
+  if (!isValid(authResponse)) {
+    const response = NextResponse.redirect(
+      new URL("/auth/signin", request.url),
+    );
+    response.cookies.delete("token");
+    response.cookies.delete("identity");
+    return response;
   }
 
   return NextResponse.next();

@@ -8,7 +8,11 @@ import { isValid } from "@/helpers/api/status";
  */
 
 export const config = {
-  matcher: ["/user/:path*", "/cart/:path*", "/admin/:path*"],
+  matcher: [
+    "/user/:path*",
+    "/admin/:path*",
+    "/cart/:path((?!checkout/confirm$).*)?",
+  ],
 };
 
 export async function middleware(request: NextRequest) {

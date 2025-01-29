@@ -29,7 +29,6 @@ import { useState } from "react";
 import { useBreakpoint } from "@/hooks/useBreakpoint";
 import { breakpoints } from "@/styles/container";
 import { ImageLink as LogoWrapperDesktop } from "@/components/ui/images";
-import Link from "next/link";
 import { isValid } from "@/helpers/api/status";
 import { HeaderProps } from "./data";
 import { useOutsideClick } from "@/hooks/useOutsideClick";

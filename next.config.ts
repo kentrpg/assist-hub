@@ -27,7 +27,23 @@ const nextConfig = {
       },
       // 未登入用戶訪問需要驗證的頁面
       {
-        source: "/:path(user|cart|admin)/:slug*",
+        // 排除 /cart/checkout/confirm 路徑驗證
+        source: "/cart(/(?!checkout/confirm)[^/]*)*",
+        destination: "/auth/signin",
+        permanent: false,
+        missing: [
+          {
+            type: "cookie",
+            key: "token"
+          },
+          {
+            type: "cookie",
+            key: "identity"
+          }
+        ]
+      },
+      {
+        source: "/:path(user|admin)/:slug*",
         destination: "/auth/signin",
         permanent: false,
         missing: [

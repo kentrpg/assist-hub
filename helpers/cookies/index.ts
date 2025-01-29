@@ -3,8 +3,14 @@ import { NODE_ENV } from "@/constants/environment";
 import type { CookieOptions, AuthCookieConfig, BaseCookieOptions } from "./types";
 
 const defaultAuthConfig: AuthCookieConfig = {
-  name: "token",
-  maxAge: 60 * 60 * 24, // 24小時
+  token: {
+    name: "token",
+    maxAge: 60 * 60 * 24, // 24小時
+  },
+  identity: {
+    name: "identity",
+    maxAge: 60 * 60 * 24, // 24小時
+  }
 } as const;
 
 const defaultCookieOptions: BaseCookieOptions = {
@@ -15,15 +21,28 @@ const defaultCookieOptions: BaseCookieOptions = {
 } as const;
 
 export const setAuthCookie = (
-  token: string,
-  config: Partial<AuthCookieConfig> = {}
-): string => {
-  const { name = defaultAuthConfig.name, maxAge = defaultAuthConfig.maxAge } = config;
-  
+  identity: "admin" | "user" | "",
+  token: string
+): string[] => {
   const cookieOptions: CookieOptions = {
     ...defaultCookieOptions,
-    maxAge,
+    maxAge: defaultAuthConfig.token.maxAge,
   };
 
-  return serialize(name, token, cookieOptions);
+  return [
+    serialize(defaultAuthConfig.token.name, token, cookieOptions),
+    serialize(defaultAuthConfig.identity.name, identity, cookieOptions),
+  ];
+};
+
+export const clearAuthCookie = (): string[] => {
+  const cookieOptions: CookieOptions = {
+    ...defaultCookieOptions,
+    maxAge: 0, // 立即過期
+  };
+
+  return [
+    serialize(defaultAuthConfig.token.name, "", cookieOptions),
+    serialize(defaultAuthConfig.identity.name, "", cookieOptions),
+  ];
 };

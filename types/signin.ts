@@ -11,7 +11,13 @@ export const ResultSignin = {
     addressCity: "",
     addressDistinct: "",
     addressDetail: "",
-  }
+    IsAdmin: true,
+  },
+};
+
+export type RequestSignin = {
+  email: string;
+  password: string;
 };
 
 export type ResultSigninType = typeof ResultSignin;

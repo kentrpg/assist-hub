@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { signOut } from '@/utils/api/auth/signout';
 import { ResultSignoutType } from '@/types/signout';
 import { isUnauthorized, isValid } from '@/helpers/api/status';
-import { setAuthCookie } from '@/helpers/cookies';
+import { clearAuthCookie } from '@/helpers/cookies';
 
 export default async function handler(
   req: NextApiRequest,
@@ -13,8 +13,8 @@ export default async function handler(
   const shouldClearAuthCookie = isValid(result) && !isUnauthorized(result);
 
   if (shouldClearAuthCookie) {
-    const cookieHeader = setAuthCookie("");
-    res.setHeader("Set-Cookie", cookieHeader);
+    const cookieHeaders = clearAuthCookie();
+    res.setHeader("Set-Cookie", cookieHeaders);
   }
   
   return res.json(result);

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { check } from "@/utils/api/auth/check";
 import { isValid } from "@/helpers/api/status";
+import { default_redirect, routes } from "@/constants/routes";
 
 /** TBD: 後續邏輯
  *    - 驗證 Token 的有效性：Middleware 中使用 JWT 驗證來確認 token 是否有效 (jose)
@@ -10,6 +11,7 @@ import { isValid } from "@/helpers/api/status";
 export const config = {
   matcher: [
     "/user/:path*",
+    "/admin/:path*",
     "/cart",
     "/cart/((?!checkout/confirm).)*",
     "/inquiry",
@@ -20,25 +22,46 @@ export const config = {
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const token = request.cookies.get("token");
-  console.log(`middleware start ${pathname} token: ${token}`);
+  const identity = request.cookies.get("identity");
+  console.log(
+    `middleware start ${pathname} token: ${token}, identity: ${identity}`,
+  );
+
+  if (pathname.startsWith("/admin")) {
+    if (!token || !identity) {
+      return NextResponse.redirect(new URL(routes.auth.signin, request.url));
+    }
+
+    if (identity.value !== "admin") {
+      return NextResponse.redirect(new URL(routes.user.profile, request.url));
+    }
+
+    return NextResponse.next();
+  }
 
   if (
     pathname.startsWith("/auth") &&
     !pathname.startsWith("/auth/confirm") &&
-    token
+    token &&
+    identity
   ) {
-    console.log("middleware auth");
     const authResponse = await check(token.value);
+    console.log("middleware auth", authResponse);
+
     if (isValid(authResponse)) {
-      return NextResponse.redirect(new URL("/user/profile", request.url));
+      const redirectPath =
+        identity.value === "admin"
+          ? default_redirect.admin
+          : default_redirect.user;
+      return NextResponse.redirect(new URL(redirectPath, request.url));
     }
   }
 
   if (pathname.startsWith("/cart") || pathname.startsWith("/user")) {
     console.log(`middleware ${pathname} token: ${token}`);
 
-    if (!token) {
-      return NextResponse.redirect(new URL("/auth/signin", request.url));
+    if (!token || !identity) {
+      return NextResponse.redirect(new URL(routes.auth.signin, request.url));
     }
 
     const authResponse = await check(token.value);
@@ -46,7 +69,7 @@ export async function middleware(request: NextRequest) {
     if (isValid(authResponse)) {
       return NextResponse.next();
     } else {
-      return NextResponse.redirect(new URL("/auth/signin", request.url));
+      return NextResponse.redirect(new URL(routes.auth.signin, request.url));
     }
   }
 

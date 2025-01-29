@@ -4,15 +4,10 @@ import { Error } from "@/types/apiRoutes";
 import { catchError } from "@/utils/handleErrors";
 import { NODE_ENV } from "@/constants/environment";
 import { validateResponseType } from "@/utils/typeGuards";
-import { ResultSigninType, ResultSignin } from "@/types/signin";
-
-type SignIn = {
-  email: string;
-  password: string;
-};
+import { ResultSigninType, ResultSignin, RequestSignin } from "@/types/signin";
 
 export const signIn = async (
-  data: SignIn,
+  data: RequestSignin,
 ): Promise<Result<ResultSigninType["data"]>> => {
   console.log("signin utils", data);
   const parsedUrl = new URL(post_auth_sign_in);

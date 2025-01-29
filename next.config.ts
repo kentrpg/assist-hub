@@ -19,6 +19,11 @@ const nextConfig = {
         destination: "/auth/signin",
         permanent: false,
       },
+      {
+        source: "/admin",
+        destination: "/admin/order",
+        permanent: true,
+      },
     ];
   },
 };

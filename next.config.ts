@@ -9,7 +9,7 @@ const nextConfig = {
   },
   async redirects() {
     return [
-      // 基本路徑重定向
+      // base path redirect
       {
         source: "/user",
         destination: "/user/profile",
@@ -26,21 +26,6 @@ const nextConfig = {
         permanent: true,
       },
       // 未登入用戶訪問需要驗證的頁面
-      {
-        source: "/cart",
-        destination: "/auth/signin",
-        permanent: true,
-        missing: [
-          {
-            type: "cookie",
-            key: "token"
-          },
-          {
-            type: "cookie",
-            key: "identity"
-          }
-        ]
-      },
       {
         source: "/:path(user|cart|admin)/:slug*",
         destination: "/auth/signin",

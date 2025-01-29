@@ -1,21 +1,25 @@
 import styled, { css } from "styled-components";
 import { Container1344, Desktop, Tablet } from "@/styles/container";
-import Link from "next/link";
+import NextLink from "next/link";
 import {
   ShadowLow,
   NavLinkHover,
   ButtonHoverTransition,
   DropdownShadow,
 } from "@/styles/effect";
-import { InputRadius, RoundedFull } from "@/styles/borderRadius";
+import { ButtonRadius, InputRadius, RoundedFull } from "@/styles/borderRadius";
 import {
   AccentIconButton,
+  buttonGapSizes,
+  buttonSizes,
+  buttonVariants,
   PrimaryIconButton,
   SecondaryIconButton,
 } from "@/components/ui/buttons/Layout";
 import { DropdownTransition } from "@/styles/effect";
 import { DropdownHeight, DropdownWidth } from "@/constants/layout";
 import { Padding } from "@/types/uiProps";
+import { HstackLayout } from "@/styles/flex";
 
 export const Wrapper = styled.header`
   width: 100%;
@@ -89,7 +93,7 @@ export const NavLinks = styled.div`
   }
 `;
 
-export const NavLink = styled(Link)<{ $active?: boolean }>`
+export const NavLink = styled(NextLink)<{ $active?: boolean }>`
   position: relative;
   font-size: 16px;
   font-weight: 700;
@@ -127,13 +131,6 @@ const BaseButton = css`
   font-weight: 700;
   color: ${({ theme }) => theme.colors.white};
   padding: 13px;
-`;
-
-export const CartButton = styled(SecondaryIconButton)`
-  ${BaseButton};
-  @media ${Desktop} {
-    padding: 14px 33px;
-  }
 `;
 
 export const SearchButton = styled(AccentIconButton)`

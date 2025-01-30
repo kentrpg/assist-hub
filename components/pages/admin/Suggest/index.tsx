@@ -43,13 +43,14 @@ import {
   Name,
   Reason,
   RecommendDescription,
+  LoadingText,
 } from "./styled";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import { MdAdd } from "react-icons/md";
 import { PriceBadge, FeatureBadge } from "@/components/ui/badges";
 import { formatCurrency } from "@/helpers/format/currency";
 import { SuggestCheck } from "@/utils/react-icons/CheckIcon";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import {
   mockData,
   mockProducts,
@@ -58,6 +59,7 @@ import {
   SuggestType,
   CategoryType,
   CategoryItemType,
+  categories,
 } from "./data";
 import { hasError, isValid } from "@/helpers/api/status";
 import { BASE_URL_VM } from "@/constants/environment";
@@ -71,30 +73,23 @@ const SuggestTemplate: React.FC<SuggestType> = ({
   filterProducts,
 }) => {
   console.log("suggestInfo", suggestInfo);
-  // TBD: mockData 要改為真的 API function: getSuggest（需要再測試 parmas ?inquiryId=89）
-  // const [products, setProducts] = useState<Products[]>(mockData);
   const [additionalInfo, setAdditionalInfo] = useState<string>(
-    suggestInfo.additionalInfo,
+    suggestInfo.additionalInfo || "",
   );
   const [products, setProducts] = useState<Products[]>(suggestInfo.products);
   const [productFilter, setProductFilter] = useState<ProductFilter[]>(
     filterProducts,
   );
-  const suggestProducts = useSelector(selectSuggestProducts);
 
-  // 分類狀態管理
   const [activeCategory, setActiveCategory] = useState<CategoryType>(
     "wheelChair",
   );
   const [isLoading, setIsLoading] = useState(false);
-
-  // 分類選項定義
-  const categories: CategoryItemType[] = [
-    { type: "wheelChair", label: "行動輪椅", active: true },
-    { type: "crutch", label: "拐杖步行", active: false },
-    { type: "bed", label: "臥室寢具", active: false },
-    { type: "oxygen", label: "呼吸照護", active: false },
-  ];
+  const [savingStates, setSavingStates] = useState<Record<number, boolean>>({});
+  const lastSavedReasonsValues = useRef<Record<number, string>>({});
+  const [editingReasons, setEditingReasons] = useState<Record<number, string>>(
+    {},
+  );
 
   const handleAdditionalInfoChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -105,47 +100,46 @@ const SuggestTemplate: React.FC<SuggestType> = ({
   // 使用 useCallback 來記憶化 API 調用函數
   const updateProductReason = useCallback(
     async (suggestProductId: number, productId: number, reasons: string) => {
-      try {
-        const requestBody = {
-          suggestProductId,
-          productId,
-          reasons,
-        };
+      setSavingStates((prev) => ({ ...prev, [productId]: true }));
 
-        const result = await fetch("/api/admin/putSuggestProduct", {
-          method: "PUT",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestBody),
-        });
+      const requestBody = {
+        suggestProductId,
+        productId,
+        reasons,
+      };
 
-        const data = await result.json();
+      const result = await fetch("/api/admin/putSuggestProduct", {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
 
-        if (hasError(data)) {
-          console.error(data);
-          alert("保存失敗");
-          return;
-        }
+      const data = await result.json();
 
-        console.log("data", data);
-
-        const newProducts = products.map((product) =>
-          product.productId === productId ? { ...product, reasons } : product,
-        );
-        setProducts(newProducts);
-        alert("保存成功");
-      } catch (error) {
-        console.error("Error:", error);
+      if (hasError(data)) {
+        console.error(data);
         alert("保存失敗");
+        setEditingReasons((prev) => ({
+          ...prev,
+          [productId]: lastSavedReasonsValues.current[productId] || "",
+        }));
+        return;
       }
+
+      lastSavedReasonsValues.current[productId] = reasons;
+
+      console.log("editingReasons", editingReasons, editingReasons[productId]);
+
+      setSavingStates((prev) => ({ ...prev, [productId]: false }));
     },
-    [products],
+    [],
   );
 
-  // 使用 useCallback 來記憶化 debounced 函數
-  const debouncedUpdate = useCallback(debounce(updateProductReason, 1500), [
+  // 使用 useCallback 來記憶化 debounced 函數，延遲時間調整為 1 秒
+  const debouncedUpdate = useCallback(debounce(updateProductReason, 1000), [
     updateProductReason,
   ]);
 
@@ -153,25 +147,24 @@ const SuggestTemplate: React.FC<SuggestType> = ({
     return (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       const value = e.target.value;
 
-      // 立即更新 UI
-      const newProducts = products.map((product) =>
-        product.productId === productId
-          ? { ...product, reasons: value }
-          : product,
-      );
-      setProducts(newProducts);
+      setEditingReasons((prev) => ({
+        ...prev,
+        [productId]: value,
+      }));
 
-      console.log(suggestProductId, productId, value);
-
-      // 延遲發送 API 請求
       debouncedUpdate(suggestProductId, productId, value);
     };
   };
 
+  const getReasonValue = (product: Products) => {
+    return editingReasons[product.productId] !== undefined
+      ? editingReasons[product.productId]
+      : product.reasons;
+  };
+
   const handleAddProduct = async (product: ProductFilter) => {
-    console.log("product", product);
     const isProductExist = products.some((p) => p.productId === product.id);
-    const isMaximum = products.length > 2;
+    const isMaximum = products.length > 8;
 
     if (isProductExist || isMaximum) {
       return;
@@ -182,7 +175,7 @@ const SuggestTemplate: React.FC<SuggestType> = ({
       productId: product.id,
     };
 
-    const result = await fetch("/api/admin/postSuggestProduct", {
+    const response = await fetch("/api/admin/postSuggestProduct", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -191,32 +184,33 @@ const SuggestTemplate: React.FC<SuggestType> = ({
       body: JSON.stringify(requestBody),
     });
 
-    console.log("handleAddProduct result", result);
+    console.log("handleAddProduct result", response);
 
-    const data = await result.json();
+    const result = await response.json();
 
-    hasError(data) && alert("保存失敗");
-    isValid(data) && alert("保存成功");
+    hasError(result) && alert("保存失敗");
 
-    // const newProduct: Products = {
-    //   suggestProductId: product.suggestProductId,
-    //   productId: product.id,
-    //   name: product.name,
-    //   description: product.description,
-    //   rent: product.rent,
-    //   imgSrc: `${BASE_URL_VM}/${product.image.preview}`,
-    //   imgAlt: product.image.previewAlt,
-    //   features: product.features,
-    //   reasons: "",
-    // };
+    const newProduct: Products = {
+      suggestProductId: result.data.suggestProductId,
+      productId: product.id,
+      name: product.name,
+      description: product.description,
+      rent: product.rent,
+      imgSrc: `${BASE_URL_VM}/${product.image.preview}`,
+      imgAlt: product.image.previewAlt,
+      features: product.features,
+      reasons: "",
+    };
 
-    // setProducts((prevProducts) => [...prevProducts, newProduct]);
+    setProducts((prevProducts) => [...prevProducts, newProduct]);
 
     console.log(productFilter);
 
     setProductFilter((prevFilter) =>
       prevFilter.filter((item) => item.id !== product.id),
     );
+
+    alert("保存成功");
   };
 
   const handleSave = async () => {
@@ -343,14 +337,21 @@ const SuggestTemplate: React.FC<SuggestType> = ({
               </FeatureList>
             </Info>
             <RecommendDescription>
-              <Name>推薦原因</Name>
+              <Name>
+                推薦原因
+                {savingStates[product.productId] && (
+                  <LoadingText> 儲存中...</LoadingText>
+                )}
+              </Name>
               <Reason
-                value={product.reasons}
+                // value={product.reasons}
+                value={getReasonValue(product)}
                 onChange={handleReasonChange(
                   product.suggestProductId,
                   product.productId,
                 )}
                 placeholder="請輸入推薦原因..."
+                disabled={savingStates[product.productId]} // 在保存時禁用輸入
               />
             </RecommendDescription>
           </Card>
@@ -410,7 +411,7 @@ const SuggestTemplate: React.FC<SuggestType> = ({
                 <Tr key={product.id}>
                   <Td>
                     <ProductImage
-                      src={`http://52.172.145.130:8080/${product.image.preview}`}
+                      src={`${BASE_URL_VM}/${product.image.preview}`}
                       alt={product.image.previewAlt}
                     />
                   </Td>
@@ -434,7 +435,7 @@ const SuggestTemplate: React.FC<SuggestType> = ({
                   <Td>
                     <AddButton
                       onClick={() => handleAddProduct(product)}
-                      disabled={products.length > 2}
+                      disabled={products.length > 8}
                     >
                       <MdAdd size={24} />
                     </AddButton>

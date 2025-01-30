@@ -66,6 +66,11 @@ export const InfoItem = styled.div`
   align-items: center;
 `;
 
+export const LoadingText = styled.small`
+  font-weight: 400;
+  color: ${({ theme }) => theme.colors.textMuted};
+`;
+
 export const InfoLabel = styled.span`
   color: ${({ theme }) => theme.colors.textPrimary};
   font-weight: 700;

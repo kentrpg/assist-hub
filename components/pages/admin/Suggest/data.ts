@@ -9,6 +9,13 @@ export type CategoryItemType = {
   active: boolean;
 };
 
+export const categories: CategoryItemType[] = [
+  { type: "wheelChair", label: "行動輪椅", active: true },
+  { type: "crutch", label: "拐杖步行", active: false },
+  { type: "bed", label: "臥室寢具", active: false },
+  { type: "oxygen", label: "呼吸照護", active: false },
+];
+
 export const ResultGetSuggest = {
   statusCode: 200,
   status: true,

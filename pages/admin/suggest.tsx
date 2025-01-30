@@ -1,3 +1,4 @@
+import AdminLayout from "@/components/pages/admin/Layout";
 import SuggestTemplate from "@/components/pages/admin/Suggest";
 import getSuggest from "@/utils/api/admin/getSuggest";
 import { GetServerSideProps } from "next";
@@ -7,6 +8,7 @@ import {
 } from "@/components/pages/admin/Suggest/data";
 import { isValid } from "@/helpers/api/status";
 import { getFilterProducts } from "@/utils/api/getFilterProducts";
+import Head from "next/head";
 
 export const getServerSideProps: GetServerSideProps = async ({
   resolvedUrl,
@@ -46,10 +48,18 @@ export const getServerSideProps: GetServerSideProps = async ({
 
 const Suggest = ({ suggestInfo, filterProducts }: SuggestType) => {
   return (
-    <SuggestTemplate
-      suggestInfo={suggestInfo}
-      filterProducts={filterProducts}
-    />
+    <>
+      <Head>
+        <title>回覆建議單</title>
+        <meta name="description" content="回覆建議單" />
+      </Head>
+      <AdminLayout>
+        <SuggestTemplate
+          suggestInfo={suggestInfo}
+          filterProducts={filterProducts}
+        />
+      </AdminLayout>
+    </>
   );
 };
 

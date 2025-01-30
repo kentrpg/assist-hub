@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Layout from "@/components/pages/admin/Layout";
+import AdminLayout from "@/components/pages/admin/Layout";
 import OrderList from "@/components/pages/admin/OrderList";
 import { GetStaticPaths, GetStaticProps } from "next";
 import SuggestTemplate from "@/components/pages/admin/Suggest";
@@ -57,8 +57,7 @@ const AdminPage = ({ activeTab }: { activeTab: string }) => {
       case "user":
         return <OrderList />;
       case "suggest":
-        // return <SuggestTemplate />;
-        // return <Suggest additionalInfo="123" />;
+        return <OrderList />;
       case "diagram":
         return <OrderList />;
       default:
@@ -72,7 +71,7 @@ const AdminPage = ({ activeTab }: { activeTab: string }) => {
         <title>{getPageTitle()}</title>
         <meta name="description" content={getPageTitle()} />
       </Head>
-      <Layout>{getPageContent()}</Layout>
+      <AdminLayout>{getPageContent()}</AdminLayout>
     </>
   );
 };

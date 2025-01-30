@@ -6,6 +6,7 @@ import { RootState } from "@/utils/redux/store";
 import Layout from "@/components/layout/Layout";
 import Loading from "@/components/ui/Loading";
 import { hasError, isEmptyData, isValid } from "@/helpers/api/status";
+import AdminLayout from "@/components/pages/admin/Layout";
 
 type AuthProviderProps = {
   children: React.ReactNode;

@@ -40,8 +40,7 @@ const Sidebar: React.FC = () => {
               alt="RENT4U Logo"
               width={40}
               height={40}
-              quality={100}
-              priority
+              quality={85}
             />
             <LogoText>RENT4U 後台</LogoText>
           </Logo>

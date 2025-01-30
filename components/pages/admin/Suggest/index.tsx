@@ -52,14 +52,12 @@ import { formatCurrency } from "@/helpers/format/currency";
 import { SuggestCheck } from "@/utils/react-icons/CheckIcon";
 import { useState, useCallback, useEffect, useRef } from "react";
 import {
-  mockData,
-  mockProducts,
   ProductFilter,
   Products,
   SuggestType,
   CategoryType,
-  CategoryItemType,
   categories,
+  ProductFilterState,
 } from "./data";
 import { hasError, isValid } from "@/helpers/api/status";
 import { BASE_URL_VM } from "@/constants/environment";
@@ -72,15 +70,14 @@ const SuggestTemplate: React.FC<SuggestType> = ({
   suggestInfo,
   filterProducts,
 }) => {
-  console.log("suggestInfo", suggestInfo);
+  console.log("filterProducts", filterProducts);
   const [additionalInfo, setAdditionalInfo] = useState<string>(
     suggestInfo.additionalInfo || "",
   );
   const [products, setProducts] = useState<Products[]>(suggestInfo.products);
-  const [productFilter, setProductFilter] = useState<ProductFilter[]>(
+  const [productFilter, setProductFilter] = useState<ProductFilterState>(
     filterProducts,
   );
-
   const [activeCategory, setActiveCategory] = useState<CategoryType>(
     "wheelChair",
   );
@@ -188,7 +185,10 @@ const SuggestTemplate: React.FC<SuggestType> = ({
 
     const result = await response.json();
 
-    hasError(result) && alert("保存失敗");
+    if (hasError(result)) {
+      alert("保存失敗");
+      return;
+    }
 
     const newProduct: Products = {
       suggestProductId: result.data.suggestProductId,
@@ -206,9 +206,12 @@ const SuggestTemplate: React.FC<SuggestType> = ({
 
     console.log(productFilter);
 
-    setProductFilter((prevFilter) =>
-      prevFilter.filter((item) => item.id !== product.id),
-    );
+    setProductFilter((prev) => ({
+      ...prev,
+      [activeCategory]: prev[activeCategory].filter(
+        (item) => item.id !== product.id,
+      ),
+    }));
 
     alert("保存成功");
   };
@@ -253,28 +256,52 @@ const SuggestTemplate: React.FC<SuggestType> = ({
     setIsLoading(true);
     setActiveCategory(type);
 
-    try {
-      const queryParams = `?type=${type}&lv=-1`;
-      console.log("handleCategoryChange queryParams", queryParams);
-      const response = await fetch(`/api/getFilterProducts${queryParams}`, {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await response.json();
-
-      console.log("handleCategoryChange data", data);
-
-      if (isValid(data)) {
-        setProductFilter(data.data);
-      }
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    } finally {
+    // 如果該分類已有數據，直接使用
+    if (productFilter[type].length > 0) {
       setIsLoading(false);
+      return;
     }
+
+    const queryParams = `?type=${type}&lv=-1`;
+    console.log("handleCategoryChange queryParams", queryParams);
+    const response = await fetch(`/api/getFilterProducts${queryParams}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+
+    console.log("handleCategoryChange data", data);
+
+    if (hasError(data)) {
+      console.error("Error fetching products:", data);
+      setIsLoading(false);
+      return;
+    }
+
+    if (isValid(data)) {
+      setProductFilter((prev) => ({
+        ...prev,
+        [type]: (data.data || []).filter(
+          (product: ProductFilter) =>
+            !products.some(
+              (selectedProduct) => selectedProduct.productId === product.id,
+            ),
+        ),
+      }));
+    }
+    setIsLoading(false);
+  };
+
+  const filterAvailableProducts = (
+    categoryProducts: ProductFilter[],
+    selectedProducts: Products[],
+  ) => {
+    return categoryProducts.filter(
+      (product) => !selectedProducts.some((p) => p.productId === product.id),
+    );
   };
 
   return (
@@ -407,7 +434,7 @@ const SuggestTemplate: React.FC<SuggestType> = ({
               </Tr>
             </Thead>
             <Tbody>
-              {productFilter.map((product) => (
+              {productFilter[activeCategory].map((product) => (
                 <Tr key={product.id}>
                   <Td>
                     <ProductImage

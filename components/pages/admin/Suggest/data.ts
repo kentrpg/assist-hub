@@ -1,9 +1,21 @@
+import { SuggestProductType } from "@/types/getAdminSuggest";
 import { ProductPageProps } from "@/types/getProductFilter";
 import { SuggestPageProps } from "@/types/getSuggest";
 
 export type CategoryType = "wheelChair" | "crutch" | "bed" | "oxygen";
 
-export type CategoryItemType = {
+export type ProductFilterState = {
+  [key in CategoryType]: ProductFilter[];
+};
+
+export const initialProductFilter: ProductFilterState = {
+  wheelChair: [],
+  crutch: [],
+  bed: [],
+  oxygen: [],
+};
+
+type CategoryItemType = {
   type: CategoryType;
   label: string;
   active: boolean;
@@ -30,14 +42,8 @@ export const ResultGetSuggest = {
 };
 
 export type SuggestType = {
-  suggestInfo: {
-    suggestId: number;
-    suggestCode: string;
-    level: string;
-    additionalInfo: string;
-    products: [];
-  };
-  filterProducts: ProductFilter[];
+  suggestInfo: SuggestProductType;
+  filterProducts: ProductFilterState;
 };
 
 export const mockData = [

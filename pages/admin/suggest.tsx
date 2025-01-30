@@ -3,6 +3,8 @@ import SuggestTemplate from "@/components/pages/admin/Suggest";
 import getSuggest from "@/utils/api/admin/getSuggest";
 import { GetServerSideProps } from "next";
 import {
+  initialProductFilter,
+  ProductFilterState,
   ResultGetSuggest,
   SuggestType,
 } from "@/components/pages/admin/Suggest/data";
@@ -28,16 +30,30 @@ export const getServerSideProps: GetServerSideProps = async ({
       return {
         props: {
           suggestInfo: ResultGetSuggest.data,
-          filterProducts: [],
+          filterProducts: initialProductFilter,
           error: "數據獲取失敗",
         },
       };
     }
 
+    const filterProducts: ProductFilterState = {
+      wheelChair: (productsResult.data || []).filter(
+        (product) =>
+          !suggestResult?.data?.products.some(
+            (selectedProduct) => selectedProduct.productId === product.id,
+          ),
+      ),
+      crutch: [],
+      bed: [],
+      oxygen: [],
+    };
+
+    console.log("filterProducts", filterProducts);
+
     return {
       props: {
         suggestInfo: suggestResult.data,
-        filterProducts: productsResult.data || [],
+        filterProducts,
       },
     };
   } catch (error) {

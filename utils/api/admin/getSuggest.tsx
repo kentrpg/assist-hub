@@ -10,11 +10,9 @@ import {
 
 export const getSuggest = async (
   token: string,
-  suggestId: string
+  queryParams: string,
 ): Promise<ResultGetAdminSuggestType> => {
-  console.log("getSuggest suggestId", token, suggestId);
-  const parsedUrl = new URL(get_admin_suggest);
-  parsedUrl.searchParams.append("suggestId", suggestId);
+  const parsedUrl = new URL(`${get_admin_suggest}${queryParams}`);
 
   const options = {
     method: "GET",
@@ -26,8 +24,6 @@ export const getSuggest = async (
   };
 
   const [res, error] = await catchError(fetch(parsedUrl, options));
-
-  console.log("suggest res", res);
 
   if (error) {
     console.log("error", error);
@@ -47,8 +43,6 @@ export const getSuggest = async (
   }
 
   const json = await res.json();
-
-  console.log("suggest json", json);
 
   if (NODE_ENV === "development") {
     const validation = validateResponseType(json, ResultGetAdminSuggest);

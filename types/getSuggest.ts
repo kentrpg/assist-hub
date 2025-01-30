@@ -6,33 +6,24 @@ export const ResultGetSuggest = {
   message: "",
   "data": {
     "suggestId": 29,
-    "suggestCode": "AA063S",
-    "createdDate": "2025-01-20T05:16:44.55",
-    "createdStamp": "2025-01-20",
-    "additionalInfo": "stirng",
+    "suggestCode": "AA073S",
     "level": "1",
+    "additionalInfo": "test20",
     "products": [
       {
-        "id": 12,
-        "name": "【樂輕行】輕便折疊輪椅",
-        "description": "輕巧設計適合日常出行或短途旅行，具防滑腳踏板與可折疊功能，方便收納與攜帶，承重量可達100公斤，是老年人與行動不便人士的理想選擇。\r\n",
-        "rent": 500.00,
-        "imgSrc": "http://52.172.145.130:8080/picture/wheelChair/wheelChair-1.jpg",
-        "imgAlt": "【樂輕行】輕便折疊輪椅",
+        "suggestProductId": 15,
+        "productId": 104,
+        "name": "【樂護】標準病床",
+        "description": "標準病床具有靜音運作, 記憶床墊, 簡易操作, 升降功能等特點，採用高強度鋼製成，承重可達200公斤。適合長期照護或短期復健需求，升降功能與多角度調整提供使用者舒適體驗，並確保看護者操作便利。",
+        "rent": 50000.00,
+        "imgSrc": "https://assist-hub.rocket-coding.com/picture/bed/bed-7.webp",
+        "imgAlt": "【樂護】標準病床",
         "features": [
-            "體積小好攜帶",
-            "輪徑大"
+            "靜音運作",
+            "記憶床墊",
+            "簡易操作",
+            "升降功能"
         ],
-        "reasons": "string",
-    },
-    {
-        "id": 13,
-        "name": "【倍舒適】加寬輪椅",
-        "description": "特殊加寬座椅設計，提供極高舒適性，配備大輪徑與防滑腳踏板，適合體型較大的使用者，輕鬆拆卸方便清潔。",
-        "rent": 550.00,
-        "imgSrc": "http://52.172.145.130:8080/picture/wheelChair/wheelChair-2.jpg",
-        "imgAlt": "【倍舒適】加寬輪椅",
-        "features": [],
         "reasons": ""
       },
     ],

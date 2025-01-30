@@ -67,6 +67,7 @@ export const InfoItem = styled.div`
 `;
 
 export const LoadingText = styled.small`
+  font-size: 14px;
   font-weight: 400;
   color: ${({ theme }) => theme.colors.textMuted};
 `;

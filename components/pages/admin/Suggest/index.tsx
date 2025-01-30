@@ -82,19 +82,85 @@ const SuggestTemplate: React.FC<SuggestType> = ({
     "wheelChair",
   );
   const [isLoading, setIsLoading] = useState(false);
-  const [savingStates, setSavingStates] = useState<Record<number, boolean>>({});
   const lastSavedReasonsValues = useRef<Record<number, string>>({});
   const [editingReasons, setEditingReasons] = useState<Record<number, string>>(
     {},
   );
+  const [savingStates, setSavingStates] = useState<Record<number, boolean>>({});
+  const [isSaving, setIsSaving] = useState(false);
 
   const handleAdditionalInfoChange = (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    setAdditionalInfo(e.target.value);
+    const newValue = e.target.value;
+    setAdditionalInfo(newValue);
+    debouncedUpdateAdditionalInfo(newValue);
   };
 
-  // 使用 useCallback 來記憶化 API 調用函數
+  const updateAdditionalInfo = useCallback(
+    async (newAdditionalInfo: string) => {
+      setIsSaving(true);
+
+      const requestBody = {
+        suggestId: suggestInfo.suggestId,
+        level: suggestInfo.level,
+        additionalInfo: newAdditionalInfo,
+        isSubmitted: false,
+      };
+
+      const result = await fetch("/api/admin/putSuggest", {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      const data = await result.json();
+
+      if (hasError(data)) {
+        console.error(data);
+        alert("保存失敗");
+        setAdditionalInfo(suggestInfo.additionalInfo || "");
+        return;
+      }
+
+      setIsSaving(false);
+    },
+    [suggestInfo],
+  );
+
+  const debouncedUpdateAdditionalInfo = useCallback(
+    debounce(updateAdditionalInfo, 1000),
+    [updateAdditionalInfo],
+  );
+
+  const handleSave = async () => {
+    const requestBody = {
+      suggestId: suggestInfo.suggestId,
+      level: suggestInfo.level,
+      additionalInfo: additionalInfo,
+      isSubmitted: false,
+    };
+
+    const result = await fetch("/api/admin/putSuggest", {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    const data = await result.json();
+
+    if (isValid(data)) {
+      console.log(data);
+      alert("保存成功");
+    }
+  };
+
   const updateProductReason = useCallback(
     async (suggestProductId: number, productId: number, reasons: string) => {
       setSavingStates((prev) => ({ ...prev, [productId]: true }));
@@ -135,7 +201,6 @@ const SuggestTemplate: React.FC<SuggestType> = ({
     [],
   );
 
-  // 使用 useCallback 來記憶化 debounced 函數，延遲時間調整為 1 秒
   const debouncedUpdate = useCallback(debounce(updateProductReason, 1000), [
     updateProductReason,
   ]);
@@ -181,8 +246,6 @@ const SuggestTemplate: React.FC<SuggestType> = ({
       body: JSON.stringify(requestBody),
     });
 
-    console.log("handleAddProduct result", response);
-
     const result = await response.json();
 
     if (hasError(result)) {
@@ -204,8 +267,6 @@ const SuggestTemplate: React.FC<SuggestType> = ({
 
     setProducts((prevProducts) => [...prevProducts, newProduct]);
 
-    console.log(productFilter);
-
     setProductFilter((prev) => ({
       ...prev,
       [activeCategory]: prev[activeCategory].filter(
@@ -216,8 +277,13 @@ const SuggestTemplate: React.FC<SuggestType> = ({
     alert("保存成功");
   };
 
-  const handleSave = async () => {
-    const requestBody = { ...suggestInfo, additionalInfo };
+  const handleSubmit = async () => {
+    const requestBody = {
+      suggestId: suggestInfo.suggestId,
+      level: suggestInfo.level,
+      additionalInfo: additionalInfo,
+      isSubmitted: true,
+    };
 
     const result = await fetch("/api/admin/putSuggest", {
       method: "PUT",
@@ -230,33 +296,19 @@ const SuggestTemplate: React.FC<SuggestType> = ({
 
     const data = await result.json();
 
-    if (isValid(data)) {
-      console.log(data);
-      alert("保存成功");
+    if (hasError(data)) {
+      console.error(data);
+      alert("保存失敗");
+      return;
     }
-  };
 
-  const handleSubmit = () => {
-    // const suggestInfo = {
-    //   suggestId: 48,
-    //   level: "2",
-    //   additionalInfo: "test",
-    //   isSubmitted: false,
-    // };
-
-    const suggestProducts = {
-      suggestProductId: 14,
-      productId: 15,
-      reasons: "reasons 測試",
-    };
-    console.log(products);
+    alert("保存成功");
   };
 
   const handleCategoryChange = async (type: CategoryType) => {
     setIsLoading(true);
     setActiveCategory(type);
 
-    // 如果該分類已有數據，直接使用
     if (productFilter[type].length > 0) {
       setIsLoading(false);
       return;
@@ -295,19 +347,12 @@ const SuggestTemplate: React.FC<SuggestType> = ({
     setIsLoading(false);
   };
 
-  const filterAvailableProducts = (
-    categoryProducts: ProductFilter[],
-    selectedProducts: Products[],
-  ) => {
-    return categoryProducts.filter(
-      (product) => !selectedProducts.some((p) => p.productId === product.id),
-    );
-  };
-
   return (
     <Container>
       <Header>
-        <Title>回覆建議單</Title>
+        <Title>
+          回覆建議單{isSaving && <LoadingText> 儲存中...</LoadingText>}
+        </Title>
         <ButtonGroup>
           <SaveButton onClick={handleSave}>保存</SaveButton>
         </ButtonGroup>
@@ -335,6 +380,7 @@ const SuggestTemplate: React.FC<SuggestType> = ({
               value={additionalInfo}
               onChange={handleAdditionalInfoChange}
               placeholder="請在此輸入專業建議..."
+              disabled={isSaving}
             />
           </Additional>
         </Suggest>

@@ -1,11 +1,16 @@
-import NotFound from "@/components/pages/404";
-import { Wrapper120 as Wrapper } from "@/styles/wrappers";
-
+import { MainWrapper } from "@/styles/wrappers";
+import Error500 from "@/components/pages/500";
+import Head from "next/head";
 const Custom500Page = () => {
   return (
-    <Wrapper>
-      <NotFound />
-    </Wrapper>
+    <>
+      <Head>
+        <title>500 - 系統錯誤</title>
+      </Head>
+      <MainWrapper>
+        <Error500 />
+      </MainWrapper>
+    </>
   );
 };
 

@@ -22,7 +22,7 @@ const nextConfig = {
       },
       {
         source: "/admin",
-        destination: "/admin/order",
+        destination: "/admin/orders",
         permanent: true,
       },
       // 未登入用戶訪問需要驗證的頁面
@@ -84,7 +84,7 @@ const nextConfig = {
             value: "admin"
           }
         ],
-        destination: "/admin/order",
+        destination: "/admin/orders",
         permanent: false,
       },
       {

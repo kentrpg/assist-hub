@@ -2,10 +2,9 @@ import Head from "next/head";
 import AdminLayout from "@/components/pages/admin/Layout";
 import OrderList from "@/components/pages/admin/OrderList";
 import { GetStaticPaths, GetStaticProps } from "next";
-import SuggestTemplate from "@/components/pages/admin/Suggest";
-import Suggest from "./suggest";
+import Suggests from "./suggests";
 
-const whitelist = ["order", "user", "suggest", "diagram"];
+const whitelist = ["order", "user", "suggests", "diagram"];
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths = whitelist.map((tab) => ({
@@ -41,7 +40,7 @@ const AdminPage = ({ activeTab }: { activeTab: string }) => {
         return "訂單列表";
       case "user":
         return "會員列表";
-      case "suggest":
+      case "suggests":
         return "詢問列表";
       case "diagram":
         return "圖表列表";
@@ -56,8 +55,8 @@ const AdminPage = ({ activeTab }: { activeTab: string }) => {
         return <OrderList />;
       case "user":
         return <OrderList />;
-      case "suggest":
-        return <OrderList />;
+      case "suggests":
+        return <Suggests />;
       case "diagram":
         return <OrderList />;
       default:

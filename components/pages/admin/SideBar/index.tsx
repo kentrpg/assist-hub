@@ -70,8 +70,8 @@ const Sidebar: React.FC = () => {
       <NavList>
         <NavItem>
           <NavLink
-            href="/admin/suggest"
-            active={(router.asPath === "/admin/suggest").toString()}
+            href="/admin/suggests"
+            active={(router.asPath === "/admin/suggests").toString()}
           >
             <MdQuestionAnswer size={20} />
             詢問列表

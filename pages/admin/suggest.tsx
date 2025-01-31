@@ -28,10 +28,9 @@ export const getServerSideProps: GetServerSideProps = async ({
 
     if (!isValid(suggestResult) || !isValid(productsResult)) {
       return {
-        props: {
-          suggestInfo: ResultGetSuggest.data,
-          filterProducts: initialProductFilter,
-          error: "數據獲取失敗",
+        redirect: {
+          destination: "/admin/suggests",
+          permanent: false,
         },
       };
     }

@@ -65,12 +65,14 @@ import { debounce } from "@/helpers/debounce";
 import { selectSuggestProducts } from "@/utils/redux/slices/suggestProducts";
 import { useSelector, useDispatch } from "react-redux";
 import { setSuggestProducts } from "@/utils/redux/slices/suggestProducts";
+import { useRouter } from "next/router";
 
 const SuggestTemplate: React.FC<SuggestType> = ({
   suggestInfo,
   filterProducts,
 }) => {
   console.log("filterProducts", filterProducts);
+  const router = useRouter();
   const [additionalInfo, setAdditionalInfo] = useState<string>(
     suggestInfo.additionalInfo || "",
   );
@@ -303,6 +305,7 @@ const SuggestTemplate: React.FC<SuggestType> = ({
     }
 
     alert("保存成功");
+    router.push("/admin/suggests");
   };
 
   const handleCategoryChange = async (type: CategoryType) => {

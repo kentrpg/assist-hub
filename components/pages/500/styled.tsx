@@ -10,7 +10,14 @@ export const Container = styled(Container1344)`
   gap: 16px;
   @media ${Tablet} {
     flex-direction: row;
-    gap: 0;
+    gap: 32px;
+  }
+`;
+
+export const Br = styled.br`
+  display: none;
+  @media ${Mobile} {
+    display: block;
   }
 `;
 

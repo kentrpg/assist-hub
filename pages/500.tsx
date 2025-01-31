@@ -1,17 +1,17 @@
-import NotFound from "@/components/pages/404";
 import { MainWrapper } from "@/styles/wrappers";
+import Error500 from "@/components/pages/500";
 import Head from "next/head";
-const NotFoundPage = () => {
+const Custom500Page = () => {
   return (
     <>
       <Head>
-        <title>404 - 找不到頁面</title>
+        <title>500 - 系統錯誤</title>
       </Head>
       <MainWrapper>
-        <NotFound />
+        <Error500 />
       </MainWrapper>
     </>
   );
 };
 
-export default NotFoundPage;
+export default Custom500Page;

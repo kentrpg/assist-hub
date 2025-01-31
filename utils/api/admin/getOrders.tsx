@@ -2,18 +2,11 @@ import { Error } from "@/types/apiRoutes";
 import { catchError } from "@/utils/handleErrors";
 import { NODE_ENV } from "@/constants/environment";
 import { validateResponseType } from "@/utils/typeGuards";
-import { get_admin_suggest } from "@/constants/apiPath";
-import {
-  ResultGetAdminSuggest,
-  ResultGetAdminSuggestType,
-} from "@/types/getAdminSuggest";
+import { get_admin_orders } from "@/constants/apiPath";
+import { ResultGetAdminOrders, Result } from "@/types/getAdminOrders";
 
-export const getSuggest = async (
-  token: string,
-  queryParams: string,
-): Promise<ResultGetAdminSuggestType> => {
-  const parsedUrl = new URL(`${get_admin_suggest}${queryParams}`);
-
+export const getOrders = async (token: string): Promise<Result> => {
+  const parsedUrl = new URL(get_admin_orders);
   const options = {
     method: "GET",
     headers: {
@@ -24,6 +17,8 @@ export const getSuggest = async (
   };
 
   const [res, error] = await catchError(fetch(parsedUrl, options));
+
+  console.log("res", res, error);
 
   if (error) {
     console.log("error", error);
@@ -44,8 +39,10 @@ export const getSuggest = async (
 
   const json = await res.json();
 
+  console.log("json", json);
+
   if (NODE_ENV === "development") {
-    const validation = validateResponseType(json, ResultGetAdminSuggest);
+    const validation = validateResponseType(json, ResultGetAdminOrders);
 
     !validation.isValid &&
       console.error("API Response validation failed:", validation.errors);
@@ -60,4 +57,4 @@ export const getSuggest = async (
   };
 };
 
-export default getSuggest;
+export default getOrders;

@@ -5,7 +5,7 @@ type LayoutProps = {
   children: React.ReactNode;
 };
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const AdminLayout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <>
       <Sidebar />
@@ -14,4 +14,4 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   );
 };
 
-export default Layout;
+export default AdminLayout;

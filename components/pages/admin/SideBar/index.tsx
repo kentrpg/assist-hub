@@ -40,8 +40,7 @@ const Sidebar: React.FC = () => {
               alt="RENT4U Logo"
               width={40}
               height={40}
-              quality={100}
-              priority
+              quality={85}
             />
             <LogoText>RENT4U 後台</LogoText>
           </Logo>
@@ -71,8 +70,8 @@ const Sidebar: React.FC = () => {
       <NavList>
         <NavItem>
           <NavLink
-            href="/admin/inquiry"
-            active={(router.asPath === "/admin/inquiry").toString()}
+            href="/admin/suggests"
+            active={(router.asPath === "/admin/suggests").toString()}
           >
             <MdQuestionAnswer size={20} />
             詢問列表
@@ -80,8 +79,8 @@ const Sidebar: React.FC = () => {
         </NavItem>
         <NavItem>
           <NavLink
-            href="/admin/order"
-            active={(router.asPath === "/admin/order").toString()}
+            href="/admin/orders"
+            active={(router.asPath === "/admin/orders").toString()}
           >
             <MdShoppingCart size={20} />
             訂單列表

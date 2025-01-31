@@ -8,7 +8,7 @@ import {
   ResultGetSuggest,
   SuggestType,
 } from "@/components/pages/admin/Suggest/data";
-import { isValid } from "@/helpers/api/status";
+import { hasError, isValid } from "@/helpers/api/status";
 import { getFilterProducts } from "@/utils/api/getFilterProducts";
 import Head from "next/head";
 
@@ -16,49 +16,47 @@ export const getServerSideProps: GetServerSideProps = async ({
   resolvedUrl,
   req,
 }) => {
-  try {
-    const token = req.cookies.token || "";
-    const queryIndex = resolvedUrl.indexOf("?");
-    const inquiryId = queryIndex !== -1 ? resolvedUrl.slice(queryIndex) : "";
+  const token = req.cookies.token || "";
+  const queryIndex = resolvedUrl.indexOf("?");
+  const inquiryId = queryIndex !== -1 ? resolvedUrl.slice(queryIndex) : "";
 
-    const [suggestResult, productsResult] = await Promise.all([
-      getSuggest(token, inquiryId),
-      getFilterProducts({ type: "wheelChair", lv: "-1" }),
-    ]);
+  const [suggestResult, productsResult] = await Promise.all([
+    getSuggest(token, inquiryId),
+    getFilterProducts({ type: "wheelChair", lv: "-1" }),
+  ]);
 
-    if (!isValid(suggestResult) || !isValid(productsResult)) {
-      return {
-        redirect: {
-          destination: "/admin/suggests",
-          permanent: false,
-        },
-      };
-    }
+  if (hasError(suggestResult) || hasError(productsResult)) {
+    console.error("嚴重錯誤:", suggestResult.error, productsResult.error);
+    throw suggestResult.error;
+  }
 
-    const filterProducts: ProductFilterState = {
-      wheelChair: (productsResult.data || []).filter(
-        (product) =>
-          !suggestResult?.data?.products.some(
-            (selectedProduct) => selectedProduct.productId === product.id,
-          ),
-      ),
-      crutch: [],
-      bed: [],
-      oxygen: [],
-    };
-
-    console.log("filterProducts", filterProducts);
-
+  if (!isValid(suggestResult) || !isValid(productsResult)) {
     return {
-      props: {
-        suggestInfo: suggestResult.data,
-        filterProducts,
+      redirect: {
+        destination: "/admin/suggests",
+        permanent: false,
       },
     };
-  } catch (error) {
-    console.error("嚴重錯誤:", error);
-    throw error;
   }
+
+  const filterProducts: ProductFilterState = {
+    wheelChair: (productsResult.data || []).filter(
+      (product) =>
+        !suggestResult?.data?.products.some(
+          (selectedProduct) => selectedProduct.productId === product.id,
+        ),
+    ),
+    crutch: [],
+    bed: [],
+    oxygen: [],
+  };
+
+  return {
+    props: {
+      suggestInfo: suggestResult.data,
+      filterProducts,
+    },
+  };
 };
 
 const Suggest = ({ suggestInfo, filterProducts }: SuggestType) => {

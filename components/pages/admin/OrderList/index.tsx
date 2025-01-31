@@ -6,16 +6,10 @@ import {
 } from "react-icons/md";
 import {
   Container,
-  Header,
-  TableToolbar,
-  TabList,
-  Tab,
-  Badge,
   Table,
   Th,
   Tr,
   Td,
-  SearchInput,
   StatusButton,
   Pagination,
   PageButton,
@@ -24,18 +18,16 @@ import {
   DropdownItem,
   DropdownTrigger,
   DropdownCircle,
-  CountSelect,
-  CountGroup,
-  SelectArrowIcon,
-  CountLabel,
   Sort,
   SortIcon,
+  Thead,
+  Tbody,
 } from "./styled";
 import { orderStatuses, mockOrders, shippingValues } from "./data";
 import Link from "next/link";
 import { ColorsType } from "@/types/uiProps";
-import { FaSort } from "react-icons/fa";
 import { CgArrowLongDown, CgArrowLongUp } from "react-icons/cg";
+import { Header } from "../Header";
 
 const shippingStatusColorMapping = (status: string): ColorsType => {
   switch (status) {
@@ -55,7 +47,7 @@ const shippingStatusColorMapping = (status: string): ColorsType => {
 };
 
 const orderStatusColorMapping = (
-  status: string
+  status: string,
 ): { color: ColorsType; bgColor: ColorsType } => {
   switch (status) {
     case "未付款":
@@ -79,8 +71,8 @@ const OrderList = () => {
         ...acc,
         [order.id]: order.shippingStatus || "",
       }),
-      {}
-    )
+      {},
+    ),
   );
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -115,39 +107,14 @@ const OrderList = () => {
 
   return (
     <Container>
-      <Header>
-        <TabList>
-          {orderStatuses.map((status) => (
-            <Tab
-              key={status.label}
-              $active={activeTab === status.label}
-              onClick={() => setActiveTab(status.label)}
-            >
-              <status.icon size={16} />
-              {status.label}
-              {status.count && <Badge>{status.count}</Badge>}
-            </Tab>
-          ))}
-        </TabList>
-        <TableToolbar>
-          <CountGroup>
-            <CountLabel>顯示筆數</CountLabel>
-            <CountSelect>
-              <option value="10">10</option>
-              <option value="20">20</option>
-              <option value="30">30</option>
-            </CountSelect>
-            <SelectArrowIcon>
-              <FaSort size={16} />
-            </SelectArrowIcon>
-          </CountGroup>
-          <SearchInput placeholder="搜尋..." />
-        </TableToolbar>
-      </Header>
-
+      <Header
+        tabs={orderStatuses}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+      />
       <Table>
-        <thead>
-          <tr>
+        <Thead>
+          <Tr>
             <Th>
               <Sort>
                 訂單編號
@@ -172,9 +139,9 @@ const OrderList = () => {
             <Th>訂單狀態</Th>
             <Th>物流狀態</Th>
             <Th>取貨方式</Th>
-          </tr>
-        </thead>
-        <tbody>
+          </Tr>
+        </Thead>
+        <Tbody>
           {mockOrders.map((order) => (
             <Tr key={order.id} $isCompleted={order.orderStatus === "已結案"}>
               <Td>
@@ -230,7 +197,7 @@ const OrderList = () => {
               <Td>{order.deliveryMethod}</Td>
             </Tr>
           ))}
-        </tbody>
+        </Tbody>
       </Table>
 
       <Pagination>

@@ -5,7 +5,6 @@ import {
   MdCheckCircle,
   MdPendingActions,
   MdInventory,
-  MdSearch,
 } from "react-icons/md";
 
 export type OrderStatus = {

@@ -1,5 +1,4 @@
 import { Error } from "@/types/apiRoutes";
-import { ResultGetSuggest } from "./getSuggest";
 
 export const ResultGetProduct = {
   statusCode: 200,

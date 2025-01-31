@@ -26,22 +26,12 @@ import { formatCurrency } from "@/helpers/format/currency";
 import { SuggestPageProps } from "@/types/getSuggest";
 
 const Suggest = ({
-  suggestId,
   suggestCode: inquiryCode,
   createdStamp,
   level,
   additionalInfo,
   products,
 }: SuggestPageProps) => {
-  console.log("suggest data", {
-    suggestId,
-    inquiryCode,
-    createdStamp,
-    level,
-    additionalInfo,
-    products,
-  });
-
   return (
     <Container>
       <Header>
@@ -56,7 +46,7 @@ const Suggest = ({
           {products.map(
             (
               {
-                id,
+                productId,
                 name,
                 description,
                 rent,
@@ -65,9 +55,9 @@ const Suggest = ({
                 features,
                 reasons,
               },
-              index
+              index,
             ) => (
-              <Card key={`${id}-${index}`}>
+              <Card key={`${productId}-${index}`}>
                 <ImageWrapper>
                   <Image src={imgSrc} alt={imgAlt} />
                   <PriceBadge>{formatCurrency(rent)}/ 月</PriceBadge>
@@ -77,7 +67,7 @@ const Suggest = ({
                   <Description>{description}</Description>
                   <FeatureList>
                     {features.map((feature, featureIndex) => (
-                      <FeatureBadge key={`${id}-${featureIndex}`}>
+                      <FeatureBadge key={`${productId}-${featureIndex}`}>
                         <SuggestCheck size={24} />
                         {feature}
                       </FeatureBadge>
@@ -93,7 +83,7 @@ const Suggest = ({
                   </RentButton>
                 </RecommendDescription>
               </Card>
-            )
+            ),
           )}
         </RecommendationList>
       </Assistive>

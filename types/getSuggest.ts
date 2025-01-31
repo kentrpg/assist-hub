@@ -9,6 +9,8 @@ export const ResultGetSuggest = {
     "suggestCode": "AA073S",
     "level": "1",
     "additionalInfo": "test20",
+    "createdDate": "2025-01-20T18:13:50.353",
+    "createdStamp": "2025-01-20",
     "products": [
       {
         "suggestProductId": 15,

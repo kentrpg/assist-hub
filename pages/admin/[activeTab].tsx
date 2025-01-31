@@ -10,7 +10,7 @@ import getInquiries from "@/utils/api/member/getInquiries";
 import { hasError } from "@/helpers/api/status";
 import { ApiResponse } from "@/helpers/api/types";
 
-const whitelist = ["order", "user", "suggests", "diagram"];
+const whitelist = ["orders", "user", "suggests", "diagram"];
 
 type dataType = OrderDataType[] | InquiriesDataType[];
 

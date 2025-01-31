@@ -27,7 +27,7 @@ import { orderStatuses, shippingValues } from "./data";
 import Link from "next/link";
 import { ColorsType } from "@/types/uiProps";
 import { CgArrowLongDown, CgArrowLongUp } from "react-icons/cg";
-import { Header } from "../Header";
+import { Header } from "@/components/pages/admin/Header";
 import { OrderDataType } from "@/types/getAdminOrders";
 
 const shippingStatusColorMapping = (status: string): ColorsType => {

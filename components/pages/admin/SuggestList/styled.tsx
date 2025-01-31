@@ -77,15 +77,6 @@ export const SortIcon = styled.button`
   }
 `;
 
-export const StatusButton = styled.button<Color & BgColor>`
-  padding: 4px 12px;
-  border: none;
-  border-radius: 4px;
-  font-size: 13px;
-  color: ${({ theme, $color }) => theme.colors[$color]};
-  background: ${({ theme, $bgColor }) => theme.colors[$bgColor]};
-`;
-
 export const Pagination = styled.div`
   display: flex;
   justify-content: center;
@@ -123,87 +114,4 @@ export const PageButton = styled.button<{ $active?: boolean }>`
     opacity: 0.5;
     cursor: not-allowed;
   }
-`;
-
-// Dropdown styles
-export const DropdownContainer = styled.div`
-  position: relative;
-  display: inline-block;
-`;
-
-export const DropdownTrigger = styled.button<Color>`
-  ${InputRadius};
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-  column-gap: 4px;
-  background: ${({ theme }) => theme.colors.white};
-  border: 1px solid ${({ theme }) => theme.colors.grey100};
-  /* border: 1px solid
-    ${({ theme, $color }) =>
-      $color === "primary" ? theme.colors.grey100 : theme.colors[$color]}; */
-  color: ${({ theme }) => theme.colors.textSecondary};
-  font-size: 13px;
-  padding: 4px 12px;
-
-  /* &:hover {
-    background: ${({ theme }) => theme.colors.grey100};
-  } */
-`;
-
-export const DropdownContent = styled.div<{ $isOpen: boolean }>`
-  position: absolute;
-  top: 110%;
-  left: 50%;
-  transform: translateX(-50%);
-  min-width: 85px;
-  background: ${({ theme }) => theme.colors.white};
-  border-radius: 4px;
-  padding: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  z-index: 1;
-  display: ${({ $isOpen }) => ($isOpen ? "block" : "none")};
-`;
-
-export const DropdownItem = styled.div<Color & { $isSelected: boolean }>`
-  padding: 6px 8px;
-  font-size: 13px;
-  color: ${({ theme, $isSelected, $color }) =>
-    $isSelected ? theme.colors[$color] : theme.colors.textSecondary};
-  cursor: ${({ $isSelected }) => ($isSelected ? "default" : "pointer")};
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 2px;
-  pointer-events: ${({ $isSelected }) => ($isSelected ? "none" : "auto")};
-
-  ${({ $isSelected, $color, theme }) =>
-    !$isSelected &&
-    `
-    &:hover {
-      ${DropdownCircle} {
-        display: inline-block;
-        background: ${theme.colors[$color]};
-      }
-    }
-  `};
-
-  ${({ $isSelected, $color, theme }) =>
-    $isSelected &&
-    `
-    &:hover {
-      ${DropdownCircle} {
-        display: inline-block;
-        background: ${theme.colors[$color]};
-      }
-    }
-  `};
-`;
-
-export const DropdownCircle = styled.span`
-  width: 7px;
-  height: 7px;
-  display: none;
-  ${RoundedFull};
 `;

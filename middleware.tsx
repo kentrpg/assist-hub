@@ -25,21 +25,50 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const authResponse = await check(token.value);
-  console.log(`authResponse ${authResponse}`);
+  try {
+    const authResponse = await check(token.value);
+    console.log(`authResponse ${authResponse}`);
 
-  if (hasError(authResponse)) {
+    if (hasError(authResponse)) {
+      console.error(`Auth check failed: ${authResponse.message || "未知錯誤"}`);
+      return NextResponse.redirect(new URL("/500", request.url));
+    }
+
+    if (!isValid(authResponse)) {
+      const response = NextResponse.redirect(
+        new URL("/auth/signin", request.url),
+      );
+      response.cookies.delete("token");
+      response.cookies.delete("identity");
+      return response;
+    }
+
+    return NextResponse.next();
+  } catch (error) {
+    // 記錄原始錯誤
+    console.error(
+      "Middleware error:",
+      error instanceof Error ? error.message : "未知錯誤",
+    );
+
+    // JSON 解析錯誤，通常表示 API 服務異常
+    if (error instanceof SyntaxError && error.message.includes("JSON")) {
+      console.error("API 服務異常：", {
+        path: pathname,
+        errorType: "JSON_PARSE_ERROR",
+        timestamp: new Date().toISOString(),
+        details: error.message,
+      });
+    } else if (error instanceof Error) {
+      // 其他已知錯誤類型
+      console.error("其他錯誤：", {
+        path: pathname,
+        errorType: error.name,
+        timestamp: new Date().toISOString(),
+        details: error.message,
+      });
+    }
+
     return NextResponse.redirect(new URL("/500", request.url));
   }
-
-  if (!isValid(authResponse)) {
-    const response = NextResponse.redirect(
-      new URL("/auth/signin", request.url),
-    );
-    response.cookies.delete("token");
-    response.cookies.delete("identity");
-    return response;
-  }
-
-  return NextResponse.next();
 }

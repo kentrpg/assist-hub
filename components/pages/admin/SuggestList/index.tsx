@@ -1,16 +1,10 @@
 import {
   Completed,
   Container,
-  DropdownCircle,
-  DropdownContainer,
-  DropdownContent,
-  DropdownItem,
-  DropdownTrigger,
   PageButton,
   Pagination,
   Sort,
   SortIcon,
-  StatusButton,
   Table,
   Tbody,
   Td,
@@ -23,12 +17,7 @@ import { useState } from "react";
 import { inquiryStatuses, SuggestListProps } from "./data";
 import { Header } from "../Header";
 import { CgArrowLongDown, CgArrowLongUp } from "react-icons/cg";
-import {
-  MdChevronLeft,
-  MdChevronRight,
-  MdKeyboardArrowDown,
-} from "react-icons/md";
-import { ColorsType } from "@/types/uiProps";
+import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 
 const SuggestList = ({ data: inquiriesData = [] }: SuggestListProps) => {
   console.log("data", inquiriesData);
@@ -85,11 +74,7 @@ const SuggestList = ({ data: inquiriesData = [] }: SuggestListProps) => {
                 key={`inquiry-${inquiry.inquiryId}`}
                 $isCompleted={inquiry.isReplied}
               >
-                <Td>
-                  <Completed $completed={inquiry.isReplied}>
-                    {inquiry.isReplied ? "已回覆" : "尚未回覆"}
-                  </Completed>
-                </Td>
+                <Td>{inquiry.isReplied ? "已回覆" : "尚未回覆"}</Td>
                 <Td>
                   <Link
                     href={`/inquiry/${inquiry.inquiryCode}`}
@@ -107,7 +92,9 @@ const SuggestList = ({ data: inquiriesData = [] }: SuggestListProps) => {
                     }
                     target="_blank"
                   >
-                    {inquiry.suggetsCode}
+                    <Completed $completed={inquiry.isReplied}>
+                      {inquiry.isReplied ? inquiry.suggetsCode : "前往回覆"}
+                    </Completed>
                   </Link>
                 </Td>
                 <Td>contactInfo</Td>

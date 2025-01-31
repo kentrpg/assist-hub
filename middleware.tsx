@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { check } from "@/utils/api/auth/check";
-import { isValid } from "@/helpers/api/status";
+import { hasError, isValid } from "@/helpers/api/status";
 
 /** TBD: 後續邏輯
  *    - 驗證 Token 的有效性：Middleware 中使用 JWT 驗證來確認 token 是否有效 (jose)
@@ -27,6 +27,10 @@ export async function middleware(request: NextRequest) {
 
   const authResponse = await check(token.value);
   console.log(`authResponse ${authResponse}`);
+
+  if (hasError(authResponse)) {
+    return NextResponse.redirect(new URL("/500", request.url));
+  }
 
   if (!isValid(authResponse)) {
     const response = NextResponse.redirect(

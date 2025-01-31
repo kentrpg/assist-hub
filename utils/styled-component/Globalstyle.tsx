@@ -74,7 +74,7 @@ const GlobalStyle = createGlobalStyle`
   a {
     display: inline-block;
     text-decoration: none;
-    color: ${({ theme }) => theme.colors.black};
+    color: inherit;
     appearance: none;
   }
 `;

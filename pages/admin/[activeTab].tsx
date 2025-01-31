@@ -1,26 +1,43 @@
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import AdminLayout from "@/components/pages/admin/Layout";
 import OrderList from "@/components/pages/admin/OrderList";
-import { GetStaticPaths, GetStaticProps } from "next";
 import SuggestList from "@/components/pages/admin/SuggestList";
+import { OrderDataType } from "@/types/getAdminOrders";
+import { InquiriesDataType } from "@/types/getMemberInquiries";
+import getOrders from "@/utils/api/admin/getOrders";
+import getInquiries from "@/utils/api/member/getInquiries";
+import { hasError } from "@/helpers/api/status";
+import { ApiResponse } from "@/helpers/api/types";
 
 const whitelist = ["order", "user", "suggests", "diagram"];
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = whitelist.map((tab) => ({
-    params: { activeTab: tab },
-  }));
+type dataType = OrderDataType[] | InquiriesDataType[];
 
-  return {
-    paths,
-    fallback: false,
-  };
+const dataFetchingMapping = {
+  orders: (token: string) => getOrders(token),
+  suggests: (token: string) => getInquiries(token),
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  req,
+}) => {
   const activeTab = params?.activeTab as string;
+  const token = req.cookies.token || "";
 
   if (!whitelist.includes(activeTab)) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const fetchData =
+    dataFetchingMapping[activeTab as keyof typeof dataFetchingMapping];
+
+  const result = await fetchData(token);
+
+  if (hasError(result as ApiResponse<dataType>)) {
     return {
       notFound: true,
     };
@@ -29,14 +46,20 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return {
     props: {
       activeTab,
+      data: result.data || [],
     },
   };
 };
 
-const AdminPage = ({ activeTab }: { activeTab: string }) => {
+type AdminPageProps = {
+  activeTab: string;
+  data: dataType;
+};
+
+const AdminPage = ({ activeTab, data }: AdminPageProps) => {
   const getPageTitle = () => {
     switch (activeTab) {
-      case "order":
+      case "orders":
         return "訂單列表";
       case "user":
         return "會員列表";
@@ -51,16 +74,16 @@ const AdminPage = ({ activeTab }: { activeTab: string }) => {
 
   const getPageContent = () => {
     switch (activeTab) {
-      case "order":
-        return <OrderList />;
+      case "orders":
+        return <OrderList data={data as OrderDataType[]} />;
       case "user":
-        return <OrderList />;
+        return <OrderList data={data as OrderDataType[]} />;
       case "suggests":
-        return <SuggestList />;
+        return <SuggestList data={data as InquiriesDataType[]} />;
       case "diagram":
-        return <OrderList />;
+        return <OrderList data={data as OrderDataType[]} />;
       default:
-        return <OrderList />;
+        return <OrderList data={data as OrderDataType[]} />;
     }
   };
 

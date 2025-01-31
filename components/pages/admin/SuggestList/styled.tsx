@@ -1,6 +1,7 @@
 import { InputRadius, RoundedFull } from "@/styles/borderRadius";
-import { Color, BgColor } from "@/types/uiProps";
+import { Color, BgColor, IsCompleted } from "@/types/uiProps";
 import styled from "styled-components";
+import NextLink from "next/link";
 
 export const Container = styled.div`
   padding: 20px;
@@ -21,10 +22,14 @@ export const Tbody = styled.tbody`
 `;
 
 export const Tr = styled.tr<{ $isCompleted?: boolean }>`
-  opacity: ${({ $isCompleted }) => ($isCompleted ? 0.4 : 1)};
+  color: ${({ $isCompleted, theme }) =>
+    $isCompleted ? theme.colors.textMuted : theme.colors.textSecondary};
+  background: ${({ $isCompleted, theme }) =>
+    $isCompleted ? theme.colors.white : theme.colors.accentLight};
   transition: opacity 0.1s ease-in-out;
   &:hover {
-    background: ${({ theme }) => theme.colors.primaryLight};
+    background: ${({ $isCompleted, theme }) =>
+      $isCompleted ? theme.colors.primaryLight : theme.colors.accentLight};
   }
 `;
 
@@ -42,21 +47,20 @@ export const Td = styled.td`
   padding: 12px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
   font-size: 14px;
+`;
 
-  &:first-child {
+export const Link = styled(NextLink)`
+  display: block;
+  &:hover {
+    font-weight: 500;
+    color: ${({ theme }) => theme.colors.textSecondary};
     cursor: pointer;
-    a {
-      color: ${({ theme }) => theme.colors.textSecondary};
-      text-decoration: underline;
-      text-underline-offset: 1px;
-    }
   }
+`;
 
-  small {
-    color: ${({ theme }) => theme.colors.textMuted};
-    display: block;
-    margin-top: 4px;
-  }
+export const Completed = styled.span<IsCompleted>`
+  color: ${({ theme, $completed }) =>
+    $completed ? theme.colors.textMuted : theme.colors.error};
 `;
 
 export const Sort = styled.div`

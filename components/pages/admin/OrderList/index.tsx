@@ -23,11 +23,12 @@ import {
   Thead,
   Tbody,
 } from "./styled";
-import { orderStatuses, mockOrders, shippingValues } from "./data";
+import { orderStatuses, shippingValues } from "./data";
 import Link from "next/link";
 import { ColorsType } from "@/types/uiProps";
 import { CgArrowLongDown, CgArrowLongUp } from "react-icons/cg";
 import { Header } from "../Header";
+import { OrderDataType } from "@/types/getAdminOrders";
 
 const shippingStatusColorMapping = (status: string): ColorsType => {
   switch (status) {
@@ -60,16 +61,20 @@ const orderStatusColorMapping = (
   }
 };
 
-const OrderList = () => {
+type OrderListProps = {
+  data?: OrderDataType[];
+};
+
+const OrderList = ({ data: ordersData = [] }: OrderListProps) => {
   const [activeTab, setActiveTab] = useState("全部");
   const [currentPage, setCurrentPage] = useState(1);
   const [shippingStatuses, setShippingStatuses] = useState<{
     [key: string]: string;
   }>(
-    mockOrders.reduce(
+    ordersData.reduce(
       (acc, order) => ({
         ...acc,
-        [order.id]: order.shippingStatus || "",
+        [order.orderId]: order.shippingStatus || "",
       }),
       {},
     ),
@@ -142,21 +147,26 @@ const OrderList = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {mockOrders.map((order) => (
-            <Tr key={order.id} $isCompleted={order.orderStatus === "已結案"}>
+          {ordersData.map((order) => (
+            <Tr
+              key={order.orderId}
+              $isCompleted={order.orderStatus === "已結案"}
+            >
               <Td>
-                <Link href={`/admin/orders/${order.id}`}>{order.id}</Link>
+                <Link href={`/admin/orders/${order.orderId}`}>
+                  {order.orderCode}
+                </Link>
               </Td>
               <Td>
-                {order.productName}
-                <small>{order.productCode}</small>
+                {order.memberName}
+                <small>{order.orderCode}</small>
               </Td>
               <Td>
-                {order.rentalStart}
-                <small>{order.rentalEnd}</small>
+                {order.rentDate}
+                <small>{order.returnDate}</small>
               </Td>
               <Td>{order.quantity}</Td>
-              <Td>{order.total.toLocaleString()}</Td>
+              <Td>{order.finalAmount.toLocaleString()}</Td>
               <Td>
                 <StatusButton
                   $color={orderStatusColorMapping(order.orderStatus).color}
@@ -171,20 +181,25 @@ const OrderList = () => {
               <Td>
                 <DropdownContainer ref={dropdownRef}>
                   <DropdownTrigger
-                    onClick={() => toggleDropdown(order.id)}
+                    onClick={() => toggleDropdown(order.orderId.toString())}
                     $color={shippingStatusColorMapping(order.shippingStatus)}
                   >
-                    {shippingStatuses[order.id] || "選擇狀態"}
+                    {shippingStatuses[order.orderId] || "選擇狀態"}
                     <MdKeyboardArrowDown size={16} />
                   </DropdownTrigger>
-                  <DropdownContent $isOpen={openDropdown === order.id}>
+                  <DropdownContent
+                    $isOpen={openDropdown === order.orderId.toString()}
+                  >
                     {shippingValues.map((status) => (
                       <DropdownItem
                         key={status}
-                        $isSelected={shippingStatuses[order.id] === status}
+                        $isSelected={shippingStatuses[order.orderId] === status}
                         $color={shippingStatusColorMapping(status)}
                         onClick={() =>
-                          handleShippingStatusChange(order.id, status)
+                          handleShippingStatusChange(
+                            order.orderId.toString(),
+                            status,
+                          )
                         }
                       >
                         {status}
@@ -194,7 +209,7 @@ const OrderList = () => {
                   </DropdownContent>
                 </DropdownContainer>
               </Td>
-              <Td>{order.deliveryMethod}</Td>
+              <Td>{order.shipping}</Td>
             </Tr>
           ))}
         </Tbody>

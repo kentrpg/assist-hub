@@ -79,8 +79,8 @@ const Sidebar: React.FC = () => {
         </NavItem>
         <NavItem>
           <NavLink
-            href="/admin/order"
-            active={(router.asPath === "/admin/order").toString()}
+            href="/admin/orders"
+            active={(router.asPath === "/admin/orders").toString()}
           >
             <MdShoppingCart size={20} />
             訂單列表

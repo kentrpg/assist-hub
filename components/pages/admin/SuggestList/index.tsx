@@ -1,10 +1,13 @@
 import {
+  Completed,
   Container,
   DropdownCircle,
   DropdownContainer,
   DropdownContent,
   DropdownItem,
   DropdownTrigger,
+  PageButton,
+  Pagination,
   Sort,
   SortIcon,
   StatusButton,
@@ -14,49 +17,23 @@ import {
   Th,
   Thead,
   Tr,
+  Link,
 } from "./styled";
 import { useState } from "react";
-import { inquiryStatuses } from "./data";
+import { inquiryStatuses, SuggestListProps } from "./data";
 import { Header } from "../Header";
-import Link from "next/link";
 import { CgArrowLongDown, CgArrowLongUp } from "react-icons/cg";
-import { MdKeyboardArrowDown } from "react-icons/md";
-import { mockOrders, orderStatuses, shippingValues } from "../OrderList/data";
+import {
+  MdChevronLeft,
+  MdChevronRight,
+  MdKeyboardArrowDown,
+} from "react-icons/md";
 import { ColorsType } from "@/types/uiProps";
 
-const shippingStatusColorMapping = (status: string): ColorsType => {
-  switch (status) {
-    case "待出貨":
-    case "待取貨":
-      return "accent";
-    case "運送中":
-      return "secondary";
-    case "已抵達":
-    case "已取貨":
-      return "primary";
-    case "已歸還":
-    case "已取消":
-    default:
-      return "textMuted";
-  }
-};
-
-const orderStatusColorMapping = (
-  status: string,
-): { color: ColorsType; bgColor: ColorsType } => {
-  switch (status) {
-    case "未付款":
-      return { color: "accent", bgColor: "accentLight" };
-    case "已付款":
-      return { color: "grey300", bgColor: "secondaryBg" };
-    case "已結案":
-    default:
-      return { color: "textMuted", bgColor: "secondaryBg" };
-  }
-};
-
-const SuggestList: React.FC = () => {
+const SuggestList = ({ data: inquiriesData = [] }: SuggestListProps) => {
+  console.log("data", inquiriesData);
   const [activeTab, setActiveTab] = useState("全部");
+  const [currentPage, setCurrentPage] = useState(1);
 
   return (
     <Container>
@@ -71,8 +48,24 @@ const SuggestList: React.FC = () => {
             <Th>
               <Sort>詢問單狀態</Sort>
             </Th>
-            <Th>詢問單</Th>
-            <Th>建議單</Th>
+            <Th>
+              <Sort>
+                詢問單
+                <SortIcon>
+                  <CgArrowLongDown size={14} />
+                  <CgArrowLongUp size={14} />
+                </SortIcon>
+              </Sort>
+            </Th>
+            <Th>
+              <Sort>
+                建議單
+                <SortIcon>
+                  <CgArrowLongDown size={14} />
+                  <CgArrowLongUp size={14} />
+                </SortIcon>
+              </Sort>
+            </Th>
             <Th>會員聯絡方式</Th>
             <Th>
               <Sort>
@@ -86,26 +79,61 @@ const SuggestList: React.FC = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {mockOrders.map((order) => (
-            <Tr key={order.id} $isCompleted={order.orderStatus === "已結案"}>
-              <Td>
-                <Link href={`/admin/orders/${order.id}`}>{order.id}</Link>
-              </Td>
-              <Td>
-                {order.productName}
-                <small>{order.productCode}</small>
-              </Td>
-              <Td>{order.quantity}</Td>
-              <Td>{order.deliveryMethod}</Td>
-              <Td>
-                {order.rentalStart}
-                <small>尚未回覆</small>
-                {/* <small>{order.rentalEnd || "尚未回覆"}</small> */}
-              </Td>
+          {inquiriesData.length > 0 ? (
+            inquiriesData.map((inquiry) => (
+              <Tr
+                key={`inquiry-${inquiry.inquiryId}`}
+                $isCompleted={inquiry.isReplied}
+              >
+                <Td>
+                  <Completed $completed={inquiry.isReplied}>
+                    {inquiry.isReplied ? "已回覆" : "尚未回覆"}
+                  </Completed>
+                </Td>
+                <Td>
+                  <Link
+                    href={`/inquiry/${inquiry.inquiryCode}`}
+                    target="_blank"
+                  >
+                    {inquiry.inquiryCode}
+                  </Link>
+                </Td>
+                <Td>
+                  <Link
+                    href={
+                      inquiry.isReplied
+                        ? `/suggest/${inquiry.suggetsCode}`
+                        : `/admin/suggest?inquiryId=${inquiry.inquiryId}`
+                    }
+                    target="_blank"
+                  >
+                    {inquiry.suggetsCode}
+                  </Link>
+                </Td>
+                <Td>contactInfo</Td>
+                {/* <Td>{inquiry.contactInfo || "contactInfo"}</Td> */}
+                <Td>{inquiry.createdStamp}</Td>
+              </Tr>
+            ))
+          ) : (
+            <Tr>
+              <Td colSpan={5}>No data</Td>
             </Tr>
-          ))}
+          )}
         </Tbody>
       </Table>
+      <Pagination>
+        <PageButton
+          onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+          disabled={currentPage === 1}
+        >
+          <MdChevronLeft size={18} />
+        </PageButton>
+        <PageButton $active={true}>{currentPage}</PageButton>
+        <PageButton onClick={() => setCurrentPage((p) => p + 1)}>
+          <MdChevronRight size={18} />
+        </PageButton>
+      </Pagination>
     </Container>
   );
 };

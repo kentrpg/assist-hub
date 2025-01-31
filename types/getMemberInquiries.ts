@@ -31,10 +31,12 @@ export const ResultGetInquiries = {
   ],
 };
 
+export type InquiriesDataType = typeof ResultGetInquiries["data"][number];
+
 export type ResultGetInquiriesType = {
   statusCode: number;
   status: boolean;
   message: string;
-  data: typeof ResultGetInquiries.data | undefined;
+  data: InquiriesDataType[] | undefined;
   error: Error | null;
 };

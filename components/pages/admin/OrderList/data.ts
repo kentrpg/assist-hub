@@ -14,6 +14,7 @@ export type OrderStatus = {
   label: string;
   count?: number;
   icon: IconType;
+  type: "orderStatus" | "shippingStatus" | "all";
 };
 
 export type OrderListProps = {
@@ -40,18 +41,20 @@ export const shippingStatusMapping: { [key: string]: string } = {
   store: "店取",
 };
 
+export type TabType = "orderStatus" | "shippingStatus" | "all";
+
 export const orderStatuses: OrderStatus[] = [
-  { key: "all", label: "全部", count: 100, icon: MdCheckCircle },
-  { key: "outstanding", label: "未付款", count: 2, icon: MdPayment },
-  { key: "paid", label: "已付款", count: 2, icon: MdPayment },
-  { key: "completed", label: "已結案", count: 32, icon: MdCheckCircle },
-  { key: "pending", label: "待出貨", icon: MdPendingActions },
-  { key: "shipping", label: "運送中", count: 12, icon: MdLocalShipping },
-  { key: "delivered", label: "已抵達", count: 56, icon: MdLocalShipping },
-  { key: "pickup", label: "待取貨", count: 5, icon: MdPendingActions },
-  { key: "picked", label: "已取貨", count: 6, icon: MdCheckCircle },
-  { key: "returned", label: "已歸還", count: 6, icon: MdInventory },
-  { key: "cancelled", label: "已取消", count: 2, icon: MdCheckCircle },
+  { key: "all", label: "全部", count: 100, icon: MdCheckCircle, type: "all" },
+  { key: "outstanding", label: "未付款", count: 2, icon: MdPayment, type: "orderStatus" },
+  { key: "paid", label: "已付款", count: 2, icon: MdPayment, type: "orderStatus" },
+  { key: "completed", label: "已結案", count: 32, icon: MdCheckCircle, type: "orderStatus" },
+  { key: "pending", label: "待出貨", icon: MdPendingActions, type: "shippingStatus" },
+  { key: "shipping", label: "運送中", count: 12, icon: MdLocalShipping, type: "shippingStatus" },
+  { key: "delivered", label: "已抵達", count: 56, icon: MdLocalShipping, type: "shippingStatus" },
+  { key: "pickup", label: "待取貨", count: 5, icon: MdPendingActions, type: "shippingStatus" },
+  { key: "picked", label: "已取貨", count: 6, icon: MdCheckCircle, type: "shippingStatus" },
+  { key: "returned", label: "已歸還", count: 6, icon: MdInventory, type: "shippingStatus" },
+  { key: "cancelled", label: "已取消", count: 2, icon: MdCheckCircle, type: "shippingStatus" },
 ];
 
 export const orderStatusValues = ["未付款", "已付款", "已結案"];

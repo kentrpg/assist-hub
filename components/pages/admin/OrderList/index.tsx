@@ -28,9 +28,12 @@ import {
   OrderListProps,
   orderStatusColorMapping,
   orderStatuses,
+  OrderStatusType,
   shippingStatusColorMapping,
   shippingStatusMapping,
+  ShippingStatusType,
   shippingValues,
+  TabType,
 } from "./data";
 import Link from "next/link";
 import { CgArrowLongDown, CgArrowLongUp } from "react-icons/cg";
@@ -41,6 +44,7 @@ const OrderList = ({ data: ordersData = [] }: OrderListProps) => {
   console.log("ordersData", ordersData);
   const [activeTab, setActiveTab] = useState("全部");
   const [currentPage, setCurrentPage] = useState(1);
+  const [filteredOrders, setFilteredOrders] = useState(ordersData);
   const [shippingStatuses, setShippingStatuses] = useState<{
     [key: string]: string;
   }>(
@@ -55,20 +59,67 @@ const OrderList = ({ data: ordersData = [] }: OrderListProps) => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const handleShippingStatusChange = (orderId: string, value: string) => {
-    setShippingStatuses((prev) => ({
-      ...prev,
-      [orderId]: value,
-    }));
-    setOpenDropdown(null);
-  };
-
   const toggleDropdown = (orderId: string) => {
     setOpenDropdown(openDropdown === orderId ? null : orderId);
   };
 
+  const handleDataFilter = (
+    tab: ShippingStatusType | OrderStatusType,
+    type: TabType,
+  ) => {
+    setActiveTab(tab);
+
+    if (type === "all") {
+      setFilteredOrders(ordersData);
+      return;
+    }
+
+    if (type === "orderStatus") {
+      const filtered = ordersData.filter((order) => {
+        return order.orderStatus === tab;
+      });
+      setFilteredOrders(filtered);
+      return;
+    }
+
+    const filtered = ordersData.filter((order) => {
+      return order.shippingStatus === tab;
+    });
+
+    setFilteredOrders(filtered);
+  };
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+
+      if (target.closest("[data-dropdown-item]")) {
+        const orderId = target
+          .closest("[data-dropdown-item]")
+          ?.getAttribute("data-order-id");
+        const status = target
+          .closest("[data-dropdown-item]")
+          ?.getAttribute("data-status");
+
+        console.log("orderId", orderId);
+        console.log("status", status);
+
+        // TBD: 需要多一隻 API 來取得訂單資料
+        const bodyData = {
+          shippingStatus: status,
+        };
+
+        if (orderId && status) {
+          setShippingStatuses((prev) => ({
+            ...prev,
+            [orderId]: status,
+          }));
+        }
+        setOpenDropdown(null);
+        return;
+      }
+
+      // 點擊其他區域時關閉下拉選單
       if (
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
@@ -88,7 +139,8 @@ const OrderList = ({ data: ordersData = [] }: OrderListProps) => {
       <Header
         tabs={orderStatuses}
         activeTab={activeTab}
-        onTabChange={setActiveTab}
+        onTabChange={handleDataFilter}
+        // onTabChange={setActiveTab}
       />
       <Table>
         <Thead>
@@ -120,7 +172,7 @@ const OrderList = ({ data: ordersData = [] }: OrderListProps) => {
           </Tr>
         </Thead>
         <Tbody>
-          {ordersData.map((order) => {
+          {filteredOrders.map((order) => {
             const isCompleted =
               !order.orderStatus ||
               order.orderStatus === "已結案" ||
@@ -194,6 +246,9 @@ const OrderList = ({ data: ordersData = [] }: OrderListProps) => {
                       {shippingValues.map((status) => (
                         <DropdownItem
                           key={status}
+                          data-dropdown-item
+                          data-order-id={order.orderId.toString()}
+                          data-status={status}
                           $isSelected={
                             shippingStatuses[order.orderId] === status ||
                             (!shippingStatuses[order.orderId] &&
@@ -201,12 +256,6 @@ const OrderList = ({ data: ordersData = [] }: OrderListProps) => {
                           }
                           $color={
                             shippingStatusColorMapping[status] || "textMuted"
-                          }
-                          onClick={() =>
-                            handleShippingStatusChange(
-                              order.orderId.toString(),
-                              status,
-                            )
                           }
                         >
                           {status}

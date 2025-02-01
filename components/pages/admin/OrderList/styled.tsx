@@ -162,7 +162,6 @@ export const DropdownContent = styled.div<{ $isOpen: boolean }>`
   border: 1px solid ${({ theme }) => theme.colors.border};
   z-index: 1;
   display: ${({ $isOpen }) => ($isOpen ? "block" : "none")};
-  opacity: 1 !important;
 `;
 
 export const DropdownItem = styled.div<Color & { $isSelected: boolean }>`

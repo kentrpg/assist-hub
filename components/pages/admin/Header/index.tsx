@@ -21,7 +21,7 @@ export const Header = ({ tabs, activeTab, onTabChange }: HeaderProps) => {
           <Tab
             key={status.label}
             $active={activeTab === status.label}
-            onClick={() => onTabChange(status.label)}
+            onClick={() => onTabChange(status.label, status.type)}
           >
             <status.icon size={16} />
             {status.label}

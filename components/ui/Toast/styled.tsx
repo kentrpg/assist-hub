@@ -30,8 +30,8 @@ export const ToastContainer = styled.div<ToastType>`
   top: ${({ $top }) => $top};
   right: ${({ $right }) => $right};
   padding: 12px 20px;
-  background: ${({ theme, type }) =>
-    type === "success" ? theme.colors.success : theme.colors.error};
+  background: ${({ theme, $type }) =>
+    $type === "success" ? theme.colors.success : theme.colors.error};
   color: ${({ theme }) => theme.colors.white};
   ${InputRadius};
   ${ShadowLow};
@@ -40,8 +40,8 @@ export const ToastContainer = styled.div<ToastType>`
   gap: 8px;
   z-index: 1;
 
-  ${({ isLeaving }) =>
-    isLeaving
+  ${({ $isLeaving }) =>
+    $isLeaving
       ? css`
           animation: ${slideOutRight} 0.3s ease-in-out forwards;
         `

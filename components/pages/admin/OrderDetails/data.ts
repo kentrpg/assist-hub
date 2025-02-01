@@ -1,5 +1,3 @@
-import { ResultGetAdminOrders } from "@/types/getAdminOrders";
-
 export type OrderData = {
   orderStatus: string;
   shippingStatus: string;
@@ -84,3 +82,5 @@ export type ToastType = {
   type: "success" | "error";
   isLeaving: boolean;
 };
+
+export const quantitySelects = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];

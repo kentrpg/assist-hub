@@ -1,3 +1,4 @@
+import { ColorsType } from "@/types/uiProps";
 import type { IconType } from "react-icons";
 import {
   MdPayment,
@@ -42,6 +43,22 @@ export const orderStatuses: OrderStatus[] = [
   { key: "returned", label: "已歸還", count: 6, icon: MdInventory },
   { key: "cancelled", label: "已取消", count: 2, icon: MdCheckCircle },
 ];
+
+export const shippingStatusColorMapping: Record<string, ColorsType> = {
+  "待出貨": "accent",
+  "待取貨": "accent",
+  "運送中": "secondary",
+  "已抵達": "primary",
+  "已取貨": "primary",
+  "已歸還": "textMuted",
+  "已取消": "textMuted",
+};
+
+export const orderStatusColorMapping: Record<string, { color: ColorsType; bgColor: ColorsType }> = {
+  "未付款": { color: "accent", bgColor: "accentLight" },
+  "已付款": { color: "grey300", bgColor: "secondaryBg" },
+  "已結案": { color: "textMuted", bgColor: "secondaryBg" },
+};
 
 export const orderStatusValues: ShippingStatus = ["未付款", "已付款", "已結案"];
 export const shippingValues: ShippingStatus = ["待出貨", "運送中", "已抵達", "待取貨", "已取貨", "已歸還", "已取消"];

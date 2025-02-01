@@ -19,9 +19,6 @@ import {
   IconGroup,
   IconWrapper,
   NotificationBadge,
-  SearchGroup,
-  SearchInput,
-  SearchIcon,
   NavList,
   NavItem,
   NavLink,
@@ -59,13 +56,6 @@ const Sidebar: React.FC = () => {
           </IconWrapper>
         </IconGroup>
       </TopSection>
-
-      <SearchGroup>
-        <SearchIcon>
-          <MdSearch size={20} />
-        </SearchIcon>
-        <SearchInput placeholder="找尋..." />
-      </SearchGroup>
 
       <NavList>
         <NavItem>

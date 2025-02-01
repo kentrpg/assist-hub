@@ -72,8 +72,8 @@ const Toast = ({
 
   return (
     <ToastContainer
-      type={type}
-      isLeaving={isLeaving}
+      $type={type}
+      $isLeaving={isLeaving}
       $top={$top}
       $right={$right}
     >

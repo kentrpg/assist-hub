@@ -31,8 +31,8 @@ export const Header = ({ tabs, activeTab, onTabChange }: HeaderProps) => {
       </TabList>
       <TableToolbar>
         <CountGroup>
-          <CountLabel>顯示筆數</CountLabel>
-          <CountSelect>
+          <CountLabel htmlFor="count">顯示筆數</CountLabel>
+          <CountSelect id="count">
             {countSelects.map((count) => (
               <option key={count} value={count}>
                 {count}

@@ -23,7 +23,12 @@ import {
   Thead,
   Tbody,
 } from "./styled";
-import { orderStatuses, shippingValues } from "./data";
+import {
+  orderStatusColorMapping,
+  orderStatuses,
+  shippingStatusColorMapping,
+  shippingValues,
+} from "./data";
 import Link from "next/link";
 import { ColorsType } from "@/types/uiProps";
 import { CgArrowLongDown, CgArrowLongUp } from "react-icons/cg";
@@ -31,36 +36,19 @@ import { Header } from "@/components/pages/admin/Header";
 import { OrderDataType } from "@/types/getAdminOrders";
 import { formatCurrency } from "@/helpers/format/currency";
 
-const shippingStatusColorMapping = (status: string): ColorsType => {
-  switch (status) {
-    case "待出貨":
-    case "待取貨":
-      return "accent";
-    case "運送中":
-      return "secondary";
-    case "已抵達":
-    case "已取貨":
-      return "primary";
-    case "已歸還":
-    case "已取消":
-    default:
-      return "textMuted";
-  }
-};
-
-const orderStatusColorMapping = (
-  status: string,
-): { color: ColorsType; bgColor: ColorsType } => {
-  switch (status) {
-    case "未付款":
-      return { color: "accent", bgColor: "accentLight" };
-    case "已付款":
-      return { color: "grey300", bgColor: "secondaryBg" };
-    case "已結案":
-    default:
-      return { color: "textMuted", bgColor: "secondaryBg" };
-  }
-};
+// const orderStatusColorMapping = (
+//   status: string,
+// ): { color: ColorsType; bgColor: ColorsType } => {
+//   switch (status) {
+//     case "未付款":
+//       return { color: "accent", bgColor: "accentLight" };
+//     case "已付款":
+//       return { color: "grey300", bgColor: "secondaryBg" };
+//     case "已結案":
+//     default:
+//       return { color: "textMuted", bgColor: "secondaryBg" };
+//   }
+// };
 
 const shippingStatusMapping: { [key: string]: string } = {
   delivery: "宅配",
@@ -177,8 +165,14 @@ const OrderList = ({ data: ordersData = [] }: OrderListProps) => {
               <Td>{formatCurrency(order.finalAmount)}</Td>
               <Td>
                 <StatusButton
-                  $color={orderStatusColorMapping(order.orderStatus).color}
-                  $bgColor={orderStatusColorMapping(order.orderStatus).bgColor}
+                  $color={
+                    orderStatusColorMapping[order.orderStatus]?.color ||
+                    "textMuted"
+                  }
+                  $bgColor={
+                    orderStatusColorMapping[order.orderStatus]?.bgColor ||
+                    "secondaryBg"
+                  }
                 >
                   {orderStatuses.find((s) => s.label === order.orderStatus)
                     ?.label || "已結案"}
@@ -188,7 +182,7 @@ const OrderList = ({ data: ordersData = [] }: OrderListProps) => {
                 <DropdownContainer ref={dropdownRef}>
                   <DropdownTrigger
                     onClick={() => toggleDropdown(order.orderId.toString())}
-                    $color={shippingStatusColorMapping(order.shippingStatus)}
+                    $color={shippingStatusColorMapping[order.shippingStatus]}
                   >
                     {shippingStatuses[order.orderId] || "已取消"}
                     <MdKeyboardArrowDown size={16} />
@@ -200,7 +194,7 @@ const OrderList = ({ data: ordersData = [] }: OrderListProps) => {
                       <DropdownItem
                         key={status}
                         $isSelected={shippingStatuses[order.orderId] === status}
-                        $color={shippingStatusColorMapping(status)}
+                        $color={shippingStatusColorMapping[status] || "textMuted"}
                         onClick={() =>
                           handleShippingStatusChange(
                             order.orderId.toString(),

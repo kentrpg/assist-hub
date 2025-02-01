@@ -44,7 +44,6 @@ export const IconWrapper = styled.div`
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  /* background: ${({ theme }) => theme.colors.primary}; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -69,40 +68,6 @@ export const NotificationBadge = styled.span`
   border-radius: 10px;
   min-width: 20px;
   text-align: center;
-`;
-
-export const SearchGroup = styled.div`
-  position: relative;
-  margin-bottom: 20px;
-`;
-
-export const SearchIcon = styled.div`
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: ${({ theme }) => theme.colors.textMuted};
-  font-size: 0;
-`;
-
-export const SearchInput = styled.input`
-  width: 100%;
-  padding: 12px 12px 12px 40px;
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 8px;
-  font-size: 14px;
-  color: ${({ theme }) => theme.colors.textPrimary};
-  background: transparent;
-
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.textMuted};
-  }
-
-  &:focus {
-    outline: none;
-    border-color: ${({ theme }) => theme.colors.primary};
-    background: ${({ theme }) => theme.colors.white};
-  }
 `;
 
 export const NavList = styled.nav`

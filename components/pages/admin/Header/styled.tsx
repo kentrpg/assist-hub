@@ -62,7 +62,7 @@ export const CountGroup = styled.div`
   position: relative;
 `;
 
-export const CountLabel = styled.span`
+export const CountLabel = styled.label`
   font-size: 14px;
   color: ${({ theme }) => theme.colors.textMuted};
   margin-right: 10px;

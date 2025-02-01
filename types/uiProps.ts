@@ -64,8 +64,8 @@ export type Padding = {
 };
 
 export type Toast = {
-  type: "success" | "error";
-  isLeaving: boolean;
+  $type: "success" | "error";
+  $isLeaving: boolean;
   $top: string;
   $right: string;
 };

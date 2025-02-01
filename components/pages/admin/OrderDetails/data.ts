@@ -58,16 +58,16 @@ export type OrderItemType = {
     total: number
   }
   payment: string
-}
+};
 
 export type UserInfoType = {
   account: string
   lineId: string
-  phone: string
-}
+  phone: string;
+};
 
 export type ShippingInfoType = {
-  name: string
+  name: string;
   phone: string
   email: string
   address: {
@@ -76,4 +76,11 @@ export type ShippingInfoType = {
     district: string
     detail: string
   }
-}
+};
+
+export type ToastType = {
+  show: boolean;
+  message: string;
+  type: "success" | "error";
+  isLeaving: boolean;
+};

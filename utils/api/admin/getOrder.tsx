@@ -21,8 +21,6 @@ export const getOrder = async (
 
   const [res, error] = await catchError(fetch(parsedUrl, options));
 
-  console.log("getOrder res", res);
-
   if (error) {
     console.log("error", error);
 

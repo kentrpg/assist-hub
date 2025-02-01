@@ -71,6 +71,7 @@ export type OrderDetailsInputs = {
 };
 
 const OrderDetails = ({ order }: { order: OrderData }) => {
+  console.log(order);
   const [showToast, setShowToast] = useState(false);
   const [apiResponse, setApiResponse] = useState<{
     isValid: ToastProps["type"];
@@ -119,8 +120,8 @@ const OrderDetails = ({ order }: { order: OrderData }) => {
     const submitData = {
       memberId: order.member.memberId,
       orderCode: order.orderCode,
-      orderStatus: order.orderStatus,
-      shippingStatus: order.shippingStatus,
+      orderStatus: data.orderStatus,
+      shippingStatus: data.shippingStatus,
       shipping: data.shipping,
       shippingInfo: {
         name: data.name,
@@ -137,7 +138,7 @@ const OrderDetails = ({ order }: { order: OrderData }) => {
         rent: data.rent,
         deposit: data.deposit,
         fee: data.fee,
-        finalAmount: order.details.finalAmount,
+        finalAmount: finalAmount,
         rentStamp: data.rentStamp,
         returnStamp: data.returnStamp,
         payment: data.payment,
@@ -156,6 +157,8 @@ const OrderDetails = ({ order }: { order: OrderData }) => {
     });
 
     const json = await result.json();
+
+    console.log(json);
 
     setApiResponse({
       isValid: isValid(json) ? "success" : "error",

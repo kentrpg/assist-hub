@@ -7,13 +7,18 @@ import {
   MdPendingActions,
   MdInventory,
 } from "react-icons/md";
+import { OrderDataType } from "@/types/getAdminOrders";
 
 export type OrderStatus = {
   key: string;
   label: string;
   count?: number;
   icon: IconType;
-}
+};
+
+export type OrderListProps = {
+  data: OrderDataType[];
+};
 
 export type ShippingStatus = string[];
 
@@ -28,7 +33,12 @@ export type Order = {
   deliveryMethod: string;
   orderStatus: string;
   shippingStatus: string;
-}
+};
+
+export const shippingStatusMapping: { [key: string]: string } = {
+  delivery: "宅配",
+  store: "店取",
+};
 
 export const orderStatuses: OrderStatus[] = [
   { key: "all", label: "全部", count: 100, icon: MdCheckCircle },

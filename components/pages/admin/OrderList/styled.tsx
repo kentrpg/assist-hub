@@ -1,5 +1,5 @@
 import { InputRadius, RoundedFull } from "@/styles/borderRadius";
-import { BgColor, Color } from "@/types/uiProps";
+import { BgColor, Color, IsCompleted } from "@/types/uiProps";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -21,8 +21,6 @@ export const Tbody = styled.tbody`
 `;
 
 export const Tr = styled.tr<{ $isCompleted?: boolean }>`
-  opacity: ${({ $isCompleted }) => ($isCompleted ? 0.4 : 1)};
-  transition: opacity 0.1s ease-in-out;
   &:hover {
     background: ${({ theme }) => theme.colors.primaryLight};
   }
@@ -57,6 +55,10 @@ export const Td = styled.td`
     display: block;
     margin-top: 4px;
   }
+`;
+
+export const TdCompleted = styled.div<IsCompleted>`
+  opacity: ${({ $completed }) => ($completed ? 0.4 : 1)};
 `;
 
 export const Sort = styled.div`
@@ -160,6 +162,7 @@ export const DropdownContent = styled.div<{ $isOpen: boolean }>`
   border: 1px solid ${({ theme }) => theme.colors.border};
   z-index: 1;
   display: ${({ $isOpen }) => ($isOpen ? "block" : "none")};
+  opacity: 1 !important;
 `;
 
 export const DropdownItem = styled.div<Color & { $isSelected: boolean }>`

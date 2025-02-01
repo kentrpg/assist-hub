@@ -29,7 +29,7 @@ export const Banner = styled.div`
   left: 50%;
   transform: translateX(-50%);
   width: 100vw;
-  background-image: url("/images/banner-tablet.png");
+  background-image: url("/images/banner-tablet.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

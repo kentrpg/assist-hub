@@ -44,6 +44,7 @@ import {
   InquiryIcon,
   ComparisonProduct,
   CarouselBtn,
+  ComparisonProductName,
 } from "./styled";
 import { sliderSettings } from "./data";
 import Gallery from "./Gallery";
@@ -267,7 +268,7 @@ const Single: React.FC<ProductDetailsProps> = ({
               </Cell>
               {comparison.map((item, index) => (
                 <Cell $border key={index}>
-                  {item.name}
+                  <ComparisonProductName>{item.name}</ComparisonProductName>
                 </Cell>
               ))}
             </Row>

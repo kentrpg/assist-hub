@@ -82,7 +82,6 @@ export const Tab = styled.div<TabProps>`
   align-items: center;
   outline: #e9e5de 1px solid;
   border-radius: 10px;
-  padding-top: 10px 0px;
   width: 100%;
   height: 88px;
   overflow: hidden;
@@ -184,7 +183,6 @@ export const Overlay = styled.div`
   color: #fff;
   font-size: 16px;
   font-weight: 700;
-  border-radius: 0 0 10px 10px;
   transform: translateY(100%);
   opacity: 0;
   cursor: pointer;

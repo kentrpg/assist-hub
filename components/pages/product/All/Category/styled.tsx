@@ -46,6 +46,7 @@ export const CardWrapper = styled.div`
 
 export const Card = styled.div<CardProps>`
   width: 100%;
+  height: 100%;
   padding: 20px;
   background-color: ${(props) => theme.colors[props.$bg]};
   border-radius: 10px;
@@ -94,11 +95,15 @@ export const CardBtn = styled.button`
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  opacity: 0;
+  opacity: 1;
   transform: translateY(-10px);
   transition:
     opacity 0.3s ease,
     transform 0.3s ease;
+
+  @media (${Desktop}) {
+    opacity: 0;
+  }
 
   &:hover {
     background-color: #b28f12;

@@ -246,7 +246,7 @@ export const CopyButton = styled.button`
   }
 `;
 
-export const SubmitButton = styled.button.attrs({ type: "submit" })`
+export const SubmitButton = styled.button`
   width: 100%;
   display: flex;
   justify-content: center;

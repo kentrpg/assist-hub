@@ -12,11 +12,8 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
   const token = req.cookies.token || "";
   const orderId = (params?.id as string) || "";
-  console.log("getServerSideProps params", params, orderId);
 
   const result = await getOrder(token, orderId);
-
-  console.log("getServerSideProps result", result);
 
   if (hasError(result)) {
     console.error("嚴重錯誤:", result.error);

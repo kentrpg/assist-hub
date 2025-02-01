@@ -80,6 +80,7 @@ const Sidebar: React.FC = () => {
           <NavLink
             href="/admin/user"
             active={(router.asPath === "/admin/user").toString()}
+            $disabled={true}
           >
             <MdPeople size={20} />
             用戶資料
@@ -89,6 +90,7 @@ const Sidebar: React.FC = () => {
           <NavLink
             href="/admin/diagram"
             active={(router.asPath === "/admin/diagram").toString()}
+            $disabled={true}
           >
             <MdBarChart size={20} />
             數據報表

@@ -18,8 +18,6 @@ export const getOrders = async (token: string): Promise<Result> => {
 
   const [res, error] = await catchError(fetch(parsedUrl, options));
 
-  console.log("res", res, error);
-
   if (error) {
     console.log("error", error);
 
@@ -38,8 +36,6 @@ export const getOrders = async (token: string): Promise<Result> => {
   }
 
   const json = await res.json();
-
-  console.log("json", json);
 
   if (NODE_ENV === "development") {
     const validation = validateResponseType(json, ResultGetAdminOrders);

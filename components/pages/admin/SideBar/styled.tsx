@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import Link from "next/link";
 
+type NavLinkProps = {
+  active?: string;
+  $disabled?: boolean;
+};
+
 export const SidebarContainer = styled.aside`
   width: 280px;
   height: 100vh;
@@ -80,7 +85,7 @@ export const NavItem = styled.div`
   width: 100%;
 `;
 
-export const NavLink = styled(Link)<{ active?: string }>`
+export const NavLink = styled(Link)<NavLinkProps>`
   display: flex;
   align-items: center;
   gap: 12px;
@@ -101,4 +106,11 @@ export const NavLink = styled(Link)<{ active?: string }>`
       color: ${theme.colors.primary};
     `}
   }
+
+  ${({ $disabled }) =>
+    $disabled &&
+    `
+      opacity: 0.5;
+      pointer-events: none;
+  `}
 `;

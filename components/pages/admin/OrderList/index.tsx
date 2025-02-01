@@ -27,7 +27,6 @@ import {
 import {
   OrderListProps,
   orderStatusColorMapping,
-  orderStatuses,
   OrderStatusType,
   shippingStatusColorMapping,
   shippingStatusMapping,
@@ -40,15 +39,15 @@ import { CgArrowLongDown, CgArrowLongUp } from "react-icons/cg";
 import { Header } from "@/components/pages/admin/Header";
 import { formatCurrency } from "@/helpers/format/currency";
 
-const OrderList = ({ data: ordersData = [] }: OrderListProps) => {
+const OrderList = ({ data: ordersData }: OrderListProps) => {
   console.log("ordersData", ordersData);
   const [activeTab, setActiveTab] = useState("全部");
   const [currentPage, setCurrentPage] = useState(1);
-  const [filteredOrders, setFilteredOrders] = useState(ordersData);
+  const [filteredOrders, setFilteredOrders] = useState(ordersData["全部"].data);
   const [shippingStatuses, setShippingStatuses] = useState<{
     [key: string]: string;
   }>(
-    ordersData.reduce(
+    ordersData["全部"].data.reduce(
       (acc, order) => ({
         ...acc,
         [order.orderId]: order.shippingStatus || "",
@@ -63,30 +62,9 @@ const OrderList = ({ data: ordersData = [] }: OrderListProps) => {
     setOpenDropdown(openDropdown === orderId ? null : orderId);
   };
 
-  const handleDataFilter = (
-    tab: ShippingStatusType | OrderStatusType,
-    type: TabType,
-  ) => {
+  const handleDataFilter = (tab: ShippingStatusType | OrderStatusType) => {
     setActiveTab(tab);
-
-    if (type === "all") {
-      setFilteredOrders(ordersData);
-      return;
-    }
-
-    if (type === "orderStatus") {
-      const filtered = ordersData.filter((order) => {
-        return order.orderStatus === tab;
-      });
-      setFilteredOrders(filtered);
-      return;
-    }
-
-    const filtered = ordersData.filter((order) => {
-      return order.shippingStatus === tab;
-    });
-
-    setFilteredOrders(filtered);
+    setFilteredOrders(ordersData[tab].data);
   };
 
   useEffect(() => {
@@ -137,10 +115,9 @@ const OrderList = ({ data: ordersData = [] }: OrderListProps) => {
   return (
     <Container>
       <Header
-        tabs={orderStatuses}
+        tabs={ordersData}
         activeTab={activeTab}
         onTabChange={handleDataFilter}
-        // onTabChange={setActiveTab}
       />
       <Table>
         <Thead>
@@ -222,8 +199,7 @@ const OrderList = ({ data: ordersData = [] }: OrderListProps) => {
                         "secondaryBg"
                       }
                     >
-                      {orderStatuses.find((s) => s.label === order.orderStatus)
-                        ?.label || "已結案"}
+                      {order.orderStatus || "已結案"}
                     </StatusButton>
                   </TdCompleted>
                 </Td>

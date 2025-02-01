@@ -12,22 +12,26 @@ import {
   SelectArrowIcon,
 } from "./styled";
 import { HeaderProps, countSelects } from "./data";
+import { filterIconMapping } from "@/components/pages/admin/OrderList/data";
 
 export const Header = ({ tabs, activeTab, onTabChange }: HeaderProps) => {
   return (
     <HeaderStyled>
       <TabList>
-        {tabs.map((status) => (
-          <Tab
-            key={status.label}
-            $active={activeTab === status.label}
-            onClick={() => onTabChange(status.label, status.type)}
-          >
-            <status.icon size={16} />
-            {status.label}
-            {status.count && <Badge>{status.count}</Badge>}
-          </Tab>
-        ))}
+        {Object.keys(tabs).map((status) => {
+          const Icon = filterIconMapping[status];
+          return (
+            <Tab
+              key={status}
+              $active={activeTab === status}
+              onClick={() => onTabChange(status)}
+            >
+              {Icon && <Icon size={16} />}
+              {status}
+              {tabs[status].count && <Badge>{tabs[status].count}</Badge>}
+            </Tab>
+          );
+        })}
       </TabList>
       <TableToolbar>
         <CountGroup>

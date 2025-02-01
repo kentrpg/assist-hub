@@ -9,16 +9,23 @@ import {
 } from "react-icons/md";
 import { OrderDataType } from "@/types/getAdminOrders";
 
+export type ProcessedOrderData = {
+  [key: string]: {
+    data: OrderDataType[];
+    count: number;
+  };
+};
+
+export type OrderListProps = {
+  data: ProcessedOrderData;
+};
+
 export type OrderStatus = {
   key: string;
   label: string;
   count?: number;
   icon: IconType;
   type: "orderStatus" | "shippingStatus" | "all";
-};
-
-export type OrderListProps = {
-  data: OrderDataType[];
 };
 
 export type ShippingStatus = string[];
@@ -41,21 +48,21 @@ export const shippingStatusMapping: { [key: string]: string } = {
   store: "店取",
 };
 
-export type TabType = "orderStatus" | "shippingStatus" | "all";
+export type TabType = "orderStatus" | "shippingStatus" | "all" | undefined;
 
-export const orderStatuses: OrderStatus[] = [
-  { key: "all", label: "全部", count: 100, icon: MdCheckCircle, type: "all" },
-  { key: "outstanding", label: "未付款", count: 2, icon: MdPayment, type: "orderStatus" },
-  { key: "paid", label: "已付款", count: 2, icon: MdPayment, type: "orderStatus" },
-  { key: "completed", label: "已結案", count: 32, icon: MdCheckCircle, type: "orderStatus" },
-  { key: "pending", label: "待出貨", icon: MdPendingActions, type: "shippingStatus" },
-  { key: "shipping", label: "運送中", count: 12, icon: MdLocalShipping, type: "shippingStatus" },
-  { key: "delivered", label: "已抵達", count: 56, icon: MdLocalShipping, type: "shippingStatus" },
-  { key: "pickup", label: "待取貨", count: 5, icon: MdPendingActions, type: "shippingStatus" },
-  { key: "picked", label: "已取貨", count: 6, icon: MdCheckCircle, type: "shippingStatus" },
-  { key: "returned", label: "已歸還", count: 6, icon: MdInventory, type: "shippingStatus" },
-  { key: "cancelled", label: "已取消", count: 2, icon: MdCheckCircle, type: "shippingStatus" },
-];
+export const filterIconMapping: { [key: string]: IconType } = {
+  "全部": MdCheckCircle,
+  "未付款": MdPayment,
+  "已付款": MdPayment,
+  "已結案": MdCheckCircle,
+  "待出貨": MdPendingActions,
+  "運送中": MdLocalShipping,
+  "已抵達": MdLocalShipping,
+  "待取貨": MdPendingActions,
+  "已取貨": MdCheckCircle,
+  "已歸還": MdInventory,
+  "已取消": MdCheckCircle,
+};
 
 export const orderStatusValues = ["未付款", "已付款", "已結案"];
 export const shippingValues = ["待出貨", "運送中", "已抵達", "待取貨", "已取貨", "已歸還", "已取消"];

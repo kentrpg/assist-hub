@@ -9,10 +9,60 @@ import getOrders from "@/utils/api/admin/getOrders";
 import getInquiries from "@/utils/api/member/getInquiries";
 import { hasError } from "@/helpers/api/status";
 import { ApiResponse } from "@/helpers/api/types";
+import { filterIconMapping } from "@/components/pages/admin/OrderList/data";
 
 const whitelist = ["orders", "user", "suggests", "diagram"];
 
 type dataType = OrderDataType[] | InquiriesDataType[];
+
+type ProcessedOrderData = {
+  [key: string]: {
+    data: OrderDataType[];
+    count: number;
+  };
+};
+
+const processOrderData = (data: OrderDataType[]): ProcessedOrderData => {
+  const processedData: ProcessedOrderData = {};
+
+  Object.keys(filterIconMapping).forEach((label) => {
+    processedData[label] = {
+      data: [],
+      count: 0,
+    };
+  });
+
+  processedData["全部"] = {
+    data: data,
+    count: data.length,
+  };
+
+  data.forEach((order) => {
+    if (order.orderStatus) {
+      if (!processedData[order.orderStatus]) {
+        processedData[order.orderStatus] = {
+          data: [],
+          count: 0,
+        };
+      }
+      processedData[order.orderStatus].data.push(order);
+      processedData[order.orderStatus].count++;
+    }
+
+    if (order.shippingStatus) {
+      if (!processedData[order.shippingStatus]) {
+        processedData[order.shippingStatus] = {
+          data: [],
+          count: 0,
+        };
+      }
+      processedData[order.shippingStatus].data.push(order);
+      processedData[order.shippingStatus].count++;
+    }
+  });
+
+  return processedData;
+};
 
 const dataFetchingMapping = {
   orders: (token: string) => getOrders(token),
@@ -43,6 +93,17 @@ export const getServerSideProps: GetServerSideProps = async ({
     };
   }
 
+  // 處理訂單資料
+  if (activeTab === "orders") {
+    const processedData = processOrderData(result.data as OrderDataType[]);
+    return {
+      props: {
+        activeTab,
+        data: processedData,
+      },
+    };
+  }
+
   return {
     props: {
       activeTab,
@@ -53,7 +114,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
 type AdminPageProps = {
   activeTab: string;
-  data: dataType;
+  data: dataType | ProcessedOrderData;
 };
 
 const AdminPage = ({ activeTab, data }: AdminPageProps) => {
@@ -75,15 +136,15 @@ const AdminPage = ({ activeTab, data }: AdminPageProps) => {
   const getPageContent = () => {
     switch (activeTab) {
       case "orders":
-        return <OrderList data={data as OrderDataType[]} />;
+        return <OrderList data={data as ProcessedOrderData} />;
       case "user":
-        return <OrderList data={data as OrderDataType[]} />;
+        return <OrderList data={data as ProcessedOrderData} />;
       case "suggests":
         return <SuggestList data={data as InquiriesDataType[]} />;
       case "diagram":
-        return <OrderList data={data as OrderDataType[]} />;
+        return <OrderList data={data as ProcessedOrderData} />;
       default:
-        return <OrderList data={data as OrderDataType[]} />;
+        return <OrderList data={data as ProcessedOrderData} />;
     }
   };
 

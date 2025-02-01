@@ -225,6 +225,14 @@ export const ComparisonContent = styled.div`
   overflow-x: auto;
 `;
 
+export const ComparisonProductName = styled.span`
+  font-size: 18px;
+  font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
 export const Grid = styled.div`
   white-space: nowrap;
   min-width: 720px;

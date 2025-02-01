@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import Link from "next/link";
 
+type NavLinkProps = {
+  active?: string;
+  $disabled?: boolean;
+};
+
 export const SidebarContainer = styled.aside`
   width: 280px;
   height: 100vh;
@@ -44,7 +49,6 @@ export const IconWrapper = styled.div`
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  /* background: ${({ theme }) => theme.colors.primary}; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -65,44 +69,10 @@ export const NotificationBadge = styled.span`
   background: ${({ theme }) => theme.colors.error};
   color: ${({ theme }) => theme.colors.white};
   font-size: 12px;
-  padding: 2px 6px;
+  padding: 1px 6px;
   border-radius: 10px;
   min-width: 20px;
   text-align: center;
-`;
-
-export const SearchGroup = styled.div`
-  position: relative;
-  margin-bottom: 20px;
-`;
-
-export const SearchIcon = styled.div`
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: ${({ theme }) => theme.colors.textMuted};
-  font-size: 0;
-`;
-
-export const SearchInput = styled.input`
-  width: 100%;
-  padding: 12px 12px 12px 40px;
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 8px;
-  font-size: 14px;
-  color: ${({ theme }) => theme.colors.textPrimary};
-  background: transparent;
-
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.textMuted};
-  }
-
-  &:focus {
-    outline: none;
-    border-color: ${({ theme }) => theme.colors.primary};
-    background: ${({ theme }) => theme.colors.white};
-  }
 `;
 
 export const NavList = styled.nav`
@@ -115,7 +85,7 @@ export const NavItem = styled.div`
   width: 100%;
 `;
 
-export const NavLink = styled(Link)<{ active?: string }>`
+export const NavLink = styled(Link)<NavLinkProps>`
   display: flex;
   align-items: center;
   gap: 12px;
@@ -136,4 +106,11 @@ export const NavLink = styled(Link)<{ active?: string }>`
       color: ${theme.colors.primary};
     `}
   }
+
+  ${({ $disabled }) =>
+    $disabled &&
+    `
+      opacity: 0.5;
+      pointer-events: none;
+  `}
 `;

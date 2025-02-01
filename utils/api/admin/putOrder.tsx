@@ -2,18 +2,24 @@ import { Error } from "@/types/apiRoutes";
 import { catchError } from "@/utils/handleErrors";
 import { NODE_ENV } from "@/constants/environment";
 import { validateResponseType } from "@/utils/typeGuards";
-import { get_admin_orders } from "@/constants/apiPath";
-import { ResultGetAdminOrders, Result } from "@/types/getAdminOrders";
+import { put_admin_order } from "@/constants/apiPath";
+import { ResultPutAdminOrder, Result } from "@/types/putAdminOrder";
+import { OrderData } from "@/components/pages/admin/OrderDetails/data";
 
-export const getOrders = async (token: string): Promise<Result> => {
-  const parsedUrl = new URL(get_admin_orders);
+export const putOrder = async (
+  token: string,
+  order: OrderData,
+  orderId: string,
+): Promise<Result> => {
+  const parsedUrl = new URL(put_admin_order.replace(":id", orderId));
   const options = {
-    method: "GET",
+    method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
       Accept: "application/json",
       "Content-Type": "application/json",
     },
+    body: JSON.stringify(order),
   };
 
   const [res, error] = await catchError(fetch(parsedUrl, options));
@@ -38,7 +44,7 @@ export const getOrders = async (token: string): Promise<Result> => {
   const json = await res.json();
 
   if (NODE_ENV === "development") {
-    const validation = validateResponseType(json, ResultGetAdminOrders);
+    const validation = validateResponseType(json, ResultPutAdminOrder);
 
     !validation.isValid &&
       console.error("API Response validation failed:", validation.errors);
@@ -48,9 +54,9 @@ export const getOrders = async (token: string): Promise<Result> => {
     statusCode: json.statusCode,
     status: json.status,
     message: json.message,
-    data: json.data,
+    data: undefined,
     error: null,
   };
 };
 
-export default getOrders;
+export default putOrder;

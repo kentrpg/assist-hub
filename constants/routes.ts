@@ -10,7 +10,7 @@ export const routes = {
     inquiry: '/user/inquiry'
   },
   admin: {
-    order: '/admin/order',
+    order: '/admin/orders',
     dashboard: '/admin/dashboard',
     users: '/admin/users'
   }

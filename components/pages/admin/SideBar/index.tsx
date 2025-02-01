@@ -19,9 +19,6 @@ import {
   IconGroup,
   IconWrapper,
   NotificationBadge,
-  SearchGroup,
-  SearchInput,
-  SearchIcon,
   NavList,
   NavItem,
   NavLink,
@@ -60,13 +57,6 @@ const Sidebar: React.FC = () => {
         </IconGroup>
       </TopSection>
 
-      <SearchGroup>
-        <SearchIcon>
-          <MdSearch size={20} />
-        </SearchIcon>
-        <SearchInput placeholder="找尋..." />
-      </SearchGroup>
-
       <NavList>
         <NavItem>
           <NavLink
@@ -90,6 +80,7 @@ const Sidebar: React.FC = () => {
           <NavLink
             href="/admin/user"
             active={(router.asPath === "/admin/user").toString()}
+            $disabled={true}
           >
             <MdPeople size={20} />
             用戶資料
@@ -99,6 +90,7 @@ const Sidebar: React.FC = () => {
           <NavLink
             href="/admin/diagram"
             active={(router.asPath === "/admin/diagram").toString()}
+            $disabled={true}
           >
             <MdBarChart size={20} />
             數據報表

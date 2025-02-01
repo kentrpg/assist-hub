@@ -2,11 +2,14 @@ import { Error } from "@/types/apiRoutes";
 import { catchError } from "@/utils/handleErrors";
 import { NODE_ENV } from "@/constants/environment";
 import { validateResponseType } from "@/utils/typeGuards";
-import { get_admin_orders } from "@/constants/apiPath";
-import { ResultGetAdminOrders, Result } from "@/types/getAdminOrders";
+import { get_admin_order } from "@/constants/apiPath";
+import { ResultGetAdminOrder, Result } from "@/types/getAdminOrder";
 
-export const getOrders = async (token: string): Promise<Result> => {
-  const parsedUrl = new URL(get_admin_orders);
+export const getOrder = async (
+  token: string,
+  orderId: string,
+): Promise<Result> => {
+  const parsedUrl = new URL(get_admin_order.replace(":id", orderId));
   const options = {
     method: "GET",
     headers: {
@@ -38,7 +41,7 @@ export const getOrders = async (token: string): Promise<Result> => {
   const json = await res.json();
 
   if (NODE_ENV === "development") {
-    const validation = validateResponseType(json, ResultGetAdminOrders);
+    const validation = validateResponseType(json, ResultGetAdminOrder);
 
     !validation.isValid &&
       console.error("API Response validation failed:", validation.errors);
@@ -53,4 +56,4 @@ export const getOrders = async (token: string): Promise<Result> => {
   };
 };
 
-export default getOrders;
+export default getOrder;

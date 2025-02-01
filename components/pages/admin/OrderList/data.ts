@@ -1,3 +1,4 @@
+import { ColorsType } from "@/types/uiProps";
 import type { IconType } from "react-icons";
 import {
   MdPayment,
@@ -43,8 +44,26 @@ export const orderStatuses: OrderStatus[] = [
   { key: "cancelled", label: "已取消", count: 2, icon: MdCheckCircle },
 ];
 
-export const orderStatusValues: ShippingStatus = ["未付款", "已付款", "已結案"];
-export const shippingValues: ShippingStatus = ["待出貨", "運送中", "已抵達", "待取貨", "已取貨", "已歸還", "已取消"];
+export const orderStatusValues = ["未付款", "已付款", "已結案"];
+export const shippingValues = ["待出貨", "運送中", "已抵達", "待取貨", "已取貨", "已歸還", "已取消"];
+export type OrderStatusType = typeof orderStatusValues[number];
+export type ShippingStatusType = typeof shippingValues[number];
+
+export const shippingStatusColorMapping: Record<ShippingStatusType, ColorsType> = {
+  "待出貨": "accent",
+  "待取貨": "accent",
+  "運送中": "secondary",
+  "已抵達": "primary",
+  "已取貨": "primary",
+  "已歸還": "textMuted",
+  "已取消": "textMuted",
+} satisfies Record<ShippingStatusType, ColorsType>;
+
+export const orderStatusColorMapping: Record<OrderStatusType, { color: ColorsType; bgColor: ColorsType }> = {
+  "未付款": { color: "accent", bgColor: "accentLight" },
+  "已付款": { color: "grey300", bgColor: "secondaryBg" },
+  "已結案": { color: "textMuted", bgColor: "secondaryBg" },
+} satisfies Record<OrderStatusType, { color: ColorsType; bgColor: ColorsType }>;
 
 export const mockOrders: Order[] = [
   {

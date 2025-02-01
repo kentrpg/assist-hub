@@ -12,7 +12,7 @@ export type FormValuesProps = {
   },
   checkout: {
     method: "store" | "delivery" | "";
-    payment: "CreditCard" | "Remit" | "LinePay" | "";
+    payment: "creditCard" | "transfer" | "LinePay" | "";
     name: string;
     phone: string;
     email: string;

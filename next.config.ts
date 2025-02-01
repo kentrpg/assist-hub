@@ -22,7 +22,7 @@ const nextConfig = {
       },
       {
         source: "/admin",
-        destination: "/admin/order",
+        destination: "/admin/orders",
         permanent: true,
       },
       // 未登入用戶訪問需要驗證的頁面
@@ -70,6 +70,12 @@ const nextConfig = {
           }
         ]
       },
+      // 驗證 admin/order/[id] 路徑，正規表達式過濾 id 為數字
+      {
+        source: "/admin/order/:id((?![0-9]+$).*)",
+        destination: "/404",
+        permanent: false
+      },
       // 已登入用戶訪問登入頁面
       {
         source: "/auth/signin",
@@ -84,7 +90,7 @@ const nextConfig = {
             value: "admin"
           }
         ],
-        destination: "/admin/order",
+        destination: "/admin/orders",
         permanent: false,
       },
       {

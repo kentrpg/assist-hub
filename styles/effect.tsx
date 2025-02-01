@@ -26,9 +26,18 @@ export const InputFieldAutofill = css`
   box-shadow: 0 0 0 1000px ${({ theme }) => theme.colors.secondaryBg} inset;
 `;
 
+export const AdminInputFieldAutofill = css`
+  box-shadow: 0px 1px 0px 0px ${({ theme }) => theme.colors.border},
+    0 0 0 1000px ${({ theme }) => theme.colors.white} inset;
+`;
+
 export const InputFieldShadow = css`
   box-shadow: 0 0 0 1px ${({ theme }) => theme.colors.primary},
     0 0 0 1000px ${({ theme }) => theme.colors.secondaryBg} inset;
+`;
+
+export const AdminInputFieldShadow = css`
+  box-shadow: 0px 1px 0px 0px ${({ theme }) => theme.colors.border};
 `;
 
 export const FooterAutofill = css`

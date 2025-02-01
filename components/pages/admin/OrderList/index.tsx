@@ -157,7 +157,11 @@ const OrderList = ({ data: ordersData = [] }: OrderListProps) => {
           {ordersData.map((order) => (
             <Tr
               key={order.orderId}
-              $isCompleted={order.orderStatus === "已結案"}
+              $isCompleted={
+                !order.orderStatus ||
+                order.orderStatus === "已結案" ||
+                order.orderStatus === "已取消"
+              }
             >
               <Td>
                 <Link href={`/admin/order/${order.orderId}`} target="_blank">
@@ -166,8 +170,8 @@ const OrderList = ({ data: ordersData = [] }: OrderListProps) => {
               </Td>
               <Td>{order.memberName}</Td>
               <Td>
-                {order.rentDate}
-                <small>{order.returnDate}</small>
+                {order.rentStamp}
+                <small>{order.returnStamp}</small>
               </Td>
               <Td>{order.quantity}</Td>
               <Td>{formatCurrency(order.finalAmount)}</Td>

@@ -70,6 +70,12 @@ const nextConfig = {
           }
         ]
       },
+      // 驗證 admin/order/[id] 路徑，正規表達式過濾 id 為數字
+      {
+        source: "/admin/order/:id((?![0-9]+$).*)",
+        destination: "/404",
+        permanent: false
+      },
       // 已登入用戶訪問登入頁面
       {
         source: "/auth/signin",

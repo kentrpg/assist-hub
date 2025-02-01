@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { quantitySelects, type OrderData } from "./data";
+import { paymentSelects, paymentStatusMapping, PaymentType, quantitySelects, QuantityType, shippingSelects, shippingStatusMapping, ShippingType, type OrderData } from "./data";
 import {
   FormContainer,
   Section,
@@ -41,20 +41,161 @@ import {
 import Toast from "@/components/ui/Toast";
 import { Title } from "@/components/ui/titles";
 import { formatCurrency } from "@/helpers/format/currency";
-import { orderStatusColorMapping, orderStatusValues, shippingStatusColorMapping, shippingValues } from "../OrderList/data";
+import { OrderStatusType, orderStatusValues, ShippingStatusType, shippingValues } from "../OrderList/data";
+import { useForm } from "react-hook-form";
+import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
+import { FormError } from "@/utils/react-hook-form/FormError";
+import { useRouter } from "next/router";
+import { isValid } from "@/helpers/api/status";
+import { ToastProps } from "@/components/ui/Toast/data";
+
+export type OrderDetailsInputs = {
+  [key: string]: string | number;
+  orderStatus: OrderStatusType;
+  shippingStatus: ShippingStatusType;
+  rentStamp: string;
+  returnStamp: string;
+  shipping: ShippingType;
+  rent: number;
+  fee: number;
+  deposit: number;
+  payment: PaymentType;
+  quantity: QuantityType;
+  name: string;
+  phone: string;
+  email: string;
+  addressZIP: string;
+  addressCity: string;
+  addressDistrict: string;
+  addressDetail: string;
+};
 
 const OrderDetails = ({ order }: { order: OrderData }) => {
-  const [shipping, setShipping] = useState(order.shippinginfo);
   const [showToast, setShowToast] = useState(false);
+  const [apiResponse, setApiResponse] = useState<{
+    isValid: ToastProps["type"];
+    message: string;
+  } | null>(null);
+  const router = useRouter();
+  
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors, dirtyFields, isDirty, isSubmitting },
+  } = useForm<OrderDetailsInputs>({
+    mode: "onChange",
+    defaultValues: {
+      orderStatus: order.orderStatus || "",
+      shippingStatus: order.shippingStatus || "",
+      rentStamp: order.details.rentStamp || "",
+      returnStamp: order.details.returnStamp || "",
+      shipping: order.shipping || "",
+      rent: order.details.rent || 0,
+      fee: order.details.fee || 0,
+      deposit: order.details.deposit || 0,
+      payment: order.details.payment || "",
+      quantity: order.details.quantity || "",
+      name: order.shippinginfo.name || "",
+      phone: order.shippinginfo.phone || "",
+      email: order.shippinginfo.email || "",
+      addressZIP: order.shippinginfo.addressZIP || "",
+      addressCity: order.shippinginfo.addressCity || "",
+      addressDistrict: order.shippinginfo.addressDistrict || "",
+      addressDetail: order.shippinginfo.AddressDetail || "",
+    }
+  });
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    console.log("submit", shipping);
+  const watchedValues = watch(["quantity", "rent", "deposit", "fee"]);
+  
+  const finalAmount = (
+    Number(watchedValues[0] || 0) * Number(watchedValues[1] || 0) + 
+    Number(watchedValues[2] || 0) + 
+    Number(watchedValues[3] || 0)
+  );
+
+  const onSubmit = async (data: OrderDetailsInputs) => {
+    const submitData = {
+      memberId: order.member.memberId,
+      orderCode: order.orderCode,
+      orderStatus: order.orderStatus,
+      shippingStatus: order.shippingStatus,
+      shipping: data.shipping,
+      shippingInfo: {
+        name: data.name,
+        phone: data.phone,
+        email: data.email,
+        addressZIP: data.addressZIP,
+        addressCity: data.addressCity,
+        addressDistrict: data.addressDistrict,
+        addressDetail: data.addressDetail,
+      },
+      details: {
+        quantity: data.quantity,
+        productName: order.details.productName,
+        rent: data.rent,
+        deposit: data.deposit,
+        fee: data.fee,
+        finalAmount: order.details.finalAmount,
+        rentStamp: data.rentStamp,
+        returnStamp: data.returnStamp,
+        payment: data.payment,
+      }
+    };
+
+    const orderId = router.query.id as string;
+
+    const result = await fetch(`/api/admin/putOrder?id=${orderId}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(submitData),
+    });
+
+    const json = await result.json();
+
+    setApiResponse({
+      isValid: isValid(json) ? "success" : "error",
+      message: isValid(json) ? "成功儲存" : "儲存失敗",
+    });
+    
+    isValid(json) && reset(data);
+    
     setShowToast(true);
   };
 
+  const getValidationRules = (fieldValue: any, errorMessage: string, extraRules = {}) => {
+    return fieldValue ? { required: errorMessage, ...extraRules } : extraRules;
+  };
+
+  const formControls = {
+    amount: {
+      value: isDirty ? finalAmount : order.details.finalAmount,
+      format: (value: number) => formatCurrency(value),
+    },
+    toast: {
+      isVisible: showToast && apiResponse,
+      content: {
+        type: apiResponse?.isValid as ToastProps["type"],
+        message: apiResponse?.message as string,
+        onClose: () => setShowToast(false),
+      },
+    },
+    submit: {
+      isDisabled: isSubmitting || Object.keys(errors).length !== 0 || !isDirty,
+      text: (() => {
+        if (isSubmitting) return null;
+        return isDirty ? "儲存" : "尚未修改";
+      })(),
+      isLoading: isSubmitting,
+    },
+  };
+
   return (
-    <FormContainer onSubmit={handleSubmit}>
+    <FormContainer onSubmit={handleSubmit(onSubmit)} noValidate>
       <Title>
         訂單編號：{order.orderCode}
       </Title>
@@ -64,10 +205,13 @@ const OrderDetails = ({ order }: { order: OrderData }) => {
             <Field>
               <Label htmlFor="orderStatus">訂單狀態</Label>
               <SelectGroup>
-                <Select id="orderStatus" $color={orderStatusColorMapping[order.orderStatus].color || "textMuted"}>
-                  {orderStatusValues.map((orderStatus) => (
-                    <option key={orderStatus} value={orderStatus}>
-                      {orderStatus}
+                <Select 
+                  id="orderStatus" 
+                  {...register("orderStatus", getValidationRules(order.orderStatus, "請選擇訂單狀態"))}
+                >
+                  {orderStatusValues.map((status) => (
+                    <option key={status} value={status}>
+                      {status}
                     </option>
                   ))}
                 </Select>
@@ -75,11 +219,24 @@ const OrderDetails = ({ order }: { order: OrderData }) => {
                   <MdKeyboardArrowDown size={20} />
                 </SelectArrowIcon>
               </SelectGroup>
+              <FormError
+                $margin="4px"
+                name="orderStatus"
+                errorType="default"
+                errors={errors}
+                dirtyFields={dirtyFields}
+                validation={{
+                  required: "請選擇訂單狀態"
+                }}
+              />
             </Field>
             <Field>
               <Label htmlFor="shippingStatus">物流狀態</Label>
               <SelectGroup>
-                <Select id="shippingStatus" $color={shippingStatusColorMapping[order.shippingStatus] || "textMuted"}>
+                <Select 
+                  id="shippingStatus" 
+                  {...register("shippingStatus", getValidationRules(order.shippingStatus, "請選擇物流狀態"))}
+                >
                   {shippingValues.map((shipping) => (
                     <option key={shipping} value={shipping}>
                       {shipping}
@@ -90,6 +247,16 @@ const OrderDetails = ({ order }: { order: OrderData }) => {
                   <MdKeyboardArrowDown size={20} />
                 </SelectArrowIcon>
               </SelectGroup>
+              <FormError
+                $margin="4px"
+                name="shippingStatus"
+                errorType="default"
+                errors={errors}
+                dirtyFields={dirtyFields}
+                validation={{
+                  required: "請選擇物流狀態"
+                }}
+              />
             </Field>
           </GridRows2>
         </Section>
@@ -108,40 +275,87 @@ const OrderDetails = ({ order }: { order: OrderData }) => {
               <Label htmlFor="rentStamp">租借日</Label>
               <Input
                 id="rentStamp"
-                value={order.details.rentStamp}
-                onChange={(e) => setShipping((prev) => ({ ...prev, rentStamp: e.target.value }))}
+                {...register("rentStamp", getValidationRules(order.details.rentStamp, "請選擇租借日"))}
                 placeholder="選擇租借日"
                 type="date"
+              />
+              <FormError
+                $margin="4px"
+                name="rentStamp"
+                errorType="default"
+                errors={errors}
+                dirtyFields={dirtyFields}
+                validation={{
+                  required: "請選擇租借日"
+                }}
               />
             </Field>
             <Field>
               <Label htmlFor="returnStamp">歸還日</Label>
               <Input
                 id="returnStamp"
-                value={order.details.returnStamp}
-                onChange={(e) => setShipping((prev) => ({ ...prev, returnStamp: e.target.value }))}
+                {...register("returnStamp", getValidationRules(order.details.returnStamp, "請選擇歸還日"))}
                 placeholder="選擇歸還日"
                 type="date"
+              />
+              <FormError
+                $margin="4px"
+                name="returnStamp"
+                errorType="default"
+                errors={errors}
+                dirtyFields={dirtyFields}
+                validation={{
+                  required: "請選擇歸還日"
+                }}
               />
             </Field>
           </GridRows2>
           <GridRows2>
             <Field>
               <Label htmlFor="shipping">取貨方式</Label>
-              <Input
-                id="shipping"
-                value={order.shipping}
-                onChange={(e) => setShipping((prev) => ({ ...prev, shipping: e.target.value }))}
-                placeholder="請選擇取貨方式"
+              <SelectGroup>
+                <Select 
+                  id="shipping" 
+                  {...register("shipping", getValidationRules(order.shipping, "請選擇取貨方式"))}
+                >
+                  {shippingSelects.map((shipping) => (
+                    <option key={shipping} value={shipping}>
+                      {shippingStatusMapping[shipping]}
+                    </option>
+                  ))}
+                </Select>
+                <SelectArrowIcon>
+                  <MdKeyboardArrowDown size={20} />
+                </SelectArrowIcon>
+              </SelectGroup>
+              <FormError
+                $margin="4px"
+                name="shipping"
+                errorType="default"
+                errors={errors}
+                dirtyFields={dirtyFields}
+                validation={{
+                  required: "請選擇取貨方式"
+                }}
               />
             </Field>
             <Field>
               <Label htmlFor="rent">租金</Label>
               <Input
                 id="rent"
-                value={order.details.rent}
-                onChange={(e) => setShipping((prev) => ({ ...prev, rent: e.target.value }))}
+                type="number"
+                {...register("rent", getValidationRules(order.details.rent, "請輸入租金"))}
                 placeholder="無租金"
+              />
+              <FormError
+                $margin="4px"
+                name="rent"
+                errorType="default"
+                errors={errors}
+                dirtyFields={dirtyFields}
+                validation={{
+                  required: "請輸入租金"
+                }}
               />
             </Field>
           </GridRows2>
@@ -150,35 +364,77 @@ const OrderDetails = ({ order }: { order: OrderData }) => {
               <Label htmlFor="fee">運費</Label>
               <Input
                 id="fee"
-                value={order.details.fee}
-                onChange={(e) => setShipping((prev) => ({ ...prev, fee: e.target.value }))}
+                type="number"
+                {...register("fee", getValidationRules(order.details.fee, "請輸入運費"))}
                 placeholder="無運費"
+              />
+              <FormError
+                $margin="4px"
+                name="fee"
+                errorType="default"
+                errors={errors}
+                dirtyFields={dirtyFields}
+                validation={{
+                  required: "請輸入運費"
+                }}
               />
             </Field>
             <Field>
               <Label htmlFor="deposit">押金</Label>
               <Input
                 id="deposit"
-                value={order.details.deposit}
-                onChange={(e) => setShipping((prev) => ({ ...prev, deposit: e.target.value }))}
+                type="number"
+                {...register("deposit", getValidationRules(order.details.deposit, "請輸入押金"))}
                 placeholder="無押金"
+              />
+              <FormError
+                $margin="4px"
+                name="deposit"
+                errorType="default"
+                errors={errors}
+                dirtyFields={dirtyFields}
+                validation={{
+                  required: "請輸入押金"
+                }}
               />
             </Field>
           </GridRows2>
           <GridRows2>
             <Field>
               <Label htmlFor="payment">付款方式</Label>
-              <Input
-                id="payment"
-                value={order.details.payment}
-                onChange={(e) => setShipping((prev) => ({ ...prev, payment: e.target.value }))}
-                placeholder="無付款方式"
+              <SelectGroup>
+                <Select 
+                  id="payment" 
+                  {...register("payment", getValidationRules(order.details.payment, "請選擇付款方式"))}
+                >
+                  {paymentSelects.map((payment) => (
+                    <option key={payment} value={payment}>
+                      {paymentStatusMapping[payment]}
+                    </option>
+                  ))}
+                </Select>
+                <SelectArrowIcon>
+                  <MdKeyboardArrowDown size={20} />
+                </SelectArrowIcon>
+              </SelectGroup>
+              <FormError
+                $margin="4px"
+                name="payment"
+                errorType="default"
+                errors={errors}
+                dirtyFields={dirtyFields}
+                validation={{
+                  required: "請選擇付款方式"
+                }}
               />
             </Field>
             <Field>
               <Label htmlFor="quantity">數量</Label>
               <SelectGroup>
-                <Select id="quantity" $color="textSecondary">
+                <Select 
+                  id="quantity" 
+                  {...register("quantity", getValidationRules(order.details.quantity, "請選擇數量"))}
+                >
                   {quantitySelects.map((quantity) => (
                     <option key={quantity} value={quantity}>
                       {quantity}
@@ -189,11 +445,23 @@ const OrderDetails = ({ order }: { order: OrderData }) => {
                   <MdKeyboardArrowDown size={20} />
                 </SelectArrowIcon>
               </SelectGroup>
+              <FormError
+                $margin="4px"
+                name="quantity"
+                errorType="default"
+                errors={errors}
+                dirtyFields={dirtyFields}
+                validation={{
+                  required: "請選擇數量"
+                }}
+              />
             </Field>
           </GridRows2>
           <TextEndGroup>
             <TextLabel>總金額</TextLabel>
-            <TextValue>{formatCurrency(order.details.finalAmount)}</TextValue>
+            <TextValue>
+              {formControls.amount.format(formControls.amount.value)}
+            </TextValue>
           </TextEndGroup>
         </Section>
 
@@ -252,78 +520,159 @@ const OrderDetails = ({ order }: { order: OrderData }) => {
             <Label htmlFor="name">姓名</Label>
             <Input
               id="name"
-              value={shipping.name}
-              onChange={(e) => setShipping((prev) => ({ ...prev, name: e.target.value }))}
+              {...register("name", getValidationRules(order.shippinginfo.name, "請輸入姓名"))}
               placeholder="請輸入姓名"
+            />
+            <FormError
+              $margin="4px"
+              name="name"
+              errorType="default"
+              errors={errors}
+              dirtyFields={dirtyFields}
+              validation={{
+                required: "請輸入姓名"
+              }}
             />
           </Field>
           <Field>
             <Label htmlFor="phone">手機</Label>
             <Input
               id="phone"
-              value={shipping.phone}
-              onChange={(e) => setShipping((prev) => ({ ...prev, phone: e.target.value }))}
+              {...register("phone", getValidationRules(order.shippinginfo.phone, "請輸入手機號碼", {
+                pattern: {
+                  value: /^[0-9]{10}$/,
+                  message: "請輸入有效的手機號碼"
+                }
+              }))}
               placeholder="請輸入手機號碼"
+            />
+            <FormError
+              $margin="4px"
+              name="phone"
+              errorType="default"
+              errors={errors}
+              dirtyFields={dirtyFields}
+              validation={{
+                required: "請輸入手機號碼"
+              }}
             />
           </Field>
           <Field>
             <Label htmlFor="email">電子郵件</Label>
             <Input
               id="email"
-              type="email"
-              value={shipping.email}
-              onChange={(e) => setShipping((prev) => ({ ...prev, email: e.target.value }))}
+              {...register("email", getValidationRules(
+                order.shippinginfo.email, 
+                "請輸入電子郵件",
+                {
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "請輸入有效的電子郵件"
+                  }
+                }
+              ))}
               placeholder="請輸入電子郵件"
+            />
+            <FormError
+              $margin="4px"
+              name="email"
+              errorType="default"
+              errors={errors}
+              dirtyFields={dirtyFields}
+              validation={{
+                required: "請輸入電子郵件"
+              }}
             />
           </Field>
           <Field>
-            <Label htmlFor="zipCode">郵遞區號</Label>
+            <Label htmlFor="addressZIP">郵遞區號</Label>
             <Input
-              id="zipCode"
-              value={shipping.addressZIP}
-              onChange={(e) => setShipping((prev) => ({ ...prev, zipCode: e.target.value }))}
+              id="addressZIP"
+              {...register("addressZIP", getValidationRules(order.shippinginfo.addressZIP, "請輸入郵遞區號"))}
               placeholder="請輸入郵遞區號"
+            />
+            <FormError
+              $margin="4px"
+              name="addressZIP"
+              errorType="default"
+              errors={errors}
+              dirtyFields={dirtyFields}
+              validation={{
+                required: "請輸入郵遞區號"
+              }}
             />
           </Field>
           <GridRows2>
             <Field>
-              <Label htmlFor="city">縣市</Label>
+              <Label htmlFor="addressCity">縣市</Label>
               <Input
-                id="city"
-                value={shipping.addressCity}
-                onChange={(e) => setShipping((prev) => ({ ...prev, addressCity: e.target.value }))}
+                id="addressCity"
+                {...register("addressCity", getValidationRules(order.shippinginfo.addressCity, "請選擇縣市"))}
                 placeholder="請選擇縣市"
+              />
+              <FormError
+                $margin="4px"
+                name="addressCity"
+                errorType="default"
+                errors={errors}
+                dirtyFields={dirtyFields}
+                validation={{
+                  required: "請選擇縣市"
+                }}
               />
             </Field>
             <Field>
-              <Label htmlFor="district">鄉鎮區</Label>
+              <Label htmlFor="addressDistrict">鄉鎮區</Label>
               <Input
-                id="district"
-                value={shipping.addressDistrict}
-                onChange={(e) => setShipping((prev) => ({ ...prev, district: e.target.value }))}
+                id="addressDistrict"
+                {...register("addressDistrict", getValidationRules(order.shippinginfo.addressDistrict, "請選擇鄉鎮區"))}
                 placeholder="請選擇鄉鎮區"
+              />
+              <FormError
+                $margin="4px"
+                name="addressDistrict"
+                errorType="default"
+                errors={errors}
+                dirtyFields={dirtyFields}
+                validation={{
+                  required: "請選擇鄉鎮區"
+                }}
               />
             </Field>
           </GridRows2>
           <Field>
-            <Label htmlFor="address">詳細地址</Label>
+            <Label htmlFor="addressDetail">詳細地址</Label>
             <Input
-              id="address"
-              value={shipping.address}
-              onChange={(e) => setShipping((prev) => ({ ...prev, address: e.target.value }))}
+              id="addressDetail"
+              {...register("addressDetail", getValidationRules(order.shippinginfo.AddressDetail, "請輸入詳細地址"))}
               placeholder="請輸入詳細地址"
+            />
+            <FormError
+              $margin="4px"
+              name="addressDetail"
+              errorType="default"
+              errors={errors}
+              dirtyFields={dirtyFields}
+              validation={{
+                required: "請輸入詳細地址"
+              }}
             />
           </Field>
         </Section>
 
-        <SubmitButton>修改</SubmitButton>
+        <SubmitButton 
+          type="submit"
+          disabled={formControls.submit.isDisabled}
+        >
+          {formControls.submit.isLoading ? (
+            <LoaderSpinner $color="grey100" />
+          ) : (
+            formControls.submit.text
+          )}
+        </SubmitButton>
 
-        {showToast && (
-          <Toast
-            type="success"
-            message="成功儲存"
-            onClose={() => setShowToast(false)}
-          />
+        {formControls.toast.isVisible && (
+          <Toast {...formControls.toast.content} />
         )}
     </FormContainer>
   );

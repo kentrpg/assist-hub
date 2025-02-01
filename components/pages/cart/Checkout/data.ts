@@ -5,7 +5,7 @@ import {
   FormValuesProps,
 } from "@/utils/react-hook-form/InputField/data";
 
-export type PaymentMethodValue = "CreditCard" | "Remit" | "LinePay" | "";
+export type PaymentMethodValue = "creditCard" | "transfer" | "LinePay" | "";
 export type PickupMethodValue = "store" | "delivery" | "";
 
 export const defaultFormValues: FormValuesProps["checkout"] = {
@@ -108,12 +108,12 @@ type PaymentMethod = {
 export const paymentMethods: PaymentMethod[] = [
   {
     id: "creditCard",
-    value: "CreditCard",
+    value: "creditCard",
     icon: "信用卡/簽帳金融卡",
   },
   {
-    id: "remit",
-    value: "Remit",
+    id: "transfer",
+    value: "transfer",
     icon: "銀行匯款或轉帳",
   },
   {

@@ -41,8 +41,8 @@ import type { ToastProps } from "./data";
  * @param props.$right - 距離右側的位置，預設 24px
  */
 const Toast = ({
-  type,
-  message,
+  type = "success",
+  message = "成功",
   duration = 3000,
   onClose,
   $top = "24px",

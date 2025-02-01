@@ -60,17 +60,24 @@ export const Input = styled.input`
   &::placeholder {
     color: ${({ theme }) => theme.colors.border};
   }
+
+  /* 隱藏 Chrome, Safari, Edge, Opera 預設上下箭頭 */
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 `;
 
 export const SelectGroup = styled.div`
   position: relative;
 `;
 
-export const Select = styled.select<Color>`
+export const Select = styled.select`
   width: 100%;
   ${AdminInputFieldShadow};
   font-size: 16px;
-  color: ${({ theme, $color }) => theme.colors[$color]};
+  color: ${({ theme }) => theme.colors.textPrimary};
   padding: 6px 32px 6px 12px;
 
   &:focus,
@@ -241,17 +248,24 @@ export const CopyButton = styled.button`
 
 export const SubmitButton = styled.button.attrs({ type: "submit" })`
   width: 100%;
-  padding: 12px;
+  display: flex;
+  justify-content: center;
   background: ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.white};
   border: none;
   border-radius: 4px;
-  cursor: pointer;
   font-size: 16px;
   font-weight: 500;
   transition: background-color 0.2s;
+  padding: 12px;
 
   &:hover {
     background: ${({ theme }) => theme.colors.primaryHover};
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    background: ${({ theme }) => theme.colors.primary};
+    cursor: not-allowed;
   }
 `;

@@ -186,13 +186,17 @@ const Checkout = () => {
       return;
     }
 
-    if (data.payment === "Remit") {
+    const isTransferOrCreditCard =
+      data.payment === "transfer" || data.payment === "creditCard";
+
+    if (isTransferOrCreditCard) {
       dispatch(clearActiveCartId());
       alert("訂單已送出，請等待審核");
       router.push("/user/order");
       setIsOrderSubmitting(false);
       return;
     }
+
     const redirectPath = result.data.linePay.PaymentUrl.web;
 
     dispatch(

@@ -5,7 +5,7 @@ export type OrderData = {
   createdDate: string;
   createdStamp: string;
   note: string;
-  shipping: string;
+  shipping: ShippingType;
   shippinginfo: {
     name: string;
     phone: string;
@@ -17,7 +17,7 @@ export type OrderData = {
     AddressDetail: string;
   };
   details: {
-    quantity: number;
+    quantity: QuantityType;
     productName: string;
     productDes: string;
     productImgSrc: string;
@@ -31,7 +31,7 @@ export type OrderData = {
     rentStamp: string;
     returnDate: string;
     returnStamp: string;
-    payment: string;
+    payment: PaymentType;
   };
   member: {
     memberId: number;
@@ -83,4 +83,45 @@ export type ToastType = {
   isLeaving: boolean;
 };
 
-export const quantitySelects = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+export enum Quantity {
+  one = "1",
+  two = "2",
+  three = "3",
+  four = "4",
+  five = "5",
+  six = "6",
+  seven = "7",
+  eight = "8",
+  nine = "9",
+  ten = "10"
+}
+
+export enum Payment {
+  transfer = "transfer",
+  creditCard = "creditCard",
+  linePay = "LinePay"
+}
+
+export enum Shipping {
+  store = "store",
+  delivery = "delivery"
+}
+
+export const quantitySelects = Object.values(Quantity);
+export const paymentSelects = Object.values(Payment);
+export const shippingSelects = Object.values(Shipping);
+
+export type QuantityType = Quantity;
+export type PaymentType = Payment;
+export type ShippingType = Shipping;
+
+export const shippingStatusMapping = {
+  [Shipping.store]: "店取",
+  [Shipping.delivery]: "宅配"
+}
+
+export const paymentStatusMapping = {
+  [Payment.transfer]: "轉帳",
+  [Payment.creditCard]: "信用卡",
+  [Payment.linePay]: "LinePay"
+}

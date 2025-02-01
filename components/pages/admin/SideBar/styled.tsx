@@ -69,7 +69,7 @@ export const NotificationBadge = styled.span`
   background: ${({ theme }) => theme.colors.error};
   color: ${({ theme }) => theme.colors.white};
   font-size: 12px;
-  padding: 2px 6px;
+  padding: 1px 6px;
   border-radius: 10px;
   min-width: 20px;
   text-align: center;

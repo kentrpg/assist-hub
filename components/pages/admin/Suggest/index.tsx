@@ -397,7 +397,12 @@ const SuggestTemplate: React.FC<SuggestType> = ({
         {products.map((product) => (
           <Card key={product.suggestProductId}>
             <ImageWrapper>
-              <Image src={product.imgSrc} alt={product.imgAlt} />
+              <Image
+                src={product.imgSrc}
+                alt={product.imgAlt}
+                width={150}
+                height={150}
+              />
               <PriceBadge>{formatCurrency(product.rent)}/ 月</PriceBadge>
             </ImageWrapper>
             <Info>

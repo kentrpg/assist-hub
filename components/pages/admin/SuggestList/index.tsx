@@ -58,7 +58,8 @@ const SuggestList = ({ data: inquiriesData }: SuggestListProps) => {
                 </SortIcon>
               </Sort>
             </Th>
-            <Th>會員聯絡方式</Th>
+            <Th>名稱</Th>
+            <Th>信箱</Th>
             <Th>
               <Sort>
                 收件日期
@@ -100,13 +101,14 @@ const SuggestList = ({ data: inquiriesData }: SuggestListProps) => {
                     </Completed>
                   </Link>
                 </Td>
-                <Td>contactInfo</Td>
+                <Td>{inquiry.member.memberName}</Td>
+                <Td>{inquiry.member.email}</Td>
                 <Td>{inquiry.createdStamp}</Td>
               </Tr>
             ))
           ) : (
             <Tr>
-              <Td colSpan={5}>No data</Td>
+              <Td colSpan={6}>No data</Td>
             </Tr>
           )}
         </Tbody>

@@ -154,14 +154,14 @@ export const DropdownContent = styled.div<{ $isOpen: boolean }>`
   top: 110%;
   left: 50%;
   transform: translateX(-50%);
-  min-width: 85px;
+  width: 85px;
+  display: ${({ $isOpen }) => ($isOpen ? "block" : "none")};
   background: ${({ theme }) => theme.colors.white};
   border-radius: 4px;
   padding: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border: 1px solid ${({ theme }) => theme.colors.border};
   z-index: 1;
-  display: ${({ $isOpen }) => ($isOpen ? "block" : "none")};
 `;
 
 export const DropdownItem = styled.div<Color & { $isSelected: boolean }>`

@@ -1,5 +1,4 @@
-import { InputRadius, RoundedFull } from "@/styles/borderRadius";
-import { Color, BgColor, IsCompleted } from "@/types/uiProps";
+import { IsCompleted } from "@/types/uiProps";
 import styled from "styled-components";
 import NextLink from "next/link";
 
@@ -48,8 +47,11 @@ export const Td = styled.td`
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
   font-size: 14px;
 
-  &:hover {
+  &:has(> a):hover {
     cursor: pointer;
+  }
+
+  &:has(> a):hover {
     a {
       font-weight: 500;
       color: ${({ theme }) => theme.colors.textSecondary};

@@ -29,6 +29,7 @@ import {
   OrderListProps,
   orderStatusColorMapping,
   OrderStatusType,
+  orderStatusValues,
   shippingStatusColorMapping,
   shippingStatusMapping,
   ShippingStatusType,
@@ -39,69 +40,214 @@ import { CgArrowLongDown, CgArrowLongUp } from "react-icons/cg";
 import { Header } from "@/components/pages/admin/Header";
 import { formatCurrency } from "@/helpers/format/currency";
 import { useFilteredData } from "@/hooks/useFilteredData";
+import { isValid } from "@/helpers/api/status";
+import { useDropdownState } from "./hooks/useDropdownState";
 
 const OrderList = ({ data: ordersData }: OrderListProps) => {
   console.log("ordersData", ordersData);
   const [activeTab, setActiveTab] = useState("全部");
   const [currentPage, setCurrentPage] = useState(1);
   const filteredOrders = useFilteredData(ordersData, activeTab);
-  const [shippingStatuses, setShippingStatuses] = useState<{
-    [key: string]: string;
-  }>(
-    ordersData["全部"].data.reduce(
-      (acc, order) => ({
-        ...acc,
-        [order.orderId]: order.shippingStatus || "",
-      }),
-      {},
-    ),
-  );
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const toggleDropdown = (orderId: string) => {
-    setOpenDropdown(openDropdown === orderId ? null : orderId);
+  const shippingDropdownStatus = useDropdownState(
+    ordersData["全部"].data,
+    "shippingStatus",
+  );
+
+  const orderDropdownStatus = useDropdownState(
+    ordersData["全部"].data,
+    "orderStatus",
+  );
+
+  const getIsCompleted = (orderStatus: string | null | undefined) => {
+    return !orderStatus || orderStatus === "已結案" || orderStatus === "已取消";
   };
 
-  const handleDataFilter = (tab: ShippingStatusType | OrderStatusType) => {
-    setActiveTab(tab);
+  const orderControls = {
+    dropdown: {
+      isDropdownItem: (target: HTMLElement) =>
+        target.closest("[data-dropdown-item]"),
+      getDropdownData: (target: HTMLElement) => {
+        const item = target.closest("[data-dropdown-item]");
+        if (!item) return null;
+
+        return {
+          orderId: item.getAttribute("data-order-id"),
+          orderStatus: item.getAttribute("data-order-status"),
+          orderData: {
+            orderCode: item.getAttribute("data-order-code"),
+            memberName: item.getAttribute("data-member-name"),
+            rentStamp: item.getAttribute("data-rent-stamp"),
+            returnStamp: item.getAttribute("data-return-stamp"),
+            quantity: Number(item.getAttribute("data-quantity")),
+            finalAmount: Number(item.getAttribute("data-final-amount")),
+            shipping: item.getAttribute("data-shipping"),
+          },
+        };
+      },
+      handleDropdownItemClick: async (data: {
+        orderId: string | null;
+        orderStatus: string | null;
+        orderData: any;
+      }) => {
+        const { orderId, orderStatus, orderData } = data;
+
+        if (!orderId || !orderStatus) return;
+
+        const bodyData = {
+          orderId: Number(orderId),
+          orderStatus,
+          shippingStatus: shippingDropdownStatus.statuses[orderId],
+        };
+
+        const result = await fetch("/api/admin/putOrderStatus", {
+          method: "PUT",
+          body: JSON.stringify(bodyData),
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        });
+
+        const json = await result.json();
+
+        if (isValid(json)) {
+          // 更新 orderDropdownStatus
+          orderDropdownStatus.setStatuses((prev) => ({
+            ...prev,
+            [orderId]: orderStatus,
+          }));
+
+          // 更新 filteredOrders
+          const updatedOrder = {
+            ...orderData,
+            orderId: Number(orderId),
+            orderStatus,
+            shippingStatus: shippingDropdownStatus.statuses[orderId],
+          };
+
+          // 更新 ordersData
+          ordersData["全部"].data = ordersData["全部"].data.map((order) =>
+            order.orderId === updatedOrder.orderId ? updatedOrder : order,
+          );
+        }
+
+        orderDropdownStatus.setOpenDropdown(null);
+      },
+    },
+  };
+
+  const shippingControls = {
+    dropdown: {
+      isDropdownItem: (target: HTMLElement) =>
+        target.closest("[data-dropdown-item]"),
+      getDropdownData: (target: HTMLElement) => {
+        const item = target.closest("[data-dropdown-item]");
+        if (!item) return null;
+
+        return {
+          orderId: item.getAttribute("data-order-id"),
+          orderStatus: item.getAttribute("data-order-status"),
+          shippingStatus: item.getAttribute("data-shipping-status"),
+          orderData: {
+            orderCode: item.getAttribute("data-order-code"),
+            memberName: item.getAttribute("data-member-name"),
+            rentStamp: item.getAttribute("data-rent-stamp"),
+            returnStamp: item.getAttribute("data-return-stamp"),
+            quantity: Number(item.getAttribute("data-quantity")),
+            finalAmount: Number(item.getAttribute("data-final-amount")),
+            shipping: item.getAttribute("data-shipping"),
+          },
+        };
+      },
+      handleDropdownItemClick: async (data: {
+        orderId: string | null;
+        orderStatus: string | null;
+        shippingStatus: string | null;
+        orderData: any;
+      }) => {
+        const { orderId, orderStatus, shippingStatus, orderData } = data;
+
+        if (!orderId || !orderStatus || !shippingStatus) return;
+
+        const bodyData = {
+          orderId: Number(orderId),
+          orderStatus,
+          shippingStatus,
+        };
+
+        const result = await fetch("/api/admin/putOrderStatus", {
+          method: "PUT",
+          body: JSON.stringify(bodyData),
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        });
+
+        const json = await result.json();
+
+        if (isValid(json)) {
+          // 更新 shippingDropdownStatus
+          shippingDropdownStatus.setStatuses((prev) => ({
+            ...prev,
+            [orderId]: shippingStatus,
+          }));
+
+          // 更新 filteredOrders
+          const updatedOrder = {
+            ...orderData,
+            orderId: Number(orderId),
+            orderStatus,
+            shippingStatus,
+          };
+
+          // 更新 ordersData
+          ordersData["全部"].data = ordersData["全部"].data.map((order) =>
+            order.orderId === updatedOrder.orderId ? updatedOrder : order,
+          );
+        }
+
+        shippingDropdownStatus.setOpenDropdown(null);
+      },
+    },
   };
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClickOutside = async (event: MouseEvent) => {
       const target = event.target as HTMLElement;
 
-      if (target.closest("[data-dropdown-item]")) {
-        const orderId = target
-          .closest("[data-dropdown-item]")
-          ?.getAttribute("data-order-id");
-        const status = target
-          .closest("[data-dropdown-item]")
-          ?.getAttribute("data-status");
-
-        console.log("orderId", orderId);
-        console.log("orderStatus", status);
-
-        // TBD: 需要多一隻 API 來取得訂單資料
-        const bodyData = {
-          shippingStatus: status,
-        };
-
-        if (orderId && status) {
-          setShippingStatuses((prev) => ({
-            ...prev,
-            [orderId]: status,
-          }));
+      // 處理訂單狀態下拉選單的點擊
+      if (orderControls.dropdown.isDropdownItem(target)) {
+        const dropdownData = orderControls.dropdown.getDropdownData(target);
+        if (dropdownData) {
+          await orderControls.dropdown.handleDropdownItemClick(dropdownData);
         }
-        setOpenDropdown(null);
         return;
       }
 
+      // 處理物流狀態下拉選單的點擊
+      if (shippingControls.dropdown.isDropdownItem(target)) {
+        const dropdownData = shippingControls.dropdown.getDropdownData(target);
+        if (dropdownData) {
+          await shippingControls.dropdown.handleDropdownItemClick(dropdownData);
+        }
+        return;
+      }
+
+      // 點擊其他區域時關閉所有下拉選單
       if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
+        shippingDropdownStatus.dropdownRef.current &&
+        !shippingDropdownStatus.dropdownRef.current.contains(target as Node)
       ) {
-        setOpenDropdown(null);
+        shippingDropdownStatus.setOpenDropdown(null);
+      }
+
+      if (
+        orderDropdownStatus.dropdownRef.current &&
+        !orderDropdownStatus.dropdownRef.current.contains(target as Node)
+      ) {
+        orderDropdownStatus.setOpenDropdown(null);
       }
     };
 
@@ -110,6 +256,10 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const handleDataFilter = (tab: ShippingStatusType | OrderStatusType) => {
+    setActiveTab(tab);
+  };
 
   return (
     <Container>
@@ -151,10 +301,9 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
         <Tbody>
           {filteredOrders.length > 0 ? (
             filteredOrders.map((order) => {
-              const isCompleted =
-                !order.orderStatus ||
-                order.orderStatus === "已結案" ||
-                order.orderStatus === "已取消";
+              const isCompleted = getIsCompleted(
+                orderDropdownStatus.statuses[order.orderId],
+              );
               return (
                 <Tr key={order.orderId} $isCompleted={isCompleted}>
                   <Td>
@@ -189,48 +338,107 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
                     </TdCompleted>
                   </Td>
                   <Td>
-                    <TdCompleted $completed={isCompleted}>
-                      <StatusButton
-                        $color={
-                          orderStatusColorMapping[order.orderStatus]?.color ||
-                          "textMuted"
-                        }
-                        $bgColor={
-                          orderStatusColorMapping[order.orderStatus]?.bgColor ||
-                          "secondaryBg"
-                        }
-                      >
-                        {order.orderStatus || "已結案"}
-                      </StatusButton>
-                    </TdCompleted>
-                  </Td>
-                  <Td>
-                    <DropdownContainer ref={dropdownRef}>
+                    <DropdownContainer ref={orderDropdownStatus.dropdownRef}>
                       <TdCompleted $completed={isCompleted}>
                         <DropdownTrigger
                           onClick={() =>
-                            toggleDropdown(order.orderId.toString())
+                            orderDropdownStatus.toggleDropdown(
+                              order.orderId.toString(),
+                            )
                           }
                           $color={
-                            shippingStatusColorMapping[order.shippingStatus]
+                            orderStatusColorMapping[
+                              orderDropdownStatus.statuses[order.orderId]
+                            ]?.color || "textMuted"
                           }
                         >
-                          {shippingStatuses[order.orderId] || "已取消"}
+                          {orderDropdownStatus.statuses[order.orderId] ||
+                            "已結案"}
                           <MdKeyboardArrowDown size={16} />
                         </DropdownTrigger>
                       </TdCompleted>
                       <DropdownContent
-                        $isOpen={openDropdown === order.orderId.toString()}
+                        $isOpen={
+                          orderDropdownStatus.openDropdown ===
+                          order.orderId.toString()
+                        }
+                      >
+                        {orderStatusValues.map((status) => (
+                          <DropdownItem
+                            key={status}
+                            data-dropdown-item
+                            data-order-id={order.orderId.toString()}
+                            data-order-status={status}
+                            data-order-code={order.orderCode}
+                            data-member-name={order.memberName}
+                            data-rent-stamp={order.rentStamp}
+                            data-return-stamp={order.returnStamp}
+                            data-quantity={order.quantity}
+                            data-final-amount={order.finalAmount}
+                            data-shipping={order.shipping}
+                            $isSelected={
+                              orderDropdownStatus.statuses[order.orderId] ===
+                                status ||
+                              (!orderDropdownStatus.statuses[order.orderId] &&
+                                status === "已結案")
+                            }
+                            $color={
+                              orderStatusColorMapping[status]?.color ||
+                              "textMuted"
+                            }
+                          >
+                            {status}
+                          </DropdownItem>
+                        ))}
+                      </DropdownContent>
+                    </DropdownContainer>
+                  </Td>
+                  <Td>
+                    <DropdownContainer ref={shippingDropdownStatus.dropdownRef}>
+                      <TdCompleted $completed={isCompleted}>
+                        <DropdownTrigger
+                          onClick={() =>
+                            shippingDropdownStatus.toggleDropdown(
+                              order.orderId.toString(),
+                            )
+                          }
+                          $color={
+                            shippingStatusColorMapping[
+                              shippingDropdownStatus.statuses[order.orderId]
+                            ]
+                          }
+                        >
+                          {shippingDropdownStatus.statuses[order.orderId] ||
+                            "已取消"}
+                          <MdKeyboardArrowDown size={16} />
+                        </DropdownTrigger>
+                      </TdCompleted>
+                      <DropdownContent
+                        $isOpen={
+                          shippingDropdownStatus.openDropdown ===
+                          order.orderId.toString()
+                        }
                       >
                         {shippingValues.map((status) => (
                           <DropdownItem
                             key={status}
                             data-dropdown-item
                             data-order-id={order.orderId.toString()}
-                            data-status={status}
+                            data-order-status={order.orderStatus}
+                            data-shipping-status={status}
+                            data-order-code={order.orderCode}
+                            data-member-name={order.memberName}
+                            data-rent-stamp={order.rentStamp}
+                            data-return-stamp={order.returnStamp}
+                            data-quantity={order.quantity}
+                            data-final-amount={order.finalAmount}
+                            data-shipping={order.shipping}
                             $isSelected={
-                              shippingStatuses[order.orderId] === status ||
-                              (!shippingStatuses[order.orderId] &&
+                              shippingDropdownStatus.statuses[order.orderId] ===
+                                status ||
+                              (!shippingDropdownStatus.statuses[
+                                order.orderId
+                              ] &&
                                 status === "已取消")
                             }
                             $color={
@@ -271,6 +479,7 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
           <MdChevronRight size={18} />
         </PageButton>
       </Pagination>
+      {/* 請在這邊添加 Toast 元件 */}
     </Container>
   );
 };

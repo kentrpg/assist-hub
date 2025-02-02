@@ -6,3 +6,8 @@ export type ToastProps = {
   $right?: string;
   onClose: () => void;
 };
+
+export type ToastState = {
+  type: ToastProps["type"];
+  message: string;
+} | null;

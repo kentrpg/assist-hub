@@ -38,7 +38,7 @@ import { CgArrowLongDown, CgArrowLongUp } from "react-icons/cg";
 import { Header } from "@/components/pages/admin/Header";
 import { formatCurrency } from "@/helpers/format/currency";
 import { useFilteredData } from "@/hooks/useFilteredData";
-import { isValid } from "@/helpers/api/status";
+import { hasError, isValid } from "@/helpers/api/status";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import Toast from "@/components/ui/Toast";
 import { ToastState } from "@/components/ui/Toast/data";
@@ -47,6 +47,8 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
   console.log(ordersData);
   const [activeTab, setActiveTab] = useState("全部");
   const [currentPage, setCurrentPage] = useState(1);
+  const [toast, setToast] = useState<ToastState>(null);
+
   const [orderStatuses, setOrderStatuses] = useState<
     Record<string | number, string>
   >({});
@@ -63,6 +65,17 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
 
   const getIsCompleted = (orderStatus: string | null | undefined) => {
     return !orderStatus || orderStatus === "已結案" || orderStatus === "已取消";
+  };
+
+  const toastControls = {
+    toast: {
+      isVisible: toast !== null,
+      content: toast && {
+        type: toast.type,
+        message: toast.message,
+        onClose: () => setToast(null),
+      },
+    },
   };
 
   const updateStatusCount = (oldStatus: string, newStatus: string) => {
@@ -141,23 +154,39 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
 
     const json = await result.json();
 
-    if (isValid(json)) {
-      setOrderStatuses((prev: Record<string | number, string>) => ({
+    if (hasError(json)) {
+      setToast({
+        type: "error",
+        message: "系統錯誤，請稍後再試",
+      });
+      console.log("error", json.error);
+      setIsOrderStatusLoading((prev) => ({
         ...prev,
-        [orderId]: newStatus,
+        [orderId]: false,
       }));
-
-      const updatedOrder = {
-        ...ordersData[activeTab].data.find(
-          (order) => order.orderId.toString() === orderId,
-        ),
-        orderStatus: newStatus,
-        shippingStatus: shippingStatuses[orderId],
-      };
-
-      updateStatusData(orderId, oldStatus, newStatus, updatedOrder);
-      updateStatusCount(oldStatus, newStatus);
+      return;
     }
+
+    setOrderStatuses((prev: Record<string | number, string>) => ({
+      ...prev,
+      [orderId]: newStatus,
+    }));
+
+    const updatedOrder = {
+      ...ordersData[activeTab].data.find(
+        (order) => order.orderId.toString() === orderId,
+      ),
+      orderStatus: newStatus,
+      shippingStatus: shippingStatuses[orderId],
+    };
+
+    updateStatusData(orderId, oldStatus, newStatus, updatedOrder);
+    updateStatusCount(oldStatus, newStatus);
+
+    setToast({
+      type: "success",
+      message: "成功更新訂單狀態",
+    });
 
     setIsOrderStatusLoading((prev) => ({
       ...prev,
@@ -193,23 +222,34 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
 
     const json = await result.json();
 
-    if (isValid(json)) {
-      setShippingStatuses((prev: Record<string | number, string>) => ({
+    if (hasError(json)) {
+      setToast({
+        type: "error",
+        message: "系統錯誤，請稍後再試",
+      });
+      console.log("error", json.error);
+      setIsOrderStatusLoading((prev) => ({
         ...prev,
-        [orderId]: newStatus,
+        [orderId]: false,
       }));
-
-      const updatedOrder = {
-        ...ordersData[activeTab].data.find(
-          (order) => order.orderId.toString() === orderId,
-        ),
-        orderStatus: orderStatuses[orderId],
-        shippingStatus: newStatus,
-      };
-
-      updateStatusData(orderId, oldStatus, newStatus, updatedOrder);
-      updateStatusCount(oldStatus, newStatus);
+      return;
     }
+
+    setShippingStatuses((prev: Record<string | number, string>) => ({
+      ...prev,
+      [orderId]: newStatus,
+    }));
+
+    const updatedOrder = {
+      ...ordersData[activeTab].data.find(
+        (order) => order.orderId.toString() === orderId,
+      ),
+      orderStatus: orderStatuses[orderId],
+      shippingStatus: newStatus,
+    };
+
+    updateStatusData(orderId, oldStatus, newStatus, updatedOrder);
+    updateStatusCount(oldStatus, newStatus);
 
     setIsShippingStatusLoading((prev) => ({
       ...prev,
@@ -393,7 +433,9 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
           <MdChevronRight size={18} />
         </PageButton>
       </Pagination>
-      {/* 請在這邊添加 Toast 元件 */}
+      {toastControls.toast.isVisible && (
+        <Toast {...toastControls.toast.content!} />
+      )}
     </Container>
   );
 };

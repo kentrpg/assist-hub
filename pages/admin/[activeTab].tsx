@@ -4,9 +4,9 @@ import AdminLayout from "@/components/pages/admin/Layout";
 import OrderList from "@/components/pages/admin/OrderList";
 import SuggestList from "@/components/pages/admin/SuggestList";
 import { OrderDataType } from "@/types/getAdminOrders";
-import { InquiriesDataType } from "@/types/getMemberInquiries";
+import { InquiriesDataType } from "@/types/getAdminInquiries";
 import getOrders from "@/utils/api/admin/getOrders";
-import getInquiries from "@/utils/api/member/getInquiries";
+import getAdminInquiries from "@/utils/api/admin/getInquiries";
 import { hasError, isValid } from "@/helpers/api/status";
 import { ApiResponse } from "@/helpers/api/types";
 import { filterOrderMapping } from "@/components/pages/admin/OrderList/data";
@@ -106,7 +106,7 @@ const processOrderData = (data: OrderDataType[]): ProcessedOrderData => {
 
 const dataFetchingMapping = {
   orders: (token: string) => getOrders(token),
-  suggests: (token: string) => getInquiries(token),
+  suggests: (token: string) => getAdminInquiries(token),
 };
 
 export const getServerSideProps: GetServerSideProps = async ({

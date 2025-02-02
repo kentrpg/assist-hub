@@ -1,6 +1,6 @@
 import { MdCheckCircle, MdMarkEmailUnread } from "react-icons/md";
 import type { IconType } from "react-icons";
-import { InquiriesDataType } from "@/types/getMemberInquiries";
+import { InquiriesDataType } from "@/types/getAdminInquiries";
 
 export const filterSuggestMapping: { [key: string]: IconType | undefined } = {
   "全部": undefined,

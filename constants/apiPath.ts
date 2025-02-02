@@ -37,6 +37,7 @@ export const get_admin_suggest = `${baseUrl}${basePath}/admin/suggest`;
 export const get_admin_orders = `${baseUrl}${basePath}/admin/orders`;
 export const get_admin_order = `${baseUrl}/api/admin/order/:id`;
 export const put_admin_order = `${baseUrl}/api/admin/order/:id`;
+export const get_admin_inquiries = `${baseUrl}${basePath}/admin/inquiries`;
 
 export const post_linepay_confirm = `${baseUrl}${basePath}/linepay/confirm`;
 export const get_linepay_callback = `${baseUrl}/api/account/linecallback`;

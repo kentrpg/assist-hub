@@ -90,18 +90,17 @@ const SuggestList = ({ data: inquiriesData }: SuggestListProps) => {
                   <Link
                     href={
                       inquiry.isReplied
-                        ? `/suggest/${inquiry.suggetsCode}`
+                        ? `/suggest/${inquiry.suggestCode}`
                         : `/admin/suggest?inquiryId=${inquiry.inquiryId}`
                     }
                     target="_blank"
                   >
                     <Completed $completed={inquiry.isReplied}>
-                      {inquiry.isReplied ? inquiry.suggetsCode : "前往回覆"}
+                      {inquiry.isReplied ? inquiry.suggestCode : "前往回覆"}
                     </Completed>
                   </Link>
                 </Td>
                 <Td>contactInfo</Td>
-                {/* <Td>{inquiry.contactInfo || "contactInfo"}</Td> */}
                 <Td>{inquiry.createdStamp}</Td>
               </Tr>
             ))

@@ -1,5 +1,5 @@
 import { OrderDataType } from "@/types/getAdminOrders";
-import { InquiriesDataType } from "@/types/getMemberInquiries";
+import { InquiriesDataType } from "@/types/getAdminInquiries";
 import { filterOrderMapping } from "../OrderList/data";
 import { filterSuggestMapping } from "../SuggestList/data";
 

@@ -10,7 +10,7 @@ import {
 } from "@/types/getMemberProfile";
 
 export const getProfile = async (
-  token: string
+  token: string,
 ): Promise<Result<ResultGetMemberProfileType["data"]>> => {
   const parsedUrl = new URL(get_member_profile);
   const options = {
@@ -23,6 +23,8 @@ export const getProfile = async (
   };
 
   const [res, error] = await catchError(fetch(parsedUrl, options));
+
+  console.log("getProfile res", res);
 
   if (error) {
     console.log("error", error);
@@ -42,6 +44,8 @@ export const getProfile = async (
   }
 
   const json = await res.json();
+
+  console.log("getProfile json", json);
 
   if (NODE_ENV === "development") {
     const validation = validateResponseType(json, ResultGetMemberProfile);

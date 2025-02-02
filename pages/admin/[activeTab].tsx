@@ -7,9 +7,10 @@ import { OrderDataType } from "@/types/getAdminOrders";
 import { InquiriesDataType } from "@/types/getMemberInquiries";
 import getOrders from "@/utils/api/admin/getOrders";
 import getInquiries from "@/utils/api/member/getInquiries";
-import { hasError } from "@/helpers/api/status";
+import { hasError, isValid } from "@/helpers/api/status";
 import { ApiResponse } from "@/helpers/api/types";
-import { filterIconMapping } from "@/components/pages/admin/OrderList/data";
+import { filterOrderMapping } from "@/components/pages/admin/OrderList/data";
+import { filterSuggestMapping } from "@/components/pages/admin/SuggestList/data";
 
 const whitelist = ["orders", "user", "suggests", "diagram"];
 
@@ -22,10 +23,19 @@ type ProcessedOrderData = {
   };
 };
 
-const processOrderData = (data: OrderDataType[]): ProcessedOrderData => {
-  const processedData: ProcessedOrderData = {};
+type ProcessedSuggestData = {
+  [key: string]: {
+    data: InquiriesDataType[];
+    count: number;
+  };
+};
 
-  Object.keys(filterIconMapping).forEach((label) => {
+const processSuggestData = (
+  data: InquiriesDataType[],
+): ProcessedSuggestData => {
+  const processedData: ProcessedSuggestData = {};
+
+  Object.keys(filterSuggestMapping).forEach((label) => {
     processedData[label] = {
       data: [],
       count: 0,
@@ -37,28 +47,58 @@ const processOrderData = (data: OrderDataType[]): ProcessedOrderData => {
     count: data.length,
   };
 
-  data.forEach((order) => {
-    if (order.orderStatus) {
-      if (!processedData[order.orderStatus]) {
-        processedData[order.orderStatus] = {
-          data: [],
-          count: 0,
-        };
-      }
-      processedData[order.orderStatus].data.push(order);
-      processedData[order.orderStatus].count++;
-    }
+  processedData["未回覆"] = {
+    data: data.filter((inquiry) => !inquiry.isReplied),
+    count: data.filter((inquiry) => !inquiry.isReplied).length,
+  };
 
-    if (order.shippingStatus) {
-      if (!processedData[order.shippingStatus]) {
-        processedData[order.shippingStatus] = {
-          data: [],
-          count: 0,
-        };
+  processedData["已回覆"] = {
+    data: data.filter((inquiry) => inquiry.isReplied),
+    count: data.filter((inquiry) => inquiry.isReplied).length,
+  };
+
+  console.log("processedData", processedData);
+
+  return processedData;
+};
+
+const processOrderData = (data: OrderDataType[]): ProcessedOrderData => {
+  const processedData: ProcessedOrderData = {};
+
+  // 初始化所有狀態的資料結構
+  Object.keys(filterOrderMapping).forEach((label) => {
+    processedData[label] = {
+      data: [],
+      count: 0,
+    };
+  });
+
+  // 初始化全部類別資料
+  processedData["全部"] = {
+    data: data,
+    count: data.length,
+  };
+
+  const statusTypes = [
+    { key: "orderStatus" as const },
+    { key: "shippingStatus" as const },
+  ] as const;
+
+  // 統一處理不同狀態類型的資料
+  data.forEach((order) => {
+    statusTypes.forEach(({ key }) => {
+      const status = order[key];
+      if (status) {
+        if (!processedData[status]) {
+          processedData[status] = {
+            data: [],
+            count: 0,
+          };
+        }
+        processedData[status].data.push(order);
+        processedData[status].count++;
       }
-      processedData[order.shippingStatus].data.push(order);
-      processedData[order.shippingStatus].count++;
-    }
+    });
   });
 
   return processedData;
@@ -104,6 +144,19 @@ export const getServerSideProps: GetServerSideProps = async ({
     };
   }
 
+  // 處理建議資料
+  if (activeTab === "suggests") {
+    const processedData = processSuggestData(
+      result.data as InquiriesDataType[],
+    );
+    return {
+      props: {
+        activeTab,
+        data: processedData,
+      },
+    };
+  }
+
   return {
     props: {
       activeTab,
@@ -114,7 +167,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
 type AdminPageProps = {
   activeTab: string;
-  data: dataType | ProcessedOrderData;
+  data: ProcessedSuggestData | ProcessedOrderData;
 };
 
 const AdminPage = ({ activeTab, data }: AdminPageProps) => {
@@ -140,7 +193,7 @@ const AdminPage = ({ activeTab, data }: AdminPageProps) => {
       case "user":
         return <OrderList data={data as ProcessedOrderData} />;
       case "suggests":
-        return <SuggestList data={data as InquiriesDataType[]} />;
+        return <SuggestList data={data as ProcessedSuggestData} />;
       case "diagram":
         return <OrderList data={data as ProcessedOrderData} />;
       default:

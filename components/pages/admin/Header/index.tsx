@@ -12,14 +12,13 @@ import {
   SelectArrowIcon,
 } from "./styled";
 import { HeaderProps, countSelects } from "./data";
-import { filterIconMapping } from "@/components/pages/admin/OrderList/data";
 
-export const Header = ({ tabs, activeTab, onTabChange }: HeaderProps) => {
+export const Header = ({ tabs, activeTab, onTabChange, iconMapping }: HeaderProps) => {
   return (
     <HeaderStyled>
       <TabList>
         {Object.keys(tabs).map((status) => {
-          const Icon = filterIconMapping[status];
+          const Icon = iconMapping[status];
           return (
             <Tab
               key={status}

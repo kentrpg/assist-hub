@@ -27,7 +27,9 @@ export async function middleware(request: NextRequest) {
 
   try {
     const authResponse = await check(token.value);
-    console.log(`authResponse ${authResponse}`);
+    console.log(
+      `authResponse ${authResponse.message}, ${authResponse.error}, ${authResponse.data}`,
+    );
 
     if (hasError(authResponse)) {
       console.error(`Auth check failed: ${authResponse.message || "未知錯誤"}`);

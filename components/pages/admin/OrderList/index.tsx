@@ -25,6 +25,7 @@ import {
   TdCompleted,
 } from "./styled";
 import {
+  filterOrderMapping,
   OrderListProps,
   orderStatusColorMapping,
   OrderStatusType,
@@ -32,18 +33,18 @@ import {
   shippingStatusMapping,
   ShippingStatusType,
   shippingValues,
-  TabType,
 } from "./data";
 import Link from "next/link";
 import { CgArrowLongDown, CgArrowLongUp } from "react-icons/cg";
 import { Header } from "@/components/pages/admin/Header";
 import { formatCurrency } from "@/helpers/format/currency";
+import { useFilteredData } from "@/hooks/useFilteredData";
 
 const OrderList = ({ data: ordersData }: OrderListProps) => {
   console.log("ordersData", ordersData);
   const [activeTab, setActiveTab] = useState("全部");
   const [currentPage, setCurrentPage] = useState(1);
-  const [filteredOrders, setFilteredOrders] = useState(ordersData["全部"].data);
+  const filteredOrders = useFilteredData(ordersData, activeTab);
   const [shippingStatuses, setShippingStatuses] = useState<{
     [key: string]: string;
   }>(
@@ -64,7 +65,6 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
 
   const handleDataFilter = (tab: ShippingStatusType | OrderStatusType) => {
     setActiveTab(tab);
-    setFilteredOrders(ordersData[tab].data);
   };
 
   useEffect(() => {
@@ -80,7 +80,7 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
           ?.getAttribute("data-status");
 
         console.log("orderId", orderId);
-        console.log("status", status);
+        console.log("orderStatus", status);
 
         // TBD: 需要多一隻 API 來取得訂單資料
         const bodyData = {
@@ -97,7 +97,6 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
         return;
       }
 
-      // 點擊其他區域時關閉下拉選單
       if (
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
@@ -118,6 +117,7 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
         tabs={ordersData}
         activeTab={activeTab}
         onTabChange={handleDataFilter}
+        iconMapping={filterOrderMapping}
       />
       <Table>
         <Thead>
@@ -149,109 +149,116 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
           </Tr>
         </Thead>
         <Tbody>
-          {filteredOrders.map((order) => {
-            const isCompleted =
-              !order.orderStatus ||
-              order.orderStatus === "已結案" ||
-              order.orderStatus === "已取消";
-            return (
-              <Tr key={order.orderId} $isCompleted={isCompleted}>
-                <Td>
-                  <TdCompleted $completed={isCompleted}>
-                    <Link
-                      href={`/admin/order/${order.orderId}`}
-                      target="_blank"
-                    >
-                      {order.orderCode}
-                    </Link>
-                  </TdCompleted>
-                </Td>
-                <Td>
-                  <TdCompleted $completed={isCompleted}>
-                    {order.memberName}
-                  </TdCompleted>
-                </Td>
-                <Td>
-                  <TdCompleted $completed={isCompleted}>
-                    {order.rentStamp}
-                    <small>{order.returnStamp}</small>
-                  </TdCompleted>
-                </Td>
-                <Td>
-                  <TdCompleted $completed={isCompleted}>
-                    {order.quantity}
-                  </TdCompleted>
-                </Td>
-                <Td>
-                  <TdCompleted $completed={isCompleted}>
-                    {formatCurrency(order.finalAmount)}
-                  </TdCompleted>
-                </Td>
-                <Td>
-                  <TdCompleted $completed={isCompleted}>
-                    <StatusButton
-                      $color={
-                        orderStatusColorMapping[order.orderStatus]?.color ||
-                        "textMuted"
-                      }
-                      $bgColor={
-                        orderStatusColorMapping[order.orderStatus]?.bgColor ||
-                        "secondaryBg"
-                      }
-                    >
-                      {order.orderStatus || "已結案"}
-                    </StatusButton>
-                  </TdCompleted>
-                </Td>
-                <Td>
-                  <DropdownContainer ref={dropdownRef}>
+          {filteredOrders.length > 0 ? (
+            filteredOrders.map((order) => {
+              const isCompleted =
+                !order.orderStatus ||
+                order.orderStatus === "已結案" ||
+                order.orderStatus === "已取消";
+              return (
+                <Tr key={order.orderId} $isCompleted={isCompleted}>
+                  <Td>
                     <TdCompleted $completed={isCompleted}>
-                      <DropdownTrigger
-                        onClick={() => toggleDropdown(order.orderId.toString())}
+                      <Link
+                        href={`/admin/order/${order.orderId}`}
+                        target="_blank"
+                      >
+                        {order.orderCode}
+                      </Link>
+                    </TdCompleted>
+                  </Td>
+                  <Td>
+                    <TdCompleted $completed={isCompleted}>
+                      {order.memberName}
+                    </TdCompleted>
+                  </Td>
+                  <Td>
+                    <TdCompleted $completed={isCompleted}>
+                      {order.rentStamp}
+                      <small>{order.returnStamp}</small>
+                    </TdCompleted>
+                  </Td>
+                  <Td>
+                    <TdCompleted $completed={isCompleted}>
+                      {order.quantity}
+                    </TdCompleted>
+                  </Td>
+                  <Td>
+                    <TdCompleted $completed={isCompleted}>
+                      {formatCurrency(order.finalAmount)}
+                    </TdCompleted>
+                  </Td>
+                  <Td>
+                    <TdCompleted $completed={isCompleted}>
+                      <StatusButton
                         $color={
-                          shippingStatusColorMapping[order.shippingStatus]
+                          orderStatusColorMapping[order.orderStatus]?.color ||
+                          "textMuted"
+                        }
+                        $bgColor={
+                          orderStatusColorMapping[order.orderStatus]?.bgColor ||
+                          "secondaryBg"
                         }
                       >
-                        {shippingStatuses[order.orderId] || "已取消"}
-                        <MdKeyboardArrowDown size={16} />
-                      </DropdownTrigger>
+                        {order.orderStatus || "已結案"}
+                      </StatusButton>
                     </TdCompleted>
-                    <DropdownContent
-                      $isOpen={openDropdown === order.orderId.toString()}
-                    >
-                      {shippingValues.map((status) => (
-                        <DropdownItem
-                          key={status}
-                          data-dropdown-item
-                          data-order-id={order.orderId.toString()}
-                          data-status={status}
-                          $isSelected={
-                            shippingStatuses[order.orderId] === status ||
-                            (!shippingStatuses[order.orderId] &&
-                              status === "已取消")
+                  </Td>
+                  <Td>
+                    <DropdownContainer ref={dropdownRef}>
+                      <TdCompleted $completed={isCompleted}>
+                        <DropdownTrigger
+                          onClick={() =>
+                            toggleDropdown(order.orderId.toString())
                           }
                           $color={
-                            shippingStatusColorMapping[status] || "textMuted"
+                            shippingStatusColorMapping[order.shippingStatus]
                           }
                         >
-                          {status}
-                          <DropdownCircle />
-                        </DropdownItem>
-                      ))}
-                    </DropdownContent>
-                  </DropdownContainer>
-                </Td>
-                <Td>
-                  <TdCompleted $completed={isCompleted}>
-                    {shippingStatusMapping[order.shipping] || "未選擇"}
-                  </TdCompleted>
-                </Td>
-              </Tr>
-            );
-          })}
+                          {shippingStatuses[order.orderId] || "已取消"}
+                          <MdKeyboardArrowDown size={16} />
+                        </DropdownTrigger>
+                      </TdCompleted>
+                      <DropdownContent
+                        $isOpen={openDropdown === order.orderId.toString()}
+                      >
+                        {shippingValues.map((status) => (
+                          <DropdownItem
+                            key={status}
+                            data-dropdown-item
+                            data-order-id={order.orderId.toString()}
+                            data-status={status}
+                            $isSelected={
+                              shippingStatuses[order.orderId] === status ||
+                              (!shippingStatuses[order.orderId] &&
+                                status === "已取消")
+                            }
+                            $color={
+                              shippingStatusColorMapping[status] || "textMuted"
+                            }
+                          >
+                            {status}
+                            <DropdownCircle />
+                          </DropdownItem>
+                        ))}
+                      </DropdownContent>
+                    </DropdownContainer>
+                  </Td>
+                  <Td>
+                    <TdCompleted $completed={isCompleted}>
+                      {shippingStatusMapping[order.shipping] || "未選擇"}
+                    </TdCompleted>
+                  </Td>
+                </Tr>
+              );
+            })
+          ) : (
+            <Tr>
+              <Td colSpan={8}>No data</Td>
+            </Tr>
+          )}
         </Tbody>
       </Table>
-
       <Pagination>
         <PageButton
           onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}

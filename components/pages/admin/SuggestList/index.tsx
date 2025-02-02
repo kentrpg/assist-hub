@@ -14,22 +14,25 @@ import {
   Link,
 } from "./styled";
 import { useState } from "react";
-import { inquiryStatuses, SuggestListProps } from "./data";
+import { filterSuggestMapping, SuggestListProps } from "./data";
 import { Header } from "../Header";
 import { CgArrowLongDown, CgArrowLongUp } from "react-icons/cg";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
+import { useFilteredData } from "@/hooks/useFilteredData";
 
-const SuggestList = ({ data: inquiriesData = [] }: SuggestListProps) => {
+const SuggestList = ({ data: inquiriesData }: SuggestListProps) => {
   console.log("data", inquiriesData);
   const [activeTab, setActiveTab] = useState("全部");
   const [currentPage, setCurrentPage] = useState(1);
+  const filteredOrders = useFilteredData(inquiriesData, activeTab);
 
   return (
     <Container>
       <Header
-        tabs={inquiryStatuses}
+        tabs={inquiriesData}
         activeTab={activeTab}
         onTabChange={setActiveTab}
+        iconMapping={filterSuggestMapping}
       />
       <Table>
         <Thead>
@@ -68,8 +71,8 @@ const SuggestList = ({ data: inquiriesData = [] }: SuggestListProps) => {
           </Tr>
         </Thead>
         <Tbody>
-          {inquiriesData.length > 0 ? (
-            inquiriesData.map((inquiry) => (
+          {filteredOrders.length > 0 ? (
+            filteredOrders.map((inquiry) => (
               <Tr
                 key={`inquiry-${inquiry.inquiryId}`}
                 $isCompleted={inquiry.isReplied}

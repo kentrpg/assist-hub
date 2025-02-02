@@ -145,6 +145,11 @@ export const Select = styled.select`
   &:-webkit-autofill {
     ${AdminInputFieldAutofill};
   }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 `;
 
 export const SelectArrowIcon = styled.div`

@@ -39,6 +39,9 @@ import { Header } from "@/components/pages/admin/Header";
 import { formatCurrency } from "@/helpers/format/currency";
 import { useFilteredData } from "@/hooks/useFilteredData";
 import { isValid } from "@/helpers/api/status";
+import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
+import Toast from "@/components/ui/Toast";
+import { ToastState } from "@/components/ui/Toast/data";
 
 const OrderList = ({ data: ordersData }: OrderListProps) => {
   console.log(ordersData);
@@ -49,6 +52,12 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
   >({});
   const [shippingStatuses, setShippingStatuses] = useState<
     Record<string | number, string>
+  >({});
+  const [isOrderStatusLoading, setIsOrderStatusLoading] = useState<
+    Record<string | number, boolean>
+  >({});
+  const [isShippingStatusLoading, setIsShippingStatusLoading] = useState<
+    Record<string | number, boolean>
   >({});
   const filteredOrders = useFilteredData(ordersData, activeTab);
 
@@ -76,17 +85,14 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
     newStatus: string,
     updatedOrder: any,
   ) => {
-    // 只有在狀態確實改變時才更新
     if (oldStatus === newStatus) return;
 
-    // 從舊狀態移除訂單
     if (ordersData[oldStatus]) {
       ordersData[oldStatus].data = ordersData[oldStatus].data.filter(
         (order) => order.orderId.toString() !== orderId,
       );
     }
 
-    // 添加到新狀態
     if (ordersData[newStatus]) {
       ordersData[newStatus].data = [
         ...ordersData[newStatus].data,
@@ -94,14 +100,12 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
       ];
     }
 
-    // 更新全部訂單列表
     if (ordersData["全部"]) {
       ordersData["全部"].data = ordersData["全部"].data.map((order) =>
         order.orderId.toString() === orderId ? updatedOrder : order,
       );
     }
 
-    // 更新當前頁面顯示的資料
     ordersData[activeTab].data = ordersData[activeTab].data.map((order) =>
       order.orderId.toString() === orderId ? updatedOrder : order,
     );
@@ -111,7 +115,11 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
     orderId: string,
     newStatus: string,
   ) => {
-    // 取得舊狀態
+    setIsOrderStatusLoading((prev) => ({
+      ...prev,
+      [orderId]: true,
+    }));
+
     const oldStatus = orderStatuses[orderId] || "已結案";
 
     const bodyData = {
@@ -134,13 +142,11 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
     const json = await result.json();
 
     if (isValid(json)) {
-      // 更新狀態
       setOrderStatuses((prev: Record<string | number, string>) => ({
         ...prev,
         [orderId]: newStatus,
       }));
 
-      // 建立更新後的訂單資料
       const updatedOrder = {
         ...ordersData[activeTab].data.find(
           (order) => order.orderId.toString() === orderId,
@@ -152,12 +158,22 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
       updateStatusData(orderId, oldStatus, newStatus, updatedOrder);
       updateStatusCount(oldStatus, newStatus);
     }
+
+    setIsOrderStatusLoading((prev) => ({
+      ...prev,
+      [orderId]: false,
+    }));
   };
 
   const handleShippingStatusChange = async (
     orderId: string,
     newStatus: string,
   ) => {
+    setIsShippingStatusLoading((prev) => ({
+      ...prev,
+      [orderId]: true,
+    }));
+
     const oldStatus = shippingStatuses[orderId] || "已取消";
 
     const bodyData = {
@@ -178,13 +194,11 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
     const json = await result.json();
 
     if (isValid(json)) {
-      // 更新狀態
       setShippingStatuses((prev: Record<string | number, string>) => ({
         ...prev,
         [orderId]: newStatus,
       }));
 
-      // 建立更新後的訂單資料
       const updatedOrder = {
         ...ordersData[activeTab].data.find(
           (order) => order.orderId.toString() === orderId,
@@ -196,6 +210,11 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
       updateStatusData(orderId, oldStatus, newStatus, updatedOrder);
       updateStatusCount(oldStatus, newStatus);
     }
+
+    setIsShippingStatusLoading((prev) => ({
+      ...prev,
+      [orderId]: false,
+    }));
   };
 
   useEffect(() => {
@@ -300,6 +319,7 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
                               e.target.value,
                             )
                           }
+                          disabled={isOrderStatusLoading[order.orderId]}
                         >
                           {orderStatusValues.map((status) => (
                             <option key={status} value={status}>
@@ -308,7 +328,11 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
                           ))}
                         </Select>
                         <SelectArrowIcon>
-                          <MdKeyboardArrowDown size={20} />
+                          {isOrderStatusLoading[order.orderId] ? (
+                            <LoaderSpinner $color="grey100" />
+                          ) : (
+                            <MdKeyboardArrowDown size={20} />
+                          )}
                         </SelectArrowIcon>
                       </SelectGroup>
                     </TdCompleted>
@@ -324,6 +348,7 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
                               e.target.value,
                             )
                           }
+                          disabled={isShippingStatusLoading[order.orderId]}
                         >
                           {shippingValues.map((status) => (
                             <option key={status} value={status}>
@@ -332,7 +357,11 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
                           ))}
                         </Select>
                         <SelectArrowIcon>
-                          <MdKeyboardArrowDown size={20} />
+                          {isShippingStatusLoading[order.orderId] ? (
+                            <LoaderSpinner $color="grey300" />
+                          ) : (
+                            <MdKeyboardArrowDown size={20} />
+                          )}
                         </SelectArrowIcon>
                       </SelectGroup>
                     </TdCompleted>

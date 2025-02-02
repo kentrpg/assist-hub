@@ -66,6 +66,8 @@ import { selectSuggestProducts } from "@/utils/redux/slices/suggestProducts";
 import { useSelector, useDispatch } from "react-redux";
 import { setSuggestProducts } from "@/utils/redux/slices/suggestProducts";
 import { useRouter } from "next/router";
+import Toast from "@/components/ui/Toast";
+import { ToastState } from "@/components/ui/Toast/data";
 
 const SuggestTemplate: React.FC<SuggestType> = ({
   suggestInfo,
@@ -84,12 +86,35 @@ const SuggestTemplate: React.FC<SuggestType> = ({
     "wheelChair",
   );
   const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const lastSavedReasonsValues = useRef<Record<number, string>>({});
   const [editingReasons, setEditingReasons] = useState<Record<number, string>>(
     {},
   );
   const [savingStates, setSavingStates] = useState<Record<number, boolean>>({});
   const [isSaving, setIsSaving] = useState(false);
+  const [isAddProductLoading, setIsAddProductLoading] = useState(false);
+  const [toast, setToast] = useState<ToastState>(null);
+
+  const toastControls = {
+    toast: {
+      isVisible: toast !== null,
+      content: toast && {
+        type: toast.type,
+        message: toast.message,
+        onClose: () => setToast(null),
+      },
+    },
+  };
+
+  const submitControls = {
+    isDisabled: isSubmitting || !products.length,
+    text: (() => {
+      if (isSubmitting) return null;
+      return products.length ? "送出建議書" : "請添加輔具";
+    })(),
+    isLoading: isSubmitting,
+  };
 
   const handleAdditionalInfoChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -227,6 +252,7 @@ const SuggestTemplate: React.FC<SuggestType> = ({
   };
 
   const handleAddProduct = async (product: ProductFilter) => {
+    setIsAddProductLoading(true);
     const isProductExist = products.some((p) => p.productId === product.id);
     const isMaximum = products.length > 8;
 
@@ -251,7 +277,11 @@ const SuggestTemplate: React.FC<SuggestType> = ({
     const result = await response.json();
 
     if (hasError(result)) {
-      alert("保存失敗");
+      setToast({
+        type: "error",
+        message: "系統錯誤，請稍後再試",
+      });
+      setIsAddProductLoading(false);
       return;
     }
 
@@ -276,10 +306,16 @@ const SuggestTemplate: React.FC<SuggestType> = ({
       ),
     }));
 
-    alert("保存成功");
+    setToast({
+      type: "success",
+      message: "保存成功",
+    });
+
+    setIsAddProductLoading(false);
   };
 
   const handleSubmit = async () => {
+    setIsSubmitting(true);
     const requestBody = {
       suggestId: suggestInfo.suggestId,
       level: suggestInfo.level,
@@ -301,10 +337,12 @@ const SuggestTemplate: React.FC<SuggestType> = ({
     if (hasError(data)) {
       console.error(data);
       alert("保存失敗");
+      setIsSubmitting(false);
       return;
     }
 
     alert("保存成功");
+    setIsSubmitting(false);
     router.push("/admin/suggests");
   };
 
@@ -425,7 +463,6 @@ const SuggestTemplate: React.FC<SuggestType> = ({
                 )}
               </Name>
               <Reason
-                // value={product.reasons}
                 value={getReasonValue(product)}
                 onChange={handleReasonChange(
                   product.suggestProductId,
@@ -489,7 +526,7 @@ const SuggestTemplate: React.FC<SuggestType> = ({
             </Thead>
             <Tbody>
               {productFilter[activeCategory].map((product) => (
-                <Tr key={product.id}>
+                <Tr key={product.id} $isLoading={isAddProductLoading}>
                   <Td>
                     <ProductImage
                       src={`${BASE_URL_VM}/${product.image.preview}`}
@@ -530,9 +567,22 @@ const SuggestTemplate: React.FC<SuggestType> = ({
 
       <SectionWrapper>
         <FlexAlignCenter>
-          <SubmitButton onClick={handleSubmit}>送出建議書</SubmitButton>
+          <SubmitButton
+            onClick={handleSubmit}
+            disabled={isSubmitting || !products.length}
+          >
+            {isSubmitting ? (
+              <LoaderSpinner $color="grey300" />
+            ) : (
+              submitControls.text
+            )}
+          </SubmitButton>
         </FlexAlignCenter>
       </SectionWrapper>
+
+      {toastControls.toast.isVisible && (
+        <Toast {...toastControls.toast.content!} />
+      )}
     </Container>
   );
 };

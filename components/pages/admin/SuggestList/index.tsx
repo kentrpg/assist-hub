@@ -13,26 +13,87 @@ import {
   Tr,
   Link,
 } from "./styled";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { filterSuggestMapping, SuggestListProps } from "./data";
 import { Header } from "../Header";
 import { CgArrowLongDown, CgArrowLongUp } from "react-icons/cg";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { useFilteredData } from "@/hooks/useFilteredData";
+import { InquiriesDataType } from "@/types/getAdminInquiries";
+import { countSelects } from "../Header/data";
 
 const SuggestList = ({ data: inquiriesData }: SuggestListProps) => {
   console.log("data", inquiriesData);
   const [activeTab, setActiveTab] = useState("全部");
   const [currentPage, setCurrentPage] = useState(1);
-  const filteredOrders = useFilteredData(inquiriesData, activeTab);
+  const [itemsPerPage, setItemsPerPage] = useState(countSelects[0]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [paginatedData, setPaginatedData] = useState<InquiriesDataType[]>([]);
+
+  const calculatePaginatedData = (
+    data: InquiriesDataType[],
+    page: number,
+    pageSize: number,
+  ) => {
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    return data.slice(startIndex, endIndex);
+  };
+
+  const handlePagination = (
+    value: number,
+    countPage: number,
+    currentPage: number,
+  ) => {
+    const newPaginatedData = calculatePaginatedData(
+      inquiriesData[activeTab].data,
+      currentPage,
+      value,
+    );
+
+    setItemsPerPage(value);
+    setTotalPages(countPage);
+    setCurrentPage(currentPage);
+    setPaginatedData(newPaginatedData);
+  };
+
+  const handleCountSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = parseInt(e.target.value, 10);
+    const totalItems = inquiriesData[activeTab].count;
+
+    const quotient = Math.floor(totalItems / value);
+    const remainder = totalItems % value;
+    const countPage = remainder > 0 ? quotient + 1 : quotient;
+
+    handlePagination(value, countPage, 1);
+  };
+
+  const handlePageChange = (page: number) => {
+    handlePagination(itemsPerPage, totalPages, page);
+  };
+
+  const handleDataFilter = (tab: string) => {
+    setCurrentPage(1);
+    setActiveTab(tab);
+  };
+
+  useEffect(() => {
+    const totalItems = inquiriesData[activeTab].count;
+    const quotient = Math.floor(totalItems / itemsPerPage);
+    const remainder = totalItems % itemsPerPage;
+    const countPage = remainder > 0 ? quotient + 1 : quotient;
+
+    handlePagination(itemsPerPage, countPage, currentPage);
+  }, [activeTab, inquiriesData]);
 
   return (
     <Container>
       <Header
         tabs={inquiriesData}
         activeTab={activeTab}
-        onTabChange={setActiveTab}
+        onTabChange={handleDataFilter}
         iconMapping={filterSuggestMapping}
+        onChangeSelect={handleCountSelect}
       />
       <Table>
         <Thead>
@@ -72,8 +133,8 @@ const SuggestList = ({ data: inquiriesData }: SuggestListProps) => {
           </Tr>
         </Thead>
         <Tbody>
-          {filteredOrders.length > 0 ? (
-            filteredOrders.map((inquiry) => (
+          {paginatedData.length > 0 ? (
+            paginatedData.map((inquiry) => (
               <Tr
                 key={`inquiry-${inquiry.inquiryId}`}
                 $isCompleted={inquiry.isReplied}
@@ -115,13 +176,28 @@ const SuggestList = ({ data: inquiriesData }: SuggestListProps) => {
       </Table>
       <Pagination>
         <PageButton
-          onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+          onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
           disabled={currentPage === 1}
         >
           <MdChevronLeft size={18} />
         </PageButton>
-        <PageButton $active={true}>{currentPage}</PageButton>
-        <PageButton onClick={() => setCurrentPage((p) => p + 1)}>
+        {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+          (page) => (
+            <PageButton
+              key={page}
+              $active={currentPage === page}
+              onClick={() => handlePageChange(page)}
+            >
+              {page}
+            </PageButton>
+          ),
+        )}
+        <PageButton
+          onClick={() =>
+            handlePageChange(Math.min(totalPages, currentPage + 1))
+          }
+          disabled={currentPage === totalPages}
+        >
           <MdChevronRight size={18} />
         </PageButton>
       </Pagination>

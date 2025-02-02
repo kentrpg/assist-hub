@@ -489,7 +489,7 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
       </Table>
       <Pagination>
         <PageButton
-          onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+          onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
           disabled={currentPage === 1}
         >
           <MdChevronLeft size={18} />
@@ -506,7 +506,9 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
           ),
         )}
         <PageButton
-          onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+          onClick={() =>
+            handlePageChange(Math.min(totalPages, currentPage + 1))
+          }
           disabled={currentPage === totalPages}
         >
           <MdChevronRight size={18} />

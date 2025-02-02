@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   MdChevronLeft,
   MdChevronRight,
@@ -13,11 +13,9 @@ import {
   StatusButton,
   Pagination,
   PageButton,
-  DropdownContainer,
-  DropdownContent,
-  DropdownItem,
-  DropdownTrigger,
-  DropdownCircle,
+  SelectGroup,
+  Select,
+  SelectArrowIcon,
   Sort,
   SortIcon,
   Thead,
@@ -41,221 +39,177 @@ import { Header } from "@/components/pages/admin/Header";
 import { formatCurrency } from "@/helpers/format/currency";
 import { useFilteredData } from "@/hooks/useFilteredData";
 import { isValid } from "@/helpers/api/status";
-import { useDropdownState } from "./hooks/useDropdownState";
 
 const OrderList = ({ data: ordersData }: OrderListProps) => {
-  console.log("ordersData", ordersData);
+  console.log(ordersData);
   const [activeTab, setActiveTab] = useState("全部");
   const [currentPage, setCurrentPage] = useState(1);
+  const [orderStatuses, setOrderStatuses] = useState<
+    Record<string | number, string>
+  >({});
+  const [shippingStatuses, setShippingStatuses] = useState<
+    Record<string | number, string>
+  >({});
   const filteredOrders = useFilteredData(ordersData, activeTab);
-
-  const shippingDropdownStatus = useDropdownState(
-    ordersData["全部"].data,
-    "shippingStatus",
-  );
-
-  const orderDropdownStatus = useDropdownState(
-    ordersData["全部"].data,
-    "orderStatus",
-  );
 
   const getIsCompleted = (orderStatus: string | null | undefined) => {
     return !orderStatus || orderStatus === "已結案" || orderStatus === "已取消";
   };
 
-  const orderControls = {
-    dropdown: {
-      isDropdownItem: (target: HTMLElement) =>
-        target.closest("[data-dropdown-item]"),
-      getDropdownData: (target: HTMLElement) => {
-        const item = target.closest("[data-dropdown-item]");
-        if (!item) return null;
-
-        return {
-          orderId: item.getAttribute("data-order-id"),
-          orderStatus: item.getAttribute("data-order-status"),
-          orderData: {
-            orderCode: item.getAttribute("data-order-code"),
-            memberName: item.getAttribute("data-member-name"),
-            rentStamp: item.getAttribute("data-rent-stamp"),
-            returnStamp: item.getAttribute("data-return-stamp"),
-            quantity: Number(item.getAttribute("data-quantity")),
-            finalAmount: Number(item.getAttribute("data-final-amount")),
-            shipping: item.getAttribute("data-shipping"),
-          },
-        };
-      },
-      handleDropdownItemClick: async (data: {
-        orderId: string | null;
-        orderStatus: string | null;
-        orderData: any;
-      }) => {
-        const { orderId, orderStatus, orderData } = data;
-
-        if (!orderId || !orderStatus) return;
-
-        const bodyData = {
-          orderId: Number(orderId),
-          orderStatus,
-          shippingStatus: shippingDropdownStatus.statuses[orderId],
-        };
-
-        const result = await fetch("/api/admin/putOrderStatus", {
-          method: "PUT",
-          body: JSON.stringify(bodyData),
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        });
-
-        const json = await result.json();
-
-        if (isValid(json)) {
-          // 更新 orderDropdownStatus
-          orderDropdownStatus.setStatuses((prev) => ({
-            ...prev,
-            [orderId]: orderStatus,
-          }));
-
-          // 更新 filteredOrders
-          const updatedOrder = {
-            ...orderData,
-            orderId: Number(orderId),
-            orderStatus,
-            shippingStatus: shippingDropdownStatus.statuses[orderId],
-          };
-
-          // 更新 ordersData
-          ordersData["全部"].data = ordersData["全部"].data.map((order) =>
-            order.orderId === updatedOrder.orderId ? updatedOrder : order,
-          );
-        }
-
-        orderDropdownStatus.setOpenDropdown(null);
-      },
-    },
+  const updateStatusCount = (oldStatus: string, newStatus: string) => {
+    if (oldStatus !== newStatus) {
+      if (ordersData[oldStatus]) {
+        ordersData[oldStatus].count = Math.max(
+          0,
+          ordersData[oldStatus].count - 1,
+        );
+      }
+      if (ordersData[newStatus]) {
+        ordersData[newStatus].count = (ordersData[newStatus].count || 0) + 1;
+      }
+    }
   };
 
-  const shippingControls = {
-    dropdown: {
-      isDropdownItem: (target: HTMLElement) =>
-        target.closest("[data-dropdown-item]"),
-      getDropdownData: (target: HTMLElement) => {
-        const item = target.closest("[data-dropdown-item]");
-        if (!item) return null;
+  const updateStatusData = (
+    orderId: string,
+    oldStatus: string,
+    newStatus: string,
+    updatedOrder: any,
+  ) => {
+    // 只有在狀態確實改變時才更新
+    if (oldStatus === newStatus) return;
 
-        return {
-          orderId: item.getAttribute("data-order-id"),
-          orderStatus: item.getAttribute("data-order-status"),
-          shippingStatus: item.getAttribute("data-shipping-status"),
-          orderData: {
-            orderCode: item.getAttribute("data-order-code"),
-            memberName: item.getAttribute("data-member-name"),
-            rentStamp: item.getAttribute("data-rent-stamp"),
-            returnStamp: item.getAttribute("data-return-stamp"),
-            quantity: Number(item.getAttribute("data-quantity")),
-            finalAmount: Number(item.getAttribute("data-final-amount")),
-            shipping: item.getAttribute("data-shipping"),
-          },
-        };
+    // 從舊狀態移除訂單
+    if (ordersData[oldStatus]) {
+      ordersData[oldStatus].data = ordersData[oldStatus].data.filter(
+        (order) => order.orderId.toString() !== orderId,
+      );
+    }
+
+    // 添加到新狀態
+    if (ordersData[newStatus]) {
+      ordersData[newStatus].data = [
+        ...ordersData[newStatus].data,
+        updatedOrder,
+      ];
+    }
+
+    // 更新全部訂單列表
+    if (ordersData["全部"]) {
+      ordersData["全部"].data = ordersData["全部"].data.map((order) =>
+        order.orderId.toString() === orderId ? updatedOrder : order,
+      );
+    }
+
+    // 更新當前頁面顯示的資料
+    ordersData[activeTab].data = ordersData[activeTab].data.map((order) =>
+      order.orderId.toString() === orderId ? updatedOrder : order,
+    );
+  };
+
+  const handleOrderStatusChange = async (
+    orderId: string,
+    newStatus: string,
+  ) => {
+    // 取得舊狀態
+    const oldStatus = orderStatuses[orderId] || "已結案";
+
+    const bodyData = {
+      orderId: Number(orderId),
+      orderStatus: newStatus,
+      shippingStatus: shippingStatuses[orderId],
+    };
+
+    console.log(oldStatus, orderId, newStatus, shippingStatuses[orderId]);
+
+    const result = await fetch("/api/admin/putOrderStatus", {
+      method: "PUT",
+      body: JSON.stringify(bodyData),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
-      handleDropdownItemClick: async (data: {
-        orderId: string | null;
-        orderStatus: string | null;
-        shippingStatus: string | null;
-        orderData: any;
-      }) => {
-        const { orderId, orderStatus, shippingStatus, orderData } = data;
+    });
 
-        if (!orderId || !orderStatus || !shippingStatus) return;
+    const json = await result.json();
 
-        const bodyData = {
-          orderId: Number(orderId),
-          orderStatus,
-          shippingStatus,
-        };
+    if (isValid(json)) {
+      // 更新狀態
+      setOrderStatuses((prev: Record<string | number, string>) => ({
+        ...prev,
+        [orderId]: newStatus,
+      }));
 
-        const result = await fetch("/api/admin/putOrderStatus", {
-          method: "PUT",
-          body: JSON.stringify(bodyData),
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        });
+      // 建立更新後的訂單資料
+      const updatedOrder = {
+        ...ordersData[activeTab].data.find(
+          (order) => order.orderId.toString() === orderId,
+        ),
+        orderStatus: newStatus,
+        shippingStatus: shippingStatuses[orderId],
+      };
 
-        const json = await result.json();
+      updateStatusData(orderId, oldStatus, newStatus, updatedOrder);
+      updateStatusCount(oldStatus, newStatus);
+    }
+  };
 
-        if (isValid(json)) {
-          // 更新 shippingDropdownStatus
-          shippingDropdownStatus.setStatuses((prev) => ({
-            ...prev,
-            [orderId]: shippingStatus,
-          }));
+  const handleShippingStatusChange = async (
+    orderId: string,
+    newStatus: string,
+  ) => {
+    const oldStatus = shippingStatuses[orderId] || "已取消";
 
-          // 更新 filteredOrders
-          const updatedOrder = {
-            ...orderData,
-            orderId: Number(orderId),
-            orderStatus,
-            shippingStatus,
-          };
+    const bodyData = {
+      orderId: Number(orderId),
+      orderStatus: orderStatuses[orderId],
+      shippingStatus: newStatus,
+    };
 
-          // 更新 ordersData
-          ordersData["全部"].data = ordersData["全部"].data.map((order) =>
-            order.orderId === updatedOrder.orderId ? updatedOrder : order,
-          );
-        }
-
-        shippingDropdownStatus.setOpenDropdown(null);
+    const result = await fetch("/api/admin/putOrderStatus", {
+      method: "PUT",
+      body: JSON.stringify(bodyData),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
-    },
+    });
+
+    const json = await result.json();
+
+    if (isValid(json)) {
+      // 更新狀態
+      setShippingStatuses((prev: Record<string | number, string>) => ({
+        ...prev,
+        [orderId]: newStatus,
+      }));
+
+      // 建立更新後的訂單資料
+      const updatedOrder = {
+        ...ordersData[activeTab].data.find(
+          (order) => order.orderId.toString() === orderId,
+        ),
+        orderStatus: orderStatuses[orderId],
+        shippingStatus: newStatus,
+      };
+
+      updateStatusData(orderId, oldStatus, newStatus, updatedOrder);
+      updateStatusCount(oldStatus, newStatus);
+    }
   };
 
   useEffect(() => {
-    const handleClickOutside = async (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
+    const initialOrderStatuses: Record<string | number, string> = {};
+    const initialShippingStatuses: Record<string | number, string> = {};
 
-      // 處理訂單狀態下拉選單的點擊
-      if (orderControls.dropdown.isDropdownItem(target)) {
-        const dropdownData = orderControls.dropdown.getDropdownData(target);
-        if (dropdownData) {
-          await orderControls.dropdown.handleDropdownItemClick(dropdownData);
-        }
-        return;
-      }
+    ordersData["全部"].data.forEach((order) => {
+      initialOrderStatuses[order.orderId] = order.orderStatus || "已結案";
+      initialShippingStatuses[order.orderId] = order.shippingStatus || "已取消";
+    });
 
-      // 處理物流狀態下拉選單的點擊
-      if (shippingControls.dropdown.isDropdownItem(target)) {
-        const dropdownData = shippingControls.dropdown.getDropdownData(target);
-        if (dropdownData) {
-          await shippingControls.dropdown.handleDropdownItemClick(dropdownData);
-        }
-        return;
-      }
-
-      // 點擊其他區域時關閉所有下拉選單
-      if (
-        shippingDropdownStatus.dropdownRef.current &&
-        !shippingDropdownStatus.dropdownRef.current.contains(target as Node)
-      ) {
-        shippingDropdownStatus.setOpenDropdown(null);
-      }
-
-      if (
-        orderDropdownStatus.dropdownRef.current &&
-        !orderDropdownStatus.dropdownRef.current.contains(target as Node)
-      ) {
-        orderDropdownStatus.setOpenDropdown(null);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+    setOrderStatuses(initialOrderStatuses);
+    setShippingStatuses(initialShippingStatuses);
+  }, [ordersData]);
 
   const handleDataFilter = (tab: ShippingStatusType | OrderStatusType) => {
     setActiveTab(tab);
@@ -301,9 +255,7 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
         <Tbody>
           {filteredOrders.length > 0 ? (
             filteredOrders.map((order) => {
-              const isCompleted = getIsCompleted(
-                orderDropdownStatus.statuses[order.orderId],
-              );
+              const isCompleted = getIsCompleted(orderStatuses[order.orderId]);
               return (
                 <Tr key={order.orderId} $isCompleted={isCompleted}>
                   <Td>
@@ -338,119 +290,52 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
                     </TdCompleted>
                   </Td>
                   <Td>
-                    <DropdownContainer ref={orderDropdownStatus.dropdownRef}>
-                      <TdCompleted $completed={isCompleted}>
-                        <DropdownTrigger
-                          onClick={() =>
-                            orderDropdownStatus.toggleDropdown(
+                    <TdCompleted $completed={isCompleted}>
+                      <SelectGroup>
+                        <Select
+                          value={orderStatuses[order.orderId] || "已結案"}
+                          onChange={(e) =>
+                            handleOrderStatusChange(
                               order.orderId.toString(),
+                              e.target.value,
                             )
                           }
-                          $color={
-                            orderStatusColorMapping[
-                              orderDropdownStatus.statuses[order.orderId]
-                            ]?.color || "textMuted"
-                          }
                         >
-                          {orderDropdownStatus.statuses[order.orderId] ||
-                            "已結案"}
-                          <MdKeyboardArrowDown size={16} />
-                        </DropdownTrigger>
-                      </TdCompleted>
-                      <DropdownContent
-                        $isOpen={
-                          orderDropdownStatus.openDropdown ===
-                          order.orderId.toString()
-                        }
-                      >
-                        {orderStatusValues.map((status) => (
-                          <DropdownItem
-                            key={status}
-                            data-dropdown-item
-                            data-order-id={order.orderId.toString()}
-                            data-order-status={status}
-                            data-order-code={order.orderCode}
-                            data-member-name={order.memberName}
-                            data-rent-stamp={order.rentStamp}
-                            data-return-stamp={order.returnStamp}
-                            data-quantity={order.quantity}
-                            data-final-amount={order.finalAmount}
-                            data-shipping={order.shipping}
-                            $isSelected={
-                              orderDropdownStatus.statuses[order.orderId] ===
-                                status ||
-                              (!orderDropdownStatus.statuses[order.orderId] &&
-                                status === "已結案")
-                            }
-                            $color={
-                              orderStatusColorMapping[status]?.color ||
-                              "textMuted"
-                            }
-                          >
-                            {status}
-                          </DropdownItem>
-                        ))}
-                      </DropdownContent>
-                    </DropdownContainer>
+                          {orderStatusValues.map((status) => (
+                            <option key={status} value={status}>
+                              {status}
+                            </option>
+                          ))}
+                        </Select>
+                        <SelectArrowIcon>
+                          <MdKeyboardArrowDown size={20} />
+                        </SelectArrowIcon>
+                      </SelectGroup>
+                    </TdCompleted>
                   </Td>
                   <Td>
-                    <DropdownContainer ref={shippingDropdownStatus.dropdownRef}>
-                      <TdCompleted $completed={isCompleted}>
-                        <DropdownTrigger
-                          onClick={() =>
-                            shippingDropdownStatus.toggleDropdown(
+                    <TdCompleted $completed={isCompleted}>
+                      <SelectGroup>
+                        <Select
+                          value={shippingStatuses[order.orderId] || "已取消"}
+                          onChange={(e) =>
+                            handleShippingStatusChange(
                               order.orderId.toString(),
+                              e.target.value,
                             )
                           }
-                          $color={
-                            shippingStatusColorMapping[
-                              shippingDropdownStatus.statuses[order.orderId]
-                            ]
-                          }
                         >
-                          {shippingDropdownStatus.statuses[order.orderId] ||
-                            "已取消"}
-                          <MdKeyboardArrowDown size={16} />
-                        </DropdownTrigger>
-                      </TdCompleted>
-                      <DropdownContent
-                        $isOpen={
-                          shippingDropdownStatus.openDropdown ===
-                          order.orderId.toString()
-                        }
-                      >
-                        {shippingValues.map((status) => (
-                          <DropdownItem
-                            key={status}
-                            data-dropdown-item
-                            data-order-id={order.orderId.toString()}
-                            data-order-status={order.orderStatus}
-                            data-shipping-status={status}
-                            data-order-code={order.orderCode}
-                            data-member-name={order.memberName}
-                            data-rent-stamp={order.rentStamp}
-                            data-return-stamp={order.returnStamp}
-                            data-quantity={order.quantity}
-                            data-final-amount={order.finalAmount}
-                            data-shipping={order.shipping}
-                            $isSelected={
-                              shippingDropdownStatus.statuses[order.orderId] ===
-                                status ||
-                              (!shippingDropdownStatus.statuses[
-                                order.orderId
-                              ] &&
-                                status === "已取消")
-                            }
-                            $color={
-                              shippingStatusColorMapping[status] || "textMuted"
-                            }
-                          >
-                            {status}
-                            <DropdownCircle />
-                          </DropdownItem>
-                        ))}
-                      </DropdownContent>
-                    </DropdownContainer>
+                          {shippingValues.map((status) => (
+                            <option key={status} value={status}>
+                              {status}
+                            </option>
+                          ))}
+                        </Select>
+                        <SelectArrowIcon>
+                          <MdKeyboardArrowDown size={20} />
+                        </SelectArrowIcon>
+                      </SelectGroup>
+                    </TdCompleted>
                   </Td>
                   <Td>
                     <TdCompleted $completed={isCompleted}>

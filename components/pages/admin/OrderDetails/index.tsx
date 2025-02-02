@@ -45,7 +45,7 @@ import { useForm } from "react-hook-form";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import { FormError } from "@/utils/react-hook-form/FormError";
 import { useRouter } from "next/router";
-import { isValid } from "@/helpers/api/status";
+import { hasError, isValid } from "@/helpers/api/status";
 import Toast from "@/components/ui/Toast";
 import { ToastState } from "@/components/ui/Toast/data";
 
@@ -122,30 +122,30 @@ const OrderDetails = ({ order }: { order: OrderData }) => {
 
     const orderId = router.query.id as string;
 
-    try {
-      const result = await fetch(`/api/admin/putOrder?id=${orderId}`, {
-        method: "PUT",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(submitData),
-      });
+    const result = await fetch(`/api/admin/putOrder?id=${orderId}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(submitData),
+    });
 
-      const json = await result.json();
+    const json = await result.json();
 
-      setToast({
-        type: isValid(json) ? "success" : "error",
-        message: isValid(json) ? "成功儲存" : "儲存失敗",
-      });
-      
-      isValid(json) && reset(data);
-    } catch (error) {
+    if (hasError(json)) {
       setToast({
         type: "error",
         message: "系統錯誤，請稍後再試",
       });
     }
+
+    setToast({
+      type: isValid(json) ? "success" : "error",
+      message: isValid(json) ? "成功儲存" : "儲存失敗",
+    });
+    
+    isValid(json) && reset(data);
   };
 
   const getValidationRules = (fieldValue: any, errorMessage: string, extraRules = {}) => {

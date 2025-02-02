@@ -1,4 +1,5 @@
-import { InputRadius, RoundedFull } from "@/styles/borderRadius";
+import { InputRadius } from "@/styles/borderRadius";
+import { AdminInputFieldAutofill } from "@/styles/effect";
 import { BgColor, Color, IsCompleted } from "@/types/uiProps";
 import styled from "styled-components";
 
@@ -123,85 +124,36 @@ export const PageButton = styled.button<{ $active?: boolean }>`
   }
 `;
 
-// Dropdown styles
-export const DropdownContainer = styled.div`
+export const SelectGroup = styled.div`
   position: relative;
-  display: inline-block;
+  width: 100px;
 `;
 
-export const DropdownTrigger = styled.button<Color>`
-  ${InputRadius};
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-  column-gap: 4px;
-  background: ${({ theme }) => theme.colors.white};
+export const Select = styled.select`
+  width: 100%;
+  font-size: 14px;
+  color: ${({ theme }) => theme.colors.textPrimary};
+  padding: 6px 32px 6px 12px;
   border: 1px solid ${({ theme }) => theme.colors.grey100};
-  /* border: 1px solid
-    ${({ theme, $color }) =>
-      $color === "primary" ? theme.colors.grey100 : theme.colors[$color]}; */
-  color: ${({ theme }) => theme.colors.textSecondary};
-  font-size: 13px;
-  padding: 4px 12px;
+  ${InputRadius};
 
-  /* &:hover {
-    background: ${({ theme }) => theme.colors.grey100};
-  } */
+  &:focus,
+  &:hover {
+    box-shadow: 0px 0px 0px 1.5px ${({ theme }) => theme.colors.primary};
+  }
+
+  &:-webkit-autofill {
+    ${AdminInputFieldAutofill};
+  }
 `;
 
-export const DropdownContent = styled.div<{ $isOpen: boolean }>`
-  position: absolute;
-  top: 110%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 85px;
-  display: ${({ $isOpen }) => ($isOpen ? "block" : "none")};
-  background: ${({ theme }) => theme.colors.white};
-  border-radius: 4px;
-  padding: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  z-index: 1;
-`;
-
-export const DropdownItem = styled.div<Color & { $isSelected: boolean }>`
-  padding: 6px 8px;
-  font-size: 13px;
-  color: ${({ theme, $isSelected, $color }) =>
-    $isSelected ? theme.colors[$color] : theme.colors.textSecondary};
-  cursor: ${({ $isSelected }) => ($isSelected ? "default" : "pointer")};
+export const SelectArrowIcon = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  border-radius: 2px;
-  pointer-events: ${({ $isSelected }) => ($isSelected ? "none" : "auto")};
-
-  ${({ $isSelected, $color, theme }) =>
-    !$isSelected &&
-    `
-    &:hover {
-      ${DropdownCircle} {
-        display: inline-block;
-        background: ${theme.colors[$color]};
-      }
-    }
-  `};
-
-  ${({ $isSelected, $color, theme }) =>
-    $isSelected &&
-    `
-    &:hover {
-      ${DropdownCircle} {
-        display: inline-block;
-        background: ${theme.colors[$color]};
-      }
-    }
-  `};
-`;
-
-export const DropdownCircle = styled.span`
-  width: 7px;
-  height: 7px;
-  display: none;
-  ${RoundedFull};
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: ${({ theme }) => theme.colors.textMuted};
 `;

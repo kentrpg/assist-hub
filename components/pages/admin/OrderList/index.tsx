@@ -13,41 +13,45 @@ import {
   StatusButton,
   Pagination,
   PageButton,
-  SelectGroup,
-  Select,
-  SelectArrowIcon,
   Sort,
   SortIcon,
   Thead,
   Tbody,
   TdCompleted,
+  SelectArrowIcon,
+  SelectGroup,
+  Select,
 } from "./styled";
 import {
   filterOrderMapping,
   OrderListProps,
-  orderStatusColorMapping,
   OrderStatusType,
   orderStatusValues,
-  shippingStatusColorMapping,
   shippingStatusMapping,
   ShippingStatusType,
   shippingValues,
 } from "./data";
+import { OrderDataType } from "@/types/getAdminOrders";
 import Link from "next/link";
 import { CgArrowLongDown, CgArrowLongUp } from "react-icons/cg";
 import { Header } from "@/components/pages/admin/Header";
 import { formatCurrency } from "@/helpers/format/currency";
 import { useFilteredData } from "@/hooks/useFilteredData";
-import { hasError, isValid } from "@/helpers/api/status";
+import { hasError } from "@/helpers/api/status";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import Toast from "@/components/ui/Toast";
 import { ToastState } from "@/components/ui/Toast/data";
+
+const countSelects = [10, 20, 30, 50];
 
 const OrderList = ({ data: ordersData }: OrderListProps) => {
   console.log(ordersData);
   const [activeTab, setActiveTab] = useState("全部");
   const [currentPage, setCurrentPage] = useState(1);
   const [toast, setToast] = useState<ToastState>(null);
+  const [itemsPerPage, setItemsPerPage] = useState(countSelects[0]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [paginatedData, setPaginatedData] = useState<OrderDataType[]>([]);
 
   const [orderStatuses, setOrderStatuses] = useState<
     Record<string | number, string>
@@ -61,7 +65,7 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
   const [isShippingStatusLoading, setIsShippingStatusLoading] = useState<
     Record<string | number, boolean>
   >({});
-  const filteredOrders = useFilteredData(ordersData, activeTab);
+  // const filteredOrders = useFilteredData(ordersData, activeTab);
 
   const getIsCompleted = (orderStatus: string | null | undefined) => {
     return !orderStatus || orderStatus === "已結案" || orderStatus === "已取消";
@@ -251,6 +255,11 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
     updateStatusData(orderId, oldStatus, newStatus, updatedOrder);
     updateStatusCount(oldStatus, newStatus);
 
+    setToast({
+      type: "success",
+      message: "成功更新物流狀態",
+    });
+
     setIsShippingStatusLoading((prev) => ({
       ...prev,
       [orderId]: false,
@@ -271,8 +280,64 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
   }, [ordersData]);
 
   const handleDataFilter = (tab: ShippingStatusType | OrderStatusType) => {
+    setCurrentPage(1);
     setActiveTab(tab);
   };
+
+  const calculatePaginatedData = (
+    data: OrderDataType[],
+    page: number,
+    pageSize: number,
+  ) => {
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    return data.slice(startIndex, endIndex);
+  };
+
+  const handlePagination = (
+    value: number,
+    countPage: number,
+    currentPage: number,
+  ) => {
+    const newPaginatedData = calculatePaginatedData(
+      ordersData[activeTab].data,
+      currentPage,
+      value,
+    );
+
+    console.log(newPaginatedData);
+
+    setItemsPerPage(value);
+    setTotalPages(countPage);
+    setCurrentPage(currentPage);
+    setPaginatedData(newPaginatedData);
+  };
+
+  const handleCountSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = parseInt(e.target.value, 10);
+    const totalItems = ordersData[activeTab].count;
+
+    const quotient = Math.floor(totalItems / value);
+    const remainder = totalItems % value;
+    const countPage = remainder > 0 ? quotient + 1 : quotient;
+
+    handlePagination(value, countPage, 1);
+  };
+
+  const handlePageChange = (page: number) => {
+    console.log("Selected page:", page);
+
+    handlePagination(itemsPerPage, totalPages, page);
+  };
+
+  useEffect(() => {
+    const totalItems = ordersData[activeTab].count;
+    const quotient = Math.floor(totalItems / itemsPerPage);
+    const remainder = totalItems % itemsPerPage;
+    const countPage = remainder > 0 ? quotient + 1 : quotient;
+
+    handlePagination(itemsPerPage, countPage, currentPage);
+  }, [activeTab, ordersData]);
 
   return (
     <Container>
@@ -281,6 +346,7 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
         activeTab={activeTab}
         onTabChange={handleDataFilter}
         iconMapping={filterOrderMapping}
+        onChangeSelect={handleCountSelect}
       />
       <Table>
         <Thead>
@@ -312,8 +378,8 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
           </Tr>
         </Thead>
         <Tbody>
-          {filteredOrders.length > 0 ? (
-            filteredOrders.map((order) => {
+          {paginatedData.length > 0 ? (
+            paginatedData.map((order) => {
               const isCompleted = getIsCompleted(orderStatuses[order.orderId]);
               return (
                 <Tr key={order.orderId} $isCompleted={isCompleted}>
@@ -428,8 +494,21 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
         >
           <MdChevronLeft size={18} />
         </PageButton>
-        <PageButton $active={true}>{currentPage}</PageButton>
-        <PageButton onClick={() => setCurrentPage((p) => p + 1)}>
+        {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+          (page) => (
+            <PageButton
+              key={page}
+              $active={currentPage === page}
+              onClick={() => handlePageChange(page)}
+            >
+              {page}
+            </PageButton>
+          ),
+        )}
+        <PageButton
+          onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+          disabled={currentPage === totalPages}
+        >
           <MdChevronRight size={18} />
         </PageButton>
       </Pagination>

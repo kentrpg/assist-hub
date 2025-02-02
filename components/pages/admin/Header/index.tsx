@@ -13,7 +13,7 @@ import {
 } from "./styled";
 import { HeaderProps, countSelects } from "./data";
 
-export const Header = ({ tabs, activeTab, onTabChange, iconMapping }: HeaderProps) => {
+export const Header = ({ tabs, activeTab, onTabChange, iconMapping, onChangeSelect }: HeaderProps) => {
   return (
     <HeaderStyled>
       <TabList>
@@ -35,7 +35,7 @@ export const Header = ({ tabs, activeTab, onTabChange, iconMapping }: HeaderProp
       <TableToolbar>
         <CountGroup>
           <CountLabel htmlFor="count">顯示筆數</CountLabel>
-          <CountSelect id="count">
+          <CountSelect id="count" onChange={onChangeSelect}>
             {countSelects.map((count) => (
               <option key={count} value={count}>
                 {count}

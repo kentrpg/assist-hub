@@ -134,7 +134,7 @@ export const Select = styled.select`
   font-size: 14px;
   color: ${({ theme }) => theme.colors.textPrimary};
   padding: 6px 32px 6px 12px;
-  border: 1px solid ${({ theme }) => theme.colors.grey100};
+  box-shadow: 0px 0px 0px 1.5px ${({ theme }) => theme.colors.grey100};
   ${InputRadius};
 
   &:focus,

@@ -13,6 +13,7 @@ export type HeaderProps = {
   activeTab: string;
   onTabChange: (tab: string) => void;
   iconMapping: typeof filterSuggestMapping | typeof filterOrderMapping;
+  onChangeSelect: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
 export const countSelects = [10, 20, 30];

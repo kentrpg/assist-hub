@@ -1,5 +1,5 @@
-import { Container1344 as Container } from "@/styles/container";
 import {
+  Container,
   Categories,
   AddressInfo,
   Contact,
@@ -14,10 +14,7 @@ import {
   CategoryLinks,
   Image,
 } from "./styled";
-import { IconLinkWrapper } from "@/utils/react-icons/iconWrappers";
 import CheckboxField from "@/utils/react-hook-form/CheckboxField";
-import { FaFacebookSquare, FaLine } from "react-icons/fa";
-import { useTheme } from "styled-components";
 import { useForm } from "react-hook-form";
 import { ErrorMessage as FormErrorMessage } from "@/utils/react-hook-form/FormError/styled";
 import InputField from "@/utils/react-hook-form/InputField";
@@ -26,12 +23,9 @@ import {
   FormValuesData,
   FormValuesProps,
 } from "@/utils/react-hook-form/InputField/data";
-import { ImageWrapper } from "@/components/ui/images";
 import Link from "next/link";
 
 const Footer: React.FC = () => {
-  const theme = useTheme();
-
   const {
     register,
     control,

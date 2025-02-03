@@ -32,8 +32,8 @@ const Sidebar: React.FC = () => {
         <Link href="/">
           <Logo>
             <Image
-              src="/images/LOGO.webp"
-              alt="RENT4U Logo"
+              src="/images/LOGO2x.webp"
+              alt="網站 Logo"
               width={40}
               height={40}
               quality={85}

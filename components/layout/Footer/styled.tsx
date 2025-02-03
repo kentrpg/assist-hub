@@ -1,26 +1,38 @@
 import styled from "styled-components";
 import Link from "next/link";
 import { Mobile, Tablet } from "@/styles/container";
-
+import { Container1344 } from "@/styles/container";
 // TBD: 待評估響應式移除 Newsletter 區塊是否合理，否則背景高度要改為 520px
 
 export const Wrapper = styled.footer`
-  /* height: 520px; */
   width: 100%;
-  height: 420px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   flex-shrink: 0;
-  background-image: url("/images/footer-bg.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: top;
+  background-color: ${({ theme }) => theme.colors.grey100};
+  position: relative;
   padding-bottom: 20px;
+  margin-top: 90px;
 
-  /* @media ${Mobile} {
-    height: 420px;
-  } */
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -120px;
+    height: 168px;
+    background-image: url("/images/wave768.webp");
+    background-repeat: repeat-x;
+    background-position: top;
+    @media ${Tablet} {
+      background-image: url("/images/wave1920.webp");
+    }
+  }
+`;
+
+export const Container = styled(Container1344)`
+  z-index: 1;
 `;
 
 export const Content = styled.div`

@@ -346,11 +346,15 @@ export const RecommendedContainer = styled.div`
 
   .slick-slider {
     width: 100%;
+    padding: 0px 12px;
     display: flex;
     flex-direction: column;
     row-gap: 16px;
     justify-content: center;
     align-items: center;
+    @media (${Mobile}) {
+      padding: 0px;
+    }
   }
 
   .slick-list {
@@ -487,7 +491,7 @@ export const CarouselBtn = styled.button`
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  opacity: 0;
+  opacity: 1;
   transition:
     opacity 0.3s ease,
     transform 0.3s ease;
@@ -495,6 +499,10 @@ export const CarouselBtn = styled.button`
   &:hover {
     background-color: #b28f12;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  @media (${Desktop}) {
+    opacity: 0;
   }
 `;
 

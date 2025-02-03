@@ -4,9 +4,11 @@ import { Tablet, Desktop, Mobile, ExtraLarge } from "@/styles/container";
 
 export const BarContainer = styled(Container1344)`
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 90px;
+  row-gap: 10px;
+  padding: 12px 12px;
   outline: 1px solid #08204d;
   border-radius: 20px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -20,41 +22,66 @@ export const BarContainer = styled(Container1344)`
   transition:
     transform 0.3s ease,
     bottom 0.3s ease;
+  @media ${Mobile} {
+    padding: 20px 24px;
+  }
+  @media ${ExtraLarge} {
+    flex-direction: row;
+    padding: 20px 90px;
+  }
 `;
 
 export const Products = styled.div`
   display: flex;
-  column-gap: 40px;
+  column-gap: 20px;
+  @media ${Mobile} {
+    column-gap: 40px;
+  }
 `;
 
 export const Product = styled.div`
   display: flex;
+  flex-direction: row;
   column-gap: 10px;
   align-items: center;
 `;
 
 export const Info = styled.div`
   display: flex;
+  row-gap: 10px;
   flex-direction: column;
 `;
 
 export const Name = styled.span`
   font-size: 16px;
   font-weight: 700;
+  display: none;
+  @media ${Tablet} {
+    display: block;
+  }
 `;
 
 export const Rent = styled.span`
   font-size: 16px;
   font-weight: 500;
+  display: none;
+  @media ${Tablet} {
+    display: block;
+  }
 `;
 
 export const Img = styled.img`
   object-fit: contain;
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
+  @media ${Desktop} {
+    width: 80px;
+    height: 80px;
+  }
 `;
 
 export const InquiryBtn = styled.button`
+  white-space: nowrap;
   border-radius: 30px;
   background-color: #103f99;
   color: white;
@@ -69,7 +96,7 @@ export const InquiryBtn = styled.button`
 
   &:hover {
     background-color: #0b2c6b;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transform: scale(1.1);
   }
 `;
@@ -85,12 +112,12 @@ export const IconWrapper = styled.div`
   transition:
     background-color 0.3s ease,
     box-shadow 0.2s ease,
-    transform 0.2s ease; 
+    transform 0.2s ease;
 
   &:hover {
     background-color: #0b2c6b;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-    transform: scale(1.2); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(1.2);
   }
 `;
 

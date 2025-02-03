@@ -20,6 +20,7 @@ import { useDispatch } from "react-redux";
 import { removeFromInquiryBar } from "@/utils/redux/slices/inquiryBar";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { formatCurrency } from "@/helpers/format/currency";
 
 const InquiryBar: React.FC = () => {
   const router = useRouter();
@@ -55,7 +56,7 @@ const InquiryBar: React.FC = () => {
               <Img src={product.imgSrc} alt={product.name} />
               <Info>
                 <Name>{product.name}</Name>
-                <Rent>{product.rent}元</Rent>
+                <Rent>{formatCurrency(product.rent)}</Rent>
               </Info>
             </Product>
           </Link>

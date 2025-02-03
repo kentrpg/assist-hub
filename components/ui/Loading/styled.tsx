@@ -10,7 +10,7 @@ export const LoadingWrapper = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${({ theme }) =>
-    `color-mix(in srgb, ${theme.colors.white} 80%, transparent)`};
+    `color-mix(in srgb, ${theme.colors.secondaryBg} 55%, transparent)`};
   z-index: 9999;
 `;
 

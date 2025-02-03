@@ -17,6 +17,7 @@ import {
 } from "./styled";
 import { ProductItem } from "../data";
 import { useModal } from "@/components/ui/Modal";
+import { useToast } from "@/components/ui/Toast";
 
 type ProductCategoryProps = {
   title: string;
@@ -36,6 +37,7 @@ const Category: React.FC<ProductCategoryProps> = ({
   const dispatch = useDispatch();
   const inquiryBar = useSelector((state: RootState) => state.inquiryBar);
   const { openModal, Modal } = useModal();
+  const { openToast, Toast } = useToast();
 
   const handleAddToInquiryBar = (
     product: ProductItem,
@@ -63,7 +65,7 @@ const Category: React.FC<ProductCategoryProps> = ({
         description: product.description,
       }),
     );
-    openModal("✅ 商品成功加入詢問單！");
+    openToast("商品成功加入詢問單", "success");
   };
 
   const filteredProducts = products.filter((product) => product.type === type);
@@ -93,6 +95,7 @@ const Category: React.FC<ProductCategoryProps> = ({
           </Link>
         ))}
       </CardWrapper>
+      <Toast />
       <Modal />
     </CategoryContainer>
   );

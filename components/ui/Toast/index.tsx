@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { MdCheckCircle } from "react-icons/md";
 import { ToastContainer } from "./styled";
-import type { ToastProps } from "./data";
+import type { ToastProps, ToastState, ToastType } from "./data";
 
 /**
  * Toast 通知元件
@@ -40,7 +40,40 @@ import type { ToastProps } from "./data";
  * @param props.$top - 距離頂部的位置，預設 24px
  * @param props.$right - 距離右側的位置，預設 24px
  */
-const Toast = ({
+export const useToast = () => {
+  const [toastState, setToastState] = useState<ToastState>(null);
+
+  const openToast = useCallback(
+    (message: string, type: ToastType = "success") => {
+      setToastState({ type, message });
+    },
+    [],
+  );
+
+  const hideToast = useCallback(() => {
+    setToastState(null);
+  }, []);
+
+  const Toast = useCallback(() => {
+    if (!toastState) return null;
+
+    return (
+      <ToastComponent
+        type={toastState.type}
+        message={toastState.message}
+        onClose={hideToast}
+      />
+    );
+  }, [toastState, hideToast]);
+
+  return {
+    openToast,
+    hideToast,
+    Toast,
+  };
+};
+
+const ToastComponent = ({
   type = "success",
   message = "成功",
   duration = 3000,
@@ -68,7 +101,7 @@ const Toast = ({
       clearTimeout(hideTimer);
       clearTimeout(removeTimer);
     };
-  }, [duration, onClose]);
+  }, [duration, onClose, isFunction]);
 
   return (
     <ToastContainer
@@ -83,4 +116,4 @@ const Toast = ({
   );
 };
 
-export default Toast;
+export default ToastComponent;

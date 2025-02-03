@@ -51,8 +51,7 @@ export const Content = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* min-width: 320px;
-  max-width: 90%; */
+  max-width: 90%;
   max-height: 90vh;
   overflow-y: auto;
   background-color: ${({ theme }) => theme.colors.white};

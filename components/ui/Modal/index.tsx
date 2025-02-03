@@ -11,7 +11,7 @@ import {
   OutlinedButton,
 } from "./styled";
 
-const controller = {
+const modalControls = {
   default: {
     type: "text",
     description: "成功",
@@ -113,18 +113,18 @@ const ModalComponent = ({
             <>
               {mode === "default" ? (
                 <>
-                  <Text>{description || controller[mode].description}</Text>
+                  <Text>{description || modalControls[mode].description}</Text>
                   <OutlinedButton onClick={handleClose}>確定</OutlinedButton>
                 </>
               ) : (
                 <>
                   <Image
-                    src={controller[mode].imgSrc}
-                    alt={controller[mode].imgAlt}
+                    src={modalControls[mode].imgSrc}
+                    alt={modalControls[mode].imgAlt}
                     width={120}
                     height={120}
                   />
-                  <Text>{description || controller[mode].description}</Text>
+                  <Text>{description || modalControls[mode].description}</Text>
                   <Button onClick={handleClose}>確定</Button>
                 </>
               )}

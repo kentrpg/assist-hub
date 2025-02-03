@@ -34,7 +34,6 @@ import {
 } from "./styled";
 import {
   MdPerson,
-  MdLocalShipping,
   MdContentCopy,
   MdKeyboardArrowDown,
 } from "react-icons/md";
@@ -46,13 +45,12 @@ import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import { FormError } from "@/utils/react-hook-form/FormError";
 import { useRouter } from "next/router";
 import { hasError, isValid } from "@/helpers/api/status";
-import Toast from "@/components/ui/Toast";
-import { ToastState } from "@/components/ui/Toast/data";
+import { useToast } from "@/components/ui/Toast";
 
 const OrderDetails = ({ order }: { order: OrderData }) => {
   console.log(order);
   const router = useRouter();
-  const [toast, setToast] = useState<ToastState>(null);
+  const { openToast, Toast } = useToast();
   
   const {
     register,
@@ -134,16 +132,11 @@ const OrderDetails = ({ order }: { order: OrderData }) => {
     const json = await result.json();
 
     if (hasError(json)) {
-      setToast({
-        type: "error",
-        message: "系統錯誤，請稍後再試",
-      });
+      openToast("系統錯誤，請稍後再試", "error");
+      return;
     }
 
-    setToast({
-      type: isValid(json) ? "success" : "error",
-      message: isValid(json) ? "成功儲存" : "儲存失敗",
-    });
+    openToast(isValid(json) ? "成功儲存" : "儲存失敗", isValid(json) ? "success" : "error");
     
     isValid(json) && reset(data);
   };
@@ -156,14 +149,6 @@ const OrderDetails = ({ order }: { order: OrderData }) => {
     amount: {
       value: isDirty ? finalAmount : order.details.finalAmount,
       format: (value: number) => formatCurrency(value),
-    },
-    toast: {
-      isVisible: toast !== null,
-      content: toast && {
-        type: toast.type,
-        message: toast.message,
-        onClose: () => setToast(null),
-      },
     },
     submit: {
       isDisabled: isSubmitting || Object.keys(errors).length !== 0 || !isDirty,
@@ -649,10 +634,7 @@ const OrderDetails = ({ order }: { order: OrderData }) => {
             formControls.submit.text
           )}
         </SubmitButton>
-
-        {formControls.toast.isVisible && (
-          <Toast {...formControls.toast.content!} />
-        )}
+      <Toast />
     </FormContainer>
   );
 };

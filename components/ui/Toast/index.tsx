@@ -7,38 +7,44 @@ import type { ToastProps, ToastState, ToastType } from "./data";
  * Toast 通知元件
  *
  * 使用方式：
- * 1. 在父元件中設置 state 來控制 Toast 的顯示狀態
- * ```typescript
- * const [showToast, setShowToast] = useState(false);
- * ```
+ * - 在元件中引入並使用 useToast hook
  *
- * 2. 在需要顯示 Toast 的時候，state(showToast) 設置 true
  * ```typescript
- * const handleClick = () => {
- *   setShowToast(true);
+ * const YourComponent = () => {
+ *   const { openToast, Toast } = useToast();
+ *
+ *   const handleSuccess = () => {
+ *     openToast("操作成功"); // 預設為 success 類型
+ *   };
+ *
+ *   const handleError = () => {
+ *     openToast("操作失敗", "error");
+ *   };
+ *
+ *   return (
+ *     <div>
+ *       <button onClick={handleSuccess}>成功按鈕</button>
+ *       <button onClick={handleError}>失敗按鈕</button>
+ *       <Toast />
+ *     </div>
+ *   );
  * };
  * ```
  *
- * 3. 在 JSX 中使用條件渲染來顯示 Toast
- * ```typescript
- * {showToast && (
- *   <Toast
- *     type="success"  // 'success' | 'error'
- *     message="成功儲存"  // 顯示的訊息
- *     onClose={() => setShowToast(false)}  // Toast 消失時的回調
- *     duration={3000}  // 可選，預設 3000ms
- *     $top="24px"     // 可選，預設 24px
- *     $right="24px"   // 可選，預設 24px
- *   />
- * )}
- * ```
+ * @hook useToast
+ * @returns {object} Toast hook 物件
+ * @property {function} openToast - 顯示 Toast 的函數，參數：(message: string, type?: "success" | "error")
+ * @property {function} hideToast - 手動隱藏 Toast 的函數
+ * @property {function} Toast - Toast 元件，需要在 JSX 中渲染
  *
- * @param props.type - Toast 類型：'success' | 'error'
- * @param props.message - 顯示的訊息內容
- * @param props.onClose - Toast 消失時的回調函數
- * @param props.duration - 顯示時間（毫秒），預設 3000ms
- * @param props.$top - 距離頂部的位置，預設 24px
- * @param props.$right - 距離右側的位置，預設 24px
+ * @component ToastComponent
+ * @param {object} props - Toast 元件屬性
+ * @param {ToastType} [props.type="success"] - Toast 類型：'success' | 'error'
+ * @param {string} props.message - 顯示的訊息內容
+ * @param {function} props.onClose - Toast 消失時的回調函數
+ * @param {number} [props.duration=3000] - 顯示時間（毫秒）
+ * @param {string} [props.$top="24px"] - 距離頂部的位置
+ * @param {string} [props.$right="24px"] - 距離右側的位置
  */
 export const useToast = () => {
   const [toastState, setToastState] = useState<ToastState>(null);

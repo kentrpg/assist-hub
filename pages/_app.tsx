@@ -6,8 +6,29 @@ import Head from "next/head";
 import store from "@/utils/redux/store";
 import { Provider } from "react-redux";
 import AuthProvider from "@/components/auth/AuthProvider";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import Loading from "@/components/ui/Loading";
 
 export default function App({ Component, pageProps }: AppProps) {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const handleStart = () => setLoading(true);
+    const handleComplete = () => setLoading(false);
+
+    router.events.on("routeChangeStart", handleStart);
+    router.events.on("routeChangeComplete", handleComplete);
+    router.events.on("routeChangeError", handleComplete);
+
+    return () => {
+      router.events.off("routeChangeStart", handleStart);
+      router.events.off("routeChangeComplete", handleComplete);
+      router.events.off("routeChangeError", handleComplete);
+    };
+  }, [router]);
+
   return (
     <Provider store={store}>
       <Head>
@@ -17,6 +38,7 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
+        {loading && <Loading />}
         <AuthProvider>
           <Component {...pageProps} />
         </AuthProvider>

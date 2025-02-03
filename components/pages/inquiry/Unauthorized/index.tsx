@@ -1,38 +1,27 @@
-import { Container912 as Container } from "@/styles/container";
-import { InquiryStep } from "./styled";
-import {
-  Title,
-  TitleDescription as Description,
-  TitleGroup as Group,
-} from "@/components/ui/titles";
-import { FlexAlignCenter } from "@/styles/flex";
-import { inquiryStepCards } from "../data";
-import InquiryStepCard from "@/components/ui/cards/InquiryStepCard";
-import { AccentButton } from "../styled";
+import { ImageWrapper } from "@/components/ui/images";
+import { Container, Image, Content, Title, Text } from "./styled";
+import { AccentButton } from "@/styles/link";
 
-const NotFound = () => {
+const Unauthorized = () => {
   return (
     <Container>
-      <Group>
-        <Title>還找不到合適的輔具？</Title>
-        <Description>建立詢問單，我們幫您搞定！</Description>
-      </Group>
-      <InquiryStep>
-        {inquiryStepCards.map(({ step, title, imgSrc, $color }) => (
-          <InquiryStepCard
-            key={step}
-            step={step}
-            title={title}
-            imgSrc={imgSrc}
-            $color={$color}
-          />
-        ))}
-      </InquiryStep>
-      <FlexAlignCenter>
-        <AccentButton>建立詢問單</AccentButton>
-      </FlexAlignCenter>
+      <ImageWrapper>
+        <Image
+          src="/images/inquiry-NotLoggedIn-3.webp"
+          alt="插畫顯示一位醫生透過手機與患者進行遠端醫療諮詢，旁邊有心電圖圖案和對話框圖示，象徵醫療數據傳遞與交流。"
+          width={570}
+          height={368}
+        />
+      </ImageWrapper>
+      <Content>
+        <Title>
+          還在為合適的輔具煩惱？
+          <Text>透過詢問單獲取免費1對1專業建議</Text>
+        </Title>
+        <AccentButton href="/auth/signin">立即登入</AccentButton>
+      </Content>
     </Container>
   );
 };
 
-export default NotFound;
+export default Unauthorized;

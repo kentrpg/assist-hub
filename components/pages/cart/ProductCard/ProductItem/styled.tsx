@@ -5,7 +5,7 @@ import {
   OutlineColorTransition,
   ShadowMedium,
 } from "@/styles/effect";
-import { AccentButton } from "@/styles/link";
+import { AccentIconButton } from "@/styles/link";
 import styled, { css } from "styled-components";
 
 export const Product = styled.div<{ $isActive: boolean }>`
@@ -350,7 +350,9 @@ export const CheckoutActive = styled.div<{ $isDisabled?: boolean }>`
   cursor: ${({ $isDisabled }) => ($isDisabled ? "not-allowed" : "pointer")};
 `;
 
-export const CheckoutButton = styled(AccentButton)<{ $isDisabled?: boolean }>`
+export const CheckoutButton = styled(AccentIconButton)<{
+  $isDisabled?: boolean;
+}>`
   ${ShadowMedium};
 
   ${({ $isDisabled }) =>

@@ -32,7 +32,7 @@ const Sidebar: React.FC = () => {
         <Link href="/">
           <Logo>
             <Image
-              src="/images/LOGO-default.webp"
+              src="/images/LOGO.webp"
               alt="RENT4U Logo"
               width={40}
               height={40}

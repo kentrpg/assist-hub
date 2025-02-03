@@ -7,6 +7,7 @@ import {
 import NextLink from "next/link";
 import styled from "styled-components";
 import { HstackLayout } from "./flex";
+import { Mobile } from "./container";
 
 export const InfoLink = styled(NextLink)`
   color: ${({ theme }) => theme.colors.info};
@@ -38,11 +39,22 @@ export const SecondaryIconButton = styled(NextLink)`
   ${buttonVariants.secondary};
 `;
 
-export const AccentButton = styled(NextLink)`
+export const AccentIconButton = styled(NextLink)`
   display: flex;
   gap: 12px;
   ${BaseButton};
   ${buttonVariants.accent};
+`;
+
+export const AccentButton = styled(NextLink)`
+  gap: 12px;
+  ${BaseButton};
+  ${buttonVariants.accent};
+  ${buttonSizes.medium};
+
+  @media ${Mobile} {
+    ${buttonSizes.xlarge};
+  }
 `;
 
 export const OutlineButton = styled(NextLink)`

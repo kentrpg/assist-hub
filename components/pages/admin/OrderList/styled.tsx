@@ -112,6 +112,7 @@ export const PageButton = styled.button<{ $active?: boolean }>`
 
   &:first-child,
   &:last-child {
+    padding: 0 6px;
     &:hover:not(:disabled) {
       border-color: ${({ theme }) => theme.colors.primary};
       color: ${({ theme }) => theme.colors.primary};
@@ -121,6 +122,11 @@ export const PageButton = styled.button<{ $active?: boolean }>`
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+
+    svg {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   }
 `;
 

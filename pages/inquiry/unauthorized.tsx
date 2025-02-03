@@ -1,11 +1,13 @@
 import { MainWrapper } from "@/styles/wrappers";
-import NotFound from "@/components/pages/inquiry/Unauthorized";
+import Unauthorized from "@/components/pages/inquiry/Unauthorized";
 
 const NotFoundPage = () => {
   return (
-    <MainWrapper>
-      <NotFound />
-    </MainWrapper>
+    <>
+      <MainWrapper>
+        <Unauthorized />
+      </MainWrapper>
+    </>
   );
 };
 

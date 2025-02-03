@@ -5,7 +5,7 @@ import {
   OutlineColorTransition,
   ShadowMedium,
 } from "@/styles/effect";
-import { AccentButton } from "@/styles/link";
+import { AccentIconButton } from "@/styles/link";
 import styled, { css } from "styled-components";
 
 export const Product = styled.div<{ $isActive: boolean }>`
@@ -27,6 +27,7 @@ export const Product = styled.div<{ $isActive: boolean }>`
 `;
 
 export const Card = styled.div<{ $isParentActive: boolean }>`
+  position: relative;
   width: 100%;
   border: 1px solid ${({ theme }) => theme.colors.textSecondary};
   ${CardRadius};
@@ -350,7 +351,9 @@ export const CheckoutActive = styled.div<{ $isDisabled?: boolean }>`
   cursor: ${({ $isDisabled }) => ($isDisabled ? "not-allowed" : "pointer")};
 `;
 
-export const CheckoutButton = styled(AccentButton)<{ $isDisabled?: boolean }>`
+export const CheckoutButton = styled(AccentIconButton)<{
+  $isDisabled?: boolean;
+}>`
   ${ShadowMedium};
 
   ${({ $isDisabled }) =>

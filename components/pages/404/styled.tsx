@@ -33,10 +33,10 @@ export const Content = styled.div`
   align-items: center;
   justify-content: center;
   flex-shrink: 1;
-  gap: 16px;
+  gap: 15px;
 
   @media ${Tablet} {
-    gap: 32px;
+    gap: 30px;
     flex-shrink: 0;
   }
 `;

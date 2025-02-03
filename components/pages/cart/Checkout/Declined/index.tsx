@@ -15,7 +15,12 @@ const Declined = () => {
     <Container>
       <Context>
         <ImageWrapper>
-          <Image src="/images/checkout-declined.png" alt="declined image" />
+          <Image
+            src="/images/failed.webp"
+            alt="插畫顯示一名穿紅色衣服的男子坐在椅子上，右腳打著石膏，象徵受傷或行動不便的狀態。"
+            width={200}
+            height={320}
+          />
         </ImageWrapper>
         <Title>付款失敗</Title>
         <Description>

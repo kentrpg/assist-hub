@@ -1,9 +1,15 @@
-import { LoadingWrapper, Spinner } from "./styled";
+import { LoadingWrapper, CardLoadingWrapper, Spinner } from "./styled";
 
-export default function Loading() {
+type LoadingProps = {
+  mode?: "full" | "card";
+};
+
+export default function Loading({ mode = "full" }: LoadingProps) {
+  const Wrapper = mode === "card" ? CardLoadingWrapper : LoadingWrapper;
+
   return (
-    <LoadingWrapper>
+    <Wrapper>
       <Spinner />
-    </LoadingWrapper>
+    </Wrapper>
   );
 }

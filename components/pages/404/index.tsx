@@ -8,8 +8,8 @@ const NotFound = () => {
       <ImageWrapper>
         <Image
           src="/images/404.webp"
-          alt="404 image"
-          width={565}
+          alt="插畫顯示 404 錯誤頁面，圖案包含斷開的插頭和文字 ‘Oops..!’ 與 ‘Page Not Found’，象徵網頁未找到的狀態。"
+          width={570}
           height={368}
         />
       </ImageWrapper>

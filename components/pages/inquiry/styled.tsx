@@ -1,10 +1,18 @@
 import { PrimaryButton, buttonSizes } from "@/components/ui/buttons/Layout";
-import { Desktop, Tablet } from "@/styles/container";
+import { Desktop, Mobile, Tablet } from "@/styles/container";
 import styled from "styled-components";
 
 export const Header = styled.header`
   position: relative;
-  margin-bottom: 40px;
+  margin-bottom: 0px;
+
+  @media ${Mobile} {
+    margin-bottom: 20px;
+  }
+
+  @media ${Tablet} {
+    margin-bottom: 40px;
+  }
 `;
 
 export const Title = styled.h1`
@@ -18,13 +26,22 @@ export const Assistive = styled.div`
 
 export const ActionAssessment = styled.div`
   margin-bottom: 40px;
+
+  @media ${Tablet} {
+    margin-bottom: 70px;
+  }
 `;
 
 export const SubTitle = styled.h2`
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 500;
   color: ${({ theme }) => theme.colors.textPrimary};
-  margin-bottom: 40px;
+  margin-bottom: 20px;
+
+  @media ${Tablet} {
+    font-size: 24px;
+    font-weight: 500;
+  }
 `;
 
 export const DeleteButton = styled.button`

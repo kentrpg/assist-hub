@@ -26,8 +26,8 @@ export type ProductItemProps = {
   $isActive: boolean;
   isDeleting: boolean;
   onClick: () => void;
-  onDelete: (id: number) => void;
-  onRentalPeriodChange: (period: PeriodProps) => void;
-  onStartDateChange: (date: string) => void;
-  onQuantityChange: (quantity: number) => void;
+  onDelete: (id: number) => Promise<void>;
+  onRentalPeriodChange: (period: PeriodProps) => Promise<void>;
+  onStartDateChange: (date: string) => Promise<void>;
+  onQuantityChange: (quantity: number) => Promise<void>;
 };

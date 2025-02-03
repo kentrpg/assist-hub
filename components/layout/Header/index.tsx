@@ -152,8 +152,6 @@ const Header = ({ isAuthenticated, isLoading }: HeaderProps) => {
         </Navbar>
 
         <ActionButtonGroup>
-          <a href="/user/profile">user</a>
-          <a href="/user/order">order</a>
           <SearchButton>
             <MdSearch size={24} />
             <ButtonText>快速適配</ButtonText>

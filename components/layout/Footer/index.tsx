@@ -1,5 +1,5 @@
-import { Container1344 as Container } from "@/styles/container";
 import {
+  Container,
   Categories,
   AddressInfo,
   Contact,
@@ -12,12 +12,10 @@ import {
   SocialMediaLinks,
   Title,
   CategoryLinks,
+  Image,
 } from "./styled";
-import { IconLinkWrapper } from "@/utils/react-icons/iconWrappers";
 import CheckboxField from "@/utils/react-hook-form/CheckboxField";
-import { FaFacebookSquare, FaLine } from "react-icons/fa";
-import { useTheme } from "styled-components";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { ErrorMessage as FormErrorMessage } from "@/utils/react-hook-form/FormError/styled";
 import InputField from "@/utils/react-hook-form/InputField";
 import ForwardButton from "@/components/ui/buttons/ForwardButton";
@@ -25,10 +23,9 @@ import {
   FormValuesData,
   FormValuesProps,
 } from "@/utils/react-hook-form/InputField/data";
+import Link from "next/link";
 
 const Footer: React.FC = () => {
-  const theme = useTheme();
-
   const {
     register,
     control,
@@ -86,24 +83,22 @@ const Footer: React.FC = () => {
               <span>電話：0912-345678</span>
               <span>地址：高雄市新興區</span>
               <SocialMediaLinks>
-                <IconLinkWrapper
-                  href="https://line.me"
-                  target="_blank"
-                  $size={24}
-                  $backgroundColor="white"
-                  $borderRadius={4}
-                >
-                  <FaLine size={24} fill={theme.colors.lineLogo} />
-                </IconLinkWrapper>
-                <IconLinkWrapper
-                  href="https://www.facebook.com/hexschool"
-                  target="_blank"
-                  $size={24}
-                  $backgroundColor="white"
-                  $borderRadius={2}
-                >
-                  <FaFacebookSquare size={24} fill={theme.colors.fbLogo} />
-                </IconLinkWrapper>
+                <Link href="https://line.me" target="_blank">
+                  <Image
+                    src="/images/social/LINE_icon.webp"
+                    alt="LINE logo"
+                    width={20}
+                    height={20}
+                  />
+                </Link>
+                <Link href="https://www.facebook.com/hexschool" target="_blank">
+                  <Image
+                    src="/images/social/META-logo.webp"
+                    alt="META logo"
+                    width={20}
+                    height={20}
+                  />
+                </Link>
               </SocialMediaLinks>
             </AddressInfo>
           </Contact>

@@ -46,7 +46,12 @@ const Tabs = () => {
           (tab) =>
             tab.id === activeTab && (
               <Group key={tab.id}>
-                <Image src={tab.imgSrc} alt={tab.label} />
+                <Image
+                  src={tab.imgSrc}
+                  alt={tab.imgAlt}
+                  width={270}
+                  height={300}
+                />
                 <Description>{tab.description}</Description>
               </Group>
             ),

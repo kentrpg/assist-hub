@@ -17,7 +17,12 @@ const Approval = () => {
       <Breadcrumb />
       <Context>
         <ImageWrapper>
-          <Image src="/images/checkout-approval.png" alt="approval image" />
+          <Image
+            src="/images/successful.webp"
+            alt="插畫顯示一名穿淺灰色上衣的男子使用拐杖站立，右腳打著石膏，象徵正在康復中的狀態。"
+            width={200}
+            height={320}
+          />
         </ImageWrapper>
         <Title>付款成功</Title>
         <Description>

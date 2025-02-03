@@ -21,32 +21,3 @@ export const inquiryInfo: InquiryInfoProps = {
 export type InquiryDetailProps = {
   data: InquiryInfo;
 };
-
-// for InquiryStep page
-
-export type InquiryStepCardProps = {
-  step: "01" | "02" | "03";
-  title: string;
-  imgSrc: string;
-} & Color;
-
-export const inquiryStepCards: InquiryStepCardProps[] = [
-  {
-    step: "01",
-    title: "節省選購時間",
-    imgSrc: "inquiry-nosignin-1.png",
-    $color: "primaryLight",
-  },
-  {
-    step: "02",
-    title: "量身打造專屬建議",
-    imgSrc: "inquiry-nosignin-2.png",
-    $color: "accentLight",
-  },
-  {
-    step: "03",
-    title: "一對一免費專業諮詢",
-    imgSrc: "inquiry-nosignin-3.png",
-    $color: "secondaryLight",
-  },
-];

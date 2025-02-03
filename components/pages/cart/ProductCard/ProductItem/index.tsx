@@ -35,6 +35,7 @@ import {
   RentalText,
   Checkout,
   CheckoutActive,
+  CheckoutNoticeSpan,
 } from "./styled";
 import {
   MdAdd,
@@ -133,6 +134,8 @@ export const ProductItem: FC<ProductItemProps> = ({
     checkoutUrl: "/cart/checkout",
   };
 
+  const shouldShowDateSelectionReminder = rentStamp === "" && $isActive;
+
   return (
     <Product $isActive={$isActive} onClick={onClick}>
       <Card $isParentActive={$isActive}>
@@ -205,6 +208,7 @@ export const ProductItem: FC<ProductItemProps> = ({
                 <RentalDateInput
                   type="date"
                   value={dateControls.picker.value}
+                  $completed={shouldShowDateSelectionReminder}
                   onClick={dateControls.picker.handleToggle}
                   onChange={dateControls.picker.handleChange}
                   onBlur={dateControls.picker.handleBlur}
@@ -242,9 +246,14 @@ export const ProductItem: FC<ProductItemProps> = ({
           </ProductRemoveButton>
           <Checkout>
             <CheckoutNotice>
+              {shouldShowDateSelectionReminder && (
+                <CheckoutNoticeSpan
+                  $completed={shouldShowDateSelectionReminder}
+                >
+                  請先選擇租借日期，再前往結帳
+                </CheckoutNoticeSpan>
+              )}
               注意：一次只能結帳一筆訂單
-              <br />
-              請先選擇租借日期，再前往結帳
             </CheckoutNotice>
             <CheckoutActive $isDisabled={checkoutControls.isDisabled}>
               <CheckoutButton

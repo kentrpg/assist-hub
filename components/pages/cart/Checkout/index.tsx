@@ -27,8 +27,8 @@ import {
   PaymentOptions,
   PickupGroup,
   SummaryContent,
+  SubmitButton,
 } from "./styled";
-import { AccentButton as SubmitButton } from "@/components/ui/buttons/Layout";
 import CheckboxField from "@/utils/react-hook-form/CheckboxField";
 import { CheckoutImage, ImageWrapper } from "@/components/ui/images";
 import PaymentOption from "@/components/ui/PaymentOption";
@@ -378,7 +378,7 @@ const Checkout = () => {
             type="submit"
             disabled={isSubmitting || Object.keys(errors).length !== 0}
           >
-            {isOrderSubmitting ? <LoaderSpinner /> : "送出訂單"}
+            {isOrderSubmitting ? <LoaderSpinner $color="white" /> : "送出訂單"}
           </SubmitButton>
         </Summary>
       </OrderForm>

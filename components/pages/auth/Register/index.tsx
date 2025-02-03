@@ -82,7 +82,7 @@ const Regist: React.FC = () => {
           type="submit"
           disabled={isSubmitting || Object.keys(errors).length !== 0}
         >
-          {isSubmitting ? <LoaderSpinner /> : "註冊帳號"}
+          {isSubmitting ? <LoaderSpinner $color="white" /> : "註冊帳號"}
         </Button>
       </Form>
     </Container>

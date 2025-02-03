@@ -29,6 +29,8 @@ import {
 import Empty from "@/components/pages/inquiry/Empty";
 import { useRouter } from "next/router";
 import { hasError, isValid } from "@/helpers/api/status";
+import { useState } from "react";
+import Loading from "@/components/ui/Loading";
 
 const DraftInquiry = () => {
   const router = useRouter();
@@ -36,11 +38,14 @@ const DraftInquiry = () => {
   const inquiryBar = useSelector((state: RootState) => state.inquiryBar);
   const userInquiry = useSelector(selectUserInquiry);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleDelete = (id: number) => {
     dispatch(removeFromInquiryBar(id));
   };
 
   const handleSubmit = async () => {
+    setIsLoading(true);
     const { level, additionalInfo } = userInquiry;
     const postInquiryData = {
       productIds: inquiryBar.map((item) => item.id),
@@ -61,11 +66,13 @@ const DraftInquiry = () => {
 
     if (hasError(result)) {
       alert(result.message);
+      setIsLoading(false);
       return;
     }
 
     if (isValid(result)) {
       alert(result.message);
+      setIsLoading(false);
       await router.push("/user/inquiry");
       dispatch(resetInquiryBar());
       dispatch(resetUserInquiry());
@@ -85,6 +92,7 @@ const DraftInquiry = () => {
       </Header>
       <Assistive>
         <SubTitle>您已選擇的輔具</SubTitle>
+        {isLoading && <Loading />}
         <CardGroup>
           {inquiryBar.map(({ id, ...props }, index) => (
             <Card key={id}>

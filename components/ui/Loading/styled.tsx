@@ -9,13 +9,15 @@ export const LoadingWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: ${({ theme }) =>
+    `color-mix(in srgb, ${theme.colors.white} 80%, transparent)`};
   z-index: 9999;
 `;
 
 export const CardLoadingWrapper = styled(LoadingWrapper)`
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: ${({ theme }) =>
+    `color-mix(in srgb, ${theme.colors.white} 75%, transparent)`};
   z-index: 100;
 `;
 
@@ -27,8 +29,11 @@ const spin = keyframes`
 export const Spinner = styled.div`
   width: 50px;
   height: 50px;
-  border: 5px solid #f3f3f3;
+  border: 5px solid
+    ${({ theme }) =>
+      `color-mix(in srgb, ${theme.colors.grey100} 50%, transparent)`};
   border-top: 5px solid ${({ theme }) => theme.colors.primary};
   border-radius: 50%;
   animation: ${spin} 1s linear infinite;
+  pointer-events: none;
 `;

@@ -1,3 +1,4 @@
+import { AccentButton } from "@/components/ui/buttons/Layout";
 import { CardRadius, InputRadius } from "@/styles/borderRadius";
 import { Desktop, Mobile, Tablet } from "@/styles/container";
 import { H4, H6 } from "@/styles/typography";
@@ -233,4 +234,11 @@ export const Agreement = styled.div`
   ${Checkbox} + ${Checkbox} {
     margin-top: 6px;
   }
+`;
+
+export const SubmitButton = styled(AccentButton)`
+  height: 47px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

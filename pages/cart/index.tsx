@@ -11,6 +11,17 @@ const Cart = dynamic(() => import("@/components/pages/cart/ProductCard"), {
 });
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const token = req.cookies.token;
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/auth/signin",
+        permanent: false,
+      },
+    };
+  }
+
   const result = await getCarts(req.cookies.token || "");
 
   return {

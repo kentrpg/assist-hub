@@ -8,6 +8,7 @@ import {
   Navbar,
   ActionButtonGroup,
   SearchButton,
+  CartButton,
   TriggerButton,
   Logo,
   NavLink,
@@ -24,7 +25,6 @@ import {
   DropdownItemButton,
   DropdownItemLink,
 } from "./styled";
-import { CartButton } from "@/styles/alink";
 import { useState } from "react";
 import { useBreakpoint } from "@/hooks/useBreakpoint";
 import { breakpoints } from "@/styles/container";
@@ -143,7 +143,10 @@ const Header = ({ isAuthenticated, isLoading }: HeaderProps) => {
               所有輔具
             </NavLink>
             <NavLink
-              href="javascript:void(0);"
+              href="#"
+              onClick={() => {
+                return false;
+              }}
               $active={router.pathname === "/faq"}
             >
               常見問題

@@ -10,16 +10,12 @@ import {
 import { ButtonRadius, InputRadius, RoundedFull } from "@/styles/borderRadius";
 import {
   AccentIconButton,
-  buttonGapSizes,
-  buttonSizes,
-  buttonVariants,
   PrimaryIconButton,
-  SecondaryIconButton,
 } from "@/components/ui/buttons/Layout";
+import { SecondaryIconButton } from "@/styles/link";
 import { DropdownTransition } from "@/styles/effect";
 import { DropdownHeight, DropdownWidth } from "@/constants/layout";
 import { Padding } from "@/types/uiProps";
-import { HstackLayout } from "@/styles/flex";
 
 export const Wrapper = styled.header`
   width: 100%;
@@ -137,6 +133,15 @@ export const SearchButton = styled(AccentIconButton)`
   ${BaseButton};
   @media ${Desktop} {
     padding: 14px 25px;
+  }
+`;
+
+export const CartButton = styled(SecondaryIconButton)`
+  ${ButtonRadius};
+  ${BaseButton};
+
+  @media ${Desktop} {
+    padding: 14px 33px;
   }
 `;
 

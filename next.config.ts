@@ -26,9 +26,9 @@ const nextConfig = {
         permanent: true,
       },
       // 未登入用戶訪問需要驗證的頁面
+      // 排除 /cart/checkout/confirm 路徑驗證
       {
-        // 排除 /cart/checkout/confirm 路徑驗證
-        source: "/cart(/(?!checkout/confirm)[^/]*)*",
+        source: "/cart/checkout/:path*",
         destination: "/auth/signin",
         permanent: false,
         missing: [
@@ -36,10 +36,6 @@ const nextConfig = {
             type: "cookie",
             key: "token"
           },
-          {
-            type: "cookie",
-            key: "identity"
-          }
         ]
       },
       {

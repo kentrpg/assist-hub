@@ -1,6 +1,7 @@
 import { CardRadius } from "@/styles/borderRadius";
 import { Desktop, Mobile, Tablet } from "@/styles/container";
 import { chineseTextStyle } from "@/styles/textFormatting";
+import { H6 } from "@/styles/typography";
 import type { Color } from "@/types/uiProps";
 import styled from "styled-components";
 
@@ -69,8 +70,12 @@ export const Name = styled.h3`
   overflow: hidden;
   text-overflow: ellipsis;
   color: ${({ theme }) => theme.colors.textPrimary};
+  font-size: 18px;
   margin-bottom: 8px;
 
+  @media ${Tablet} {
+    ${H6};
+  }
   @media ${Desktop} {
     margin-bottom: 0px;
   }

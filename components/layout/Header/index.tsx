@@ -32,12 +32,15 @@ import { ImageLink as LogoWrapperDesktop } from "@/components/ui/images";
 import { isValid } from "@/helpers/api/status";
 import { HeaderProps } from "./data";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
+import { useToast } from "@/components/ui/Toast";
 
 const Header = ({ isAuthenticated, isLoading }: HeaderProps) => {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const isTablet = useBreakpoint(breakpoints.md);
   const [isDropdownToggled, setIsDropdownToggled] = useState(false);
+  const { openToast, Toast } = useToast();
+
   const triggerButtonRef = useOutsideClick(
     () => setIsDropdownToggled(false),
     true,
@@ -65,10 +68,10 @@ const Header = ({ isAuthenticated, isLoading }: HeaderProps) => {
 
     const result = await res.json();
     if (isValid(result)) {
-      alert("登出成功");
+      openToast("登出成功", "success");
       window.location.href = "/";
     } else {
-      alert(`登出失敗: ${result.message}`);
+      openToast(`登出失敗: ${result.message}`, "error");
     }
   };
 
@@ -209,6 +212,7 @@ const Header = ({ isAuthenticated, isLoading }: HeaderProps) => {
           </DropdownWrapper>
         </ActionButtonGroup>
       </Container>
+      <Toast />
     </Wrapper>
   );
 };

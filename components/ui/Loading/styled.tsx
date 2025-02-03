@@ -10,7 +10,7 @@ export const LoadingWrapper = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${({ theme }) =>
-    `color-mix(in srgb, ${theme.colors.white} 80%, transparent)`};
+    `color-mix(in srgb, ${theme.colors.secondaryBg} 55%, transparent)`};
   z-index: 9999;
 `;
 
@@ -29,9 +29,7 @@ const spin = keyframes`
 export const Spinner = styled.div`
   width: 50px;
   height: 50px;
-  border: 5px solid
-    ${({ theme }) =>
-      `color-mix(in srgb, ${theme.colors.grey100} 50%, transparent)`};
+  border: 5px solid ${({ theme }) => theme.colors.grey100};
   border-top: 5px solid ${({ theme }) => theme.colors.primary};
   border-radius: 50%;
   animation: ${spin} 1s linear infinite;

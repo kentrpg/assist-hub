@@ -56,6 +56,8 @@ import { useDispatch } from "react-redux";
 import { addToInquiryBar } from "@/utils/redux/slices/inquiryBar";
 import Link from "next/link";
 import Loading from "@/components/ui/Loading";
+import { useToast } from "@/components/ui/Toast";
+import { useModal } from "@/components/ui/Modal";
 
 const CustomPrevArrow = ({ onClick }: { onClick?: () => void }) => (
   <div className="slick-prev" onClick={onClick}>
@@ -82,18 +84,20 @@ const Single: React.FC<ProductDetailsProps> = ({
 }) => {
   console.log("product", product);
   const [isLoading, setIsLoading] = useState(false);
+  const { openToast, Toast } = useToast();
+  const { openModal, Modal } = useModal();
 
   const dispatch = useDispatch();
   const inquiryBar = useSelector((state: RootState) => state.inquiryBar);
 
   const handleAddCurrentProductToInquiryBar = () => {
     if (inquiryBar.length >= 3) {
-      alert("⚠️ 詢問單最多只能添加 3 個商品！");
+      openModal("⚠️ 詢問單最多只能添加 3 個商品！");
       return;
     }
     const exists = inquiryBar.some((item) => item.id === product.id);
     if (exists) {
-      alert("⚠️ 該商品已經在詢問單中！");
+      openModal("⚠️ 該商品已經在詢問單中！");
       return;
     }
     dispatch(
@@ -107,17 +111,17 @@ const Single: React.FC<ProductDetailsProps> = ({
         description: product.description,
       }),
     );
-    alert("✅ 商品成功加入詢問單！");
+    openToast("商品成功加入詢問單！", "success");
   };
 
   const handleAddCarouselProductToInquiryBar = (carouselProductId: number) => {
     if (inquiryBar.length >= 3) {
-      alert("⚠️ 詢問單最多只能添加 3 個商品！");
+      openModal("⚠️ 詢問單最多只能添加 3 個商品！");
       return;
     }
     const exists = inquiryBar.some((item) => item.id === carouselProductId);
     if (exists) {
-      alert("⚠️ 該商品已經在詢問單中！");
+      openModal("⚠️ 該商品已經在詢問單中！");
       return;
     }
     const productToAdd = recommended.find(
@@ -135,9 +139,9 @@ const Single: React.FC<ProductDetailsProps> = ({
           description: productToAdd.description,
         }),
       );
-      alert("✅ 商品成功加入詢問單！");
+      openToast("商品成功加入詢問單！", "success");
     } else {
-      alert("❌ 找不到該商品！");
+      openModal("❌ 找不到該商品！");
     }
   };
 
@@ -166,13 +170,13 @@ const Single: React.FC<ProductDetailsProps> = ({
       const result = await res.json();
 
       if (result.status) {
-        alert("✅ 成功加入購物車！");
+        openToast("成功加入購物車！", "success");
       } else {
-        alert(`⚠️ 加入購物車失敗：${result.message}`);
+        openModal(`⚠️ 加入購物車失敗：${result.message}`);
       }
     } catch (error) {
       console.error("加入購物車時發生錯誤：", error);
-      alert("❌ 加入購物車時發生錯誤，請稍後再試！");
+      openModal("❌ 加入購物車時發生錯誤，請稍後再試！");
     } finally {
       setIsLoading(false); // 完成後將 loading 設為 false
     }
@@ -349,6 +353,8 @@ const Single: React.FC<ProductDetailsProps> = ({
           ))}
         </Slider>
       </RecommendedContainer>
+      <Toast />
+      <Modal />
     </Container>
   );
 };

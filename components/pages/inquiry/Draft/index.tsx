@@ -31,14 +31,15 @@ import { useRouter } from "next/router";
 import { hasError, isValid } from "@/helpers/api/status";
 import { useState } from "react";
 import Loading from "@/components/ui/Loading";
+import { useModal } from "@/components/ui/Modal";
 
 const DraftInquiry = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const inquiryBar = useSelector((state: RootState) => state.inquiryBar);
   const userInquiry = useSelector(selectUserInquiry);
-
   const [isLoading, setIsLoading] = useState(false);
+  const { openModal, Modal } = useModal();
 
   const handleDelete = (id: number) => {
     dispatch(removeFromInquiryBar(id));
@@ -65,14 +66,19 @@ const DraftInquiry = () => {
     const result = await res.json();
 
     if (hasError(result)) {
-      alert(result.message);
+      openModal(result.message);
       setIsLoading(false);
       return;
     }
 
     if (isValid(result)) {
-      alert(result.message);
       setIsLoading(false);
+      await new Promise<void>((resolve) => {
+        openModal(result.message, "inquiry", {
+          onConfirm: resolve,
+        });
+      });
+
       await router.push("/user/inquiry");
       dispatch(resetInquiryBar());
       dispatch(resetUserInquiry());
@@ -118,6 +124,7 @@ const DraftInquiry = () => {
       <FlexAlignCenter>
         <AccentButton onClick={handleSubmit}>送出詢問單</AccentButton>
       </FlexAlignCenter>
+      <Modal />
     </Container>
   );
 };

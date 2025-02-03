@@ -39,19 +39,17 @@ import { formatCurrency } from "@/helpers/format/currency";
 import { useFilteredData } from "@/hooks/useFilteredData";
 import { hasError } from "@/helpers/api/status";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
-import Toast from "@/components/ui/Toast";
-import { ToastState } from "@/components/ui/Toast/data";
-
-const countSelects = [10, 20, 30, 50];
+import { useToast } from "@/components/ui/Toast";
+import { countSelects } from "@/components/pages/admin/Header/data";
 
 const OrderList = ({ data: ordersData }: OrderListProps) => {
   console.log(ordersData);
   const [activeTab, setActiveTab] = useState("全部");
   const [currentPage, setCurrentPage] = useState(1);
-  const [toast, setToast] = useState<ToastState>(null);
   const [itemsPerPage, setItemsPerPage] = useState(countSelects[0]);
   const [totalPages, setTotalPages] = useState(1);
   const [paginatedData, setPaginatedData] = useState<OrderDataType[]>([]);
+  const { openToast, Toast } = useToast();
 
   const [orderStatuses, setOrderStatuses] = useState<
     Record<string | number, string>
@@ -69,17 +67,6 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
 
   const getIsCompleted = (orderStatus: string | null | undefined) => {
     return !orderStatus || orderStatus === "已結案" || orderStatus === "已取消";
-  };
-
-  const toastControls = {
-    toast: {
-      isVisible: toast !== null,
-      content: toast && {
-        type: toast.type,
-        message: toast.message,
-        onClose: () => setToast(null),
-      },
-    },
   };
 
   const updateStatusCount = (oldStatus: string, newStatus: string) => {
@@ -159,10 +146,7 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
     const json = await result.json();
 
     if (hasError(json)) {
-      setToast({
-        type: "error",
-        message: "系統錯誤，請稍後再試",
-      });
+      openToast("系統錯誤，請稍後再試", "error");
       console.log("error", json.error);
       setIsOrderStatusLoading((prev) => ({
         ...prev,
@@ -187,10 +171,7 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
     updateStatusData(orderId, oldStatus, newStatus, updatedOrder);
     updateStatusCount(oldStatus, newStatus);
 
-    setToast({
-      type: "success",
-      message: "成功更新訂單狀態",
-    });
+    openToast("成功更新訂單狀態", "success");
 
     setIsOrderStatusLoading((prev) => ({
       ...prev,
@@ -227,10 +208,7 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
     const json = await result.json();
 
     if (hasError(json)) {
-      setToast({
-        type: "error",
-        message: "系統錯誤，請稍後再試",
-      });
+      openToast("系統錯誤，請稍後再試", "error");
       console.log("error", json.error);
       setIsOrderStatusLoading((prev) => ({
         ...prev,
@@ -255,10 +233,7 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
     updateStatusData(orderId, oldStatus, newStatus, updatedOrder);
     updateStatusCount(oldStatus, newStatus);
 
-    setToast({
-      type: "success",
-      message: "成功更新物流狀態",
-    });
+    openToast("成功更新物流狀態", "success");
 
     setIsShippingStatusLoading((prev) => ({
       ...prev,
@@ -514,9 +489,7 @@ const OrderList = ({ data: ordersData }: OrderListProps) => {
           <MdChevronRight size={18} />
         </PageButton>
       </Pagination>
-      {toastControls.toast.isVisible && (
-        <Toast {...toastControls.toast.content!} />
-      )}
+      <Toast />
     </Container>
   );
 };

@@ -66,8 +66,8 @@ import { selectSuggestProducts } from "@/utils/redux/slices/suggestProducts";
 import { useSelector, useDispatch } from "react-redux";
 import { setSuggestProducts } from "@/utils/redux/slices/suggestProducts";
 import { useRouter } from "next/router";
-import Toast from "@/components/ui/Toast";
-import { ToastState } from "@/components/ui/Toast/data";
+import { useToast } from "@/components/ui/Toast";
+import { useModal } from "@/components/ui/Modal";
 
 const SuggestTemplate: React.FC<SuggestType> = ({
   suggestInfo,
@@ -75,6 +75,8 @@ const SuggestTemplate: React.FC<SuggestType> = ({
 }) => {
   console.log("filterProducts", filterProducts);
   const router = useRouter();
+  const { openToast, Toast } = useToast();
+  const { openModal, Modal } = useModal();
   const [additionalInfo, setAdditionalInfo] = useState<string>(
     suggestInfo.additionalInfo || "",
   );
@@ -94,18 +96,6 @@ const SuggestTemplate: React.FC<SuggestType> = ({
   const [savingStates, setSavingStates] = useState<Record<number, boolean>>({});
   const [isSaving, setIsSaving] = useState(false);
   const [isAddProductLoading, setIsAddProductLoading] = useState(false);
-  const [toast, setToast] = useState<ToastState>(null);
-
-  const toastControls = {
-    toast: {
-      isVisible: toast !== null,
-      content: toast && {
-        type: toast.type,
-        message: toast.message,
-        onClose: () => setToast(null),
-      },
-    },
-  };
 
   const submitControls = {
     isDisabled: isSubmitting || !products.length,
@@ -148,7 +138,7 @@ const SuggestTemplate: React.FC<SuggestType> = ({
 
       if (hasError(data)) {
         console.error(data);
-        alert("保存失敗");
+        openModal("保存失敗，請稍後再試");
         setAdditionalInfo(suggestInfo.additionalInfo || "");
         return;
       }
@@ -184,7 +174,7 @@ const SuggestTemplate: React.FC<SuggestType> = ({
 
     if (isValid(data)) {
       console.log(data);
-      alert("保存成功");
+      openToast("保存成功", "success");
     }
   };
 
@@ -211,7 +201,7 @@ const SuggestTemplate: React.FC<SuggestType> = ({
 
       if (hasError(data)) {
         console.error(data);
-        alert("保存失敗");
+        openModal("保存失敗，請稍後再試");
         setEditingReasons((prev) => ({
           ...prev,
           [productId]: lastSavedReasonsValues.current[productId] || "",
@@ -277,10 +267,7 @@ const SuggestTemplate: React.FC<SuggestType> = ({
     const result = await response.json();
 
     if (hasError(result)) {
-      setToast({
-        type: "error",
-        message: "系統錯誤，請稍後再試",
-      });
+      openToast("系統錯誤，請稍後再試", "error");
       setIsAddProductLoading(false);
       return;
     }
@@ -306,10 +293,7 @@ const SuggestTemplate: React.FC<SuggestType> = ({
       ),
     }));
 
-    setToast({
-      type: "success",
-      message: "保存成功",
-    });
+    openToast("保存成功", "success");
 
     setIsAddProductLoading(false);
   };
@@ -336,12 +320,12 @@ const SuggestTemplate: React.FC<SuggestType> = ({
 
     if (hasError(data)) {
       console.error(data);
-      alert("保存失敗");
+      openModal("保存失敗，請稍後再試");
       setIsSubmitting(false);
       return;
     }
 
-    alert("保存成功");
+    openToast("保存成功", "success");
     setIsSubmitting(false);
     router.push("/admin/suggests");
   };
@@ -569,9 +553,9 @@ const SuggestTemplate: React.FC<SuggestType> = ({
         <FlexAlignCenter>
           <SubmitButton
             onClick={handleSubmit}
-            disabled={isSubmitting || !products.length}
+            disabled={submitControls.isDisabled}
           >
-            {isSubmitting ? (
+            {submitControls.isLoading ? (
               <LoaderSpinner $color="grey300" />
             ) : (
               submitControls.text
@@ -579,10 +563,8 @@ const SuggestTemplate: React.FC<SuggestType> = ({
           </SubmitButton>
         </FlexAlignCenter>
       </SectionWrapper>
-
-      {toastControls.toast.isVisible && (
-        <Toast {...toastControls.toast.content!} />
-      )}
+      <Modal />
+      <Toast />
     </Container>
   );
 };

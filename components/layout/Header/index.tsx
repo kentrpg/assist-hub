@@ -142,7 +142,10 @@ const Header = ({ isAuthenticated, isLoading }: HeaderProps) => {
             <NavLink href="/product" $active={router.pathname === "/product"}>
               所有輔具
             </NavLink>
-            <NavLink href="/faq" $active={router.pathname === "/faq"}>
+            <NavLink
+              href="javascript:void(0);"
+              $active={router.pathname === "/faq"}
+            >
               常見問題
             </NavLink>
             <NavLink href="/inquiry" $active={router.pathname === "/inquiry"}>

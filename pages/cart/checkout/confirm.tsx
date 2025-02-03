@@ -23,48 +23,45 @@ const ConfirmPage = () => {
     if (!router.isReady) return;
 
     const confirmPayment = async () => {
-      try {
-        const queryString = router.asPath.split("?")[1] || "";
+      const queryString = router.asPath.split("?")[1] || "";
 
-        console.log("queryString", queryString);
+      console.log("queryString", queryString);
 
-        const response = await fetch(
-          `/api/line/getLinepayConfirm?${queryString}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
+      const response = await fetch(
+        `/api/line/getLinepayConfirm?${queryString}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
           },
-        );
+        },
+      );
 
-        const result = await response.json();
-        setPaymentResult(result);
-        console.log("result", result);
+      const result = await response.json();
+      setPaymentResult(result);
+      console.log("result", result);
 
-        switch (result.statusCode) {
-          case 200:
-            setPaymentStatus("success");
-            break;
-          case 404:
-          case 405:
-            router.push("/404");
-            break;
-          case 400:
-            setPaymentStatus("failed");
-            break;
-          case 500:
-          default:
-            console.error(
-              `未預期的狀態碼: ${result.statusCode}, ${result.error}`,
-            );
-            setPaymentStatus("invalid");
-            break;
-        }
-      } catch (error) {
-        console.error("付款確認失敗:", error);
-        setPaymentStatus("failed");
-      }
+      setPaymentStatus("success");
+
+      // switch (result.statusCode) {
+      //   case 200:
+      //     setPaymentStatus("success");
+      //     break;
+      //   case 404:
+      //   case 405:
+      //     router.push("/404");
+      //     break;
+      //   case 400:
+      //     setPaymentStatus("failed");
+      //     break;
+      //   case 500:
+      //   default:
+      //     console.error(
+      //       `未預期的狀態碼: ${result.statusCode}, ${result.error}`,
+      //     );
+      //     setPaymentStatus("invalid");
+      //     break;
+      // }
     };
 
     confirmPayment();

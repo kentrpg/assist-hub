@@ -16,9 +16,24 @@ import {
 } from "@/utils/redux/slices/cart";
 import Loading from "@/components/ui/Loading";
 import { hasError, isValid } from "@/helpers/api/status";
+import Toast from "@/components/ui/Toast";
+import { ToastState } from "@/components/ui/Toast/data";
 
 const Cart = ({ data }: { data: CartItem[] }) => {
   const dispatch = useDispatch();
+
+  const [toast, setToast] = useState<ToastState>(null);
+
+  const toastControls = {
+    toast: {
+      isVisible: toast !== null,
+      content: toast && {
+        type: toast.type,
+        message: toast.message,
+        onClose: () => setToast(null),
+      },
+    },
+  };
 
   const { items: cartItems, activeCartId, isInitialized } = useSelector(
     (state: RootState) => state.cart,
@@ -57,7 +72,10 @@ const Cart = ({ data }: { data: CartItem[] }) => {
 
     if (hasError(result) || !isValid(result)) {
       console.error("更新購物車失敗:", result.error);
-      alert(`${result.message}，請稍後再試`);
+      setToast({
+        type: "error",
+        message: `${result.message}，請稍後再試`,
+      });
       return false;
     }
 
@@ -153,7 +171,7 @@ const Cart = ({ data }: { data: CartItem[] }) => {
     <Container>
       {cartItems.length > 0 ? (
         <>
-          <Breadcrumb />
+          <Breadcrumb mode="cart" />
           <Title>購物車</Title>
           <ProductList>
             {cartItems.map((item) => (
@@ -180,6 +198,9 @@ const Cart = ({ data }: { data: CartItem[] }) => {
         </>
       ) : (
         <CartEmpty />
+      )}
+      {toastControls.toast.isVisible && (
+        <Toast {...toastControls.toast.content!} />
       )}
     </Container>
   );

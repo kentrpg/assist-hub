@@ -17,33 +17,33 @@ export const config = {
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
-  console.log(`middleware ${pathname}`);
 
   const token = request.cookies.get("token");
+  console.log(`middleware ${pathname}, ${token}`);
 
-  if (!token?.value) {
-    return NextResponse.next();
-  }
+  // if (!token?.value) {
+  //   return NextResponse.next();
+  // }
 
   try {
-    const authResponse = await check(token.value);
-    console.log(
-      `authResponse ${authResponse.message}, ${authResponse.error}, ${authResponse.data}`,
-    );
+    // const authResponse = await check(token.value);
+    // console.log(
+    //   `authResponse ${authResponse.message}, ${authResponse.error}, ${authResponse.data}`,
+    // );
 
-    if (hasError(authResponse)) {
-      console.error(`Auth check failed: ${authResponse.message || "未知錯誤"}`);
-      return NextResponse.redirect(new URL("/500", request.url));
-    }
+    // if (hasError(authResponse)) {
+    //   console.error(`Auth check failed: ${authResponse.message || "未知錯誤"}`);
+    //   return NextResponse.redirect(new URL("/500", request.url));
+    // }
 
-    if (!isValid(authResponse)) {
-      const response = NextResponse.redirect(
-        new URL("/auth/signin", request.url),
-      );
-      response.cookies.delete("token");
-      response.cookies.delete("identity");
-      return response;
-    }
+    // if (!isValid(authResponse)) {
+    //   const response = NextResponse.redirect(
+    //     new URL("/auth/signin", request.url),
+    //   );
+    //   response.cookies.delete("token");
+    //   response.cookies.delete("identity");
+    //   return response;
+    // }
 
     return NextResponse.next();
   } catch (error) {

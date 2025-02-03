@@ -105,7 +105,7 @@ export const TextBase = css`
   display: flex;
   flex-direction: column;
   gap: 4px;
-  opacity: 0.6;
+  opacity: 0.4;
 `;
 
 export const TextGroup = styled.div`

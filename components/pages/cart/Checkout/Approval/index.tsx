@@ -14,7 +14,7 @@ import { SecondaryButton, PrimaryButton } from "@/styles/link";
 const Approval = () => {
   return (
     <Container>
-      <Breadcrumb />
+      <Breadcrumb mode="payment" />
       <Context>
         <ImageWrapper>
           <Image

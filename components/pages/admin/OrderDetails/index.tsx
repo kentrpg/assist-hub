@@ -83,7 +83,7 @@ const OrderDetails = ({ order }: { order: OrderData }) => {
     }
   });
 
-  const watchedValues = watch(["quantity", "rent", "deposit", "fee"]);
+  const watchedValues = watch(["quantity", "rent", "deposit", "fee", "shipping"]);
   
   const finalAmount = (
     Number(watchedValues[0] || 0) * Number(watchedValues[1] || 0) + 
@@ -448,7 +448,6 @@ const OrderDetails = ({ order }: { order: OrderData }) => {
 
         <Section>
           <SectionTitle>
-            {/* <MdPerson size={24} /> */}
             下單用戶
           </SectionTitle>
           <TableWrapper>
@@ -494,8 +493,7 @@ const OrderDetails = ({ order }: { order: OrderData }) => {
 
         <Section>
           <SectionTitle>
-            <MdLocalShipping size={24} />
-            {/* 宅配資料 */}
+            {watchedValues[4].toString() === "delivery" ? "宅配資料" : "店內取貨資料"}
           </SectionTitle>
           <Field>
             <Label htmlFor="name">姓名</Label>

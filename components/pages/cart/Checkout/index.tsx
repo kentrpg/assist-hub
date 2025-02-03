@@ -67,6 +67,8 @@ import { RootState } from "@/utils/redux/store";
 import { isValid, hasError } from "@/helpers/api/status";
 import { setLinePay } from "@/utils/redux/slices/linePay";
 import { BASE_URL } from "@/constants/environment";
+import Toast from "@/components/ui/Toast";
+import { ToastState } from "@/components/ui/Toast/data";
 
 const Checkout = () => {
   const dispatch = useDispatch();
@@ -74,6 +76,18 @@ const Checkout = () => {
   const cart = useSelector(selectActiveCartItem);
   const user = useSelector((state: RootState) => state.user);
   const [isOrderSubmitting, setIsOrderSubmitting] = useState(false);
+  const [toast, setToast] = useState<ToastState>(null);
+
+  const toastControls = {
+    toast: {
+      isVisible: toast !== null,
+      content: toast && {
+        type: toast.type,
+        message: toast.message,
+        onClose: () => setToast(null),
+      },
+    },
+  };
 
   const methods = useForm<FormValuesProps["checkout"]>({
     mode: "onChange",
@@ -181,7 +195,10 @@ const Checkout = () => {
 
     if (hasError(result)) {
       console.error("Error:", result.error);
-      alert(`${result.message}，請重新整理稍後重新下單`);
+      setToast({
+        type: "error",
+        message: `${result.message}，請重新整理稍後重新下單`,
+      });
       setIsOrderSubmitting(false);
       return;
     }
@@ -191,7 +208,10 @@ const Checkout = () => {
 
     if (isTransferOrCreditCard) {
       dispatch(clearActiveCartId());
-      alert("訂單已送出，請等待審核");
+      setToast({
+        type: "success",
+        message: "訂單已送出，請等待審核",
+      });
       router.push("/user/order");
       setIsOrderSubmitting(false);
       return;
@@ -208,7 +228,10 @@ const Checkout = () => {
     );
 
     console.log("redirectPath", redirectPath);
-    alert(`付款${isValid(result) ? "成功" : "失敗"}，訂單已送出`);
+    setToast({
+      type: isValid(result) ? "success" : "error",
+      message: `付款${isValid(result) ? "成功" : "失敗"}，訂單已送出`,
+    });
 
     dispatch(clearActiveCartId());
     router.push(redirectPath);
@@ -228,7 +251,7 @@ const Checkout = () => {
 
   return (
     <Container>
-      <Breadcrumb />
+      <Breadcrumb mode="checkout" />
       <OrderForm onSubmit={handleSubmit(onSubmit)} noValidate>
         <Shipping>
           <Title>訂購資訊</Title>
@@ -359,6 +382,9 @@ const Checkout = () => {
           </SubmitButton>
         </Summary>
       </OrderForm>
+      {toastControls.toast.isVisible && (
+        <Toast {...toastControls.toast.content!} />
+      )}
     </Container>
   );
 };

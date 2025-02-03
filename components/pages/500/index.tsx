@@ -8,7 +8,7 @@ const Error500 = () => {
       <ImageWrapper>
         <Image
           src="/images/server_busy.webp"
-          alt="server busy image"
+          alt="插畫顯示伺服器房內的場景，三位技術人員正在操作筆記型電腦，周圍有伺服器機櫃、資料庫圖標、齒輪與雲端符號，象徵數據處理與雲端運算的概念。"
           width={570}
           height={368}
         />

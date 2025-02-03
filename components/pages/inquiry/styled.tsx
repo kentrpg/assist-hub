@@ -17,14 +17,14 @@ export const Assistive = styled.div`
 `;
 
 export const ActionAssessment = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: 70px;
 `;
 
 export const SubTitle = styled.h2`
   font-size: 24px;
   font-weight: 500;
   color: ${({ theme }) => theme.colors.textPrimary};
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 `;
 
 export const DeleteButton = styled.button`

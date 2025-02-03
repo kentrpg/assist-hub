@@ -28,7 +28,12 @@ const InquiryEmpty = () => {
         {AddInquirySteps.map((step, index) => (
           <Card key={step.id}>
             <InquiryStepCircle>{index + 1}</InquiryStepCircle>
-            <Image src={step.imgSrc} alt={step.title} />
+            <Image
+              src={step.imgSrc}
+              alt={step.title}
+              width={156}
+              height={156}
+            />
             <StepGroup>
               <StepTitle>{step.title}</StepTitle>
               <StepDescription>{step.description}</StepDescription>

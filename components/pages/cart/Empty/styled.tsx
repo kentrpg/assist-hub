@@ -55,6 +55,8 @@ export const Info = styled.div`
 export const Image = styled.img`
   max-width: 100%;
   height: 100px;
+  object-fit: contain;
+
   @media ${Mobile} {
     height: 130px;
   }

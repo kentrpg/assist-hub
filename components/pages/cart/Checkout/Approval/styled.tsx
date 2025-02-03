@@ -1,3 +1,4 @@
+import { Mobile } from "@/styles/container";
 import { FlexAlignCenter } from "@/styles/flex";
 import { H5 } from "@/styles/typography";
 import styled from "styled-components";
@@ -15,14 +16,13 @@ export const Title = styled.h1`
 `;
 
 export const ImageWrapper = styled.div`
-  text-align: center;
   margin-bottom: 20px;
   margin-top: 60px;
 `;
 
 export const Image = styled.img`
-  width: 270px;
-  height: 320px;
+  /* width: 270px;
+  height: 320px; */
 `;
 
 export const Description = styled.div`
@@ -37,6 +37,13 @@ export const Mark = styled.strong`
 `;
 
 export const Group = styled(FlexAlignCenter)`
-  gap: 24px;
+  flex-direction: column;
+  text-align: center;
+  gap: 12px;
   padding: 20px 0;
+
+  @media ${Mobile} {
+    flex-direction: row;
+    gap: 24px;
+  }
 `;

@@ -6,10 +6,6 @@ import styled from "styled-components";
 export const TabsContainer = styled.div`
   display: flex;
   gap: 20px;
-  padding: 0;
-  @media ${Desktop} {
-    padding: 0 90px;
-  }
 `;
 
 export const TabsMenu = styled.div`
@@ -19,7 +15,7 @@ export const TabsMenu = styled.div`
   flex-grow: 1;
   gap: 12px;
   @media ${Tablet} {
-    max-width: 366px;
+    max-width: 432px;
   }
 `;
 
@@ -59,6 +55,7 @@ export const Group = styled.div`
 export const Image = styled.img`
   max-width: 100%;
   height: auto;
+  object-fit: contain;
 `;
 
 export const Description = styled.p`

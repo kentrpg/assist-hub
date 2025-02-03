@@ -27,14 +27,18 @@ export const Image = styled.img`
   max-width: 100%;
   height: 80px;
   order: 3;
+  object-fit: contain;
+
   @media ${Mobile} {
     order: inherit;
   }
   @media ${Tablet} {
     height: 110px;
+    width: 110px;
   }
   @media ${Desktop} {
     height: 156px;
+    width: 156px;
   }
 `;
 

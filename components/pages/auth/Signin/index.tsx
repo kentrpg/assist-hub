@@ -129,7 +129,7 @@ const Signin: React.FC = () => {
           type="submit"
           disabled={isSubmitting || Object.keys(errors).length !== 0}
         >
-          {isSubmitting ? <LoaderSpinner /> : "登入"}
+          {isSubmitting ? <LoaderSpinner $color="white" /> : "登入"}
         </Button>
         <LineLoginButton
           href={`https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2006800464&redirect_uri=${BASE_URL}/auth/confirm&state=12345abcde&scope=profile%20openid%20email&nonce=09876xyz`}

@@ -31,7 +31,7 @@ import { useRouter } from "next/router";
 import { hasError, isValid } from "@/helpers/api/status";
 import { useState } from "react";
 import Loading from "@/components/ui/Loading";
-import { useToast } from "@/components/ui/Toast";
+import { useModal } from "@/components/ui/Modal";
 
 const DraftInquiry = () => {
   const router = useRouter();
@@ -39,7 +39,7 @@ const DraftInquiry = () => {
   const inquiryBar = useSelector((state: RootState) => state.inquiryBar);
   const userInquiry = useSelector(selectUserInquiry);
   const [isLoading, setIsLoading] = useState(false);
-  const { openToast, Toast } = useToast();
+  const { openModal, Modal } = useModal();
 
   const handleDelete = (id: number) => {
     dispatch(removeFromInquiryBar(id));
@@ -66,14 +66,19 @@ const DraftInquiry = () => {
     const result = await res.json();
 
     if (hasError(result)) {
-      openToast(result.message, "error");
+      openModal(result.message);
       setIsLoading(false);
       return;
     }
 
     if (isValid(result)) {
-      openToast(result.message, "success");
       setIsLoading(false);
+      await new Promise<void>((resolve) => {
+        openModal(result.message, "inquiry", {
+          onConfirm: resolve,
+        });
+      });
+
       await router.push("/user/inquiry");
       dispatch(resetInquiryBar());
       dispatch(resetUserInquiry());
@@ -119,7 +124,7 @@ const DraftInquiry = () => {
       <FlexAlignCenter>
         <AccentButton onClick={handleSubmit}>送出詢問單</AccentButton>
       </FlexAlignCenter>
-      <Toast />
+      <Modal />
     </Container>
   );
 };

@@ -1,5 +1,5 @@
-import styled, { css, keyframes } from "styled-components";
-import { ButtonRadius, CardRadius } from "@/styles/borderRadius";
+import styled, { keyframes } from "styled-components";
+import { CardRadius } from "@/styles/borderRadius";
 import {
   BaseButton,
   buttonSizes,
@@ -71,11 +71,18 @@ export const Image = styled.img`
   object-fit: cover;
 `;
 
+export const ImageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 export const Text = styled.p`
   font-weight: 700;
   font-size: 16px;
   text-align: center;
   color: ${({ theme }) => theme.colors.textPrimary};
+  white-space: pre-line;
 `;
 
 export const Button = styled(PrimaryButton)`

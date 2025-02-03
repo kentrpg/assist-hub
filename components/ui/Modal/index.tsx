@@ -9,6 +9,7 @@ import {
   Text,
   Button,
   OutlinedButton,
+  ImageWrapper,
 } from "./styled";
 
 const modalControls = {
@@ -21,7 +22,7 @@ const modalControls = {
     imgSrc: "images/inquiry-modal.png",
     imgAlt:
       "插畫顯示一名醫生透過手機螢幕與患者進行線上諮詢，周圍有健康相關的圖標，如心臟、肺部和檔案，象徵遠端醫療與健康管理的概念。",
-    description: "您已成功寄出詢問單，爾後店家會由信箱與您聯繫",
+    description: "您已成功寄出詢問單，\n爾後店家會由信箱與您聯繫",
   },
 };
 
@@ -29,37 +30,53 @@ export const useModal = () => {
   const [modalState, setModalState] = useState({
     isOpen: false,
     description: "",
-    mode: "default",
+    mode: "default" as ModalMode,
+    onConfirm: undefined as (() => void) | undefined,
   });
 
   const openModal = useCallback(
-    (description: string, mode: ModalMode = "default") => {
+    (
+      description: string,
+      mode: ModalMode = "default",
+      options?: { onConfirm?: () => void },
+    ) => {
       setModalState({
         isOpen: true,
         description,
         mode,
+        onConfirm: options?.onConfirm,
       });
     },
     [],
   );
 
   const closeModal = useCallback(() => {
+    if (modalState.onConfirm) {
+      modalState.onConfirm();
+    }
     setModalState((prev) => ({
       ...prev,
       isOpen: false,
     }));
-  }, []);
+  }, [modalState.onConfirm]);
 
   const Modal = useCallback(() => {
     return (
       <ModalComponent
         isOpen={modalState.isOpen}
         onClose={closeModal}
-        mode={modalState.mode as ModalMode}
+        mode={modalState.mode}
         description={modalState.description}
+        onConfirm={modalState.onConfirm}
       />
     );
-  }, [modalState.isOpen, modalState.mode, modalState.description, closeModal]);
+  }, [
+    modalState.isOpen,
+    modalState.mode,
+    modalState.description,
+    modalState.onConfirm,
+    closeModal,
+  ]);
 
   return {
     openModal,
@@ -74,6 +91,7 @@ const ModalComponent = ({
   onClose,
   children,
   isOpen,
+  onConfirm,
 }: ModalProps) => {
   const handleClose = useCallback(() => {
     onClose();
@@ -118,13 +136,15 @@ const ModalComponent = ({
                 </>
               ) : (
                 <>
-                  <Image
-                    src={modalControls[mode].imgSrc}
-                    alt={modalControls[mode].imgAlt}
-                    width={120}
-                    height={120}
-                  />
-                  <Text>{description || modalControls[mode].description}</Text>
+                  <ImageWrapper>
+                    <Image
+                      src={modalControls[mode].imgSrc}
+                      alt={modalControls[mode].imgAlt}
+                      width={120}
+                      height={120}
+                    />
+                    <Text>{modalControls[mode].description}</Text>
+                  </ImageWrapper>
                   <Button onClick={handleClose}>確定</Button>
                 </>
               )}

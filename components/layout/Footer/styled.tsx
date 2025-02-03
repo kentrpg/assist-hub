@@ -153,3 +153,7 @@ export const Copyright = styled.p`
     text-align: right;
   }
 `;
+
+export const Image = styled.img`
+  object-fit: contain;
+`;

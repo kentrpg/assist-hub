@@ -12,7 +12,7 @@ export const tabsData: TabData[] = [
     label: "具平地跑跳能力",
     imgAlt: "插畫顯示一名戴眼鏡的男子正揮手，表現友好或打招呼的動作。",
     imgSrc: "/images/action-assessment-1.webp",
-    description: "步態穩定適合平地及短距離移動。",
+    description: "可在平地上自由行走、跑步及跳躍，活動能力接近正常人。",
   },
   {
     id: "2",
@@ -20,8 +20,7 @@ export const tabsData: TabData[] = [
     imgAlt:
       "插畫顯示兩名男子，一人手臂吊著繃帶，另一人使用拐杖並腳部打著石膏，象徵不同受傷狀態的描述。",
     imgSrc: "/images/action-assessment-2.webp",
-    description:
-      "可在平地行走，長距離或不穩地面需助行輔具，階梯或跑跳能力受限。",
+    description: "需要扶手或輔具協助，能有限地行走和攀爬樓梯。",
   },
   {
     id: "3",
@@ -29,7 +28,7 @@ export const tabsData: TabData[] = [
     imgAlt:
       "插畫顯示一名長者使用助行器站立，旁邊有一名女子攙扶，象徵支援與照護情境。",
     imgSrc: "/images/action-assessment-3.webp",
-    description: "適合需要扶持或有輔助器需求的使用者。",
+    description: "需使用助行器或輪椅，步態不穩，需他人協助移動。",
   },
   {
     id: "4",
@@ -37,7 +36,7 @@ export const tabsData: TabData[] = [
     imgAlt:
       "插畫顯示一名女子坐在電動輪椅上，右腳戴著護具，象徵依賴輔助工具的行動方式。",
     imgSrc: "/images/action-assessment-4.webp",
-    description: "適合長時間需要支撐的使用者。",
+    description: "完全依賴輪椅或電動輔具，無法自行站立或行走。",
   },
   {
     id: "5",
@@ -45,14 +44,14 @@ export const tabsData: TabData[] = [
     imgAlt:
       "插畫顯示一位站立的人正在推著輪椅，上面坐著一位男子，象徵協助行動不便者的情境。",
     imgSrc: "/images/action-assessment-5.webp",
-    description: "提供全身性的行動支援。",
+    description: "全身重度障礙，需全天候護理和支撐輔具，且需要貼身看護。",
   },
   {
     id: "6",
     label: "無法自行評估",
     imgAlt:
       "插畫顯示兩名男子，一人手臂吊著繃帶，另一人使用拐杖並腳部打著石膏，象徵不同受傷狀態的描述。",
-    imgSrc: "/images/action-assessment-2.webp",
-    description: "適合多樣化行動限制的解決方案。",
+    imgSrc: "/images/LOGO-default.webp",
+    description: "需等待專業人士評估。",
   },
 ];

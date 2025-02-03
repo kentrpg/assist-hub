@@ -27,6 +27,7 @@ export const Product = styled.div<{ $isActive: boolean }>`
 `;
 
 export const Card = styled.div<{ $isParentActive: boolean }>`
+  position: relative;
   width: 100%;
   border: 1px solid ${({ theme }) => theme.colors.textSecondary};
   ${CardRadius};

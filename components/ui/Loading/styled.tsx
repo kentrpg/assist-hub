@@ -13,6 +13,12 @@ export const LoadingWrapper = styled.div`
   z-index: 9999;
 `;
 
+export const CardLoadingWrapper = styled(LoadingWrapper)`
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.9);
+  z-index: 100;
+`;
+
 const spin = keyframes`
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }

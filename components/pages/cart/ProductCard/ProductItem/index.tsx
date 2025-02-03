@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import {
   Card,
   Header,
@@ -47,6 +47,7 @@ import {
 import { rentalPeriodOptions, PeriodProps, ProductItemProps } from "../data";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import { formatCurrency } from "@/helpers/format/currency";
+import Loading from "@/components/ui/Loading";
 
 export const ProductItem: FC<ProductItemProps> = ({
   item,
@@ -60,6 +61,20 @@ export const ProductItem: FC<ProductItemProps> = ({
   isDeleting,
 }: ProductItemProps) => {
   const { quantity, rent, period, rentStamp } = item;
+  const [isLoading, setIsLoading] = useState(false);
+
+  const selectControls = {
+    value: period,
+    options: rentalPeriodOptions.map((option) => ({
+      value: option,
+      label: `${option}天`,
+    })),
+    handleChange: async (e: React.ChangeEvent<HTMLSelectElement>) => {
+      setIsLoading(true);
+      await onRentalPeriodChange(Number(e.target.value) as PeriodProps);
+      setIsLoading(false);
+    },
+  };
 
   const dateControls = {
     range: {
@@ -85,9 +100,11 @@ export const ProductItem: FC<ProductItemProps> = ({
       handleBlur: () => {
         isDatepickerTarget = false;
       },
-      handleChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+      handleChange: async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!e.target.value) return;
-        onStartDateChange(e.target.value);
+        setIsLoading(true);
+        await onStartDateChange(e.target.value);
+        setIsLoading(false);
       },
     },
     display: {
@@ -98,10 +115,16 @@ export const ProductItem: FC<ProductItemProps> = ({
 
   const quantityControls = {
     isMinQuantity: quantity === 1,
-    handleIncrement: () => onQuantityChange(1),
-    handleDecrement: () => {
+    handleIncrement: async () => {
+      setIsLoading(true);
+      await onQuantityChange(1);
+      setIsLoading(false);
+    },
+    handleDecrement: async () => {
       if (quantity <= 1) return;
-      onQuantityChange(-1);
+      setIsLoading(true);
+      await onQuantityChange(-1);
+      setIsLoading(false);
     },
   };
 
@@ -110,20 +133,10 @@ export const ProductItem: FC<ProductItemProps> = ({
     checkoutUrl: "/cart/checkout",
   };
 
-  const selectControls = {
-    value: period,
-    options: rentalPeriodOptions.map((option) => ({
-      value: option,
-      label: `${option}天`,
-    })),
-    handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => {
-      onRentalPeriodChange(Number(e.target.value) as PeriodProps);
-    },
-  };
-
   return (
     <Product $isActive={$isActive} onClick={onClick}>
       <Card $isParentActive={$isActive}>
+        {isLoading && <Loading mode="card" />}
         <Header>
           <HeaderCell>輔具名稱</HeaderCell>
           <HeaderCell>租金/月</HeaderCell>

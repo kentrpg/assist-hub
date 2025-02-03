@@ -311,6 +311,6 @@ export const DropdownItemButton = styled.button`
   background: none;
 `;
 
-export const DropdownItemLink = styled.a`
+export const DropdownItemLink = styled(NextLink)`
   ${DropdownItemBase};
 `;

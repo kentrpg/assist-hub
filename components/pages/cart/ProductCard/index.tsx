@@ -153,7 +153,7 @@ const Cart = ({ data }: { data: CartItem[] }) => {
     <Container>
       {cartItems.length > 0 ? (
         <>
-          <Breadcrumb />
+          <Breadcrumb mode="cart" />
           <Title>購物車</Title>
           <ProductList>
             {cartItems.map((item) => (

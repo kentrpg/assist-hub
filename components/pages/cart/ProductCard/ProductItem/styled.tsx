@@ -1,14 +1,15 @@
 import { CardRadius, InputRadius } from "@/styles/borderRadius";
-import { Desktop, Tablet } from "@/styles/container";
+import { Tablet } from "@/styles/container";
 import {
   CardOpacityTransition,
   OutlineColorTransition,
   ShadowMedium,
 } from "@/styles/effect";
 import { AccentIconButton } from "@/styles/link";
+import { IsActive, IsCompleted } from "@/types/uiProps";
 import styled, { css } from "styled-components";
 
-export const Product = styled.div<{ $isActive: boolean }>`
+export const Product = styled.div<IsActive>`
   position: relative;
   ${CardOpacityTransition};
   opacity: 0.3;
@@ -259,10 +260,15 @@ export const DateInputWrapper = styled.div`
   }
 `;
 
-export const RentalDateInput = styled.input`
+export const RentalDateInput = styled.input<IsCompleted>`
   position: absolute;
   width: 100%;
   outline: 1px solid ${({ theme }) => theme.colors.border};
+  ${({ $completed }) =>
+    $completed &&
+    css`
+      outline-color: ${({ theme }) => theme.colors.error};
+    `}
   ${InputRadius};
   ${OutlineColorTransition};
   background-color: ${({ theme }) => theme.colors.white};
@@ -337,6 +343,7 @@ export const ProductRemoveButton = styled.button`
 
 export const Checkout = styled.div`
   display: flex;
+  align-items: end;
   gap: 24px;
 `;
 
@@ -344,7 +351,13 @@ export const CheckoutNotice = styled.p`
   text-align: end;
   font-size: 12px;
   color: ${({ theme }) => theme.colors.textMuted};
-  margin-top: 10px;
+  margin-bottom: 7px;
+`;
+
+export const CheckoutNoticeSpan = styled.span<IsCompleted>`
+  display: block;
+  color: ${({ theme, $completed }) =>
+    $completed ? theme.colors.error : theme.colors.textMuted};
 `;
 
 export const CheckoutActive = styled.div<{ $isDisabled?: boolean }>`

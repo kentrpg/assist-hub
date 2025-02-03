@@ -28,7 +28,7 @@ const nextConfig = {
       // 未登入用戶訪問需要驗證的頁面
       // 排除 /cart/checkout/confirm 路徑驗證
       {
-        source: "/cart/checkout/:path*",
+        source: "/cart/checkout/:path((?!confirm$).*)",
         destination: "/auth/signin",
         permanent: false,
         missing: [

@@ -1,3 +1,5 @@
+import { OrderStatusType, ShippingStatusType } from "../OrderList/data";
+
 export type OrderData = {
   orderStatus: string;
   shippingStatus: string;
@@ -94,18 +96,18 @@ export enum Quantity {
   eight = "8",
   nine = "9",
   ten = "10"
-}
+};
 
 export enum Payment {
   transfer = "transfer",
   creditCard = "creditCard",
   linePay = "LinePay"
-}
+};
 
 export enum Shipping {
   store = "store",
   delivery = "delivery"
-}
+};
 
 export const quantitySelects = Object.values(Quantity);
 export const paymentSelects = Object.values(Payment);
@@ -118,10 +120,31 @@ export type ShippingType = Shipping;
 export const shippingStatusMapping = {
   [Shipping.store]: "店取",
   [Shipping.delivery]: "宅配"
-}
+};
 
 export const paymentStatusMapping = {
   [Payment.transfer]: "轉帳",
   [Payment.creditCard]: "信用卡",
   [Payment.linePay]: "LinePay"
-}
+};
+
+export type OrderDetailsInputs = {
+  [key: string]: string | number;
+  orderStatus: OrderStatusType;
+  shippingStatus: ShippingStatusType;
+  rentStamp: string;
+  returnStamp: string;
+  shipping: ShippingType;
+  rent: number;
+  fee: number;
+  deposit: number;
+  payment: PaymentType;
+  quantity: QuantityType;
+  name: string;
+  phone: string;
+  email: string;
+  addressZIP: string;
+  addressCity: string;
+  addressDistrict: string;
+  addressDetail: string;
+};

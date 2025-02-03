@@ -349,9 +349,16 @@ export const Tbody = styled.tbody`
   font-weight: 500;
 `;
 
-export const Tr = styled.tr`
+export const Tr = styled.tr<{ $isLoading?: boolean }>`
   font-size: 14px;
   color: ${({ theme }) => theme.colors.textSecondary};
+
+  ${({ $isLoading }) =>
+    $isLoading &&
+    `
+    opacity: 0.5;
+    cursor: not-allowed;
+  `}
 `;
 
 export const Th = styled.th`
@@ -415,5 +422,13 @@ export const AddButton = styled.button<{ disabled?: boolean }>`
 `;
 
 export const SubmitButton = styled(SecondaryButton)`
+  width: 170px;
+  display: flex;
+  justify-content: center;
   ${buttonSizes.xlarge};
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
 `;

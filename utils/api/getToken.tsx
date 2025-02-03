@@ -2,6 +2,7 @@ import { Result } from "@/types/postOrder";
 
 export const getToken = async (token: string): Promise<Result> => {
   const isTokenValid = !!token && token !== "";
+  console.log("getToken token", token, isTokenValid);
 
   if (!isTokenValid) {
     return {

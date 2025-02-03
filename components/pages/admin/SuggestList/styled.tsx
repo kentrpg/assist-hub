@@ -1,5 +1,4 @@
-import { InputRadius, RoundedFull } from "@/styles/borderRadius";
-import { Color, BgColor, IsCompleted } from "@/types/uiProps";
+import { IsCompleted } from "@/types/uiProps";
 import styled from "styled-components";
 import NextLink from "next/link";
 
@@ -47,20 +46,33 @@ export const Td = styled.td`
   padding: 12px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
   font-size: 14px;
+
+  &:has(> a):hover {
+    cursor: pointer;
+  }
+
+  &:has(> a):hover {
+    a {
+      font-weight: 500;
+      color: ${({ theme }) => theme.colors.textSecondary};
+    }
+  }
 `;
 
 export const Link = styled(NextLink)`
   display: block;
-  &:hover {
-    font-weight: 500;
-    color: ${({ theme }) => theme.colors.textSecondary};
-    cursor: pointer;
-  }
 `;
 
 export const Completed = styled.span<IsCompleted>`
-  color: ${({ theme, $completed }) =>
-    $completed ? theme.colors.textMuted : theme.colors.error};
+  ${({ theme, $completed }) => !$completed && `color: ${theme.colors.error};`}
+
+  ${({ $completed }) =>
+    !$completed &&
+    `
+    &:hover {
+      font-weight: 700;
+    }
+  `}
 `;
 
 export const Sort = styled.div`

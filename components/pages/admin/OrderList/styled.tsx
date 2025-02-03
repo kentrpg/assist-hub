@@ -1,5 +1,6 @@
-import { InputRadius, RoundedFull } from "@/styles/borderRadius";
-import { BgColor, Color } from "@/types/uiProps";
+import { InputRadius } from "@/styles/borderRadius";
+import { AdminInputFieldAutofill } from "@/styles/effect";
+import { BgColor, Color, IsCompleted } from "@/types/uiProps";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -21,8 +22,6 @@ export const Tbody = styled.tbody`
 `;
 
 export const Tr = styled.tr<{ $isCompleted?: boolean }>`
-  opacity: ${({ $isCompleted }) => ($isCompleted ? 0.4 : 1)};
-  transition: opacity 0.1s ease-in-out;
   &:hover {
     background: ${({ theme }) => theme.colors.primaryLight};
   }
@@ -57,6 +56,10 @@ export const Td = styled.td`
     display: block;
     margin-top: 4px;
   }
+`;
+
+export const TdCompleted = styled.div<IsCompleted>`
+  opacity: ${({ $completed }) => ($completed ? 0.4 : 1)};
 `;
 
 export const Sort = styled.div`
@@ -121,85 +124,41 @@ export const PageButton = styled.button<{ $active?: boolean }>`
   }
 `;
 
-// Dropdown styles
-export const DropdownContainer = styled.div`
+export const SelectGroup = styled.div`
   position: relative;
-  display: inline-block;
+  width: 100px;
 `;
 
-export const DropdownTrigger = styled.button<Color>`
+export const Select = styled.select`
+  width: 100%;
+  font-size: 14px;
+  color: ${({ theme }) => theme.colors.textPrimary};
+  padding: 6px 32px 6px 12px;
+  box-shadow: 0px 0px 0px 1.5px ${({ theme }) => theme.colors.grey100};
   ${InputRadius};
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-  column-gap: 4px;
-  background: ${({ theme }) => theme.colors.white};
-  border: 1px solid ${({ theme }) => theme.colors.grey100};
-  /* border: 1px solid
-    ${({ theme, $color }) =>
-      $color === "primary" ? theme.colors.grey100 : theme.colors[$color]}; */
-  color: ${({ theme }) => theme.colors.textSecondary};
-  font-size: 13px;
-  padding: 4px 12px;
 
-  /* &:hover {
-    background: ${({ theme }) => theme.colors.grey100};
-  } */
+  &:focus,
+  &:hover {
+    box-shadow: 0px 0px 0px 1.5px ${({ theme }) => theme.colors.primary};
+  }
+
+  &:-webkit-autofill {
+    ${AdminInputFieldAutofill};
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 `;
 
-export const DropdownContent = styled.div<{ $isOpen: boolean }>`
-  position: absolute;
-  top: 110%;
-  left: 50%;
-  transform: translateX(-50%);
-  min-width: 85px;
-  background: ${({ theme }) => theme.colors.white};
-  border-radius: 4px;
-  padding: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  z-index: 1;
-  display: ${({ $isOpen }) => ($isOpen ? "block" : "none")};
-`;
-
-export const DropdownItem = styled.div<Color & { $isSelected: boolean }>`
-  padding: 6px 8px;
-  font-size: 13px;
-  color: ${({ theme, $isSelected, $color }) =>
-    $isSelected ? theme.colors[$color] : theme.colors.textSecondary};
-  cursor: ${({ $isSelected }) => ($isSelected ? "default" : "pointer")};
+export const SelectArrowIcon = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  border-radius: 2px;
-  pointer-events: ${({ $isSelected }) => ($isSelected ? "none" : "auto")};
-
-  ${({ $isSelected, $color, theme }) =>
-    !$isSelected &&
-    `
-    &:hover {
-      ${DropdownCircle} {
-        display: inline-block;
-        background: ${theme.colors[$color]};
-      }
-    }
-  `};
-
-  ${({ $isSelected, $color, theme }) =>
-    $isSelected &&
-    `
-    &:hover {
-      ${DropdownCircle} {
-        display: inline-block;
-        background: ${theme.colors[$color]};
-      }
-    }
-  `};
-`;
-
-export const DropdownCircle = styled.span`
-  width: 7px;
-  height: 7px;
-  display: none;
-  ${RoundedFull};
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: ${({ theme }) => theme.colors.textMuted};
 `;

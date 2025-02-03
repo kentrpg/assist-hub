@@ -22,6 +22,8 @@ export const TabList = styled.div`
   padding-bottom: 0;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  position: relative;
+  background: ${({ theme }) => theme.colors.white};
 
   &::-webkit-scrollbar {
     display: none;
@@ -37,11 +39,25 @@ export const Tab = styled.button<{ $active?: boolean }>`
   background: none;
   color: ${({ $active, theme }) =>
     $active ? theme.colors.primary : theme.colors.textSecondary};
-  border-bottom: 2px solid
-    ${({ $active, theme }) => ($active ? theme.colors.primary : "transparent")};
+  position: relative;
   cursor: pointer;
   white-space: nowrap;
   font-size: 14px;
+  z-index: 1;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 100%;
+    height: 3px;
+    background-color: ${({ $active, theme }) =>
+      $active ? theme.colors.white : "transparent"};
+    border-bottom: ${({ $active, theme }) =>
+      $active ? `2px solid ${theme.colors.primary}` : "none"};
+    transition: all 0.1s ease;
+  }
 
   &:hover {
     color: ${({ theme }) => theme.colors.primary};

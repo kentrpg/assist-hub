@@ -1,5 +1,5 @@
-import { useState, type FormEvent } from "react";
-import { paymentSelects, paymentStatusMapping, PaymentType, quantitySelects, QuantityType, shippingSelects, shippingStatusMapping, ShippingType, type OrderData } from "./data";
+import { useState } from "react";
+import { OrderDetailsInputs, paymentSelects, paymentStatusMapping, PaymentType, quantitySelects, QuantityType, shippingSelects, shippingStatusMapping, ShippingType, type OrderData } from "./data";
 import {
   FormContainer,
   Section,
@@ -38,45 +38,21 @@ import {
   MdContentCopy,
   MdKeyboardArrowDown,
 } from "react-icons/md";
-import Toast from "@/components/ui/Toast";
 import { Title } from "@/components/ui/titles";
 import { formatCurrency } from "@/helpers/format/currency";
-import { OrderStatusType, orderStatusValues, ShippingStatusType, shippingValues } from "../OrderList/data";
+import { orderStatusValues, shippingValues } from "../OrderList/data";
 import { useForm } from "react-hook-form";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import { FormError } from "@/utils/react-hook-form/FormError";
 import { useRouter } from "next/router";
-import { isValid } from "@/helpers/api/status";
-import { ToastProps } from "@/components/ui/Toast/data";
-
-export type OrderDetailsInputs = {
-  [key: string]: string | number;
-  orderStatus: OrderStatusType;
-  shippingStatus: ShippingStatusType;
-  rentStamp: string;
-  returnStamp: string;
-  shipping: ShippingType;
-  rent: number;
-  fee: number;
-  deposit: number;
-  payment: PaymentType;
-  quantity: QuantityType;
-  name: string;
-  phone: string;
-  email: string;
-  addressZIP: string;
-  addressCity: string;
-  addressDistrict: string;
-  addressDetail: string;
-};
+import { hasError, isValid } from "@/helpers/api/status";
+import Toast from "@/components/ui/Toast";
+import { ToastState } from "@/components/ui/Toast/data";
 
 const OrderDetails = ({ order }: { order: OrderData }) => {
-  const [showToast, setShowToast] = useState(false);
-  const [apiResponse, setApiResponse] = useState<{
-    isValid: ToastProps["type"];
-    message: string;
-  } | null>(null);
+  console.log(order);
   const router = useRouter();
+  const [toast, setToast] = useState<ToastState>(null);
   
   const {
     register,
@@ -119,8 +95,8 @@ const OrderDetails = ({ order }: { order: OrderData }) => {
     const submitData = {
       memberId: order.member.memberId,
       orderCode: order.orderCode,
-      orderStatus: order.orderStatus,
-      shippingStatus: order.shippingStatus,
+      orderStatus: data.orderStatus,
+      shippingStatus: data.shippingStatus,
       shipping: data.shipping,
       shippingInfo: {
         name: data.name,
@@ -137,7 +113,7 @@ const OrderDetails = ({ order }: { order: OrderData }) => {
         rent: data.rent,
         deposit: data.deposit,
         fee: data.fee,
-        finalAmount: order.details.finalAmount,
+        finalAmount: finalAmount,
         rentStamp: data.rentStamp,
         returnStamp: data.returnStamp,
         payment: data.payment,
@@ -157,14 +133,19 @@ const OrderDetails = ({ order }: { order: OrderData }) => {
 
     const json = await result.json();
 
-    setApiResponse({
-      isValid: isValid(json) ? "success" : "error",
+    if (hasError(json)) {
+      setToast({
+        type: "error",
+        message: "系統錯誤，請稍後再試",
+      });
+    }
+
+    setToast({
+      type: isValid(json) ? "success" : "error",
       message: isValid(json) ? "成功儲存" : "儲存失敗",
     });
     
     isValid(json) && reset(data);
-    
-    setShowToast(true);
   };
 
   const getValidationRules = (fieldValue: any, errorMessage: string, extraRules = {}) => {
@@ -177,11 +158,11 @@ const OrderDetails = ({ order }: { order: OrderData }) => {
       format: (value: number) => formatCurrency(value),
     },
     toast: {
-      isVisible: showToast && apiResponse,
-      content: {
-        type: apiResponse?.isValid as ToastProps["type"],
-        message: apiResponse?.message as string,
-        onClose: () => setShowToast(false),
+      isVisible: toast !== null,
+      content: toast && {
+        type: toast.type,
+        message: toast.message,
+        onClose: () => setToast(null),
       },
     },
     submit: {
@@ -672,7 +653,7 @@ const OrderDetails = ({ order }: { order: OrderData }) => {
         </SubmitButton>
 
         {formControls.toast.isVisible && (
-          <Toast {...formControls.toast.content} />
+          <Toast {...formControls.toast.content!} />
         )}
     </FormContainer>
   );

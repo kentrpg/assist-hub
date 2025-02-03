@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import {
   AdminInputFieldShadow,
   AdminInputFieldAutofill,
@@ -101,18 +101,21 @@ export const SelectArrowIcon = styled.div`
   color: ${({ theme }) => theme.colors.textMuted};
 `;
 
-export const TextGroup = styled.div`
+export const TextBase = css`
   display: flex;
   flex-direction: column;
   gap: 4px;
+  opacity: 0.6;
+`;
+
+export const TextGroup = styled.div`
   margin-bottom: 14px;
+  ${TextBase};
 `;
 
 export const TextEndGroup = styled.div`
-  display: flex;
-  flex-direction: column;
   align-items: flex-end;
-  gap: 4px;
+  ${TextBase};
 `;
 
 export const TextLabel = styled.span`

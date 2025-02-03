@@ -5,7 +5,6 @@ import {
   MdPerson,
   MdSettings,
   MdNotifications,
-  MdSearch,
   MdQuestionAnswer,
   MdShoppingCart,
   MdPeople,

@@ -1,30 +1,30 @@
-import { Result } from "@/types/postOrder";
 import { Error } from "@/types/apiRoutes";
 import { catchError } from "@/utils/handleErrors";
 import { NODE_ENV } from "@/constants/environment";
 import { validateResponseType } from "@/utils/typeGuards";
-import { get_member_profile } from "@/constants/apiPath";
+import { put_admin_order_status } from "@/constants/apiPath";
 import {
-  ResultGetMemberProfile,
-  ResultGetMemberProfileType,
-} from "@/types/getMemberProfile";
+  ResultPutAdminOrderStatus,
+  Result,
+  RequestPutAdminOrderStatus,
+} from "@/types/putAdminOrderStatus";
 
-export const getProfile = async (
+export const putOrderStatus = async (
   token: string,
-): Promise<Result<ResultGetMemberProfileType["data"]>> => {
-  const parsedUrl = new URL(get_member_profile);
+  order: RequestPutAdminOrderStatus,
+): Promise<Result> => {
+  const parsedUrl = new URL(put_admin_order_status);
   const options = {
-    method: "GET",
+    method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
       Accept: "application/json",
       "Content-Type": "application/json",
     },
+    body: JSON.stringify(order),
   };
 
   const [res, error] = await catchError(fetch(parsedUrl, options));
-
-  console.log("getProfile res", res);
 
   if (error) {
     console.log("error", error);
@@ -45,10 +45,8 @@ export const getProfile = async (
 
   const json = await res.json();
 
-  console.log("getProfile json", json);
-
   if (NODE_ENV === "development") {
-    const validation = validateResponseType(json, ResultGetMemberProfile);
+    const validation = validateResponseType(json, ResultPutAdminOrderStatus);
 
     !validation.isValid &&
       console.error("API Response validation failed:", validation.errors);
@@ -58,9 +56,9 @@ export const getProfile = async (
     statusCode: json.statusCode,
     status: json.status,
     message: json.message,
-    data: json.data,
+    data: undefined,
     error: null,
   };
 };
 
-export default getProfile;
+export default putOrderStatus;

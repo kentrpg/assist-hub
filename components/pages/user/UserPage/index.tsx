@@ -10,6 +10,7 @@ import { InquiryData } from "@/components/pages/user/Inquiries/data";
 import { ActiveTabType } from "@/components/pages/user/SideBar/data";
 import { Container } from "./styled";
 import { ResultGetMemberOrderType } from "@/types/getOrder";
+import { useModal } from "@/components/ui/Modal";
 
 type UserPageLayoutProps = {
   initialTab: ActiveTabType;
@@ -22,6 +23,7 @@ const UserPage: React.FC<UserPageLayoutProps> = ({
   ordersData,
   inquiriesData,
 }) => {
+  const { openModal, Modal } = useModal();
   const [activeTab, setActiveTab] = useState<ActiveTabType>(initialTab);
   const [selectedOrder, setSelectedOrder] = useState<OrdersData | null>(null);
   const [orderData, setOrderData] = useState<
@@ -51,11 +53,11 @@ const UserPage: React.FC<UserPageLayoutProps> = ({
         setActiveTab("detail");
       } else {
         console.error("獲取訂單詳細資料失敗:", result.error);
-        alert(result.message || "獲取訂單詳細資料失敗，請稍後再試");
+        openModal(result.message || "獲取訂單詳細資料失敗，請稍後再試");
       }
     } catch (error) {
       console.error("無法獲取訂單詳細資料:", error);
-      alert("發生錯誤，請稍後再試");
+      openModal("發生錯誤，請稍後再試");
     }
   };
 
@@ -79,6 +81,7 @@ const UserPage: React.FC<UserPageLayoutProps> = ({
         <Details onBack={handleBackToOrders} orderData={orderData} />
       )}
       {activeTab === "inquiry" && <Inquiries inquiriesData={inquiriesData} />}
+      <Modal />
     </Container>
   );
 };

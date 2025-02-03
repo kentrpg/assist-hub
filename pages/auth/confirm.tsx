@@ -5,6 +5,7 @@ import { GetServerSideProps } from "next";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { hasError, isValid } from "@/helpers/api/status";
+import { useModal } from "@/components/ui/Modal";
 
 type Props = {
   fullQuery: string;
@@ -27,6 +28,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
 
 const ConfirmPage = ({ fullQuery }: Props) => {
   const router = useRouter();
+  const { openModal, Modal } = useModal();
 
   console.log("ConfirmPage", fullQuery);
 
@@ -46,14 +48,15 @@ const ConfirmPage = ({ fullQuery }: Props) => {
       console.log("result", result);
 
       if (hasError(result)) {
-        alert(`${result.error}, ${result.message}`);
+        openModal(`${result.message}, 請稍候再試`);
+        console.error(result.error);
         router.push("/404");
       }
 
       if (isValid(result)) {
         window.location.href = "/user/profile";
       } else {
-        alert(`${result.message}, 請稍候再試`);
+        openModal(`${result.message}, 即將返回登入頁面...`);
         console.error(result.error);
         router.push("/auth/signin");
       }
@@ -71,14 +74,7 @@ const ConfirmPage = ({ fullQuery }: Props) => {
       </Head>
       <MainWrapper>
         <Loading />
-        {/* {isSuccess ? (
-        ) : (
-          <div>
-            <h1>登入失敗</h1>
-            <p>{error?.error_description}</p>
-            <p>即將返回登入頁面...</p>
-          </div>
-        )} */}
+        <Modal />
       </MainWrapper>
     </>
   );

@@ -67,6 +67,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSuggestProducts } from "@/utils/redux/slices/suggestProducts";
 import { useRouter } from "next/router";
 import { useToast } from "@/components/ui/Toast";
+import { useModal } from "@/components/ui/Modal";
 
 const SuggestTemplate: React.FC<SuggestType> = ({
   suggestInfo,
@@ -75,6 +76,7 @@ const SuggestTemplate: React.FC<SuggestType> = ({
   console.log("filterProducts", filterProducts);
   const router = useRouter();
   const { openToast, Toast } = useToast();
+  const { openModal, Modal } = useModal();
   const [additionalInfo, setAdditionalInfo] = useState<string>(
     suggestInfo.additionalInfo || "",
   );
@@ -136,7 +138,7 @@ const SuggestTemplate: React.FC<SuggestType> = ({
 
       if (hasError(data)) {
         console.error(data);
-        alert("保存失敗");
+        openModal("保存失敗，請稍後再試");
         setAdditionalInfo(suggestInfo.additionalInfo || "");
         return;
       }
@@ -172,7 +174,7 @@ const SuggestTemplate: React.FC<SuggestType> = ({
 
     if (isValid(data)) {
       console.log(data);
-      alert("保存成功");
+      openToast("保存成功", "success");
     }
   };
 
@@ -199,7 +201,7 @@ const SuggestTemplate: React.FC<SuggestType> = ({
 
       if (hasError(data)) {
         console.error(data);
-        alert("保存失敗");
+        openModal("保存失敗，請稍後再試");
         setEditingReasons((prev) => ({
           ...prev,
           [productId]: lastSavedReasonsValues.current[productId] || "",
@@ -318,12 +320,12 @@ const SuggestTemplate: React.FC<SuggestType> = ({
 
     if (hasError(data)) {
       console.error(data);
-      alert("保存失敗");
+      openModal("保存失敗，請稍後再試");
       setIsSubmitting(false);
       return;
     }
 
-    alert("保存成功");
+    openToast("保存成功", "success");
     setIsSubmitting(false);
     router.push("/admin/suggests");
   };
@@ -561,7 +563,7 @@ const SuggestTemplate: React.FC<SuggestType> = ({
           </SubmitButton>
         </FlexAlignCenter>
       </SectionWrapper>
-
+      <Modal />
       <Toast />
     </Container>
   );

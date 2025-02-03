@@ -12,13 +12,14 @@ import Address from "./sections/Address";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/utils/redux/slices/user";
 import Loading from "@/components/ui/Loading";
+import { useModal } from "@/components/ui/Modal";
 
 const Form: React.FC = () => {
   const user = useSelector((state: RootState) => state.user);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
-
+  const { openModal, Modal } = useModal();
   const methods = useForm<FormData>({
     defaultValues: {
       name: "",
@@ -70,11 +71,11 @@ const Form: React.FC = () => {
 
     if (result.statusCode === 200 && result.status) {
       dispatch(setUser(data));
-      alert("資料更新成功");
+      openModal("資料更新成功");
       window.location.reload(); // 刷新當前頁面
     } else {
       console.error("更新失敗:", result.error);
-      alert(result.message || "更新失敗，請稍後再試");
+      openModal(result.message || "更新失敗，請稍後再試");
     }
     setIsSubmitting(false);
   });
@@ -110,6 +111,7 @@ const Form: React.FC = () => {
               {isSubmitting ? <Loading /> : "儲存編輯"}
             </SaveBtn>
           </FormInfo>
+          <Modal />
         </FormProvider>
       )}
     </>

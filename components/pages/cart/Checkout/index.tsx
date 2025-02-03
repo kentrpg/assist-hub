@@ -228,7 +228,7 @@ const Checkout = () => {
 
   return (
     <Container>
-      <Breadcrumb />
+      <Breadcrumb mode="checkout" />
       <OrderForm onSubmit={handleSubmit(onSubmit)} noValidate>
         <Shipping>
           <Title>訂購資訊</Title>

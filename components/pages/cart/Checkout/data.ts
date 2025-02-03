@@ -138,7 +138,7 @@ export const agreementInfo: BaseCheckboxType<FormValuesProps["checkout"]>[] = [
     $checkedColor: "primary",
     $uncheckedColor: "border",
     $color: "textSecondary",
-    link: "租賃輪具規則",
+    link: "租賃輔具規則",
     linkHref: "#",
     label: "我已閱讀並同意此網站之",
   },

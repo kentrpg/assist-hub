@@ -51,7 +51,7 @@ const Sidebar: React.FC = () => {
           </IconWrapper>
           <IconWrapper>
             <MdNotifications size={24} />
-            <NotificationBadge>9</NotificationBadge>
+            <NotificationBadge>99+</NotificationBadge>
           </IconWrapper>
         </IconGroup>
       </TopSection>

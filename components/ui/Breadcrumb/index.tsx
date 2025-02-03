@@ -6,6 +6,10 @@ import {
   Indicator,
 } from "./styled";
 
+type BreadcrumbProps = {
+  mode: "cart" | "checkout" | "payment";
+};
+
 const CircularNmber = ({
   stepNumber,
   label,
@@ -21,14 +25,22 @@ const CircularNmber = ({
   </CircularNmberStyle>
 );
 
-const Breadcrumb = () => {
+const Breadcrumb = ({ mode = "checkout" }: BreadcrumbProps) => {
   return (
     <BreadcrumbStyle>
       <CircularNmber stepNumber="1" label="購物車" completed={true} />
       <Indicator size={20} />
-      <CircularNmber stepNumber="2" label="填寫資料與付款" completed={true} />
+      <CircularNmber
+        stepNumber="2"
+        label="填寫資料與付款"
+        completed={mode === "cart" ? false : true}
+      />
       <Indicator size={20} />
-      <CircularNmber stepNumber="3" label="訂單完成" completed={false} />
+      <CircularNmber
+        stepNumber="3"
+        label="訂單完成"
+        completed={mode === "payment" ? true : false}
+      />
     </BreadcrumbStyle>
   );
 };

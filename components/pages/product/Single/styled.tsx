@@ -141,7 +141,7 @@ export const RentBtn = styled.button`
 `;
 
 export const InquiryIcon = styled.div`
-  background-image: url("/images/accessible.png");
+  background-image: url("/images/accessible.svg");
   background-size: contain;
   background-repeat: no-repeat;
   display: none;

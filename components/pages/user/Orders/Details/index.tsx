@@ -91,9 +91,9 @@ const Details: React.FC<DetailsProps> = ({ onBack, orderData }) => {
   const validShipping: "delivery" | "store" =
     shipping === "delivery" || shipping === "store" ? shipping : "delivery";
 
-  const shippingFee = shipping === "delivery" ? (fee ?? 0) : 0; 
+  const shippingFee = shipping === "delivery" ? (fee ?? 0) : 0;
   const totalAmount =
-    (quantity ?? 0) * ((rent ?? 0) + shippingFee + (deposit ?? 0)); 
+    (quantity ?? 0) * ((rent ?? 0) + (deposit ?? 0)) + shippingFee;
 
   return (
     <DetailContainer>
@@ -132,11 +132,11 @@ const Details: React.FC<DetailsProps> = ({ onBack, orderData }) => {
           ) : (
             <Finished>N/A</Finished>
           )}
-          <Status>{shippingStatus}</Status>
+          <Status $status={shippingStatus}>{shippingStatus}</Status>
         </Main>
 
         {/* ProgressBar */}
-        {shipping === "delivery" && <Progress />}
+        {shipping === "delivery" && <Progress orderData={orderData} />}
 
         <TableContainer>
           <Table>

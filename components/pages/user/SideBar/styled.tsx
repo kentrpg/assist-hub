@@ -25,38 +25,6 @@ export const Span = styled.span`
   height: 21px;
 `;
 
-export const Profile = styled.div`
-  height: 60px;
-
-  justify-content: center;
-  display: none;
-  @media (${Tablet}) {
-    display: flex;
-  }
-`;
-
-export const Info = styled.div`
-  row-gap: 12px;
-  font-size: 16px;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  display: none;
-  @media (${Tablet}) {
-    display: flex;
-  }
-`;
-
-export const Name = styled.span`
-  font-size: 16px;
-  font-weight: 500;
-`;
-
-export const Email = styled.span`
-  color: #888888;
-  text-align: center;
-`;
-
 export const Tabs = styled.div`
   display: flex;
   flex-direction: row;
@@ -73,7 +41,7 @@ export const Tab = styled.button<ButtonProps>`
   column-gap: 10px;
   font-size: 14px;
   padding: 10px 0px;
-  background-color: ${({ $isActive }) => ($isActive ? "#103f99" : "white")};
+  background-color: ${({ $isActive }) => ($isActive ? "#08204D" : "white")};
   border-radius: 10px;
   color: ${({ $isActive }) => ($isActive ? "white" : "black")};
   &:hover {

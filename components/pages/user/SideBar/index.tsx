@@ -2,12 +2,8 @@ import { useRouter } from "next/router";
 import {
   SideBarContainer,
   Span,
-  Info,
-  Email,
-  Name,
   Tabs,
   Tab,
-  Profile,
   Wrapper,
 } from "./styled";
 import { tabs, ActiveTabType } from "./data";
@@ -28,14 +24,6 @@ const SideBar: React.FC<SideBarProps> = ({ setActiveTab, activeTab }) => {
 
   return (
     <SideBarContainer>
-      <Profile>
-        <img src="/images/Profile.svg" alt="用戶頭像" width={60} height={60} />
-      </Profile>
-      <Info>
-        <Name>王小姐</Name>
-        <Email>A0912345678@gmail.com</Email>
-      </Info>
-
       <Tabs>
         {tabs.map((tab) => (
           <Tab

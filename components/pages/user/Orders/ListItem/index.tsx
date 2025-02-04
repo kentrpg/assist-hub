@@ -69,7 +69,7 @@ const ListItem: React.FC<ListProps> = ({ order, onViewDetails }) => {
   } = order;
 
   const shippingFee = shipping === "delivery" ? fee : 0;
-  const totalAmount = quantity * (rent + shippingFee + deposit);
+  const totalAmount = quantity * (rent + deposit) + shippingFee;
 
   return (
     <Item>
@@ -97,7 +97,7 @@ const ListItem: React.FC<ListProps> = ({ order, onViewDetails }) => {
         ) : (
           <Finished>N/A</Finished>
         )}
-        <Status>{order.orderStatus}</Status>
+        <Status $status={order.orderStatus}>{order.orderStatus}</Status>
       </Main>
       <TableContainer>
         <Table>

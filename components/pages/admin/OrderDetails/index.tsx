@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { OrderDetailsInputs, paymentSelects, paymentStatusMapping, PaymentType, quantitySelects, QuantityType, shippingSelects, shippingStatusMapping, ShippingType, type OrderData } from "./data";
 import {
   FormContainer,
@@ -46,6 +45,8 @@ import { FormError } from "@/utils/react-hook-form/FormError";
 import { useRouter } from "next/router";
 import { hasError, isValid } from "@/helpers/api/status";
 import { useToast } from "@/components/ui/Toast";
+import { createClipboardControls } from "@/helpers/format/clipboardControls";
+import { BASE_URL } from "@/constants/environment";
 
 const OrderDetails = ({ order }: { order: OrderData }) => {
   console.log(order);
@@ -145,6 +146,29 @@ const OrderDetails = ({ order }: { order: OrderData }) => {
     return fieldValue ? { required: errorMessage, ...extraRules } : extraRules;
   };
 
+  const handleCopyLineId = async () => {
+    const clipboardControls = createClipboardControls(
+      `${BASE_URL}/inquiry/${order.member.lineId}`,
+    );
+
+    // 優先使用 Clipboard API
+    if (navigator.clipboard) {
+      const success = await clipboardControls.copyToClipboard();
+      if (success) {
+        openToast("成功複製 Line ID", "success");
+        return;
+      }
+    }
+
+    // 不支援 Clipboard API 時使用 execCommand
+    const success = clipboardControls.copyToExecCommand();
+    if (success) {
+      openToast("成功複製 Line ID", "success");
+    } else {
+      openToast("複製失敗，請手動複製", "error");
+    }
+  };
+
   const formControls = {
     amount: {
       value: isDirty ? finalAmount : order.details.finalAmount,
@@ -229,7 +253,6 @@ const OrderDetails = ({ order }: { order: OrderData }) => {
 
         <Section>
           <SectionTitle>
-            {/* <MdReceipt size={24} /> */}
             訂單檢視
           </SectionTitle>
           <TextGroup>
@@ -462,7 +485,7 @@ const OrderDetails = ({ order }: { order: OrderData }) => {
                       {order.member.lineId && (
                         <>
                           {order.member.lineId}
-                          <CopyButton type="button" onClick={() => navigator.clipboard.writeText(order.member.lineId)}>
+                          <CopyButton type="button" onClick={handleCopyLineId}>
                             <MdContentCopy size={16} />
                           </CopyButton>
                         </>

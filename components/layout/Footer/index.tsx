@@ -49,30 +49,35 @@ const Footer: React.FC = () => {
           <Categories>
             <Title>輔具分類</Title>
             <CategoryLinks>
+              <CategoryLink href="/product?type=wheelChair">
+                行動輔椅
+              </CategoryLink>
+              <CategoryLink href="/product?type=oxygen">呼吸照護</CategoryLink>
+              <CategoryLink href="/product?type=crutch">拐杖步行</CategoryLink>
+              <CategoryLink href="/product?type=bed">臥室寢具</CategoryLink>
               <CategoryLink
-                href="/product?type=wheelChair"
-                passHref
-                legacyBehavior
+                href="#"
+                onClick={() => {
+                  return false;
+                }}
               >
-                <a>行動輔椅</a>
+                如廁沐浴
               </CategoryLink>
-              <CategoryLink href="/product?type=oxygen" passHref legacyBehavior>
-                <a>呼吸照護</a>
+              <CategoryLink
+                href="#"
+                onClick={() => {
+                  return false;
+                }}
+              >
+                居家照護
               </CategoryLink>
-              <CategoryLink href="/product?type=crutch" passHref legacyBehavior>
-                <a>拐杖步行</a>
-              </CategoryLink>
-              <CategoryLink href="/product?type=bed" passHref legacyBehavior>
-                <a>臥室寢具</a>
-              </CategoryLink>
-              <CategoryLink href="/product/bathroom" passHref legacyBehavior>
-                <a>如廁沐浴</a>
-              </CategoryLink>
-              <CategoryLink href="/product/homecare" passHref legacyBehavior>
-                <a>居家照護</a>
-              </CategoryLink>
-              <CategoryLink href="/product/aids" passHref legacyBehavior>
-                <a>輔具、護具</a>
+              <CategoryLink
+                href="#"
+                onClick={() => {
+                  return false;
+                }}
+              >
+                輔具、護具
               </CategoryLink>
             </CategoryLinks>
           </Categories>

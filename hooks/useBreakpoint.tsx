@@ -5,7 +5,7 @@ export const useBreakpoint = (breakpoint: number = 768) => {
 
   useEffect(() => {
     const checkWidth = () => {
-      // TBD: server 會爛掉
+      // server side 沒有 window 所以會掛掉
       setIsAboveBreakpoint(window.innerWidth >= breakpoint);
     };
 

@@ -41,9 +41,6 @@ const ConfirmPage = () => {
       setPaymentResult(result);
       console.log("result", result);
 
-      // 測試用
-      // setPaymentStatus("success");
-
       switch (result.statusCode) {
         case 200:
           setPaymentStatus("success");

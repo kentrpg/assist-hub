@@ -141,27 +141,46 @@ export const RecommendDescription = styled.div`
 `;
 
 export const Reason = styled.textarea`
-  border: 1px solid ${({ theme }) => theme.colors.border};
+  flex: 1;
+  min-height: 92px;
   ${InputRadius};
+  border: 1px solid ${({ theme }) => theme.colors.border};
   font-size: 18px;
+  line-height: 1.5;
   color: ${({ theme }) => theme.colors.textSecondary};
-  display: list-item;
-  list-style-type: "•";
-  padding-inline-start: 6px;
+  padding-inline-start: 8px;
   cursor: default;
+  resize: none;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: ${({ theme }) => theme.colors.background};
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => theme.colors.border};
+    border-radius: 4px;
+  }
 `;
 
 export const RentButton = styled(PrimaryButton)`
+  width: 100%;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
   ${buttonGapSizes.small};
-  width: 100%;
+
   svg {
     width: 20px;
     height: 20px;
   }
   @media ${Mobile} {
+    height: 40px;
     ${buttonGapSizes.medium};
     svg {
       width: 24px;

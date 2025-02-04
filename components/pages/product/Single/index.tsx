@@ -242,12 +242,7 @@ const Single: React.FC<ProductDetailsProps> = ({
             <Row>
               <Cell $border></Cell>
               {comparison.map((item, index) => (
-                <Link
-                  key={index}
-                  href={`/product/${item.productId}`}
-                  passHref
-                  target="_blank"
-                >
+                <Link key={index} href={`/product/${item.productId}`} passHref>
                   <ComparisonProduct key={index}>
                     <ComparisonImg
                       src={item.imgSrc || "/images/wheelChair.svg"}
@@ -321,12 +316,7 @@ const Single: React.FC<ProductDetailsProps> = ({
         >
           {recommended.map((item, index) => (
             <CarouselItem key={index}>
-              <Link
-                key={index}
-                href={`/product/${item.productId}`}
-                passHref
-                target="_blank"
-              >
+              <Link key={index} href={`/product/${item.productId}`} passHref>
                 <CarouselImg>
                   <img
                     src={item.imgSrc || "/images/wheelChair.svg"}

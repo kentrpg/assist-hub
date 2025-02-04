@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Item,
   Header,
@@ -36,6 +36,7 @@ import { formatDate } from "./data";
 import { adjustDate } from "./data";
 import { formatCurrency } from "@/helpers/format/currency";
 import { OrdersData } from "./data";
+import Loading from "@/components/ui/Loading";
 
 type ListProps = {
   order: OrdersData;
@@ -43,6 +44,8 @@ type ListProps = {
 };
 
 const ListItem: React.FC<ListProps> = ({ order, onViewDetails }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     orderId,
     orderStatus,
@@ -70,6 +73,14 @@ const ListItem: React.FC<ListProps> = ({ order, onViewDetails }) => {
 
   const shippingFee = shipping === "delivery" ? fee : 0;
   const totalAmount = quantity * (rent + deposit) + shippingFee;
+
+  const handleViewDetails = () => {
+    setIsLoading(true);
+    onViewDetails();
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  };
 
   return (
     <Item>
@@ -135,7 +146,11 @@ const ListItem: React.FC<ListProps> = ({ order, onViewDetails }) => {
               <Rent>{formatCurrency(rent)}</Rent>
               <Others>{formatCurrency(deposit)}</Others>
               <BtnContainer>
-                <DetailsBtn onClick={onViewDetails}>查看訂單</DetailsBtn>
+                {isLoading ? (
+                  <Loading />
+                ) : (
+                  <DetailsBtn onClick={handleViewDetails}>查看訂單</DetailsBtn>
+                )}
               </BtnContainer>
             </Tr>
           </Tbody>

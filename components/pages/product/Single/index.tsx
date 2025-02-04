@@ -172,7 +172,7 @@ const Single: React.FC<ProductDetailsProps> = ({
       if (result.status) {
         openToast("成功加入購物車！", "success");
       } else {
-        openModal(`⚠️ 加入購物車失敗：${result.message}`);
+        openModal(`⚠️ 加入購物車失敗：請先登入再進行操作`);
       }
     } catch (error) {
       console.error("加入購物車時發生錯誤：", error);

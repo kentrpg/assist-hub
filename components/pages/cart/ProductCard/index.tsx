@@ -16,11 +16,11 @@ import {
 } from "@/utils/redux/slices/cart";
 import Loading from "@/components/ui/Loading";
 import { hasError, isValid } from "@/helpers/api/status";
-import { useToast } from "@/components/ui/Toast";
+import { useModal } from "@/components/ui/Modal";
 
 const Cart = ({ data }: { data: CartItem[] }) => {
   const dispatch = useDispatch();
-  const { openToast, Toast } = useToast();
+  const { openModal, Modal } = useModal();
 
   const { items: cartItems, activeCartId, isInitialized } = useSelector(
     (state: RootState) => state.cart,
@@ -43,6 +43,10 @@ const Cart = ({ data }: { data: CartItem[] }) => {
     cartId: number,
     updateData: { [key: string]: number | string },
   ) => {
+    console.log("updateData", {
+      cartId,
+      ...updateData,
+    });
     const res = await fetch("/api/putCarts", {
       method: "PUT",
       headers: {
@@ -57,9 +61,11 @@ const Cart = ({ data }: { data: CartItem[] }) => {
 
     const result = await res.json();
 
+    console.log(result);
+
     if (hasError(result) || !isValid(result)) {
       console.error("更新購物車失敗:", result.error);
-      openToast(`${result.message}，請稍後再試`, "error");
+      openModal(`${result.message}，請稍後再試`, "inquiry");
       return false;
     }
 
@@ -117,7 +123,9 @@ const Cart = ({ data }: { data: CartItem[] }) => {
     const targetCartItem = cartItems.find((item) => item.cartId === id);
     if (!targetCartItem) return;
 
+    console.log("targetCartItem", targetCartItem, id);
     const isUpdateSuccess = await updateCartItemToServer(id, { period });
+    console.log("isUpdateSuccess", isUpdateSuccess);
     if (!isUpdateSuccess) return;
 
     const newAmount =
@@ -183,7 +191,7 @@ const Cart = ({ data }: { data: CartItem[] }) => {
       ) : (
         <CartEmpty />
       )}
-      <Toast />
+      <Modal />
     </Container>
   );
 };

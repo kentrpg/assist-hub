@@ -73,7 +73,7 @@ export const CardImg = styled.img`
 `;
 
 export const InquiryIcon = styled.div`
-  background-image: url("/images/accessible.png");
+  background-image: url("/images/accessible.svg");
   background-size: contain;
   background-repeat: no-repeat;
   width: 21px;

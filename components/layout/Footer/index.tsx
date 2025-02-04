@@ -65,13 +65,34 @@ const Footer: React.FC = () => {
               <CategoryLink href="/product?type=bed" passHref legacyBehavior>
                 <a>臥室寢具</a>
               </CategoryLink>
-              <CategoryLink href="/product/bathroom" passHref legacyBehavior>
+              <CategoryLink
+                href="#"
+                onClick={() => {
+                  return false;
+                }}
+                passHref
+                legacyBehavior
+              >
                 <a>如廁沐浴</a>
               </CategoryLink>
-              <CategoryLink href="/product/homecare" passHref legacyBehavior>
+              <CategoryLink
+                href="#"
+                onClick={() => {
+                  return false;
+                }}
+                passHref
+                legacyBehavior
+              >
                 <a>居家照護</a>
               </CategoryLink>
-              <CategoryLink href="/product/aids" passHref legacyBehavior>
+              <CategoryLink
+                href="#"
+                onClick={() => {
+                  return false;
+                }}
+                passHref
+                legacyBehavior
+              >
                 <a>輔具、護具</a>
               </CategoryLink>
             </CategoryLinks>

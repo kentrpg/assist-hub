@@ -85,9 +85,6 @@ export const Tab = styled.div<TabProps>`
   width: 100%;
   height: 88px;
   overflow: hidden;
-  @media (${Desktop}) {
-    max-width: 167px;
-  }
 
   ${({ $isSelected }) =>
     $isSelected &&
@@ -96,13 +93,9 @@ export const Tab = styled.div<TabProps>`
     justify-content: start;
   `}
 
-  &:hover {
-    justify-content: start;
-    cursor: pointer;
-  }
-
   img {
     transition: all 0.3s ease;
+
     ${({ $isSelected }) =>
       $isSelected &&
       `
@@ -111,22 +104,14 @@ export const Tab = styled.div<TabProps>`
     `}
   }
 
-  &:hover img {
-    width: 33px;
-    height: 33px;
-  }
-
   div:first-child {
     transition: height 0.3s ease;
+
     ${({ $isSelected }) =>
       $isSelected &&
       `
       height: 56px;
     `}
-  }
-
-  &:hover div:first-child {
-    height: 56px;
   }
 
   div:last-child {
@@ -143,12 +128,29 @@ export const Tab = styled.div<TabProps>`
     `}
   }
 
-  &:hover div:last-child {
-    transform: translateY(0);
-    opacity: 1;
-    height: 32px;
+  @media (${Desktop}) {
+    &:hover {
+      justify-content: start;
+      cursor: pointer;
+    }
+
+    &:hover img {
+      width: 33px;
+      height: 33px;
+    }
+
+    &:hover div:first-child {
+      height: 56px;
+    }
+
+    &:hover div:last-child {
+      transform: translateY(0);
+      opacity: 1;
+      height: 32px;
+    }
   }
 `;
+
 
 export const ImgWrapper = styled.div`
   width: 100%;

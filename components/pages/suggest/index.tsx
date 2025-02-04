@@ -18,7 +18,7 @@ import {
   RentButton,
   Reason,
 } from "./styled";
-import { MdShoppingCart } from "react-icons/md";
+import { MdOutlineShare, MdShoppingCart } from "react-icons/md";
 import InquiryDetail from "@/components/pages/inquiry/Summary";
 import { FeatureBadge, PriceBadge } from "@/components/ui/badges";
 import { SuggestCheck } from "@/utils/react-icons/CheckIcon";
@@ -28,6 +28,10 @@ import { useModal } from "@/components/ui/Modal";
 import { useToast } from "@/components/ui/Toast";
 import { hasError, isValid } from "@/helpers/api/status";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
+import { FlexAlignCenter } from "@/styles/flex";
+import { PrimaryIconButton } from "@/components/ui/buttons/Layout";
+import { createClipboardControls } from "@/helpers/format/clipboardControls";
+import { BASE_URL } from "@/constants/environment";
 
 const Suggest = ({
   suggestCode: inquiryCode,
@@ -36,12 +40,13 @@ const Suggest = ({
   additionalInfo,
   products,
 }: SuggestPageProps) => {
-  const [isLoading, setIsLoading] = useState(false);
+  console.log(products);
+  const [loadingIds, setLoadingIds] = useState<Set<number>>(new Set());
   const { openToast, Toast } = useToast();
   const { openModal, Modal } = useModal();
 
   const handleAddToCart = async (productId: number) => {
-    setIsLoading(true);
+    setLoadingIds((prev) => new Set(prev).add(productId));
     const result = await fetch("/api/postCarts", {
       method: "POST",
       headers: {
@@ -56,13 +61,44 @@ const Suggest = ({
     const json = await result.json();
 
     if (hasError(json)) {
-      setIsLoading(false);
+      setLoadingIds((prev) => {
+        const newSet = new Set(prev);
+        newSet.delete(productId);
+        return newSet;
+      });
       openModal(`⚠️ 伺服器忙線中，請稍後再試`);
       console.error(json.error);
     }
 
     isValid(json) && openToast("成功加入購物車！", "success");
-    setIsLoading(false);
+    setLoadingIds((prev) => {
+      const newSet = new Set(prev);
+      newSet.delete(productId);
+      return newSet;
+    });
+  };
+
+  const handleCopyInquiryUrl = async () => {
+    const clipboardControls = createClipboardControls(
+      `${BASE_URL}/inquiry/${inquiryCode}`,
+    );
+
+    // 優先使用 Clipboard API
+    if (navigator.clipboard) {
+      const success = await clipboardControls.copyToClipboard();
+      if (success) {
+        openToast("成功複製詢問單網址", "success");
+        return;
+      }
+    }
+
+    // 不支援 Clipboard API 時使用 execCommand
+    const success = clipboardControls.copyToExecCommand();
+    if (success) {
+      openToast("成功複製詢問單網址", "success");
+    } else {
+      openToast("複製失敗，請手動複製", "error");
+    }
   };
 
   return (
@@ -114,9 +150,9 @@ const Suggest = ({
                     onClick={() => {
                       handleAddToCart(id);
                     }}
-                    disabled={isLoading}
+                    disabled={loadingIds.has(id)}
                   >
-                    {isLoading ? (
+                    {loadingIds.has(id) ? (
                       <LoaderSpinner $color="white" />
                     ) : (
                       <>
@@ -132,6 +168,12 @@ const Suggest = ({
         </RecommendationList>
       </Assistive>
       <FooterTitle>若有其他進一步關於輔具問題，請來電告知。</FooterTitle>
+      <FlexAlignCenter>
+        <PrimaryIconButton onClick={handleCopyInquiryUrl}>
+          <MdOutlineShare size={27} />
+          分享詢問單
+        </PrimaryIconButton>
+      </FlexAlignCenter>
       <Toast />
       <Modal />
     </Container>

@@ -16,7 +16,7 @@ export const Title = styled.h1`
 `;
 
 export const Assistive = styled.div`
-  padding: 40px 0;
+  padding: 40px 0 30px 0;
 `;
 
 export const SubTitle = styled.h2`
@@ -151,6 +151,7 @@ export const Reason = styled.textarea`
   padding-inline-start: 8px;
   cursor: default;
   resize: none;
+  padding: 8px;
 
   &::-webkit-scrollbar {
     width: 8px;
@@ -194,4 +195,5 @@ export const FooterTitle = styled.h2`
   font-size: 24px;
   font-weight: 500;
   color: ${({ theme }) => theme.colors.textPrimary};
+  margin-bottom: 40px;
 `;

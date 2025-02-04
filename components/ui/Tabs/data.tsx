@@ -32,7 +32,7 @@ export const tabsData: TabData[] = [
   },
   {
     id: "4",
-    label: "無法行走，但能在無投靠支撐下持維持",
+    label: "無法行走，但能在無頭靠支撐下維持坐姿",
     imgAlt:
       "插畫顯示一名女子坐在電動輪椅上，右腳戴著護具，象徵依賴輔助工具的行動方式。",
     imgSrc: "/images/action-assessment-4.webp",

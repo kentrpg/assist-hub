@@ -101,7 +101,7 @@ const SuggestTemplate: React.FC<SuggestType> = ({
     isDisabled: isSubmitting || !products.length,
     text: (() => {
       if (isSubmitting) return null;
-      return products.length ? "送出建議書" : "請添加輔具";
+      return products.length ? "送出建議單" : "請添加輔具";
     })(),
     isLoading: isSubmitting,
   };

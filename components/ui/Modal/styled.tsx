@@ -45,18 +45,19 @@ export const Wrapper = styled.div<WrapperProps>`
   animation: ${fadeIn} 0.2s ease-in-out;
 `;
 
-export const Content = styled.div`
+export const Content = styled.div<{ $isImageMode: boolean }>`
   ${CardRadius};
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  min-width: ${({ $isImageMode }) => ($isImageMode ? "340px" : "auto")};
   max-width: 90%;
   max-height: 90vh;
   overflow-y: auto;
   background-color: ${({ theme }) => theme.colors.white};
   animation: ${slideIn} 0.3s ease-in-out;
-  padding: 36px 44px;
+  padding: 24px;
 `;
 
 export const Body = styled.div`
@@ -66,8 +67,8 @@ export const Body = styled.div`
 `;
 
 export const Image = styled.img`
-  width: 100%;
-  height: auto;
+  /* width: 100%;
+  height: auto; */
   object-fit: cover;
 `;
 
@@ -87,8 +88,7 @@ export const Text = styled.p`
 
 export const Button = styled(PrimaryButton)`
   width: 100%;
-  margin-top: 16px;
-  ${buttonSizes.small};
+  ${buttonSizes.medium};
 `;
 
 export const OutlinedButton = styled.button`

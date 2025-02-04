@@ -41,27 +41,28 @@ const ConfirmPage = () => {
       setPaymentResult(result);
       console.log("result", result);
 
-      setPaymentStatus("success");
+      // 測試用
+      // setPaymentStatus("success");
 
-      // switch (result.statusCode) {
-      //   case 200:
-      //     setPaymentStatus("success");
-      //     break;
-      //   case 404:
-      //   case 405:
-      //     router.push("/404");
-      //     break;
-      //   case 400:
-      //     setPaymentStatus("failed");
-      //     break;
-      //   case 500:
-      //   default:
-      //     console.error(
-      //       `未預期的狀態碼: ${result.statusCode}, ${result.error}`,
-      //     );
-      //     setPaymentStatus("invalid");
-      //     break;
-      // }
+      switch (result.statusCode) {
+        case 200:
+          setPaymentStatus("success");
+          break;
+        case 404:
+        case 405:
+          router.push("/404");
+          break;
+        case 400:
+          setPaymentStatus("failed");
+          break;
+        case 500:
+        default:
+          console.error(
+            `未預期的狀態碼: ${result.statusCode}, ${result.error}`,
+          );
+          setPaymentStatus("invalid");
+          break;
+      }
     };
 
     confirmPayment();

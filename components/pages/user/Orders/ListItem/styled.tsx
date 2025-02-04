@@ -5,6 +5,10 @@ type HeaderProps = {
   $shipping: "delivery" | "store";
 };
 
+type StatusProps = {
+  $status: string;
+};
+
 export const Item = styled.div`
   border-radius: 5px;
   outline: 1px solid #888888;
@@ -113,11 +117,18 @@ export const Finished = styled.span`
   font-size: 14px;
 `;
 
-export const Status = styled.div`
+export const Status = styled.div<StatusProps>`
   padding: 5px 10px;
   font-size: 16px;
   font-weight: 500;
   border-radius: 6px;
+  color: ${({ $status }) =>
+    $status === "已付款" || $status === "運送中"
+      ? "#2ECC71"
+      : $status === "已結案"
+        ? "#B3B3B3"
+        : "#E74C3C"};
+  border: 2px solid;
 `;
 
 export const TableContainer = styled.div`

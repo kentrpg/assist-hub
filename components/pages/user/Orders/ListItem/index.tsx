@@ -97,7 +97,7 @@ const ListItem: React.FC<ListProps> = ({ order, onViewDetails }) => {
         ) : (
           <Finished>N/A</Finished>
         )}
-        <Status>{order.orderStatus}</Status>
+        <Status $status={order.orderStatus}>{order.orderStatus}</Status>
       </Main>
       <TableContainer>
         <Table>

@@ -132,7 +132,7 @@ const Details: React.FC<DetailsProps> = ({ onBack, orderData }) => {
           ) : (
             <Finished>N/A</Finished>
           )}
-          <Status>{shippingStatus}</Status>
+          <Status $status={shippingStatus}>{shippingStatus}</Status>
         </Main>
 
         {/* ProgressBar */}

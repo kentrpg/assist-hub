@@ -16,7 +16,12 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     const handleStart = () => setLoading(true);
-    const handleComplete = () => setLoading(false);
+    const handleComplete = () => {
+      setLoading(false);
+      if (typeof window !== "undefined") {
+        window.scrollTo({ top: 0, behavior: "smooth" }); // 滾動到頂部
+      }
+    };
 
     router.events.on("routeChangeStart", handleStart);
     router.events.on("routeChangeComplete", handleComplete);
@@ -38,9 +43,8 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        {loading && <Loading />}
         <AuthProvider>
-          <Component {...pageProps} />
+          {loading ? <Loading /> : <Component {...pageProps} />}
         </AuthProvider>
       </ThemeProvider>
     </Provider>

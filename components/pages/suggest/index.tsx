@@ -40,12 +40,13 @@ const Suggest = ({
   additionalInfo,
   products,
 }: SuggestPageProps) => {
-  const [isLoading, setIsLoading] = useState(false);
+  console.log(products);
+  const [loadingIds, setLoadingIds] = useState<Set<number>>(new Set());
   const { openToast, Toast } = useToast();
   const { openModal, Modal } = useModal();
 
   const handleAddToCart = async (productId: number) => {
-    setIsLoading(true);
+    setLoadingIds((prev) => new Set(prev).add(productId));
     const result = await fetch("/api/postCarts", {
       method: "POST",
       headers: {
@@ -60,13 +61,21 @@ const Suggest = ({
     const json = await result.json();
 
     if (hasError(json)) {
-      setIsLoading(false);
+      setLoadingIds((prev) => {
+        const newSet = new Set(prev);
+        newSet.delete(productId);
+        return newSet;
+      });
       openModal(`⚠️ 伺服器忙線中，請稍後再試`);
       console.error(json.error);
     }
 
     isValid(json) && openToast("成功加入購物車！", "success");
-    setIsLoading(false);
+    setLoadingIds((prev) => {
+      const newSet = new Set(prev);
+      newSet.delete(productId);
+      return newSet;
+    });
   };
 
   const handleCopyInquiryUrl = async () => {
@@ -141,9 +150,9 @@ const Suggest = ({
                     onClick={() => {
                       handleAddToCart(id);
                     }}
-                    disabled={isLoading}
+                    disabled={loadingIds.has(id)}
                   >
-                    {isLoading ? (
+                    {loadingIds.has(id) ? (
                       <LoaderSpinner $color="white" />
                     ) : (
                       <>

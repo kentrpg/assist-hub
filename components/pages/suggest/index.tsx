@@ -78,9 +78,9 @@ const Suggest = ({
     });
   };
 
-  const handleCopyInquiryUrl = async () => {
+  const handleCopySuggestUrl = async () => {
     const clipboardControls = createClipboardControls(
-      `${BASE_URL}/inquiry/${inquiryCode}`,
+      `${BASE_URL}/suggest/${inquiryCode}`,
     );
 
     // 優先使用 Clipboard API
@@ -169,7 +169,7 @@ const Suggest = ({
       </Assistive>
       <FooterTitle>若有其他進一步關於輔具問題，請來電告知。</FooterTitle>
       <FlexAlignCenter>
-        <PrimaryIconButton onClick={handleCopyInquiryUrl}>
+        <PrimaryIconButton onClick={handleCopySuggestUrl}>
           <MdOutlineShare size={27} />
           分享詢問單
         </PrimaryIconButton>

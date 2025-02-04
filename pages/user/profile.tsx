@@ -6,6 +6,7 @@ import { setUser } from "@/utils/redux/slices/user";
 import { useDispatch } from "react-redux";
 import { FormData } from "@/components/pages/user/Profile/Form/data";
 import getProfile from "@/utils/api/member/getProfile";
+import Head from "next/head";
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const token = req.cookies.token;
@@ -45,6 +46,10 @@ const Profile: NextPage<ProfileProps> = ({ userData }) => {
 
   return (
     <Wrapper100>
+      <Head>
+        <title>基本資料</title>
+        <meta name="description" content="使用者基本資料" />
+      </Head>
       <UserPage initialTab="profile" />
     </Wrapper100>
   );

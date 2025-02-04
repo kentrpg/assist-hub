@@ -57,7 +57,7 @@ export const Content = styled.div<{ $isImageMode: boolean }>`
   overflow-y: auto;
   background-color: ${({ theme }) => theme.colors.white};
   animation: ${slideIn} 0.3s ease-in-out;
-  padding: 36px 44px;
+  padding: 24px;
 `;
 
 export const Body = styled.div`

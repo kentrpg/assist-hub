@@ -69,7 +69,7 @@ const ListItem: React.FC<ListProps> = ({ order, onViewDetails }) => {
   } = order;
 
   const shippingFee = shipping === "delivery" ? fee : 0;
-  const totalAmount = quantity * (rent + shippingFee + deposit);
+  const totalAmount = quantity * (rent + deposit) + shippingFee;
 
   return (
     <Item>

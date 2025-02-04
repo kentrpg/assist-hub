@@ -50,6 +50,10 @@ const Header = ({ isAuthenticated, isLoading }: HeaderProps) => {
     setMenuOpen((prevState) => !prevState);
   };
 
+  const handleNavLinkClick = () => {
+    setMenuOpen(false);
+  };
+
   const toggleAccountMenu = () => {
     setIsDropdownToggled((prev) => !prev);
   };
@@ -142,19 +146,28 @@ const Header = ({ isAuthenticated, isLoading }: HeaderProps) => {
             </LogoWrapperDesktop>
           )}
           <NavLinks>
-            <NavLink href="/product" $active={router.pathname === "/product"}>
+            <NavLink
+              href="/product"
+              $active={router.pathname === "/product"}
+              onClick={handleNavLinkClick}
+            >
               所有輔具
             </NavLink>
             <NavLink
               href="#"
               onClick={() => {
+                handleNavLinkClick();
                 return false;
               }}
               $active={router.pathname === "/faq"}
             >
               常見問題
             </NavLink>
-            <NavLink href="/inquiry" $active={router.pathname === "/inquiry"}>
+            <NavLink
+              href="/inquiry"
+              $active={router.pathname === "/inquiry"}
+              onClick={handleNavLinkClick}
+            >
               詢問單
             </NavLink>
           </NavLinks>

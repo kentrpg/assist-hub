@@ -146,6 +146,15 @@ const Header = ({ isAuthenticated, isLoading }: HeaderProps) => {
             </LogoWrapperDesktop>
           )}
           <NavLinks>
+            {!isTablet && (
+              <NavLink
+                href="/"
+                $active={router.pathname === "/"}
+                onClick={handleNavLinkClick}
+              >
+                首頁
+              </NavLink>
+            )}
             <NavLink
               href="/product"
               $active={router.pathname === "/product"}

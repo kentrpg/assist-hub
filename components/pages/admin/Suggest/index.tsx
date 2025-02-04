@@ -68,6 +68,7 @@ import { setSuggestProducts } from "@/utils/redux/slices/suggestProducts";
 import { useRouter } from "next/router";
 import { useToast } from "@/components/ui/Toast";
 import { useModal } from "@/components/ui/Modal";
+import { SuggestProductType } from "@/types/getAdminSuggest";
 
 const SuggestTemplate: React.FC<SuggestType> = ({
   suggestInfo,
@@ -80,7 +81,9 @@ const SuggestTemplate: React.FC<SuggestType> = ({
   const [additionalInfo, setAdditionalInfo] = useState<string>(
     suggestInfo.additionalInfo || "",
   );
-  const [products, setProducts] = useState<Products[]>(suggestInfo.products);
+  const [products, setProducts] = useState<SuggestProductType["products"]>(
+    suggestInfo.products,
+  );
   const [productFilter, setProductFilter] = useState<ProductFilterState>(
     filterProducts,
   );
@@ -235,7 +238,7 @@ const SuggestTemplate: React.FC<SuggestType> = ({
     };
   };
 
-  const getReasonValue = (product: Products) => {
+  const getReasonValue = (product: SuggestProductType["products"][number]) => {
     return editingReasons[product.productId] !== undefined
       ? editingReasons[product.productId]
       : product.reasons;
@@ -272,7 +275,7 @@ const SuggestTemplate: React.FC<SuggestType> = ({
       return;
     }
 
-    const newProduct: Products = {
+    const newProduct: SuggestProductType["products"][number] = {
       suggestProductId: result.data.suggestProductId,
       productId: product.id,
       name: product.name,

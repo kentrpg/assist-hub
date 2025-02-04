@@ -4,6 +4,10 @@ import { SuggestPageProps } from "@/types/getSuggest";
 
 export type CategoryType = "wheelChair" | "crutch" | "bed" | "oxygen";
 
+export type Products = SuggestPageProps["products"][number];
+
+export type ProductFilter = ProductPageProps[number];
+
 export type ProductFilterState = {
   [key in CategoryType]: ProductFilter[];
 };
@@ -313,7 +317,3 @@ export const mockProducts = [
     },
   },
 ];
-
-export type Products = SuggestPageProps["products"][number];
-
-export type ProductFilter = ProductPageProps[number];

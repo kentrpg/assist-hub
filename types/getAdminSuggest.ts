@@ -18,7 +18,11 @@ export const ResultGetAdminSuggest = {
         "rent": 1000.00,
         "imgSrc": "http://52.172.145.130:8080/picture/wheelChair/wheelChair-4.jpg",
         "imgAlt": "【豪尊】豪華型輪椅",
-        "features": [],
+        "features": [
+          "支撐性高",
+          "輕量化設計",
+          "S曲面型坐墊"
+        ],
         "reasons": "API putSuggestProduct"
       },
     ],

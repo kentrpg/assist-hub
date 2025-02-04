@@ -7,6 +7,9 @@ import { inquiryCardColors } from "../data";
 import InquiryCard from "@/components/ui/cards/InquiryCard";
 import InquiryDetail from "@/components/pages/inquiry/Summary";
 import { InquiryPageProps } from "@/types/getInquiry";
+import { useToast } from "@/components/ui/Toast";
+import { BASE_URL } from "@/constants/environment";
+import { createClipboardControls } from "@/helpers/format/clipboardControls";
 
 const SubmittedInquiry = ({ data }: InquiryPageProps) => {
   const {
@@ -16,6 +19,31 @@ const SubmittedInquiry = ({ data }: InquiryPageProps) => {
     level,
     additionalInfo,
   } = data;
+
+  const { openToast, Toast } = useToast();
+
+  const handleCopyInquiryUrl = async () => {
+    const clipboardControls = createClipboardControls(
+      `${BASE_URL}/inquiry/${inquiryCode}`,
+    );
+
+    // 優先使用 Clipboard API
+    if (navigator.clipboard) {
+      const success = await clipboardControls.copyToClipboard();
+      if (success) {
+        openToast("成功複製詢問單網址", "success");
+        return;
+      }
+    }
+
+    // 不支援 Clipboard API 時使用 execCommand
+    const success = clipboardControls.copyToExecCommand();
+    if (success) {
+      openToast("成功複製詢問單網址", "success");
+    } else {
+      openToast("複製失敗，請手動複製", "error");
+    }
+  };
 
   return (
     <Container>
@@ -31,7 +59,7 @@ const SubmittedInquiry = ({ data }: InquiryPageProps) => {
           {submittedInquiry.map(
             (
               { id, name, description, rent, imgSrc, imgAlt, features },
-              index
+              index,
             ) => (
               <InquiryCard
                 key={id}
@@ -44,16 +72,17 @@ const SubmittedInquiry = ({ data }: InquiryPageProps) => {
                 description={description}
                 features={features}
               />
-            )
+            ),
           )}
         </CardGroup>
       </Assistive>
       <FlexAlignCenter>
-        <PrimaryIconButton>
+        <PrimaryIconButton onClick={handleCopyInquiryUrl}>
           <MdOutlineShare size={27} />
           分享詢問單
         </PrimaryIconButton>
       </FlexAlignCenter>
+      <Toast />
     </Container>
   );
 };

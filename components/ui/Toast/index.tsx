@@ -92,17 +92,14 @@ const ToastComponent = ({
   const isFunction = typeof onClose === "function";
 
   useEffect(() => {
-    // 設置 Toast 消失的計時器
     const hideTimer = setTimeout(() => {
       setIsLeaving(true);
     }, duration);
 
-    // 設置移除 Toast 的計時器（包含動畫時間）
     const removeTimer = setTimeout(() => {
       isFunction && onClose();
     }, duration + animationDuration);
 
-    // 計時器清空，避免記憶體洩漏
     return () => {
       clearTimeout(hideTimer);
       clearTimeout(removeTimer);

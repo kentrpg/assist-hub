@@ -20,12 +20,19 @@ export const Wrapper = styled.footer`
     position: absolute;
     left: 0;
     right: 0;
-    top: -120px;
+    top: -115px;
     height: 168px;
-    background-image: url("/images/wave768.webp");
+    background-image: url("/images/wave375.webp");
     background-repeat: repeat-x;
     background-position: top;
+    background-size: 100% 100%;
+    @media ${Mobile} {
+      top: -110px;
+      background-image: url("/images/wave768.webp");
+      background-size: cover;
+    }
     @media ${Tablet} {
+      top: -130px;
       background-image: url("/images/wave1920.webp");
     }
   }
@@ -73,11 +80,10 @@ export const Contact = styled.div`
 `;
 
 export const Newsletter = styled.div`
-  display: none;
+  display: block;
   grid-column: 1 / 3;
   grid-row: 3 / 3;
   @media ${Mobile} {
-    display: block;
     grid-column: 2 / 3;
     grid-row: 2 / 3;
   }
@@ -144,7 +150,7 @@ export const SocialMediaLinks = styled.div`
 export const SubscriptionField = styled.div`
   max-width: 260px;
   position: relative;
-  /* margin-bottom: 8px; */
+  margin-bottom: 8px;
   @media ${Mobile} {
     margin-top: 0;
     margin-bottom: 10px;

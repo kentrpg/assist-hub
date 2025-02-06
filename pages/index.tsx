@@ -12,7 +12,7 @@ const HomePage: NextPage = () => {
           content="讓線上輔具租賃流程更加簡單、直觀，讓用戶無縫接軌從選擇到租賃的每一個步驟。"
         />
       </Head>
-      <Home />;
+      <Home />
     </>
   );
 };

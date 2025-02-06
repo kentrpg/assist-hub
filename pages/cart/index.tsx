@@ -6,6 +6,7 @@ import { CartItem } from "@/components/pages/cart/ProductCard/data";
 import getCarts from "@/utils/api/getCarts";
 import Head from "next/head";
 
+// 讓元件只在 client 端渲染，確保元件不會預先渲染架構
 const Cart = dynamic(() => import("@/components/pages/cart/ProductCard"), {
   loading: () => <Loading />,
 });

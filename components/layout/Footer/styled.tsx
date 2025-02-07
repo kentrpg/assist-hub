@@ -29,7 +29,6 @@ export const Wrapper = styled.footer`
     @media ${Mobile} {
       top: -110px;
       background-image: url("/images/wave768.webp");
-      background-size: cover;
     }
     @media ${Tablet} {
       top: -130px;

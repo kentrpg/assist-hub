@@ -1,7 +1,8 @@
 import { Title, TitleGroup } from "@/components/ui/titles";
 import { Content, Image, Info, Text, Description, Action } from "./styled";
-import { CartSteps } from "./data";
 import { PrimaryButton } from "@/styles/link";
+import { CartSteps } from "@/constants/imagePath";
+
 const CartEmpty = () => {
   return (
     <>
@@ -12,8 +13,8 @@ const CartEmpty = () => {
       <Content>
         {CartSteps.map((step) => (
           <Info key={step.id}>
-            <Image key={step.id} src={step.imgSrc} alt={step.description} />
-            <Text>{step.description}</Text>
+            <Image key={step.id} {...step.type} />
+            <Text>{step.title}</Text>
           </Info>
         ))}
       </Content>

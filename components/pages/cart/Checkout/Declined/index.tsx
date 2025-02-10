@@ -9,22 +9,23 @@ import {
   Image,
 } from "./styled";
 import { SecondaryButton, PrimaryButton } from "@/styles/link";
+import { CheckoutDeclined } from "@/constants/imagePath";
+import { StringToJSXWrapper } from "@/components/ui/StringToJSXWrapper";
 
 const Declined = () => {
+  const { description, convertString = [] } = CheckoutDeclined;
+
   return (
     <Container>
       <Context>
         <ImageWrapper>
-          <Image
-            src="/images/failed.webp"
-            alt="插畫顯示一名穿紅色衣服的男子坐在椅子上，右腳打著石膏，象徵受傷或行動不便的狀態。"
-            width={200}
-            height={320}
-          />
+          <Image {...CheckoutDeclined.type} width={200} height={320} />
         </ImageWrapper>
-        <Title>付款失敗</Title>
+        <Title>{CheckoutDeclined.title}</Title>
         <Description>
-          為了您的訂單安全，店內取貨時需出示<Mark>驗證碼</Mark>以完成核對
+          <StringToJSXWrapper text={description} convertString={convertString}>
+            {({ text, index }) => <Mark key={index}>{text}</Mark>}
+          </StringToJSXWrapper>
         </Description>
         <Group>
           <SecondaryButton href="/user/order">查看訂單</SecondaryButton>

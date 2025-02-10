@@ -12,12 +12,36 @@ type ImagesPathProps = {
 
 type ImagePathProps = Omit<ImagesPathProps, "id">;
 
+type ConvertStringProps = ImagePathProps & {
+  convertString: string[];
+};
+
 export const InquiryUnauthorized: ImagePathProps = {
   title: "還在為合適的輔具煩惱？",
   description: "透過詢問單獲取免費1對1專業建議",
   type: {
     src: `${baseImagePath}/inquiry-NotLoggedIn-3.webp`,
     alt: "插畫顯示一位醫生透過手機與患者進行遠端醫療諮詢，旁邊有心電圖圖案和對話框圖示，象徵醫療數據傳遞與交流。",
+  },
+};
+
+export const CheckoutDeclined: ConvertStringProps = {
+  title: "付款失敗",
+  description: "請於隔日 [marker] 前完成付款",
+  convertString: ["23:59"],
+  type: {
+    src: `${baseImagePath}/failed.webp`,
+    alt: "插畫顯示一名穿紅色衣服的男子坐在椅子上，右腳打著石膏，象徵受傷或行動不便的狀態。",
+  },
+};
+
+export const CheckoutApproval: ConvertStringProps = {
+  title: "付款成功",
+  description: "為了您的訂單安全，店內取貨時需出示[marker]以完成核對",
+  convertString: ["驗證碼"],
+  type: {
+    src: `${baseImagePath}/successful.webp`,
+    alt: "插畫顯示一名穿淺灰色上衣的男子使用拐杖站立，右腳打著石膏，象徵正在康復中的狀態。",
   },
 };
 

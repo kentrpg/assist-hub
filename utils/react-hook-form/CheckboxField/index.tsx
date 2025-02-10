@@ -8,6 +8,10 @@ import { ColorsType } from "@/types/uiProps";
 import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
 import { useController, Control, Path, FieldValues } from "react-hook-form";
 import { InfoLink } from "@/styles/link";
+import {
+  HrefMarkerProps,
+  StringToJSXWrapper,
+} from "@/components/ui/StringToJSXWrapper";
 
 export type BaseCheckboxType<T extends FieldValues> = {
   id: string;
@@ -24,8 +28,7 @@ export type BaseCheckboxType<T extends FieldValues> = {
   $uncheckedColor: ColorsType;
   $color: ColorsType;
   label: string;
-  link?: string;
-  linkHref?: string;
+  convertString?: HrefMarkerProps[];
 };
 
 type CheckboxFieldProps<T extends FieldValues> = BaseCheckboxType<T> & {
@@ -44,8 +47,7 @@ const CheckboxField = <T extends FieldValues>({
   $uncheckedColor = "textMuted",
   $color = "textMuted",
   label,
-  link,
-  linkHref,
+  convertString = [],
 }: CheckboxFieldProps<T>) => {
   const {
     field: { onChange, value: fieldValue },
@@ -79,8 +81,11 @@ const CheckboxField = <T extends FieldValues>({
         htmlFor={id}
         $isRequired={$isRequired}
       >
-        {label}
-        {link && linkHref && <InfoLink href={linkHref}>{link}</InfoLink>}
+        <StringToJSXWrapper text={label} convertString={convertString}>
+          {({ text, index }) => (
+            <InfoLink href={convertString[index].href}>{text}</InfoLink>
+          )}
+        </StringToJSXWrapper>
       </CheckboxText>
     </CheckboxGroup>
   );

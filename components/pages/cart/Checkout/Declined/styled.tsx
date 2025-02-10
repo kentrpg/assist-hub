@@ -27,7 +27,7 @@ export const Image = styled.img`
 
 export const Description = styled.div`
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
   margin-bottom: 10px;
 `;
 

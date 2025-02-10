@@ -24,6 +24,7 @@ import {
   FormValuesProps,
 } from "@/utils/react-hook-form/InputField/data";
 import Link from "next/link";
+import { footerInfo } from "@/components/pages/cart/Checkout/data";
 
 const Footer: React.FC = () => {
   const {
@@ -124,15 +125,8 @@ const Footer: React.FC = () => {
                 )}
               </SubscriptionField>
               <CheckboxField<FormValuesProps["newsletter"]>
-                id="newsletter-consent"
+                {...footerInfo}
                 control={control}
-                field={{ name: "isSubscribed" }}
-                $gap={10}
-                $fontSize={14}
-                $checkedColor="textMuted"
-                $uncheckedColor="textMuted"
-                $color="grey300"
-                label="我想要了解最新的輔具資訊"
               />
             </form>
           </Newsletter>

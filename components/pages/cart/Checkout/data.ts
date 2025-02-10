@@ -123,6 +123,20 @@ export const paymentMethods: PaymentMethod[] = [
   },
 ];
 
+export const footerInfo: BaseCheckboxType<FormValuesProps["newsletter"]> = {
+  id: "newsletter-consent",
+  field: {
+    name: "isSubscribed",
+  },
+  $isRequired: false,
+  $gap: 10,
+  $fontSize: 14,
+  $checkedColor: "textMuted",
+  $uncheckedColor: "textMuted",
+  $color: "grey300",
+  label: "我想要了解最新的輔具",
+}
+
 export const agreementInfo: BaseCheckboxType<FormValuesProps["checkout"]>[] = [
   {
     id: "agreeRentalRules",
@@ -138,9 +152,11 @@ export const agreementInfo: BaseCheckboxType<FormValuesProps["checkout"]>[] = [
     $checkedColor: "primary",
     $uncheckedColor: "border",
     $color: "textSecondary",
-    link: "租賃輔具規則",
-    linkHref: "#",
-    label: "我已閱讀並同意此網站之",
+    label: "我已閱讀並同意此網站之[marker]",
+    convertString: [{
+      text: "租賃輔具規則",
+      href: "#",
+    }],
   },
   {
     id: "agreeTermsPrivacy",
@@ -156,8 +172,13 @@ export const agreementInfo: BaseCheckboxType<FormValuesProps["checkout"]>[] = [
     $checkedColor: "primary",
     $uncheckedColor: "border",
     $color: "textSecondary",
-    link: "服務條款",
-    linkHref: "#",
-    label: "我同意網站",
+    label: "我同意網站[marker]及[marker]",
+    convertString: [{
+      text: "服務條款",
+      href: "#",
+    }, {
+      text: "隱私權政策",
+      href: "#",
+    }],
   },
 ];

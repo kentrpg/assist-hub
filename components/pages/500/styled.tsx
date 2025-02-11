@@ -14,8 +14,8 @@ export const Container = styled(Container1344)`
   }
 `;
 
-export const Br = styled.br`
-  display: none;
+export const InlineText = styled.span`
+  display: inline;
   @media ${Mobile} {
     display: block;
   }

@@ -13,7 +13,7 @@ import {
   StepTitle,
   StepDescription,
 } from "./styled";
-import { InquiryEmpties } from "@/constants/imagePath";
+import { inquiryEmpties } from "@/constants/statusPageContent";
 import { InquiryStepCircle } from "@/components/ui/circulars";
 import { PrimaryButton } from "@/styles/link";
 
@@ -25,10 +25,10 @@ const InquiryEmpty = () => {
         <Description>簡單4個步驟，讓專業店家幫您找</Description>
       </Group>
       <Step>
-        {InquiryEmpties.map((step, index) => (
+        {inquiryEmpties.map((step, index) => (
           <Card key={step.id}>
             <InquiryStepCircle>{index + 1}</InquiryStepCircle>
-            <Image {...step.type} width={156} height={156} />
+            <Image {...step.imageProps} width={156} height={156} />
             <StepGroup>
               <StepTitle>{step.title}</StepTitle>
               <StepDescription>{step.description}</StepDescription>

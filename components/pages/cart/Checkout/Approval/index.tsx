@@ -10,14 +10,14 @@ import {
   Image,
 } from "./styled";
 import { SecondaryButton, PrimaryButton } from "@/styles/link";
-import { CheckoutApproval } from "@/constants/imagePath";
+import { checkoutApproval } from "@/constants/statusPageContent";
 import {
   MarkerProps,
   StringToJSXWrapper,
 } from "@/components/ui/StringToJSXWrapper";
 
 const Approval = () => {
-  const { description, convertString = [] } = CheckoutApproval;
+  const { description, convertString = [] } = checkoutApproval;
 
   const MarkMarker = ({ text }: MarkerProps) => <Mark>{text}</Mark>;
 
@@ -26,9 +26,9 @@ const Approval = () => {
       <Breadcrumb mode="payment" />
       <Context>
         <ImageWrapper>
-          <Image {...CheckoutApproval.type} width={200} height={320} />
+          <Image {...checkoutApproval.imageProps} width={200} height={320} />
         </ImageWrapper>
-        <Title>{CheckoutApproval.title}</Title>
+        <Title>{checkoutApproval.title}</Title>
         <Description>
           <StringToJSXWrapper
             text={description}

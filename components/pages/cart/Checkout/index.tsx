@@ -52,7 +52,7 @@ import {
 import Address from "./Address";
 import useRenderError from "@/hooks/useRenderError";
 import useDateFormatter from "@/hooks/useDateFormatter";
-import LinePayImage from "./LinePayImage";
+import { LinePay } from "@/constants/imagePath";
 import { formatCurrency } from "@/helpers/format/currency";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -299,7 +299,11 @@ const Checkout = () => {
                   },
                 }}
               >
-                {icon === "LinePay" ? <LinePayImage /> : icon}
+                {icon === "LinePay" ? (
+                  <img {...LinePay} width={92} height={24} />
+                ) : (
+                  icon
+                )}
               </PaymentOption>
             ))}
           </PaymentOptions>

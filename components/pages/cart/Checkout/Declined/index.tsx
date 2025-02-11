@@ -9,14 +9,14 @@ import {
   Image,
 } from "./styled";
 import { SecondaryButton, PrimaryButton } from "@/styles/link";
-import { CheckoutDeclined } from "@/constants/imagePath";
+import { checkoutDeclined } from "@/constants/statusPageContent";
 import {
   MarkerProps,
   StringToJSXWrapper,
 } from "@/components/ui/StringToJSXWrapper";
 
 const Declined = () => {
-  const { description, convertString = [] } = CheckoutDeclined;
+  const { description, convertString = [] } = checkoutDeclined;
 
   const MarkMarker = ({ text }: MarkerProps) => <Mark>{text}</Mark>;
 
@@ -24,9 +24,9 @@ const Declined = () => {
     <Container>
       <Context>
         <ImageWrapper>
-          <Image {...CheckoutDeclined.type} width={200} height={320} />
+          <Image {...checkoutDeclined.imageProps} width={200} height={320} />
         </ImageWrapper>
-        <Title>{CheckoutDeclined.title}</Title>
+        <Title>{checkoutDeclined.title}</Title>
         <Description>
           <StringToJSXWrapper
             text={description}

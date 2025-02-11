@@ -42,8 +42,6 @@ export default class MyDocument extends Document {
       <Html lang="zh-Hant">
         {/* 在這裡添加全域的 meta 標籤、字體或其他標籤 */}
         <Head>
-          <title>RENT4U 輔具租賃網</title>
-          <meta name="description" content="為您打造最適合的輔具商品" />
           <link rel="icon" href="/images/LOGO.webp" />
         </Head>
         <body>

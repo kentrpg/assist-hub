@@ -10,6 +10,7 @@ import { useController, Control, Path, FieldValues } from "react-hook-form";
 import { InfoLink } from "@/styles/link";
 import {
   HrefMarkerProps,
+  MarkerProps,
   StringToJSXWrapper,
 } from "@/components/ui/StringToJSXWrapper";
 
@@ -57,6 +58,10 @@ const CheckboxField = <T extends FieldValues>({
     rules: field.validation,
   });
 
+  const InfoLinkMarker = ({ text, index }: MarkerProps) => (
+    <InfoLink href={convertString[index].href}>{text}</InfoLink>
+  );
+
   return (
     <CheckboxGroup $gap={$gap}>
       <CheckboxControl
@@ -81,11 +86,11 @@ const CheckboxField = <T extends FieldValues>({
         htmlFor={id}
         $isRequired={$isRequired}
       >
-        <StringToJSXWrapper text={label} convertString={convertString}>
-          {({ text, index }) => (
-            <InfoLink href={convertString[index].href}>{text}</InfoLink>
-          )}
-        </StringToJSXWrapper>
+        <StringToJSXWrapper
+          text={label}
+          convertString={convertString}
+          MarkerComponent={InfoLinkMarker}
+        />
       </CheckboxText>
     </CheckboxGroup>
   );

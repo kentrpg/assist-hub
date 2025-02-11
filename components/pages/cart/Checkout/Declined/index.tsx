@@ -10,10 +10,15 @@ import {
 } from "./styled";
 import { SecondaryButton, PrimaryButton } from "@/styles/link";
 import { CheckoutDeclined } from "@/constants/imagePath";
-import { StringToJSXWrapper } from "@/components/ui/StringToJSXWrapper";
+import {
+  MarkerProps,
+  StringToJSXWrapper,
+} from "@/components/ui/StringToJSXWrapper";
 
 const Declined = () => {
   const { description, convertString = [] } = CheckoutDeclined;
+
+  const MarkMarker = ({ text }: MarkerProps) => <Mark>{text}</Mark>;
 
   return (
     <Container>
@@ -23,9 +28,11 @@ const Declined = () => {
         </ImageWrapper>
         <Title>{CheckoutDeclined.title}</Title>
         <Description>
-          <StringToJSXWrapper text={description} convertString={convertString}>
-            {({ text, index }) => <Mark key={index}>{text}</Mark>}
-          </StringToJSXWrapper>
+          <StringToJSXWrapper
+            text={description}
+            convertString={convertString}
+            MarkerComponent={MarkMarker}
+          />
         </Description>
         <Group>
           <SecondaryButton href="/user/order">查看訂單</SecondaryButton>

@@ -11,9 +11,16 @@ import {
 } from "./styled";
 import { SecondaryButton, PrimaryButton } from "@/styles/link";
 import { CheckoutApproval } from "@/constants/imagePath";
-import { StringToJSXWrapper } from "@/components/ui/StringToJSXWrapper";
+import {
+  MarkerProps,
+  StringToJSXWrapper,
+} from "@/components/ui/StringToJSXWrapper";
 
 const Approval = () => {
+  const { description, convertString = [] } = CheckoutApproval;
+
+  const MarkMarker = ({ text }: MarkerProps) => <Mark>{text}</Mark>;
+
   return (
     <Container>
       <Breadcrumb mode="payment" />
@@ -24,11 +31,10 @@ const Approval = () => {
         <Title>{CheckoutApproval.title}</Title>
         <Description>
           <StringToJSXWrapper
-            text={CheckoutApproval.description}
-            convertString={CheckoutApproval.convertString}
-          >
-            {({ text, index }) => <Mark key={index}>{text}</Mark>}
-          </StringToJSXWrapper>
+            text={description}
+            convertString={convertString}
+            MarkerComponent={MarkMarker}
+          />
         </Description>
         <Group>
           <SecondaryButton href="/product">繼續逛逛</SecondaryButton>

@@ -21,6 +21,10 @@ export type IsCompleted = {
   $completed: boolean;
 };
 
+export type IsDisabled = {
+  $isDisabled: boolean;
+};
+
 // styled component prop
 
 export type Autofill = {

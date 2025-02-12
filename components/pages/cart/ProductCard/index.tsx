@@ -65,7 +65,7 @@ const Cart = ({ data }: { data: CartItem[] }) => {
 
     if (hasError(result) || !isValid(result)) {
       console.error("更新購物車失敗:", result.error);
-      openModal(`${result.message}，請稍後再試`, "inquiry");
+      openModal(`${result.message}，請稍後再試`, "default");
       return false;
     }
 

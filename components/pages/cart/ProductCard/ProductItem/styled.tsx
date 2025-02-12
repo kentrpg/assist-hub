@@ -6,7 +6,7 @@ import {
   ShadowMedium,
 } from "@/styles/effect";
 import { AccentIconButton } from "@/styles/link";
-import { IsActive, IsCompleted } from "@/types/uiProps";
+import { IsActive, IsCompleted, IsDisabled } from "@/types/uiProps";
 import styled, { css } from "styled-components";
 
 export const Product = styled.div<IsActive>`
@@ -193,10 +193,17 @@ export const RentalGroup = styled.div`
   gap: 24px;
 `;
 
-export const RentalAction = styled.div`
+export const RentalAction = styled.div<IsDisabled>`
   display: flex;
   align-items: center;
   gap: 12px;
+  ${({ $isDisabled }) =>
+    $isDisabled &&
+    css`
+      opacity: 0.3;
+      pointer-events: none;
+      cursor: not-allowed;
+    `};
 `;
 
 export const RentalLabel = styled.label`
@@ -360,13 +367,11 @@ export const CheckoutNoticeSpan = styled.span<IsCompleted>`
     $completed ? theme.colors.error : theme.colors.textMuted};
 `;
 
-export const CheckoutActive = styled.div<{ $isDisabled?: boolean }>`
+export const CheckoutActive = styled.div<IsDisabled>`
   cursor: ${({ $isDisabled }) => ($isDisabled ? "not-allowed" : "pointer")};
 `;
 
-export const CheckoutButton = styled(AccentIconButton)<{
-  $isDisabled?: boolean;
-}>`
+export const CheckoutButton = styled(AccentIconButton)<IsDisabled>`
   ${ShadowMedium};
 
   ${({ $isDisabled }) =>

@@ -184,25 +184,7 @@ export const ProductItem: FC<ProductItemProps> = ({
 
         <Rental>
           <RentalGroup>
-            <RentalAction>
-              <RentalLabel>租賃期約</RentalLabel>
-              <Period>
-                <RentalSelect
-                  value={selectControls.value}
-                  onChange={selectControls.handleChange}
-                >
-                  {selectControls.options.map(({ value, label }) => (
-                    <option key={value} value={value}>
-                      {label}
-                    </option>
-                  ))}
-                </RentalSelect>
-                <SelectArrowIcon>
-                  <MdArrowDropDown size={24} />
-                </SelectArrowIcon>
-              </Period>
-            </RentalAction>
-            <RentalAction>
+            <RentalAction $isDisabled={false}>
               <RentalLabel>租賃期間</RentalLabel>
               <DateInputWrapper>
                 <RentalDateInput
@@ -230,6 +212,24 @@ export const ProductItem: FC<ProductItemProps> = ({
                   </DateIcon>
                 </RentalDate>
               </DateInputWrapper>
+            </RentalAction>
+            <RentalAction $isDisabled={checkoutControls.isDisabled}>
+              <RentalLabel>租賃期約</RentalLabel>
+              <Period>
+                <RentalSelect
+                  value={selectControls.value}
+                  onChange={selectControls.handleChange}
+                >
+                  {selectControls.options.map(({ value, label }) => (
+                    <option key={value} value={value}>
+                      {label}
+                    </option>
+                  ))}
+                </RentalSelect>
+                <SelectArrowIcon>
+                  <MdArrowDropDown size={24} />
+                </SelectArrowIcon>
+              </Period>
             </RentalAction>
           </RentalGroup>
           <RentalSummaryAmount>

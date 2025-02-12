@@ -361,10 +361,9 @@ export const CheckoutNotice = styled.p`
   margin-bottom: 7px;
 `;
 
-export const CheckoutNoticeSpan = styled.span<IsCompleted>`
+export const CheckoutNoticeSpan = styled.span`
   display: block;
-  color: ${({ theme, $completed }) =>
-    $completed ? theme.colors.error : theme.colors.textMuted};
+  color: ${({ theme }) => theme.colors.error};
 `;
 
 export const CheckoutActive = styled.div<IsDisabled>`

@@ -1,3 +1,4 @@
+import { layoutPath } from "@/constants/imagePath";
 import Document, {
   Html,
   Head,
@@ -44,7 +45,7 @@ export default class MyDocument extends Document {
         <Head>
           <title>RENT4U 輔具租賃網</title>
           <meta name="description" content="為您打造最適合的輔具商品" />
-          <link rel="icon" href="/images/LOGO.webp" />
+          <link rel="icon" href={`${layoutPath}/icon@1x.webp`} />
         </Head>
         <body>
           <Main />

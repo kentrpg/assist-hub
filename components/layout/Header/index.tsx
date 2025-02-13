@@ -33,6 +33,7 @@ import { isValid } from "@/helpers/api/status";
 import { HeaderProps } from "./data";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { useToast } from "@/components/ui/Toast";
+import { layoutPath } from "@/constants/imagePath";
 
 const Header = ({ isAuthenticated, isLoading }: HeaderProps) => {
   const router = useRouter();
@@ -138,7 +139,7 @@ const Header = ({ isAuthenticated, isLoading }: HeaderProps) => {
           {isTablet && (
             <LogoWrapperDesktop href="/" passHref>
               <Logo
-                src="/images/LOGO-default.webp"
+                src={`${layoutPath}/logo-desktop.webp`}
                 alt="輔具租賃網"
                 width={40}
                 height={40}

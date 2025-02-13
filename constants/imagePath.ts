@@ -8,6 +8,7 @@ export const errorPath = `${basePath}/error`;
 export const inquiryPath = `${basePath}/inquiry`;
 export const cartPath = `${basePath}/cart`;
 export const checkoutPath = `${basePath}/checkout`;
+export const userPath = `${basePath}/user`;
 export const layoutPath = `${basePath}/layout`;
 
 export const footerWaveImages = {
@@ -34,4 +35,9 @@ export const LineIcon: BaseImage = {
 export const MetaLogo: BaseImage = {
   src: `${socialPath}/META-logo.webp`,
   alt: "META logo",
+};
+
+export const userEmpty: BaseImage = {
+  src: `${userPath}/empty.webp`,
+  alt: "插畫顯示一隻手點擊平板上的購物車圖示，象徵電子商務或線上購物的概念。象徵使用者目前沒有任何資料紀錄。",
 };

@@ -1,4 +1,4 @@
-import { BaseImage, basePath, cartPath, checkoutPath, errorPath, inquiryPath, layoutPath } from "@/constants/imagePath";
+import { BaseImage, basePath, cartPath, checkoutPath, errorPath, homePath, inquiryPath, layoutPath } from "@/constants/imagePath";
 
 type ImageProps = {
   imageProps: BaseImage;
@@ -184,6 +184,59 @@ export const inquiryTabs: StepImage[] = [
     imageProps: {
       src: `${layoutPath}/logo-desktop.webp`,
       alt: "插畫顯示兩名男子，一人手臂吊著繃帶，另一人使用拐杖並腳部打著石膏，象徵不同受傷狀態的描述。",
+    },
+  },
+];
+
+export const homeSolutions: StepImage[] = [
+  {
+    id: "1",
+    title: "不確定需要什麼輔具",
+    description:
+      "提供快速適配功能，根據身體部位找到適合的輔具，無需自行判斷，可將輔具加入詢問單，由專業人員提供建議。",
+    imageProps: {
+      src: `${homePath}/solution-1.webp`,
+      alt: "插畫顯示一輛黃色汽車與一名人形符號發生碰撞，象徵交通事故或車禍發生的情境。",
+    },
+  },
+  {
+    id: "2",
+    title: "身體康復之路",
+    description:
+      "我們提供靈活租期和多樣產品，能根據康復進程輕鬆切換不同輔具，省心又省錢。",
+    imageProps: {
+      src: `${homePath}/solution-2.webp`,
+      alt: "插畫顯示一名病人正在進行步行復健訓練，旁邊有一名護理師或物理治療師協助，象徵康復與醫療支持。",
+    },
+  },
+  {
+    id: "3",
+    title: "短期使用",
+    description:
+      "提供短期租賃服務，按日、週、月彈性選擇，讓輔具使用高效、經濟，不再為存放煩惱。",
+    imageProps: {
+      src: `${homePath}/solution-3.webp`,
+      alt: "插畫顯示一名男子坐在輪椅上，身穿藍色上衣與綠色褲子，背景為灰色，象徵行動輔助需求。",
+    },
+  },
+  {
+    id: "4",
+    title: "購買價格太貴",
+    description:
+      "租賃能大幅降低使用成本，讓您以不到購買價格的一小部分，輕鬆獲得所需輔具。",
+    imageProps: {
+      src: `${homePath}/solution-4.webp`,
+      alt: "插畫顯示一名病人躺在醫院病床上，正在接受點滴治療，背景為灰色，象徵住院或醫療照護。",
+    },
+  },
+  {
+    id: "5",
+    title: "維修和保養",
+    description:
+      "我們的租賃服務包含免費維修和保養，租期內不需擔心任何額外費用，讓您使用更省心。",
+    imageProps: {
+      src: `${homePath}/solution-5.webp`,
+      alt: "插畫顯示一張空置的醫療病床，上方有一把工具扳手的圖示，象徵病床維護或醫療設備維修。",
     },
   },
 ];

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Container1344 } from "@/styles/container";
 import { ExtraLarge, Desktop, Tablet, Mobile } from "@/styles/container";
+import { bannerImages, homePath } from "@/constants/imagePath";
 
 type CardProps = {
   $isActive: boolean;
@@ -29,14 +30,14 @@ export const Banner = styled.div`
   left: 50%;
   transform: translateX(-50%);
   width: 100vw;
-  background-image: url("/images/banner-tablet.webp");
+  background-image: url(${bannerImages.mobile});
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   height: 680px;
 
   @media (${Tablet}) {
-    background-image: url("/images/banner.webp");
+    background-image: url(${bannerImages.tablet});
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -144,11 +145,8 @@ export const Card = styled.div<CardProps>`
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition:
-    transform 0.3s ease-in-out,
-    box-shadow 0.3s ease-in-out,
-    background-color 0.3s ease-in-out,
-    border-radius 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out,
+    background-color 0.3s ease-in-out, border-radius 0.3s ease-in-out;
   cursor: pointer;
 
   &:hover {
@@ -372,9 +370,7 @@ export const BodyBtn = styled.button<BodyBtnProps>`
   background-color: ${({ $isActive }) =>
     $isActive ? "#103f99" : "transparent"};
   color: ${({ $isActive }) => ($isActive ? "white" : "#103f99")};
-  transition:
-    background-color 0.3s,
-    color 0.3s;
+  transition: background-color 0.3s, color 0.3s;
 
   &:hover {
     background-color: #0b2c6b;
@@ -504,7 +500,7 @@ export const GuideContainer = styled.div`
   align-items: center;
   row-gap: 70px;
   height: 410px;
-  background-image: url("/images/guide-bg.webp");
+  background-image: url(${homePath}/guide-bg.webp);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

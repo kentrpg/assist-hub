@@ -3,7 +3,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { RootState } from "@/utils/redux/store";
 import { useEffect, useState } from "react";
-import { FormData } from "./data";
+import { ResultGetMemberProfile } from "@/types/getMemberProfile";
 import Gender from "./sections/Gender";
 import NameWithDob from "./sections/NameWithDob";
 import EmailWithPw from "./sections/EmailWithPw";
@@ -20,10 +20,11 @@ const Form: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const { openModal, Modal } = useModal();
-  const methods = useForm<FormData>({
+  const methods = useForm<typeof ResultGetMemberProfile.data>({
     defaultValues: {
       name: "",
       gender: "",
+      dobDate: "",
       dobStamp: "",
       email: "",
       phone: "",

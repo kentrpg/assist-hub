@@ -19,13 +19,14 @@ import {
   RadioText,
   NoProductsMessage,
 } from "./styled";
-import { ProductItem, tabsData, radioOptions } from "./data";
-import { MdInfo, MdRadioButtonChecked, MdOutlineCircle } from "react-icons/md";
+import { ResultGetProducts } from "@/types/getProducts";
+import { tabsData, radioOptions } from "./data";
+import { MdRadioButtonChecked, MdOutlineCircle } from "react-icons/md";
 import Category from "./Category";
 import Tooltip from "@/components/ui/Tooltip";
 
 type AllProps = {
-  products: ProductItem[];
+  products: typeof ResultGetProducts.data;
 };
 
 const All: React.FC<AllProps> = ({ products }) => {
@@ -33,7 +34,7 @@ const All: React.FC<AllProps> = ({ products }) => {
   const [selectedTab, setSelectedTab] = useState<number | null>(null);
   const [selectedLevel, setSelectedLevel] = useState<string>("");
   const [filteredProducts, setFilteredProducts] =
-    useState<ProductItem[]>(products);
+    useState<typeof ResultGetProducts.data>(products);
 
   useEffect(() => {
     if (router.query.type) {

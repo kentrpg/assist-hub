@@ -1,7 +1,5 @@
 export const basePath = "/images";
-export const socialPath = `${basePath}/social`;
 
-// TBD: 尚待討論 image folder management
 export const logoPath = `${basePath}/logo`;
 export const statusPath = `${basePath}/status`;
 export const errorPath = `${basePath}/error`;
@@ -12,6 +10,7 @@ export const userPath = `${basePath}/user`;
 export const layoutPath = `${basePath}/layout`;
 export const productPath = `${basePath}/product`;
 export const homePath = `${basePath}/home`;
+
 export const footerWaveImages = {
   mobile: `${layoutPath}/wave375.webp`,
   tablet: `${layoutPath}/wave768.webp`,
@@ -28,17 +27,17 @@ export type BaseImage = {
 };
 
 export const LinePay: BaseImage = {
-  src: `${socialPath}/LINE_Pay.webp`,
+  src: `${layoutPath}/LINE-Pay.webp`,
   alt: "LINE Pay",
 };
 
 export const LineIcon: BaseImage = {
-  src: `${socialPath}/LINE_icon.webp`,
+  src: `${layoutPath}/LINE-icon.webp`,
   alt: "LINE",
 };
 
 export const MetaLogo: BaseImage = {
-  src: `${socialPath}/META-logo.webp`,
+  src: `${layoutPath}/META-logo.webp`,
   alt: "META",
 };
 

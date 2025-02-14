@@ -1,4 +1,4 @@
-import { BaseImage, basePath, cartPath, checkoutPath, errorPath, homePath, inquiryPath, layoutPath } from "@/constants/imagePath";
+import { BaseImage, cartPath, checkoutPath, errorPath, homePath, inquiryPath, layoutPath } from "@/constants/imagePath";
 
 type ImageProps = {
   imageProps: BaseImage;

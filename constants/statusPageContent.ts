@@ -1,4 +1,4 @@
-import { BaseImage, cartPath, checkoutPath, errorPath, homePath, inquiryPath, layoutPath } from "@/constants/imagePath";
+import { BaseImage, cartPath, errorPath, homePath, inquiryPath, layoutPath } from "@/constants/imagePath";
 
 type ImageProps = {
   imageProps: BaseImage;
@@ -16,20 +16,18 @@ type StatusImage = Omit<StepImage, "id"> & {
 
 export const checkoutDeclined: StatusImage = {
   title: "付款失敗",
-  description: "請於隔日 [marker] 前完成付款",
-  convertString: ["23:59"],
+  description: "請於隔日 <span>23:59</span> 前完成付款",
   imageProps: {
-    src: `${checkoutPath}/failed.webp`,
+    src: `${cartPath}/failed.webp`,
     alt: "插畫顯示一名穿紅色衣服的男子坐在椅子上，右腳打著石膏，象徵受傷或行動不便的狀態。",
   },
 };
 
 export const checkoutApproval: StatusImage = {
   title: "付款成功",
-  description: "為了您的訂單安全，店內取貨時需出示[marker]以完成核對",
-  convertString: ["驗證碼"],
+  description: "為了您的訂單安全，店內取貨時需出示<span>驗證碼</span>以完成核對",
   imageProps: {
-    src: `${checkoutPath}/successful.webp`,
+    src: `${cartPath}/successful.webp`,
     alt: "插畫顯示一名穿淺灰色上衣的男子使用拐杖站立，右腳打著石膏，象徵正在康復中的狀態。",
   },
 };
@@ -54,8 +52,7 @@ export const notFound: StatusImage = {
 
 export const serverBusy: StatusImage = {
   title: "伺服器忙線中，請稍候",
-  description: "我們目前正處於高峰使用時段，系統正在處理大量請求。[marker]",
-  convertString: ["請您耐心等待，我們會盡快為您服務！"],
+  description: "我們目前正處於高峰使用時段，系統正在處理大量請求。<span>請您耐心等待，我們會盡快為您服務！</span>",
   imageProps: {
     src: `${errorPath}/500.webp`,
     alt: "插畫顯示伺服器房內的場景，三位技術人員正在操作筆記型電腦，周圍有伺服器機櫃、資料庫圖標、齒輪與雲端符號，象徵數據處理與雲端運算的概念。",

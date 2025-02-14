@@ -61,15 +61,8 @@ export type MarkerProps = {
 
 type StringToJSXWrapperProps = {
   text: string;
-  convertString: string[] | HrefMarkerProps[];
+  convertString: HrefMarkerProps[];
   MarkerComponent: React.ComponentType<MarkerProps>;
-};
-
-const isHrefMarkerArray = (
-  value: string[] | HrefMarkerProps[],
-): value is HrefMarkerProps[] => {
-  if (value.length === 0) return false;
-  return typeof value[0] === "object" && "text" in value[0];
 };
 
 export const StringToJSXWrapper = ({
@@ -77,9 +70,7 @@ export const StringToJSXWrapper = ({
   convertString,
   MarkerComponent,
 }: StringToJSXWrapperProps) => {
-  const textArray = isHrefMarkerArray(convertString)
-    ? convertString.map((item) => item.text)
-    : convertString;
+  const textArray = convertString.map((item) => item.text);
 
   const parts = text.split("[marker]");
   const shouldRenderMarker = (index: number) => index < parts.length - 1;

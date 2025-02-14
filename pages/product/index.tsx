@@ -2,12 +2,12 @@ import { NextPage, GetServerSideProps } from "next";
 import Head from "next/head";
 import All from "@/components/pages/product/All";
 import { MainWrapper } from "@/styles/wrappers";
-import { ProductItem } from "@/components/pages/product/All/data";
+import { ResultGetProducts } from "@/types/getProducts";
 import getProducts from "@/utils/api/getProducts";
 import InquiryBar from "@/components/ui/InquiryBar";
 
 type AllPageProps = {
-  products: ProductItem[];
+  products: typeof ResultGetProducts.data;
 };
 
 export const getServerSideProps: GetServerSideProps<AllPageProps> = async (
@@ -42,10 +42,7 @@ const Product: NextPage<AllPageProps> = ({ products }) => {
     <MainWrapper>
       <Head>
         <title>所有輔具</title>
-        <meta
-          name="description"
-          content="輔具商品一覽頁面"
-        />
+        <meta name="description" content="輔具商品一覽頁面" />
       </Head>
       <All products={products} />
       <InquiryBar />

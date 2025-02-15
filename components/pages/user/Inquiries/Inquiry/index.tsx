@@ -1,21 +1,21 @@
 import React from "react";
 import Link from "next/link";
 import { ProductImages, ContentRow, Icon, Grid } from "./styled";
-import { InquiryData } from "../data";
+import { ResultGetInquiries } from "@/types/getMemberInquiries";
 import { MdFileOpen } from "react-icons/md";
 
-type InquiryRowProps = {
-  inquiry: InquiryData;
+type InquiryProps = {
+  inquiry: (typeof ResultGetInquiries.data)[number];
 };
 
-const Inquiry: React.FC<InquiryRowProps> = ({ inquiry }) => {
+const Inquiry: React.FC<InquiryProps> = ({ inquiry }) => {
   const {
     inquiryId,
     inquiryCode,
     createdStamp,
     isReplied,
     images,
-    suggetsCode,
+    suggestCode,
   } = inquiry;
 
   return (
@@ -47,7 +47,7 @@ const Inquiry: React.FC<InquiryRowProps> = ({ inquiry }) => {
       <Grid>
         {isReplied ? (
           <Link
-            href={`/suggest/${suggetsCode}`}
+            href={`/suggest/${suggestCode}`}
             target="_blank"
             rel="noopener noreferrer"
             passHref

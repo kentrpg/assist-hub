@@ -5,8 +5,7 @@ import Orders from "@/components/pages/user/Orders";
 import Inquiries from "@/components/pages/user/Inquiries";
 import Details from "@/components/pages/user/Orders/Details";
 import { OrdersData } from "@/components/pages/user/Orders/ListItem/data";
-import { OrderData } from "@/components/pages/user/Orders/Details/data";
-import { InquiryData } from "@/components/pages/user/Inquiries/data";
+import { ResultGetInquiries } from "@/types/getMemberInquiries";
 import { ActiveTabType } from "@/components/pages/user/SideBar/data";
 import { Container } from "./styled";
 import { ResultGetMemberOrderType } from "@/types/getOrder";
@@ -15,7 +14,7 @@ import { useModal } from "@/components/ui/Modal";
 type UserPageLayoutProps = {
   initialTab: ActiveTabType;
   ordersData?: OrdersData[];
-  inquiriesData?: InquiryData[];
+  inquiriesData?: typeof ResultGetInquiries.data;
 };
 
 const UserPage: React.FC<UserPageLayoutProps> = ({

@@ -25,8 +25,8 @@ export const ResultGetInquiries = {
           "alt": "【省心】經濟型輪椅"
         }
       ],
-      "suggetsId": 14,
-      "suggetsCode": "AA016S"
+      "suggestId": 14,
+      "suggestCode": "AA016S"
     },
   ],
 };

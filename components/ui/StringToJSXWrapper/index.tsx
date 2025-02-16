@@ -5,22 +5,7 @@ import React, { Fragment } from "react";
  * 利用文字中的 “[marker]” 標記來決定需要被替換的位置，
  * 並透過 MarkerComponent prop 渲染自定義標記內容。
  *
- * @example 純文字標記使用 - 用於一般文字強調，傳入純文字陣列
- * ```tsx
- * const description = "為了您的訂單安全，店內取貨時需出示[marker]以完成核對";
- * const convertString = ["驗證碼"];
- *
- * 定義 MarkerComponent，用於渲染標記文字
- * const MarkMarker = ({ text }: MarkerProps) => <Mark>{text}</Mark>;
- *
- * <StringToJSXWrapper
- *   text={description}
- *   convertString={convertString}
- *   MarkerComponent={MarkMarker}
- * />
- * ```
- *
- * @example 帶 href 的標記使用 - 用於可點擊的文字連結，
+ * @example 帶 props 的標記使用 - 例如： href 可點擊的文字連結
  * - 需要傳入的 convertString 陣列中的物件型別包含 href 屬性，
  * - 並在 MarkerComponent 中根據 index 從 convertString 取得對應 href
  *

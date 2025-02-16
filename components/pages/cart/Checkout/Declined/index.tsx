@@ -7,11 +7,11 @@ import {
   ImageWrapper,
   Image,
 } from "./styled";
-import { SecondaryButton, PrimaryButton } from "@/styles/link";
 import { checkoutDeclined } from "@/constants/statusPageContent";
+import { getButtonComponent } from "@/helpers/mapping/linkMap";
 
 const Declined = () => {
-  const { imageProps, title, description } = checkoutDeclined;
+  const { imageProps, title, description, links } = checkoutDeclined;
 
   return (
     <Container>
@@ -22,8 +22,19 @@ const Declined = () => {
         <Title>{title}</Title>
         <Description dangerouslySetInnerHTML={{ __html: description }} />
         <Group>
-          <SecondaryButton href="/user/order">查看訂單</SecondaryButton>
-          <PrimaryButton href="/cart">返回購物車</PrimaryButton>
+          {links?.map((link, index) => {
+            const ButtonComponent = getButtonComponent(link.theme);
+
+            return (
+              <ButtonComponent
+                key={index}
+                href={link.href}
+                target={link.target}
+              >
+                {link.text}
+              </ButtonComponent>
+            );
+          })}
         </Group>
       </Context>
     </Container>

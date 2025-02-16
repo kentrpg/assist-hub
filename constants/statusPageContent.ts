@@ -1,4 +1,5 @@
 import { BaseImage, cartPath, errorPath, homePath, inquiryPath, layoutPath } from "@/constants/imagePath";
+import { StyledLinkType } from "@/helpers/mapping/linkMap";
 
 type ImageProps = {
   imageProps: BaseImage;
@@ -12,6 +13,19 @@ export type StepImage = ImageProps & {
 
 type StatusImage = Omit<StepImage, "id"> & {
   convertString?: string[];
+  links?: 
+    {
+      text: string;
+      href: string;
+      target: "_blank" | "_self";
+      theme: StyledLinkType;
+      // theme: {
+      //   layoutType: StyledLinkType;
+      //   buttonVariants: "primary" | "secondary";
+      //   buttonSizes: "large" | "xlarge";
+      // };
+    }[]
+  ;
 };
 
 export const checkoutDeclined: StatusImage = {
@@ -21,6 +35,30 @@ export const checkoutDeclined: StatusImage = {
     src: `${cartPath}/failed.webp`,
     alt: "插畫顯示一名穿紅色衣服的男子坐在椅子上，右腳打著石膏，象徵受傷或行動不便的狀態。",
   },
+  links: [
+    {
+      text: "查看訂單",
+      href: "/user/order",
+      target: "_self",
+      theme: "SecondaryButton"
+      // theme: {
+      //   layoutType: "solid",
+      //   buttonVariants: "secondary",
+      //   buttonSizes: "xlarge",
+      // },
+    },
+    {
+      text: "回購物車",
+      href: "/cart",
+      target: "_self",
+      theme: "PrimaryButton"
+      // theme: {
+      //   layoutType: "solid",
+      //   buttonVariants: "primary",
+      //   buttonSizes: "xlarge",
+      // },
+    },
+  ],
 };
 
 export const checkoutApproval: StatusImage = {

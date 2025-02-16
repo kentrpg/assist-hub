@@ -1,7 +1,8 @@
 import { Title, TitleGroup } from "@/components/ui/titles";
 import { Content, Image, Info, Text, Description, Action } from "./styled";
-import { CartSteps } from "./data";
 import { PrimaryButton } from "@/styles/link";
+import { cartSteps } from "@/constants/statusPageContent";
+
 const CartEmpty = () => {
   return (
     <>
@@ -10,10 +11,10 @@ const CartEmpty = () => {
         <Description>租賃輔具更省心，快來填滿你的購物車吧！</Description>
       </TitleGroup>
       <Content>
-        {CartSteps.map((step) => (
+        {cartSteps.map((step) => (
           <Info key={step.id}>
-            <Image key={step.id} src={step.imgSrc} alt={step.description} />
-            <Text>{step.description}</Text>
+            <Image key={step.id} {...step.imageProps} />
+            <Text>{step.title}</Text>
           </Info>
         ))}
       </Content>

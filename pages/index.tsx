@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import Home from "@/components/pages/Home";
+import Home from "@/components/pages/home";
 import Head from "next/head";
 
 const HomePage: NextPage = () => {

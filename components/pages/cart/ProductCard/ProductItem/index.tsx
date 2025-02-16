@@ -49,6 +49,7 @@ import { rentalPeriodOptions, PeriodProps, ProductItemProps } from "../data";
 import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import { formatCurrency } from "@/helpers/format/currency";
 import Loading from "@/components/ui/Loading";
+import { productPath } from "@/constants/imagePath";
 import { formatDate } from "@/helpers/format/formatDate";
 
 export const ProductItem: FC<ProductItemProps> = ({
@@ -174,7 +175,7 @@ export const ProductItem: FC<ProductItemProps> = ({
         <CardContent>
           <ProductInfo>
             <ProductImage
-              src={item.imgSrc || "images/device1.png"}
+              src={item.imgSrc || `${productPath}/initial-image.webp`}
               alt={item.imgAlt}
             />
             <ProductContent>

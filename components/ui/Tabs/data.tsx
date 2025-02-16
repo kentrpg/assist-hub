@@ -1,3 +1,5 @@
+import { layoutPath } from "@/constants/imagePath";
+
 type TabData = {
   id: string;
   label: string;
@@ -51,7 +53,7 @@ export const tabsData: TabData[] = [
     label: "無法自行評估",
     imgAlt:
       "插畫顯示兩名男子，一人手臂吊著繃帶，另一人使用拐杖並腳部打著石膏，象徵不同受傷狀態的描述。",
-    imgSrc: "/images/LOGO-default.webp",
+    imgSrc: `${layoutPath}/logo-desktop.webp`,
     description: "需等待專業人士評估。",
   },
 ];

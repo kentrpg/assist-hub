@@ -58,6 +58,7 @@ import Link from "next/link";
 import Loading from "@/components/ui/Loading";
 import { useToast } from "@/components/ui/Toast";
 import { useModal } from "@/components/ui/Modal";
+import { productPath } from "@/constants/imagePath";
 
 type SingleProps = {
   product: typeof ResultGetProduct.data.product;
@@ -245,7 +246,7 @@ const Single: React.FC<SingleProps> = ({
                 <Link key={index} href={`/product/${item.productId}`} passHref>
                   <ComparisonProduct key={index}>
                     <ComparisonImg
-                      src={item.imgSrc || "/images/wheelChair.svg"}
+                      src={item.imgSrc || `${productPath}/initial-image.webp`}
                       alt={item.name}
                     />
                     <ComparisonBtn
@@ -319,7 +320,7 @@ const Single: React.FC<SingleProps> = ({
               <Link key={index} href={`/product/${item.productId}`} passHref>
                 <CarouselImg>
                   <img
-                    src={item.imgSrc || "/images/wheelChair.svg"}
+                    src={item.imgSrc || `${productPath}/initial-image.webp`}
                     width={260}
                     height={190}
                     alt={item.name}

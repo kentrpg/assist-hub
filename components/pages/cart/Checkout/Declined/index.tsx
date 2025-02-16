@@ -3,32 +3,38 @@ import {
   Context,
   Title,
   Description,
-  Mark,
   Group,
   ImageWrapper,
   Image,
 } from "./styled";
-import { SecondaryButton, PrimaryButton } from "@/styles/link";
+import { checkoutDeclined } from "@/constants/statusPageContent";
+import { getButtonComponent } from "@/helpers/mapping/linkMap";
 
 const Declined = () => {
+  const { imageProps, title, description, links } = checkoutDeclined;
+
   return (
     <Container>
       <Context>
         <ImageWrapper>
-          <Image
-            src="/images/failed.webp"
-            alt="插畫顯示一名穿紅色衣服的男子坐在椅子上，右腳打著石膏，象徵受傷或行動不便的狀態。"
-            width={200}
-            height={320}
-          />
+          <Image {...imageProps} width={200} height={320} />
         </ImageWrapper>
-        <Title>付款失敗</Title>
-        <Description>
-          為了您的訂單安全，店內取貨時需出示<Mark>驗證碼</Mark>以完成核對
-        </Description>
+        <Title>{title}</Title>
+        <Description dangerouslySetInnerHTML={{ __html: description }} />
         <Group>
-          <SecondaryButton href="/user/order">查看訂單</SecondaryButton>
-          <PrimaryButton href="/cart">返回購物車</PrimaryButton>
+          {links?.map((link, index) => {
+            const ButtonComponent = getButtonComponent(link.theme);
+
+            return (
+              <ButtonComponent
+                key={index}
+                href={link.href}
+                target={link.target}
+              >
+                {link.text}
+              </ButtonComponent>
+            );
+          })}
         </Group>
       </Context>
     </Container>

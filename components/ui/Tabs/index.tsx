@@ -8,7 +8,7 @@ import {
   Description,
   Group,
 } from "./styled";
-import { tabsData } from "./data";
+import { inquiryTabs, StepImage } from "@/constants/statusPageContent";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserInquiry } from "@/utils/redux/slices/userInquiry";
 import { RootState } from "@/utils/redux/store";
@@ -16,10 +16,9 @@ import { RootState } from "@/utils/redux/store";
 const Tabs = () => {
   const dispatch = useDispatch();
   const { level } = useSelector((state: RootState) => state.userInquiry);
+  const activeTabData = inquiryTabs[Number(level) - 1];
 
-  const activeTab = level || "1";
-
-  const handleTabClick = (tab: typeof tabsData[0]) => {
+  const handleTabClick = (tab: StepImage) => {
     dispatch(
       setUserInquiry({
         level: tab.id,
@@ -31,31 +30,21 @@ const Tabs = () => {
   return (
     <TabsContainer>
       <TabsMenu>
-        {tabsData.map((tab) => (
+        {inquiryTabs.map((tab) => (
           <TabButton
             key={tab.id}
-            $isActive={tab.id === activeTab}
+            $isActive={tab.id === level}
             onClick={() => handleTabClick(tab)}
           >
-            {tab.label}
+            {tab.title}
           </TabButton>
         ))}
       </TabsMenu>
       <TabContent>
-        {tabsData.map(
-          (tab) =>
-            tab.id === activeTab && (
-              <Group key={tab.id}>
-                <Image
-                  src={tab.imgSrc}
-                  alt={tab.imgAlt}
-                  width={270}
-                  height={300}
-                />
-                <Description>{tab.description}</Description>
-              </Group>
-            ),
-        )}
+        <Group key={activeTabData.id}>
+          <Image {...activeTabData.imageProps} width={270} height={300} />
+          <Description>{activeTabData.description}</Description>
+        </Group>
       </TabContent>
     </TabsContainer>
   );

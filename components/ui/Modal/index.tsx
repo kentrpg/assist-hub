@@ -11,6 +11,7 @@ import {
   OutlinedButton,
   ImageWrapper,
 } from "./styled";
+import { inquiryPath } from "@/constants/imagePath";
 
 const modalControls = {
   default: {
@@ -19,7 +20,7 @@ const modalControls = {
   },
   inquiry: {
     type: "image",
-    imgSrc: "images/inquiry-modal.webp",
+    imgSrc: `${inquiryPath}/modal.webp`,
     imgAlt:
       "插畫顯示一名醫生透過手機螢幕與患者進行線上諮詢，周圍有健康相關的圖標，如心臟、肺部和檔案，象徵遠端醫療與健康管理的概念。",
     description: "您已成功寄出詢問單，\n爾後店家會與您聯繫",

@@ -14,13 +14,6 @@ export const Container = styled(Container1344)`
   }
 `;
 
-export const Br = styled.br`
-  display: none;
-  @media ${Mobile} {
-    display: block;
-  }
-`;
-
 export const Image = styled.img`
   height: auto;
   max-width: 300px;
@@ -48,8 +41,11 @@ export const Content = styled.div`
   }
 `;
 
-export const Title = styled.h1`
+export const Group = styled.div`
   text-align: center;
+`;
+
+export const Title = styled.h1`
   ${H5};
   color: ${({ theme }) => theme.colors.textPrimary};
 `;
@@ -59,4 +55,10 @@ export const Text = styled.p`
   font-size: 14px;
   color: ${({ theme }) => theme.colors.error};
   margin-top: 12px;
+  span {
+    display: inline;
+    @media ${Mobile} {
+      display: block;
+    }
+  }
 `;

@@ -50,6 +50,7 @@ import { LoaderSpinner } from "@/components/ui/LoaderSpinner";
 import { formatCurrency } from "@/helpers/format/currency";
 import Loading from "@/components/ui/Loading";
 import { productPath } from "@/constants/imagePath";
+import { formatDate } from "@/helpers/format/formatDate";
 
 export const ProductItem: FC<ProductItemProps> = ({
   item,
@@ -64,13 +65,20 @@ export const ProductItem: FC<ProductItemProps> = ({
 }: ProductItemProps) => {
   const { quantity, rent, period, rentStamp } = item;
   const [isLoading, setIsLoading] = useState(false);
+  const today = formatDate(new Date());
 
   const selectControls = {
     value: period,
-    options: rentalPeriodOptions.map((option) => ({
-      value: option,
-      label: `${option}天`,
-    })),
+    options: (() => {
+      const processOptions = (options: number[]) => {
+        return options.map((option) => ({
+          value: option,
+          label: `${option}天`,
+        }));
+      };
+      return processOptions(rentalPeriodOptions);
+    })(),
+    isDisabled: !rentStamp,
     handleChange: async (e: React.ChangeEvent<HTMLSelectElement>) => {
       setIsLoading(true);
       await onRentalPeriodChange(Number(e.target.value) as PeriodProps);
@@ -80,15 +88,23 @@ export const ProductItem: FC<ProductItemProps> = ({
 
   const dateControls = {
     range: {
-      today: new Date().toISOString().split("T")[0],
-      oneYearLater: (() => {
+      tomorrow: () => {
+        const now = new Date();
+        now.setHours(0, 0, 0, 0);
+        now.setDate(now.getDate() + 1);
+        return formatDate(now);
+      },
+      oneYearLater: () => {
         const date = new Date();
+        date.setHours(0, 0, 0, 0);
         date.setFullYear(date.getFullYear() + 1);
-        return date.toISOString().split("T")[0];
-      })(),
+        return formatDate(date);
+      },
     },
     picker: {
       value: rentStamp,
+      isEmpty: rentStamp === "",
+      isInvalidDate: rentStamp !== "" && rentStamp <= today,
       handleToggle: (e: React.MouseEvent<HTMLInputElement>) => {
         if (isDatepickerTarget) {
           e.currentTarget.blur();
@@ -131,11 +147,19 @@ export const ProductItem: FC<ProductItemProps> = ({
   };
 
   const checkoutControls = {
-    isDisabled: !rentStamp,
     checkoutUrl: "/cart/checkout",
+    isDisabled:
+      dateControls.picker.isEmpty || dateControls.picker.isInvalidDate,
+    isShowNoticeMessage:
+      $isActive &&
+      (dateControls.picker.isEmpty || dateControls.picker.isInvalidDate),
+    getNoticeMessage: () => {
+      if (dateControls.picker.isEmpty) {
+        return "請先選擇租借日期，再前往結帳";
+      }
+      return "租借日期不可小於今日";
+    },
   };
-
-  const shouldShowDateSelectionReminder = rentStamp === "" && $isActive;
 
   return (
     <Product $isActive={$isActive} onClick={onClick}>
@@ -185,36 +209,18 @@ export const ProductItem: FC<ProductItemProps> = ({
 
         <Rental>
           <RentalGroup>
-            <RentalAction>
-              <RentalLabel>租賃期約</RentalLabel>
-              <Period>
-                <RentalSelect
-                  value={selectControls.value}
-                  onChange={selectControls.handleChange}
-                >
-                  {selectControls.options.map(({ value, label }) => (
-                    <option key={value} value={value}>
-                      {label}
-                    </option>
-                  ))}
-                </RentalSelect>
-                <SelectArrowIcon>
-                  <MdArrowDropDown size={24} />
-                </SelectArrowIcon>
-              </Period>
-            </RentalAction>
-            <RentalAction>
+            <RentalAction $isDisabled={false}>
               <RentalLabel>租賃期間</RentalLabel>
               <DateInputWrapper>
                 <RentalDateInput
                   type="date"
                   value={dateControls.picker.value}
-                  $completed={shouldShowDateSelectionReminder}
+                  $completed={checkoutControls.isShowNoticeMessage}
                   onClick={dateControls.picker.handleToggle}
                   onChange={dateControls.picker.handleChange}
                   onBlur={dateControls.picker.handleBlur}
-                  min={dateControls.range.today}
-                  max={dateControls.range.oneYearLater}
+                  min={dateControls.range.tomorrow()}
+                  max={dateControls.range.oneYearLater()}
                 />
                 <RentalDate>
                   <RentalInputWrapper>
@@ -232,6 +238,24 @@ export const ProductItem: FC<ProductItemProps> = ({
                 </RentalDate>
               </DateInputWrapper>
             </RentalAction>
+            <RentalAction $isDisabled={checkoutControls.isDisabled}>
+              <RentalLabel>租賃期約</RentalLabel>
+              <Period>
+                <RentalSelect
+                  value={selectControls.value}
+                  onChange={selectControls.handleChange}
+                >
+                  {selectControls.options.map(({ value, label }) => (
+                    <option key={value} value={value}>
+                      {label}
+                    </option>
+                  ))}
+                </RentalSelect>
+                <SelectArrowIcon>
+                  <MdArrowDropDown size={24} />
+                </SelectArrowIcon>
+              </Period>
+            </RentalAction>
           </RentalGroup>
           <RentalSummaryAmount>
             總額(未含運送費)：{formatCurrency(item.amount)}
@@ -247,11 +271,9 @@ export const ProductItem: FC<ProductItemProps> = ({
           </ProductRemoveButton>
           <Checkout>
             <CheckoutNotice>
-              {shouldShowDateSelectionReminder && (
-                <CheckoutNoticeSpan
-                  $completed={shouldShowDateSelectionReminder}
-                >
-                  請先選擇租借日期，再前往結帳
+              {checkoutControls.isShowNoticeMessage && (
+                <CheckoutNoticeSpan>
+                  {checkoutControls.getNoticeMessage()}
                 </CheckoutNoticeSpan>
               )}
               注意：一次只能結帳一筆訂單

@@ -2,9 +2,13 @@ import { NextPage, GetServerSideProps } from "next";
 import React from "react";
 import UserPage from "@/components/pages/user/UserPage";
 import { Wrapper100 } from "@/styles/wrappers";
-import { InquiryData } from "@/components/pages/user/Inquiries/data";
+import { ResultGetInquiries } from "@/types/getMemberInquiries";
 import getInquiries from "@/utils/api/member/getInquiries";
 import Head from "next/head";
+
+type InquiryPageProps = {
+  inquiriesData: typeof ResultGetInquiries.data;
+};
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const token = req.cookies.token;
@@ -31,15 +35,11 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   };
 };
 
-type InquiryPageProps = {
-  inquiriesData: InquiryData[];
-};
-
 const Inquiry: NextPage<InquiryPageProps> = ({ inquiriesData }) => {
   return (
     <Wrapper100>
       <Head>
-        <title>詢問單</title>
+        <title>我的詢問單</title>
         <meta name="description" content="使用者詢問單一覽頁面" />
       </Head>
       <UserPage initialTab="inquiry" inquiriesData={inquiriesData} />

@@ -8,11 +8,11 @@ import {
 } from "./styled";
 import Inquiry from "./Inquiry";
 import Empty from "./Empty";
-import { InquiryData } from "@/components/pages/user/Inquiries/data";
+import { ResultGetInquiries } from "@/types/getMemberInquiries";
 import Loading from "@/components/ui/Loading";
 
 type InquiriesProps = {
-  inquiriesData?: InquiryData[];
+  inquiriesData?: typeof ResultGetInquiries.data;
 };
 
 const Inquiries: React.FC<InquiriesProps> = ({ inquiriesData }) => {

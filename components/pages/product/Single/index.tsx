@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { ProductItem, ComparisonItem, RecommendedItem } from "./data";
+import { ResultGetProduct } from "@/types/getProduct";
 import {
   MdArrowBackIosNew,
   MdArrowForwardIos,
@@ -60,6 +60,12 @@ import { useToast } from "@/components/ui/Toast";
 import { useModal } from "@/components/ui/Modal";
 import { productPath } from "@/constants/imagePath";
 
+type SingleProps = {
+  product: typeof ResultGetProduct.data.product;
+  comparison: typeof ResultGetProduct.data.comparison;
+  recommended: typeof ResultGetProduct.data.recommended;
+};
+
 const CustomPrevArrow = ({ onClick }: { onClick?: () => void }) => (
   <div className="slick-prev" onClick={onClick}>
     <MdArrowBackIosNew size={40} color="#103F99" />
@@ -72,13 +78,7 @@ const CustomNextArrow = ({ onClick }: { onClick?: () => void }) => (
   </div>
 );
 
-type ProductDetailsProps = {
-  product: ProductItem;
-  comparison: ComparisonItem[];
-  recommended: RecommendedItem[];
-};
-
-const Single: React.FC<ProductDetailsProps> = ({
+const Single: React.FC<SingleProps> = ({
   product,
   comparison,
   recommended,

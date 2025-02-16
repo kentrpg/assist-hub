@@ -2,9 +2,13 @@ import { NextPage, GetServerSideProps } from "next";
 import React from "react";
 import UserPage from "@/components/pages/user/UserPage";
 import { Wrapper100 } from "@/styles/wrappers";
-import type { OrdersData } from "@/components/pages/user/Orders/ListItem/data";
+import { ResultGetMemberOrders } from "@/types/getOrders";
 import getOrders from "@/utils/api/member/getOrders";
 import Head from "next/head";
+
+type OrderPageProps = {
+  ordersData: typeof ResultGetMemberOrders.data;
+};
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const token = req.cookies.token;
@@ -29,10 +33,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
       ordersData: result.data,
     },
   };
-};
-
-type OrderPageProps = {
-  ordersData: OrdersData[];
 };
 
 const Order: NextPage<OrderPageProps> = ({ ordersData }) => {

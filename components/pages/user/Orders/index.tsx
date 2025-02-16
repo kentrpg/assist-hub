@@ -2,20 +2,21 @@ import React, { useState, useEffect } from "react";
 import { OrderContainer, Header, Tabs, Tab, Title, List } from "./styled";
 import Empty from "./Empty";
 import ListItem from "./ListItem";
-import { ResultGetMemberOrdersType } from "@/types/getOrders";
+import { ResultGetMemberOrders } from "@/types/getOrders";
 import Loading from "@/components/ui/Loading";
-import { OrdersData } from "@/components/pages/user/Orders/ListItem/data";
 
 type OrdersProps = {
-  setActiveOrder: (order: OrdersData) => void;
-  ordersData: OrdersData[];
+  setActiveOrder: (order: (typeof ResultGetMemberOrders.data)[number]) => void;
+  ordersData: typeof ResultGetMemberOrders.data;
 };
 
 type ActiveTab = "全部訂單" | "已結案";
 
 const Orders: React.FC<OrdersProps> = ({ setActiveOrder, ordersData }) => {
   const [activeTab, setActiveTab] = useState<ActiveTab>("全部訂單");
-  const [filteredOrders, setFilteredOrders] = useState<OrdersData[]>([]);
+  const [filteredOrders, setFilteredOrders] = useState<
+    typeof ResultGetMemberOrders.data
+  >([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -29,8 +30,8 @@ const Orders: React.FC<OrdersProps> = ({ setActiveOrder, ordersData }) => {
         });
         setFilteredOrders(filtered);
       }
-      setLoading(false); // 資料處理完成後，設置為非加載狀態
-    }, 500); // 模擬延遲以避免太快觸發渲染
+      setLoading(false);
+    }, 500);
 
     return () => clearTimeout(timeoutId); // 清除上一次的延遲操作
   }, [activeTab, ordersData]);

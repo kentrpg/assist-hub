@@ -1,7 +1,7 @@
 import { Desktop, Mobile, Tablet } from "@/styles/container";
 import { VstackLayout } from "@/styles/flex";
 import type { IsActive } from "@/types/uiProps";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const TabsContainer = styled.div`
   display: flex;
@@ -40,12 +40,24 @@ export const TabButton = styled.button<IsActive>`
   }
 `;
 
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
 export const TabContent = styled.div`
   flex: 1;
   display: flex;
   justify-content: center;
   gap: 16px;
   max-width: 50%;
+
   @media ${Tablet} {
     max-width: inherit;
   }
@@ -54,6 +66,8 @@ export const TabContent = styled.div`
 export const Group = styled.div`
   ${VstackLayout};
   gap: 48px;
+  animation: ${fadeIn} 0.3s ease-in-out;
+  will-change: opacity, transform;
 `;
 
 export const Image = styled.img`

@@ -41,6 +41,7 @@ const Form: React.FC = () => {
       methods.reset({
         name: user.name,
         gender: user.gender,
+        dobDate: user.dobDate,
         dobStamp: user.dobStamp,
         email: user.email,
         phone: user.phone,

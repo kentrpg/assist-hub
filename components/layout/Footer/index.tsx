@@ -24,6 +24,8 @@ import {
   FormValuesProps,
 } from "@/utils/react-hook-form/InputField/data";
 import Link from "next/link";
+import { footerInfo } from "@/components/pages/cart/Checkout/data";
+import { LineIcon, MetaLogo } from "@/constants/imagePath";
 
 const Footer: React.FC = () => {
   const {
@@ -89,20 +91,10 @@ const Footer: React.FC = () => {
               <span>地址：高雄市新興區</span>
               <SocialMediaLinks>
                 <Link href="https://line.me" target="_blank">
-                  <Image
-                    src="/images/social/LINE_icon.webp"
-                    alt="LINE logo"
-                    width={20}
-                    height={20}
-                  />
+                  <Image {...LineIcon} width={20} height={20} />
                 </Link>
                 <Link href="https://www.facebook.com/hexschool" target="_blank">
-                  <Image
-                    src="/images/social/META-logo.webp"
-                    alt="META logo"
-                    width={20}
-                    height={20}
-                  />
+                  <Image {...MetaLogo} width={20} height={20} />
                 </Link>
               </SocialMediaLinks>
             </AddressInfo>
@@ -124,15 +116,8 @@ const Footer: React.FC = () => {
                 )}
               </SubscriptionField>
               <CheckboxField<FormValuesProps["newsletter"]>
-                id="newsletter-consent"
+                {...footerInfo}
                 control={control}
-                field={{ name: "isSubscribed" }}
-                $gap={10}
-                $fontSize={14}
-                $checkedColor="textMuted"
-                $uncheckedColor="textMuted"
-                $color="grey300"
-                label="我想要了解最新的輔具資訊"
               />
             </form>
           </Newsletter>

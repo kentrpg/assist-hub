@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { GalleryContainer, Main, InfoImage, Thumbnail } from "./styled";
+import { productPath } from "@/constants/imagePath";
 
 // 定義型別
 type GalleryProps = {
@@ -8,7 +9,7 @@ type GalleryProps = {
 };
 
 const Gallery: React.FC<GalleryProps> = ({
-  initialImage = "/images/infoMain.png", 
+  initialImage = `${productPath}/initial-image.webp`,
   thumbnails,
 }) => {
   const [selectedImage, setSelectedImage] = useState<string>(initialImage);

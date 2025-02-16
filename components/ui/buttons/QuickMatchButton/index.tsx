@@ -1,3 +1,4 @@
+import { layoutPath } from "@/constants/imagePath";
 import { QuickMatchButtonStyle } from "./styled";
 
 const QuickMatchButton = () => {
@@ -5,12 +6,12 @@ const QuickMatchButton = () => {
     <QuickMatchButtonStyle>
       <object
         type="image/svg+xml"
-        data="/images/search-Accessible.svg"
+        data={`${layoutPath}/search.svg`}
         style={{ width: "30px", height: "30px" }}
         aria-label="搜尋圖示"
       />
       {/* <img
-        src="/images/search-Accessible.svg"
+        src="/images/search.svg"
         alt="搜尋圖示"
         width={30}
         height={30}

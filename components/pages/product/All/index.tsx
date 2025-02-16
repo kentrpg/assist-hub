@@ -24,6 +24,7 @@ import { tabsData, radioOptions } from "./data";
 import { MdRadioButtonChecked, MdOutlineCircle } from "react-icons/md";
 import Category from "./Category";
 import Tooltip from "@/components/ui/Tooltip";
+import { layoutPath } from "@/constants/imagePath";
 
 type AllProps = {
   products: typeof ResultGetProducts.data;
@@ -119,7 +120,10 @@ const All: React.FC<AllProps> = ({ products }) => {
                 onClick={() => handleTabClick(index)}
               >
                 <ImgWrapper>
-                  <Img src={`/images/${tab.value}.webp`} alt={tab.label} />
+                  <Img
+                    src={`${layoutPath}/type-${tab.value}.webp`}
+                    alt={tab.label}
+                  />
                 </ImgWrapper>
                 <Overlay>{tab.label}</Overlay>
               </Tab>

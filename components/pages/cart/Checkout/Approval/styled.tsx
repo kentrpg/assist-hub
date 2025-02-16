@@ -21,19 +21,17 @@ export const ImageWrapper = styled.div`
 `;
 
 export const Image = styled.img`
-  /* width: 270px;
-  height: 320px; */
+  vertical-align: middle;
 `;
 
 export const Description = styled.div`
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
   margin-bottom: 10px;
-`;
-
-export const Mark = styled.strong`
-  font-weight: 500;
-  color: ${({ theme }) => theme.colors.accent};
+  span {
+    font-weight: 500;
+    color: ${({ theme }) => theme.colors.accent};
+  }
 `;
 
 export const Group = styled(FlexAlignCenter)`

@@ -8,6 +8,7 @@ import {
   Tablet,
   Mobile,
 } from "@/styles/container";
+import { productPath } from "@/constants/imagePath";
 
 type CardProps = {
   $bg: "primaryLight" | "accentLight";
@@ -73,7 +74,7 @@ export const CardImg = styled.img`
 `;
 
 export const InquiryIcon = styled.div`
-  background-image: url("/images/accessible.svg");
+  background-image: url(${productPath}/accessible.svg);
   background-size: contain;
   background-repeat: no-repeat;
   width: 21px;

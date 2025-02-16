@@ -1,3 +1,4 @@
+import { layoutPath } from "@/constants/imagePath";
 import Document, {
   Html,
   Head,
@@ -40,10 +41,8 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="zh-Hant">
-        {/* 在這裡添加全域的 meta 標籤、字體或其他標籤 */}
-        <Head>
-          <link rel="icon" href="/images/LOGO.webp" />
-        </Head>
+        {/* 未來擴充全域 meta 標籤、字體或其他標籤 */}
+        <Head />
         <body>
           <Main />
           <NextScript />

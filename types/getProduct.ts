@@ -9,7 +9,7 @@ export const ResultGetProduct = {
       id: 1,
       type: "wheelchair",
       name: "鋁製躺式輪椅",
-      level: 1,
+      level: "1",
       rent: 5000,
       deposit: 500,
       fee: 150,
@@ -20,11 +20,7 @@ export const ResultGetProduct = {
         load: "最高支撐 120 公斤",
         origin: "台灣製造，品質保證",
       },
-      features: [
-        "輕量鋁合金",
-        "收和體積小",
-        "Ｓ型曲面坐墊",
-      ],
+      features: ["輕量鋁合金", "收和體積小", "Ｓ型曲面坐墊"],
       image: {
         preview: "https://image.com",
         previewAlt: "",
@@ -32,7 +28,7 @@ export const ResultGetProduct = {
           "https://image.com",
           "https://image.com",
           "https://image.com",
-          "https://image.com"
+          "https://image.com",
         ],
         listAlt: [
           "https://image.com",
@@ -41,7 +37,8 @@ export const ResultGetProduct = {
           "https://image.com",
         ],
       },
-      manual: "<ol><li>展開輪椅：將輪椅從摺疊狀態打開，確保座椅完全展開且側邊卡榫扣緊。</li><li>煞車使用：在固定位置時，請使用煞車控制柄將後輪鎖住，確保輪椅穩定。</li><li>使用安全帶：如需額外固定，可繫上附贈的安全帶，提供更多保護。</li><li>摺疊收納：輕輕拉起座椅中央的收納帶，輪椅即可快速摺疊，方便攜帶和存放。</li><li>清潔保養：請使用濕布擦拭框架與坐墊，不建議直接用水沖洗；定期檢查輪胎與剎車功能，保持最佳狀態。</li></ol>",
+      manual:
+        "1. 使用控制面板或遙控器進行角度調整。2. 調整床體高度或護欄位置，確保安全與舒適。3. 定期檢查護欄及控制功能，保持運作正常。4. 清潔床體與護欄，延長使用壽命。",
     },
     comparison: [
       {
@@ -50,18 +47,18 @@ export const ResultGetProduct = {
         name: "手動輪椅",
         rent: 3000,
         material: "不鏽鋼",
-        features: [
-          "可折疊",
-          "輕量設計"
-        ]
-      }
+        features: ["可折疊", "輕量設計"],
+      },
     ],
     recommended: [
       {
         productId: 1,
         imgSrc: "https://image.com",
+        imgAlt: "",
         name: "手動輪椅",
         rent: 1000,
+        features: ["可折疊", "輕量設計"],
+        description: "適合短期使用，價格親民。",
       },
     ],
   },

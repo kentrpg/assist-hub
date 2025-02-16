@@ -15,7 +15,7 @@ import {
   InquiryIcon,
   CategoryContainer,
 } from "./styled";
-import { ProductItem } from "../data";
+import { ResultGetProducts } from "@/types/getProducts";
 import { useModal } from "@/components/ui/Modal";
 import { useToast } from "@/components/ui/Toast";
 
@@ -24,7 +24,7 @@ type ProductCategoryProps = {
   color: "primary" | "accent";
   bgColor: "primaryLight" | "accentLight";
   type: string;
-  products: ProductItem[];
+  products: typeof ResultGetProducts.data;
 };
 
 const Category: React.FC<ProductCategoryProps> = ({
@@ -40,7 +40,7 @@ const Category: React.FC<ProductCategoryProps> = ({
   const { openToast, Toast } = useToast();
 
   const handleAddToInquiryBar = (
-    product: ProductItem,
+    product: (typeof ResultGetProducts.data)[number],
     e: React.MouseEvent<HTMLButtonElement>,
   ) => {
     e.preventDefault();

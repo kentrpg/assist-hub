@@ -49,14 +49,13 @@ import {
 } from "./styled";
 import { MdArrowBack } from "react-icons/md";
 import Progress from "./Progress";
-import { formatDate } from "../ListItem/data";
-import { adjustDate } from "../ListItem/data";
+import { formatDate, adjustDate } from "../ListItem/data";
 import { formatCurrency } from "@/helpers/format/currency";
-import { OrderData } from "./data";
+import { ResultGetMemberOrder } from "@/types/getOrder";
 
 type DetailsProps = {
   onBack: () => void;
-  orderData: OrderData;
+  orderData: typeof ResultGetMemberOrder.data;
 };
 
 const Details: React.FC<DetailsProps> = ({ onBack, orderData }) => {

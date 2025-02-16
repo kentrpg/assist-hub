@@ -4,9 +4,13 @@ import UserPage from "@/components/pages/user/UserPage";
 import { Wrapper100 } from "@/styles/wrappers";
 import { setUser } from "@/utils/redux/slices/user";
 import { useDispatch } from "react-redux";
-import { FormData } from "@/components/pages/user/Profile/Form/data";
+import { ResultGetMemberProfile } from "@/types/getMemberProfile";
 import getProfile from "@/utils/api/member/getProfile";
 import Head from "next/head";
+
+type ProfileProps = {
+  userData: typeof ResultGetMemberProfile.data;
+};
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const token = req.cookies.token;
@@ -29,10 +33,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
       userData: result.data,
     },
   };
-};
-
-type ProfileProps = {
-  userData: FormData;
 };
 
 const Profile: NextPage<ProfileProps> = ({ userData }) => {

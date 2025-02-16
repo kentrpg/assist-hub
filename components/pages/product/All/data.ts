@@ -1,15 +1,3 @@
-export type ProductItem = {
-  id: number;
-  type: string;
-  name: string;
-  level: string;
-  rent: number;
-  imgSrc: string;
-  imgAlt: string;
-  features: string[];
-  description: string;
-};
-
 export const tabsData = [
   { label: "行動輪椅", value: "wheelChair" },
   { label: "拐杖步行", value: "crutch" },

@@ -12,10 +12,10 @@ import {
 import { MdCheckCircle } from "react-icons/md";
 import { FaRegCircle } from "react-icons/fa";
 import { steps } from "./data";
-import { OrderData } from "../data";
+import { ResultGetMemberOrder } from "@/types/getOrder";
 
 type ProgressProps = {
-  orderData: OrderData;
+  orderData: typeof ResultGetMemberOrder.data;
 };
 
 const Progress: React.FC<ProgressProps> = ({ orderData }) => {

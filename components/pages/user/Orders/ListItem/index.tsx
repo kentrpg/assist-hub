@@ -32,14 +32,13 @@ import {
   ColGroup,
   TableContainer,
 } from "./styled";
-import { formatDate } from "./data";
-import { adjustDate } from "./data";
+import { formatDate, adjustDate } from "./data";
 import { formatCurrency } from "@/helpers/format/currency";
-import { OrdersData } from "./data";
+import { ResultGetMemberOrders } from "@/types/getOrders";
 import Loading from "@/components/ui/Loading";
 
 type ListProps = {
-  order: OrdersData;
+  order: (typeof ResultGetMemberOrders.data)[number];
   onViewDetails: () => void;
 };
 
@@ -84,7 +83,11 @@ const ListItem: React.FC<ListProps> = ({ order, onViewDetails }) => {
 
   return (
     <Item>
-      <Header $shipping={shipping}>
+      <Header
+        $shipping={
+          shipping === "delivery" || shipping === "store" ? shipping : "store"
+        }
+      >
         <Major>
           <Type>
             {order.shipping === "delivery"

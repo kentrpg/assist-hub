@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { BreadCrumbContainer, Ol, Li } from "./styled";
 import { MdChevronRight } from "react-icons/md";
-import { ProductItem } from "../data";
+import { ResultGetProduct } from "@/types/getProduct";
 
 type BreadCrumbProps = {
-  product: ProductItem;
+  product: typeof ResultGetProduct.data.product;
 };
 
 const typeMapping: Record<string, string> = {
@@ -15,7 +15,7 @@ const typeMapping: Record<string, string> = {
 };
 
 const BreadCrumb: React.FC<BreadCrumbProps> = ({ product }) => {
-  const translatedType = typeMapping[product.type] || "未知類型"; 
+  const translatedType = typeMapping[product.type] || "未知類型";
 
   return (
     <BreadCrumbContainer>

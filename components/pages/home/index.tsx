@@ -51,14 +51,14 @@ import {
   BannerImage,
 } from "./styled";
 import {
-  solutions,
   steps,
-  brands,
   bodyPartsLeft,
   bodyPartsRight,
   categories,
   BodyPartId,
 } from "./data";
+import { brands, layoutPath } from "@/constants/imagePath";
+import { homeSolutions } from "@/constants/statusPageContent";
 
 const Home: React.FC = () => {
   const [activeCard, setActiveCard] = useState(0);
@@ -90,13 +90,13 @@ const Home: React.FC = () => {
       <SolutionContainer>
         <SolutionHeader>根據不同需求，找到最適合的解決方案</SolutionHeader>
         <Cards>
-          {solutions.map((solution, index) => (
+          {homeSolutions.map((solution, index) => (
             <Card
-              key={index}
+              key={solution.id}
               $isActive={activeCard === index}
               onClick={() => setActiveCard(index)}
             >
-              <CardImg src={solution.imgSrc} alt={solution.imgAlt} />
+              <CardImg {...solution.imageProps} />
               <CardContent>
                 <CardTitle>{solution.title}</CardTitle>
                 {activeCard === index && (
@@ -147,7 +147,7 @@ const Home: React.FC = () => {
                 </BodyBtn>
               ))}
             </BodyBtnsLeft>
-            <BodyImg src="/images/body.webp" alt="body" />
+            <BodyImg src={`${layoutPath}/body.webp`} alt="body" />
             <BodyBtnsRight>
               {bodyPartsRight.map((part) => (
                 <BodyBtn
@@ -196,7 +196,7 @@ const Home: React.FC = () => {
         <CooperationMain>
           {brands.map((brand, index) => (
             <Brand key={index}>
-              <BrandLogo src={brand.imgSrc} alt={brand.imgAlt} />
+              <BrandLogo {...brand} />
             </Brand>
           ))}
         </CooperationMain>

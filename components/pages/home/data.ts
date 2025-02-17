@@ -1,3 +1,4 @@
+import { layoutPath } from "@/constants/imagePath";
 import { ReactNode } from "react";
 import React from "react";
 
@@ -8,51 +9,6 @@ import {
   MdCalendarToday,
   MdAttachMoney,
 } from "react-icons/md";
-
-type Solution = {
-  title: string;
-  description: string;
-  imgSrc: string;
-  imgAlt: string;
-};
-
-export const solutions: Solution[] = [
-  {
-    title: "不確定需要什麼輔具",
-    description:
-      "提供快速適配功能，根據身體部位找到適合的輔具，無需自行判斷，可將輔具加入詢問單，由專業人員提供建議。",
-    imgSrc: "/images/solution-1.webp",
-    imgAlt: "",
-  },
-  {
-    title: "身體康復之路",
-    description:
-      "我們提供靈活租期和多樣產品，能根據康復進程輕鬆切換不同輔具，省心又省錢。",
-    imgSrc: "/images/solution-2.webp",
-    imgAlt: "",
-  },
-  {
-    title: "短期使用",
-    description:
-      "提供短期租賃服務，按日、週、月彈性選擇，讓輔具使用高效、經濟，不再為存放煩惱。",
-    imgSrc: "/images/solution-3.webp",
-    imgAlt: "",
-  },
-  {
-    title: "購買價格太貴",
-    description:
-      "租賃能大幅降低使用成本，讓您以不到購買價格的一小部分，輕鬆獲得所需輔具。",
-    imgSrc: "/images/solution-4.webp",
-    imgAlt: "",
-  },
-  {
-    title: "維修和保養",
-    description:
-      "我們的租賃服務包含免費維修和保養，租期內不需擔心任何額外費用，讓您使用更省心。",
-    imgSrc: "/images/solution-5.webp",
-    imgAlt: "",
-  },
-];
 
 type Step = {
   title: string;
@@ -88,42 +44,6 @@ export const steps: Step[] = [
     title: "押金退回",
     description: "押金退回流程透明，即時返還至原支付方式，確保用戶無後顧之憂。",
     icon: React.createElement(MdAttachMoney, { size: 24, color: "#103F99" }),
-  },
-];
-
-type Brand = {
-  imgSrc: string;
-  imgAlt: string;
-};
-
-export const brands: Brand[] = [
-  {
-    imgSrc: "images/company-1.webp",
-    imgAlt: "",
-  },
-  {
-    imgSrc: "images/company-2.webp",
-    imgAlt: "",
-  },
-  {
-    imgSrc: "images/company-3.webp",
-    imgAlt: "",
-  },
-  {
-    imgSrc: "images/company-4.webp",
-    imgAlt: "",
-  },
-  {
-    imgSrc: "images/company-5.webp",
-    imgAlt: "",
-  },
-  {
-    imgSrc: "images/company-6.webp",
-    imgAlt: "",
-  },
-  {
-    imgSrc: "images/company-7.webp",
-    imgAlt: "",
   },
 ];
 
@@ -166,33 +86,33 @@ export type Category = {
 
 export const categories: Record<BodyPartId, Category[]> = {
   spine: [
-    { name: "行動輪椅", imgSrc: "/images/wheelChair.webp", type: "wheelChair" },
-    { name: "臥室寢具", imgSrc: "/images/bed.webp", type: "bed" },
+    { name: "行動輪椅", imgSrc: `${layoutPath}/type-wheelChair.webp`, type: "wheelChair" },
+    { name: "臥室寢具", imgSrc: `${layoutPath}/type-bed.webp`, type: "bed" },
   ],
   waist: [
-    { name: "拐杖步行", imgSrc: "/images/crutch.webp", type: "crutch" },
-    { name: "行動輪椅", imgSrc: "/images/wheelChair.webp", type: "wheelChair" },
-    { name: "呼吸照護", imgSrc: "/images/oxygen.webp", type: "oxygen" },
+    { name: "拐杖步行", imgSrc: `${layoutPath}/type-crutch.webp`, type: "crutch" },
+    { name: "行動輪椅", imgSrc: `${layoutPath}/type-wheelChair.webp`, type: "wheelChair" },
+    { name: "呼吸照護", imgSrc: `${layoutPath}/type-oxygen.webp`, type: "oxygen" },
   ],
   hip: [
-    { name: "輪椅輔助", imgSrc: "/images/wheelChair.webp", type: "wheelChair" },
-    { name: "拐杖步行", imgSrc: "/images/crutch.webp", type: "crutch" },
+    { name: "輪椅輔助", imgSrc: `${layoutPath}/type-wheelChair.webp`, type: "wheelChair" },
+    { name: "拐杖步行", imgSrc: `${layoutPath}/type-crutch.webp`, type: "crutch" },
   ],
-  knee: [{ name: "拐杖步行", imgSrc: "/images/crutch.webp", type: "crutch" }],
+  knee: [{ name: "拐杖步行", imgSrc: `${layoutPath}/type-crutch.webp`, type: "crutch" }],
   ankle: [
-    { name: "行動輪椅", imgSrc: "/images/wheelChair.webp", type: "wheelChair" },
-    { name: "拐杖步行", imgSrc: "/images/crutch.webp", type: "crutch" },
+    { name: "行動輪椅", imgSrc: `${layoutPath}/type-wheelChair.webp`, type: "wheelChair" },
+    { name: "拐杖步行", imgSrc: `${layoutPath}/type-crutch.webp`, type: "crutch" },
   ],
   neck: [
-    { name: "行動輪椅", imgSrc: "/images/wheelChair.webp", type: "wheelChair" },
-    { name: "臥室寢具", imgSrc: "/images/bed.webp", type: "bed" },
+    { name: "行動輪椅", imgSrc: `${layoutPath}/type-wheelChair.webp`, type: "wheelChair" },
+    { name: "臥室寢具", imgSrc: `${layoutPath}/type-bed.webp`, type: "bed" },
   ],
   shoulder: [
-    { name: "行動輪椅", imgSrc: "/images/wheelChair.webp", type: "wheelChair" },
-    { name: "臥室寢具", imgSrc: "/images/bed.webp", type: "bed" },
+    { name: "行動輪椅", imgSrc: `${layoutPath}/type-wheelChair.webp`, type: "wheelChair" },
+    { name: "臥室寢具", imgSrc: `${layoutPath}/type-bed.webp`, type: "bed" },
   ],
   arm: [
-    { name: "行動輪椅", imgSrc: "/images/wheelChair.webp", type: "wheelChair" },
+    { name: "行動輪椅", imgSrc: `${layoutPath}/type-wheelChair.webp`, type: "wheelChair" },
   ],
-  wrist: [{ name: "拐杖步行", imgSrc: "/images/crutch.webp", type: "crutch" }],
+  wrist: [{ name: "拐杖步行", imgSrc: `${layoutPath}/type-crutch.webp`, type: "crutch" }],
 };

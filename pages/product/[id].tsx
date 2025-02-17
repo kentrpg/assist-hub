@@ -2,22 +2,35 @@ import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import React from "react";
 import Single from "@/components/pages/product/Single";
-import { SinglePageProps } from "@/components/pages/product/Single/data";
+import { ResultGetProduct } from "@/types/getProduct";
+import { ResultGetProducts } from "@/types/getProducts";
 import { MainWrapper } from "@/styles/wrappers";
 import getProduct from "@/utils/api/getProduct";
 import getProducts from "@/utils/api/getProducts";
 import InquiryBar from "@/components/ui/InquiryBar";
 
+type SinglePageProps = {
+  product: typeof ResultGetProduct.data.product;
+  comparison: typeof ResultGetProduct.data.comparison;
+  recommended: typeof ResultGetProduct.data.recommended;
+};
+
+type AllPageProps = {
+  products: typeof ResultGetProducts.data;
+};
+
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
     const result = await getProducts();
 
-    if (!result.status || !Array.isArray(result.data)) {
+    const products: AllPageProps["products"] = result.data || [];
+
+    if (!result.status || !Array.isArray(products)) {
       console.error("Error fetching product data:", result.message);
       return { paths: [], fallback: "blocking" };
     }
 
-    const paths = result.data.map((product) => ({
+    const paths = products.map((product) => ({
       params: { id: product.id.toString() },
     }));
 
@@ -31,7 +44,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 };
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps<SinglePageProps> = async (
+  context,
+) => {
   const { id } = context.params as { id: string };
 
   try {

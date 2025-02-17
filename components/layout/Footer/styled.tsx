@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Link from "next/link";
 import { Mobile, Tablet } from "@/styles/container";
 import { Container1344 } from "@/styles/container";
-// TBD: 待評估響應式移除 Newsletter 區塊是否合理，否則背景高度要改為 520px
+import { footerWaveImages } from "@/constants/imagePath";
 
 export const Wrapper = styled.footer`
   width: 100%;
@@ -22,17 +22,18 @@ export const Wrapper = styled.footer`
     right: 0;
     top: -115px;
     height: 168px;
-    background-image: url("/images/wave375.webp");
+    background-image: url(${footerWaveImages.mobile});
     background-repeat: repeat-x;
     background-position: top;
     background-size: 100% 100%;
     @media ${Mobile} {
       top: -110px;
-      background-image: url("/images/wave768.webp");
+      background-image: url(${footerWaveImages.tablet});
+      background-size: cover;
     }
     @media ${Tablet} {
       top: -130px;
-      background-image: url("/images/wave1920.webp");
+      background-image: url(${footerWaveImages.desktop});
     }
   }
 `;

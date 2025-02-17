@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export type UserState = {
   name: string;
   gender: string;
+  dobDate: string;
   dobStamp: string;
   email: string;
   phone: string;
@@ -16,6 +17,7 @@ export type UserState = {
 const initialState: UserState = {
   name: "",
   gender: "",
+  dobDate: "",
   dobStamp: "",
   email: "",
   phone: "",
@@ -33,6 +35,7 @@ const userSlice = createSlice({
     setUser: (state, action: PayloadAction<UserState>) => {
       state.name = action.payload.name;
       state.gender = action.payload.gender;
+      state.dobDate = action.payload.dobDate;
       state.dobStamp = action.payload.dobStamp;
       state.email = action.payload.email;
       state.phone = action.payload.phone;

@@ -22,6 +22,7 @@ import {
   NavItem,
   NavLink,
 } from "./styled";
+import { layoutPath } from "@/constants/imagePath";
 
 const Sidebar: React.FC = () => {
   const router = useRouter();
@@ -32,7 +33,7 @@ const Sidebar: React.FC = () => {
         <Link href="/">
           <Logo>
             <Image
-              src="/images/LOGO2x.webp"
+              src={`${layoutPath}/icon@2x.webp`}
               alt="網站 Logo"
               width={40}
               height={40}

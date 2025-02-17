@@ -7,6 +7,7 @@ import {
   Image,
   Description,
   Group,
+  Marker,
 } from "./styled";
 import { inquiryTabs, StepImage } from "@/constants/statusPageContent";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,8 +18,15 @@ const Tabs = () => {
   const dispatch = useDispatch();
   const { level } = useSelector((state: RootState) => state.userInquiry);
   const activeTabData = inquiryTabs[Number(level) - 1];
+  const [markerPosition, setMarkerPosition] = useState("");
+
+  const calculateMarkerOffset = (tabId: string) => {
+    const tabIndex = Number(tabId) - 1;
+    return `calc(${tabIndex * 100}% + ${tabIndex * 12}px)`;
+  };
 
   const handleTabClick = (tab: StepImage) => {
+    setMarkerPosition(calculateMarkerOffset(tab.id));
     dispatch(
       setUserInquiry({
         level: tab.id,
@@ -39,6 +47,7 @@ const Tabs = () => {
             {tab.title}
           </TabButton>
         ))}
+        <Marker style={{ transform: `translateY(${markerPosition})` }} />
       </TabsMenu>
       <TabContent>
         <Group key={activeTabData.id}>

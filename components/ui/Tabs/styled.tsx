@@ -1,3 +1,4 @@
+import { ButtonRadiusSmall } from "@/styles/borderRadius";
 import { Desktop, Mobile, Tablet } from "@/styles/container";
 import { VstackLayout } from "@/styles/flex";
 import type { IsActive } from "@/types/uiProps";
@@ -9,35 +10,63 @@ export const TabsContainer = styled.div`
 `;
 
 export const TabsMenu = styled.div`
+  position: relative;
   max-width: 50%;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   gap: 12px;
+
   @media ${Tablet} {
     max-width: 432px;
   }
 `;
 
 export const TabButton = styled.button<IsActive>`
+  position: relative;
+  ${ButtonRadiusSmall};
   font-size: 16px;
   font-weight: 700;
-  border-radius: 8px;
-  background-color: ${({ $isActive, theme }) =>
-    $isActive ? theme.colors.primaryActive : "transparent"};
-  color: ${({ $isActive, theme }) =>
-    $isActive ? theme.colors.white : theme.colors.textPrimary};
+  background-color: transparent;
+  color: ${({ theme }) => theme.colors.textPrimary};
+  ${({ $isActive, theme }) =>
+    $isActive &&
+    `
+      color: ${theme.colors.white};
+      transition-delay: 0s;
+  `};
+  transition: color 0.15s ease;
+  transition-delay: 0.1s;
+  z-index: 1;
   padding: 12px 10px;
-  transition: background-color 0.3s ease;
 
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.primaryHover};
-    color: ${({ theme }) => theme.colors.white};
-  }
+  ${({ $isActive, theme }) =>
+    !$isActive &&
+    `
+    &:hover {
+      background-color: ${theme.colors.primaryHover}15;
+      color: ${theme.colors.primaryHover};
+      transition-delay: 0s;
+    }
+  `}
 
   @media ${Mobile} {
     padding: 16px 10px;
   }
+`;
+
+export const Marker = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 56px;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  ${ButtonRadiusSmall};
+  background-color: ${({ theme }) => theme.colors.primaryActive};
+  transition: transform 0.2s ease-in-out;
+  pointer-events: none;
 `;
 
 const fadeIn = keyframes`

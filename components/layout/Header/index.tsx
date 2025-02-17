@@ -138,6 +138,13 @@ const Header = ({ isAuthenticated, isLoading }: HeaderProps) => {
         <Navbar $menuOpen={menuOpen}>
           {isTablet && (
             <LogoWrapperDesktop href="/" passHref>
+              {/* <Image
+                src={`${layoutPath}/logo-desktop.webp`}
+                alt="輔具租賃網"
+                width={40}
+                height={40}
+                priority
+              /> */}
               <Logo
                 src={`${layoutPath}/logo-desktop.webp`}
                 alt="輔具租賃網"

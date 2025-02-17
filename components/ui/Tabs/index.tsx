@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   TabsContainer,
   TabsMenu,
@@ -13,16 +13,20 @@ import { inquiryTabs, StepImage } from "@/constants/statusPageContent";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserInquiry } from "@/utils/redux/slices/userInquiry";
 import { RootState } from "@/utils/redux/store";
+import { useBreakpoint } from "@/hooks/useBreakpoint";
+import { breakpoints } from "@/styles/container";
 
 const Tabs = () => {
   const dispatch = useDispatch();
   const { level } = useSelector((state: RootState) => state.userInquiry);
   const activeTabData = inquiryTabs[Number(level) - 1];
-  const [markerPosition, setMarkerPosition] = useState("");
+  const [markerPosition, setMarkerPosition] = useState("0");
+  const isTablet = useBreakpoint(breakpoints.md);
 
   const calculateMarkerOffset = (tabId: string) => {
     const tabIndex = Number(tabId) - 1;
-    return `calc(${tabIndex * 100}% + ${tabIndex * 12}px)`;
+    const gap = isTablet ? 12 : 8;
+    return `calc(${tabIndex * 100}% + ${tabIndex * gap}px)`;
   };
 
   const handleTabClick = (tab: StepImage) => {
@@ -47,7 +51,8 @@ const Tabs = () => {
             {tab.title}
           </TabButton>
         ))}
-        <Marker style={{ transform: `translateY(${markerPosition})` }} />
+        <Marker $offset={markerPosition} />
+        {/* <Marker style={{ transform: `translateY(${markerPosition})` }} /> */}
       </TabsMenu>
       <TabContent>
         <Group key={activeTabData.id}>

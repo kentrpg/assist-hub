@@ -355,6 +355,7 @@ export const RentalDateInput = styled.input<IsCompleted>`
     `}
   ${InputRadius};
   ${OutlineColorTransition};
+  color: ${({ theme }) => theme.colors.white};
   background-color: ${({ theme }) => theme.colors.white};
   padding: 5px 10px 5px 12px;
 

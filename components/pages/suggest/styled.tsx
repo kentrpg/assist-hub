@@ -1,7 +1,7 @@
 import { PrimaryButton, buttonGapSizes } from "@/components/ui/buttons/Layout";
 import { InputRadius } from "@/styles/borderRadius";
 import { Tablet, Mobile } from "@/styles/container";
-import { chineseTextStyle } from "@/styles/textFormatting";
+import { chineseTextStyle } from "@/helpers/format/textFormatting";
 import { H6 } from "@/styles/typography";
 import styled from "styled-components";
 

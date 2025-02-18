@@ -1,6 +1,6 @@
 import { CardRadius } from "@/styles/borderRadius";
 import { Desktop, Mobile, Tablet } from "@/styles/container";
-import { chineseTextStyle } from "@/styles/textFormatting";
+import { chineseTextStyle } from "@/helpers/format/textFormatting";
 import { H6 } from "@/styles/typography";
 import type { Color } from "@/types/uiProps";
 import styled from "styled-components";

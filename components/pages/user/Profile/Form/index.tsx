@@ -89,10 +89,7 @@ const Form: React.FC = () => {
       ) : (
         <FormProvider {...methods}>
           <FormInfo onSubmit={onSubmit}>
-            <Gender
-              register={methods.register}
-              errors={methods.formState.errors}
-            />
+            <Gender />
             <NameWithDob
               register={methods.register}
               errors={methods.formState.errors}

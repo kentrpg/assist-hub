@@ -1,5 +1,6 @@
+import { chineseTextStyle } from "@/helpers/format/textFormatting";
 import { CardRadius, InputRadius } from "@/styles/borderRadius";
-import { Tablet } from "@/styles/container";
+import { Mobile, Tablet } from "@/styles/container";
 import {
   CardOpacityTransition,
   OutlineColorTransition,
@@ -107,6 +108,7 @@ export const ProductTitle = styled.h3`
 export const ProductDescription = styled.p`
   font-size: 14px;
   color: ${({ theme }) => theme.colors.textSecondary};
+  ${chineseTextStyle};
   word-wrap: break-word;
   overflow-wrap: break-word;
 `;
@@ -175,12 +177,16 @@ export const QuantityValue = styled.span`
 export const Rental = styled.div`
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  gap: 12px;
   background-color: ${({ theme }) => theme.colors.primaryBg};
   border-top: 1px solid ${({ theme }) => theme.colors.border};
   padding: 16px 24px;
   flex-direction: column;
   align-items: end;
+
+  @media ${Mobile} {
+    gap: 18px;
+  }
 
   @media ${Tablet} {
     flex-direction: row;
@@ -190,7 +196,18 @@ export const Rental = styled.div`
 
 export const RentalGroup = styled.div`
   display: flex;
-  gap: 24px;
+  flex-direction: column;
+  align-items: end;
+  gap: 12px;
+
+  @media ${Mobile} {
+    gap: 20px;
+  }
+
+  @media ${Mobile} {
+    flex-direction: row;
+    align-items: center;
+  }
 `;
 
 export const RentalAction = styled.div<IsDisabled>`
@@ -320,9 +337,13 @@ export const DateIcon = styled.div`
 `;
 
 export const RentalSummaryAmount = styled.span`
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   color: ${({ theme }) => theme.colors.textPrimary};
+
+  @media ${Mobile} {
+    font-size: 18px;
+  }
 `;
 
 export const Footer = styled.div`
@@ -350,8 +371,14 @@ export const ProductRemoveButton = styled.button`
 
 export const Checkout = styled.div`
   display: flex;
-  align-items: end;
-  gap: 24px;
+  flex-direction: column;
+  gap: 4px;
+
+  @media ${Mobile} {
+    flex-direction: row;
+    align-items: end;
+    gap: 24px;
+  }
 `;
 
 export const CheckoutNotice = styled.p`

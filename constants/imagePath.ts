@@ -17,7 +17,7 @@ export const footerWaveImages = {
   desktop: `${layoutPath}/wave1920.webp`,
 };
 export const bannerImages = {
-  mobile: `${homePath}/banner-tablet.webp`,
+  mobile: `${homePath}/banner768.webp`,
   tablet: `${homePath}/banner.webp`,
 };
 

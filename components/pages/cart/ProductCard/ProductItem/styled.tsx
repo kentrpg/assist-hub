@@ -1,6 +1,7 @@
+import { buttonGapSizes, buttonSizes } from "@/components/ui/buttons/Layout";
 import { chineseTextStyle } from "@/helpers/format/textFormatting";
 import { CardRadius, InputRadius } from "@/styles/borderRadius";
-import { Desktop, Mobile, Tablet } from "@/styles/container";
+import { Mobile, Tablet } from "@/styles/container";
 import {
   CardOpacityTransition,
   OutlineColorTransition,
@@ -61,7 +62,7 @@ const gridTemplate = css`
     minmax(80px, auto)
     minmax(60px, 60px)
     minmax(50px, 50px)
-    minmax(100px, 100px);
+    minmax(90px, 90px);
   ${CardGap};
 `;
 
@@ -214,8 +215,43 @@ export const QuantityButton = styled.button`
 `;
 
 export const QuantityValue = styled.span`
-  font-size: 18px;
+  font-size: 16px;
   color: ${({ theme }) => theme.colors.textPrimary};
+
+  @media ${Mobile} {
+    font-size: 18px;
+  }
+`;
+
+export const RentalGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 12px;
+
+  > * {
+    white-space: nowrap;
+  }
+
+  @media ${Mobile} {
+    gap: 20px;
+  }
+
+  @media ${Mobile} {
+    flex-direction: row;
+    align-items: center;
+  }
+`;
+
+export const RentalSummaryAmount = styled.span`
+  text-align: end;
+  font-size: 16px;
+  font-weight: 700;
+  color: ${({ theme }) => theme.colors.textPrimary};
+
+  @media ${Mobile} {
+    font-size: 18px;
+  }
 `;
 
 export const RentalGroup = styled.div`
@@ -352,9 +388,11 @@ export const RentalDateInput = styled.input<IsCompleted>`
     $completed &&
     css`
       outline-color: ${({ theme }) => theme.colors.error};
+      outline-width: 1.7px;
     `}
   ${InputRadius};
   ${OutlineColorTransition};
+  color: ${({ theme }) => theme.colors.white};
   background-color: ${({ theme }) => theme.colors.white};
   padding: 5px 10px 5px 12px;
 
@@ -422,6 +460,7 @@ export const ProductRemoveButton = styled.button`
 export const Checkout = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: end;
   gap: 4px;
 
   @media ${Mobile} {
@@ -448,7 +487,12 @@ export const CheckoutActive = styled.div<IsDisabled>`
 `;
 
 export const CheckoutButton = styled(AccentIconButton)<IsDisabled>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   ${ShadowMedium};
+  ${buttonSizes.small};
+  ${buttonGapSizes.small};
 
   ${({ $isDisabled }) =>
     $isDisabled &&
@@ -456,4 +500,19 @@ export const CheckoutButton = styled(AccentIconButton)<IsDisabled>`
       pointer-events: none;
       opacity: 0.3;
     `};
+
+  svg {
+    width: 21px;
+    height: 21px;
+  }
+
+  @media ${Mobile} {
+    ${buttonSizes.large};
+    ${buttonGapSizes.large};
+
+    svg {
+      width: 27px;
+      height: 27px;
+    }
+  }
 `;

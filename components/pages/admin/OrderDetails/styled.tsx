@@ -124,7 +124,7 @@ export const TextLabel = styled.span`
 `;
 
 export const TextValue = styled.span`
-  ${singleEllipsis};
+  ${singleEllipsis(1)};
   color: ${({ theme }) => theme.colors.textPrimary};
   font-size: 16px;
 `;

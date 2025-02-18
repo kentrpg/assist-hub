@@ -4,6 +4,7 @@ import { chineseTextStyle } from "@/helpers/format/textFormatting";
 import { H6 } from "@/styles/typography";
 import type { Color } from "@/types/uiProps";
 import styled from "styled-components";
+import { singleEllipsis } from "@/styles/singleEllipsis";
 
 export const Card = styled.div<Color>`
   height: 100%;
@@ -64,11 +65,7 @@ export const Details = styled.div`
 `;
 
 export const Name = styled.h3`
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  ${singleEllipsis(1)};
   color: ${({ theme }) => theme.colors.textPrimary};
   font-size: 18px;
   margin-bottom: 8px;
@@ -85,11 +82,7 @@ export const Description = styled.p`
   font-size: 14px;
   color: ${({ theme }) => theme.colors.textSecondary};
   ${chineseTextStyle};
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  ${singleEllipsis(3)};
 
   @media ${Mobile} {
     -webkit-line-clamp: 5;

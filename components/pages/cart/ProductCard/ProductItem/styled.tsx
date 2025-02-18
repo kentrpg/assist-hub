@@ -1,3 +1,4 @@
+import { buttonGapSizes, buttonSizes } from "@/components/ui/buttons/Layout";
 import { chineseTextStyle } from "@/helpers/format/textFormatting";
 import { CardRadius, InputRadius } from "@/styles/borderRadius";
 import { Desktop, Mobile, Tablet } from "@/styles/container";
@@ -423,6 +424,7 @@ export const ProductRemoveButton = styled.button`
 export const Checkout = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: end;
   gap: 4px;
 
   @media ${Mobile} {
@@ -449,7 +451,12 @@ export const CheckoutActive = styled.div<IsDisabled>`
 `;
 
 export const CheckoutButton = styled(AccentIconButton)<IsDisabled>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   ${ShadowMedium};
+  ${buttonSizes.small};
+  ${buttonGapSizes.small};
 
   ${({ $isDisabled }) =>
     $isDisabled &&
@@ -457,4 +464,19 @@ export const CheckoutButton = styled(AccentIconButton)<IsDisabled>`
       pointer-events: none;
       opacity: 0.3;
     `};
+
+  svg {
+    width: 21px;
+    height: 21px;
+  }
+
+  @media ${Mobile} {
+    ${buttonSizes.large};
+    ${buttonGapSizes.large};
+
+    svg {
+      width: 27px;
+      height: 27px;
+    }
+  }
 `;

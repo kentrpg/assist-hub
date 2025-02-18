@@ -82,6 +82,7 @@ export const InquiryIcon = styled.div`
 `;
 
 export const CardBtn = styled.button`
+  color: black;
   position: absolute;
   display: flex;
   align-items: center;

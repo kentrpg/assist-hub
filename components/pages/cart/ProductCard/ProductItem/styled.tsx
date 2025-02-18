@@ -1,12 +1,13 @@
 import { chineseTextStyle } from "@/helpers/format/textFormatting";
 import { CardRadius, InputRadius } from "@/styles/borderRadius";
-import { Mobile, Tablet } from "@/styles/container";
+import { Desktop, Mobile, Tablet } from "@/styles/container";
 import {
   CardOpacityTransition,
   OutlineColorTransition,
   ShadowMedium,
 } from "@/styles/effect";
 import { AccentIconButton } from "@/styles/link";
+import { singleEllipsis } from "@/styles/singleEllipsis";
 import { IsActive, IsCompleted, IsDisabled } from "@/types/uiProps";
 import styled, { css } from "styled-components";
 
@@ -54,17 +55,36 @@ const gridTemplate = css`
   display: grid;
   grid-template-columns:
     minmax(300px, 560px)
-    minmax(auto, 80px)
-    minmax(auto, 80px)
-    minmax(84px, 114px);
+    minmax(60px, 60px)
+    minmax(50px, 50px)
+    /* minmax(84px, 84px); */
+    minmax(100px, 100px);
   ${CardGap};
+
+  @media ${Desktop} {
+    grid-template-columns:
+      minmax(300px, auto)
+      minmax(60px, 60px)
+      minmax(50px, 50px)
+      minmax(100px, 100px);
+  }
+`;
+
+const padding = css`
+  padding: 16px;
+
+  @media ${Tablet} {
+    padding: 16px 24px;
+  }
 `;
 
 export const Header = styled.div`
   ${gridTemplate};
   background-color: ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.white};
-  padding: 10px 24px;
+  ${padding};
+  padding-top: 10px;
+  padding-bottom: 10px;
 `;
 
 export const HeaderCell = styled.div`
@@ -74,7 +94,7 @@ export const HeaderCell = styled.div`
 export const CardContent = styled.div`
   ${gridTemplate};
   position: relative;
-  padding: 24px;
+  ${padding};
 `;
 
 export const ProductInfo = styled.div`
@@ -109,6 +129,7 @@ export const ProductDescription = styled.p`
   font-size: 14px;
   color: ${({ theme }) => theme.colors.textSecondary};
   ${chineseTextStyle};
+  ${singleEllipsis(3)};
   word-wrap: break-word;
   overflow-wrap: break-word;
 `;
@@ -174,13 +195,44 @@ export const QuantityValue = styled.span`
   color: ${({ theme }) => theme.colors.textPrimary};
 `;
 
+export const RentalGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 12px;
+
+  > * {
+    white-space: nowrap;
+  }
+
+  @media ${Mobile} {
+    gap: 20px;
+  }
+
+  @media ${Mobile} {
+    flex-direction: row;
+    align-items: center;
+  }
+`;
+
+export const RentalSummaryAmount = styled.span`
+  text-align: end;
+  font-size: 16px;
+  font-weight: 700;
+  color: ${({ theme }) => theme.colors.textPrimary};
+
+  @media ${Mobile} {
+    font-size: 18px;
+  }
+`;
+
 export const Rental = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 12px;
   background-color: ${({ theme }) => theme.colors.primaryBg};
   border-top: 1px solid ${({ theme }) => theme.colors.border};
-  padding: 16px 24px;
+  ${padding};
   flex-direction: column;
   align-items: end;
 
@@ -190,22 +242,7 @@ export const Rental = styled.div`
 
   @media ${Tablet} {
     flex-direction: row;
-    align-items: center;
-  }
-`;
-
-export const RentalGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: end;
-  gap: 12px;
-
-  @media ${Mobile} {
-    gap: 20px;
-  }
-
-  @media ${Mobile} {
-    flex-direction: row;
+    /* flex-wrap: wrap; */
     align-items: center;
   }
 `;
@@ -336,16 +373,6 @@ export const DateIcon = styled.div`
   z-index: 1;
 `;
 
-export const RentalSummaryAmount = styled.span`
-  font-size: 16px;
-  font-weight: 700;
-  color: ${({ theme }) => theme.colors.textPrimary};
-
-  @media ${Mobile} {
-    font-size: 18px;
-  }
-`;
-
 export const Footer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -353,7 +380,7 @@ export const Footer = styled.div`
   gap: 24px;
   border-top: 1px solid ${({ theme }) => theme.colors.border};
   background-color: ${({ theme }) => theme.colors.primaryBg};
-  padding: 16px 24px;
+  ${padding};
 `;
 
 export const ProductRemoveButton = styled.button`

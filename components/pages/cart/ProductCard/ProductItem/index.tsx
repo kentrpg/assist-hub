@@ -133,13 +133,15 @@ export const ProductItem: FC<ProductItemProps> = ({
 
   const quantityControls = {
     isMinQuantity: quantity === 1,
+    isMaxQuantity: quantity === 999,
     handleIncrement: async () => {
+      if (quantityControls.isMaxQuantity) return;
       setIsLoading(true);
       await onQuantityChange(1);
       setIsLoading(false);
     },
     handleDecrement: async () => {
-      if (quantity <= 1) return;
+      if (quantityControls.isMinQuantity) return;
       setIsLoading(true);
       await onQuantityChange(-1);
       setIsLoading(false);
@@ -201,6 +203,7 @@ export const ProductItem: FC<ProductItemProps> = ({
             <QuantityButton
               type="button"
               onClick={quantityControls.handleIncrement}
+              disabled={quantityControls.isMaxQuantity}
             >
               <MdAdd size={24} />
             </QuantityButton>

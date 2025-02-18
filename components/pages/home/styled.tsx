@@ -145,8 +145,11 @@ export const Card = styled.div<CardProps>`
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out,
-    background-color 0.3s ease-in-out, border-radius 0.3s ease-in-out;
+  transition:
+    transform 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out,
+    background-color 0.3s ease-in-out,
+    border-radius 0.3s ease-in-out;
   cursor: pointer;
 
   &:hover {
@@ -370,7 +373,9 @@ export const BodyBtn = styled.button<BodyBtnProps>`
   background-color: ${({ $isActive }) =>
     $isActive ? "#103f99" : "transparent"};
   color: ${({ $isActive }) => ($isActive ? "white" : "#103f99")};
-  transition: background-color 0.3s, color 0.3s;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
 
   &:hover {
     background-color: #0b2c6b;
@@ -523,6 +528,7 @@ export const GuideSpan = styled.span`
 `;
 
 export const GuideBtn = styled.button`
+  color: black;
   font-size: 18px;
   font-weight: 500;
   padding: 10px 40px;

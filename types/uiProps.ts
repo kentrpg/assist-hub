@@ -73,3 +73,7 @@ export type Toast = {
   $top: string;
   $right: string;
 };
+
+export type Offset = {
+  $offset: string;
+};

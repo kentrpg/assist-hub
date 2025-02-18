@@ -1,42 +1,110 @@
-import { Desktop, Mobile, Tablet } from "@/styles/container";
+import { ButtonRadiusSmall, InputRadius } from "@/styles/borderRadius";
+import { Mobile, Tablet } from "@/styles/container";
 import { VstackLayout } from "@/styles/flex";
-import type { IsActive } from "@/types/uiProps";
-import styled from "styled-components";
+import type { IsActive, Offset } from "@/types/uiProps";
+import styled, { keyframes } from "styled-components";
 
 export const TabsContainer = styled.div`
   display: flex;
-  gap: 20px;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  @media ${Tablet} {
+    flex-direction: row;
+    align-items: end;
+    gap: 32px;
+  }
 `;
 
 export const TabsMenu = styled.div`
-  max-width: 50%;
+  position: relative;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  gap: 12px;
-  @media ${Tablet} {
+  gap: 8px;
+  width: 100%;
+
+  @media ${Mobile} {
     max-width: 432px;
+  }
+
+  @media ${Tablet} {
+    gap: 12px;
   }
 `;
 
 export const TabButton = styled.button<IsActive>`
-  font-size: 16px;
+  position: relative;
+  ${ButtonRadiusSmall};
+  font-size: 14px;
   font-weight: 700;
-  border-radius: 8px;
-  background-color: ${({ $isActive, theme }) =>
-    $isActive ? theme.colors.primaryActive : "transparent"};
-  color: ${({ $isActive, theme }) =>
-    $isActive ? theme.colors.white : theme.colors.textPrimary};
+  background-color: transparent;
+  color: ${({ theme }) => theme.colors.textPrimary};
+  ${({ $isActive, theme }) =>
+    $isActive &&
+    `
+      color: ${theme.colors.white};
+      transition-delay: 0s;
+  `};
+  outline: 1.5px solid ${({ theme }) => theme.colors.primaryActive};
+  z-index: 1;
   padding: 12px 10px;
-  transition: background-color 0.3s ease;
 
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.primaryHover};
-    color: ${({ theme }) => theme.colors.white};
+  @media (hover: hover) {
+    transition: color 0.15s ease;
+    transition-delay: 0.05s;
+
+    ${({ $isActive, theme }) =>
+      !$isActive &&
+      `
+        &:hover {
+          background-color: ${theme.colors.primaryHover}15;
+          color: ${theme.colors.primaryHover};
+          transition-delay: 0s;
+        }
+    `}
   }
 
-  @media ${Mobile} {
+  @media ${Tablet} {
+    font-size: 16px;
     padding: 16px 10px;
+  }
+`;
+
+export const Marker = styled.div<Offset>`
+  position: absolute;
+  width: 100%;
+  height: 45px;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  ${ButtonRadiusSmall};
+  background-color: ${({ theme }) => theme.colors.primaryActive};
+  transform: ${({ $offset }) => `translateY(${$offset})`};
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  pointer-events: none;
+
+  @media (hover: hover) {
+    transition: all 0.12s ease-in-out;
+  }
+
+  @media ${Tablet} {
+    height: 56px;
+  }
+`;
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 `;
 
@@ -45,22 +113,35 @@ export const TabContent = styled.div`
   display: flex;
   justify-content: center;
   gap: 16px;
-  max-width: 50%;
-  @media ${Tablet} {
-    max-width: inherit;
-  }
 `;
 
 export const Group = styled.div`
   ${VstackLayout};
-  gap: 48px;
+  gap: 10px;
+  animation: ${fadeIn} 0.2s ease-in-out;
+  will-change: opacity, transform;
+
+  @media ${Tablet} {
+    gap: 48px;
+  }
 `;
 
 export const Image = styled.img`
+  width: 216px;
+  height: 240px;
   object-fit: contain;
+
+  @media ${Mobile} {
+    width: 270px;
+    height: 300px;
+  }
 `;
 
 export const Description = styled.p`
-  font-size: 16px;
+  font-size: 14px;
   color: ${({ theme }) => theme.colors.textMuted};
+
+  @media ${Tablet} {
+    font-size: 16px;
+  }
 `;

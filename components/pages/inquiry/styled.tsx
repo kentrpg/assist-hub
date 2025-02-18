@@ -25,7 +25,7 @@ export const Assistive = styled.div`
 `;
 
 export const ActionAssessment = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: 32px;
 
   @media ${Tablet} {
     margin-bottom: 70px;

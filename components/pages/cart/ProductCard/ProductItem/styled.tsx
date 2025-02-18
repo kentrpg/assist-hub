@@ -1,7 +1,7 @@
 import { buttonGapSizes, buttonSizes } from "@/components/ui/buttons/Layout";
 import { chineseTextStyle } from "@/helpers/format/textFormatting";
 import { CardRadius, InputRadius } from "@/styles/borderRadius";
-import { Desktop, Mobile, Tablet } from "@/styles/container";
+import { Mobile, Tablet } from "@/styles/container";
 import {
   CardOpacityTransition,
   OutlineColorTransition,
@@ -62,7 +62,7 @@ const gridTemplate = css`
     minmax(80px, auto)
     minmax(60px, 60px)
     minmax(50px, 50px)
-    minmax(100px, 100px);
+    minmax(90px, 90px);
   ${CardGap};
 `;
 
@@ -215,8 +215,12 @@ export const QuantityButton = styled.button`
 `;
 
 export const QuantityValue = styled.span`
-  font-size: 18px;
+  font-size: 16px;
   color: ${({ theme }) => theme.colors.textPrimary};
+
+  @media ${Mobile} {
+    font-size: 18px;
+  }
 `;
 
 export const RentalGroup = styled.div`
@@ -353,6 +357,7 @@ export const RentalDateInput = styled.input<IsCompleted>`
     $completed &&
     css`
       outline-color: ${({ theme }) => theme.colors.error};
+      outline-width: 1.7px;
     `}
   ${InputRadius};
   ${OutlineColorTransition};

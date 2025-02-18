@@ -48,26 +48,21 @@ export const Card = styled.div<{ $isParentActive: boolean }>`
 `;
 
 export const CardGap = css`
-  gap: 20px;
+  gap: 10px;
+
+  @media ${Mobile} {
+    gap: 20px;
+  }
 `;
 
 const gridTemplate = css`
   display: grid;
   grid-template-columns:
-    minmax(300px, 560px)
+    minmax(80px, auto)
     minmax(60px, 60px)
     minmax(50px, 50px)
-    /* minmax(84px, 84px); */
     minmax(100px, 100px);
   ${CardGap};
-
-  @media ${Desktop} {
-    grid-template-columns:
-      minmax(300px, auto)
-      minmax(60px, 60px)
-      minmax(50px, 50px)
-      minmax(100px, 100px);
-  }
 `;
 
 const padding = css`
@@ -85,6 +80,16 @@ export const Header = styled.div`
   ${padding};
   padding-top: 10px;
   padding-bottom: 10px;
+
+  & > * {
+    text-align: center;
+  }
+
+  @media ${Mobile} {
+    & > :first-child {
+      text-align: left;
+    }
+  }
 `;
 
 export const HeaderCell = styled.div`
@@ -99,10 +104,14 @@ export const CardContent = styled.div`
 
 export const ProductInfo = styled.div`
   display: flex;
-  ${CardGap};
+  flex-direction: column;
   grid-column: 1;
-  width: 100%;
-  overflow: hidden;
+  align-items: center;
+  ${CardGap};
+
+  @media ${Mobile} {
+    flex-direction: row;
+  }
 `;
 
 export const ProductImage = styled.img`
@@ -115,29 +124,43 @@ export const ProductImage = styled.img`
 export const ProductContent = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  width: calc(100% - 100px);
+
+  @media ${Mobile} {
+    gap: 12px;
+  }
 `;
 
 export const ProductTitle = styled.h3`
+  text-align: center;
   font-size: 16px;
   font-weight: 500;
   color: ${({ theme }) => theme.colors.textPrimary};
+  ${singleEllipsis(1)};
+
+  @media ${Mobile} {
+    text-align: left;
+  }
 `;
 
 export const ProductDescription = styled.p`
+  visibility: hidden;
+  height: 0;
   font-size: 14px;
   color: ${({ theme }) => theme.colors.textSecondary};
   ${chineseTextStyle};
   ${singleEllipsis(3)};
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+
+  @media ${Mobile} {
+    display: -webkit-box;
+    visibility: visible;
+    height: auto;
+  }
 `;
 
 export const PriceInfo = styled.div`
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: center;
   grid-column: auto;
 `;
 

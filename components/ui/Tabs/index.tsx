@@ -23,6 +23,10 @@ const Tabs = () => {
   const [markerPosition, setMarkerPosition] = useState("0");
   const isTablet = useBreakpoint(breakpoints.md);
 
+  useEffect(() => {
+    setMarkerPosition(calculateMarkerOffset(level));
+  }, [level, isTablet]);
+
   const calculateMarkerOffset = (tabId: string) => {
     const tabIndex = Number(tabId) - 1;
     const gap = isTablet ? 12 : 8;
@@ -30,7 +34,6 @@ const Tabs = () => {
   };
 
   const handleTabClick = (tab: StepImage) => {
-    setMarkerPosition(calculateMarkerOffset(tab.id));
     dispatch(
       setUserInquiry({
         level: tab.id,
@@ -52,7 +55,6 @@ const Tabs = () => {
           </TabButton>
         ))}
         <Marker $offset={markerPosition} />
-        {/* <Marker style={{ transform: `translateY(${markerPosition})` }} /> */}
       </TabsMenu>
       <TabContent>
         <Group key={activeTabData.id}>

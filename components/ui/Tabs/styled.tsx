@@ -1,5 +1,5 @@
-import { ButtonRadiusSmall } from "@/styles/borderRadius";
-import { Desktop, Mobile, Tablet } from "@/styles/container";
+import { ButtonRadiusSmall, InputRadius } from "@/styles/borderRadius";
+import { Mobile, Tablet } from "@/styles/container";
 import { VstackLayout } from "@/styles/flex";
 import type { IsActive, Offset } from "@/types/uiProps";
 import styled, { keyframes } from "styled-components";
@@ -23,7 +23,6 @@ export const TabsMenu = styled.div`
   flex-direction: column;
   flex-grow: 1;
   gap: 8px;
-  /* max-width: 100%; */
   width: 100%;
 
   @media ${Mobile} {
@@ -49,22 +48,23 @@ export const TabButton = styled.button<IsActive>`
       transition-delay: 0s;
   `};
   outline: 1.5px solid ${({ theme }) => theme.colors.primaryActive};
-  transition: color 0.15s ease;
-  transition-delay: 0.1s;
   z-index: 1;
   padding: 12px 10px;
 
-  ${({ $isActive, theme }) =>
-    !$isActive &&
-    `
-    @media (hover: hover) {
-      &:hover {
-        background-color: ${theme.colors.primaryHover}15;
-        color: ${theme.colors.primaryHover};
-        transition-delay: 0s;
-      }
-    }
-  `}
+  @media (hover: hover) {
+    transition: color 0.15s ease;
+    transition-delay: 0.05s;
+
+    ${({ $isActive, theme }) =>
+      !$isActive &&
+      `
+        &:hover {
+          background-color: ${theme.colors.primaryHover}15;
+          color: ${theme.colors.primaryHover};
+          transition-delay: 0s;
+        }
+    `}
+  }
 
   @media ${Tablet} {
     font-size: 16px;
@@ -83,34 +83,19 @@ export const Marker = styled.div<Offset>`
   ${ButtonRadiusSmall};
   background-color: ${({ theme }) => theme.colors.primaryActive};
   transform: ${({ $offset }) => `translateY(${$offset})`};
-  transition: all 0.2s ease-in-out;
   will-change: transform;
   backface-visibility: hidden;
   transform-style: preserve-3d;
   pointer-events: none;
 
+  @media (hover: hover) {
+    transition: all 0.12s ease-in-out;
+  }
+
   @media ${Tablet} {
     height: 56px;
   }
 `;
-
-// export const Marker = styled.div`
-//   position: absolute;
-//   width: 100%;
-//   height: 45px;
-//   top: 0;
-//   left: 0;
-//   display: flex;
-//   flex-direction: column;
-//   ${ButtonRadiusSmall};
-//   background-color: ${({ theme }) => theme.colors.primaryActive};
-//   transition: transform 0.2s ease-in-out;
-//   pointer-events: none;
-
-//   @media ${Tablet} {
-//     height: 56px;
-//   }
-// `;
 
 const fadeIn = keyframes`
   from {
@@ -133,7 +118,7 @@ export const TabContent = styled.div`
 export const Group = styled.div`
   ${VstackLayout};
   gap: 10px;
-  animation: ${fadeIn} 0.3s ease-in-out;
+  animation: ${fadeIn} 0.2s ease-in-out;
   will-change: opacity, transform;
 
   @media ${Tablet} {

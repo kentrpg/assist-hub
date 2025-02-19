@@ -1,26 +1,21 @@
+import { CleanAutofill } from "@/styles/effect";
+import { FontFamily, NotoSansTC } from "@/fonts";
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
   html, body {
     width: 100%;
-    height: 100dvh;
-  }
-
-  #__next {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+    min-height: 100dvh;
   }
 
   *, *::before, *::after {
     box-sizing: border-box;
-    border: none;
-    outline: none;
-    padding: 0;
     margin: 0;
+    padding: 0;
   }
-
+  
   body {
+    ${FontFamily};
     line-height: 1.5;
   }
 
@@ -28,18 +23,35 @@ const GlobalStyle = createGlobalStyle`
     list-style: none;
   }
 
-  a, button, input {
-    cursor: pointer;
+  select {
+    appearance: none;
   }
 
-  a {
-    display: inline-block;
-    text-decoration: none;
+  address {
+    font-style: normal;
+    unicode-bidi: normal;
   }
 
-  // cursor override
+  button, input, select, textarea {
+    border: none;
+    outline: none;
+    border-radius: 0;
+    line-height: inherit;
+  }
+
   h1, h2, h3, h4, h5, h6, div, span, p {
     cursor: default;
+  }
+
+  input {
+    &[type="checkbox"], &[type="radio"], &[type="date"] {
+      cursor: pointer;
+      appearance: none;
+    }
+
+    &:-webkit-autofill {
+      ${CleanAutofill};
+    }
   }
 
   a, label, button, select, textarea {
@@ -47,6 +59,23 @@ const GlobalStyle = createGlobalStyle`
     & * {
       cursor: pointer;
     }
+  }
+
+  input,
+  button,
+  p,
+  span,
+  a,
+  textarea,
+  select {
+    ${NotoSansTC};
+  }
+
+  a {
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+    appearance: none;
   }
 `;
 

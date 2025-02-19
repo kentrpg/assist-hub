@@ -171,11 +171,8 @@ const Header = ({ isAuthenticated, isLoading }: HeaderProps) => {
               所有輔具
             </NavLink>
             <NavLink
-              href="#"
-              onClick={() => {
-                handleNavLinkClick();
-                return false;
-              }}
+              href="/faq"
+              onClick={handleNavLinkClick}
               $active={router.pathname === "/faq"}
             >
               常見問題

@@ -25,6 +25,10 @@ export type IsDisabled = {
   $isDisabled: boolean;
 };
 
+export type IsOpen = {
+  $isOpen: boolean;
+};
+
 // styled component prop
 
 export type Autofill = {

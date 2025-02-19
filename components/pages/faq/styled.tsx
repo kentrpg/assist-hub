@@ -8,7 +8,11 @@ import styled from "styled-components";
 export const Header = styled.h1`
   text-align: center;
   ${H1};
-  margin-bottom: 70px;
+  margin-bottom: 40px;
+
+  @media ${Tablet} {
+    margin-bottom: 70px;
+  }
 `;
 
 export const Main = styled.div`
@@ -74,11 +78,15 @@ export const Question = styled.div`
 `;
 
 export const Title = styled.h2`
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 400;
   color: ${({ theme }) => theme.colors.textPrimary};
   border-bottom: 2px solid ${({ theme }) => theme.colors.grey100};
   padding-bottom: 20px;
+
+  @media ${Tablet} {
+    font-size: 28px;
+  }
 `;
 
 export const QuestionList = styled.div`

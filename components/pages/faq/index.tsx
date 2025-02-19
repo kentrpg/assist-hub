@@ -1,4 +1,4 @@
-import { type FC, useState } from "react";
+import { type FC, useState, useRef, createRef, RefObject } from "react";
 import { Container1164 as Container } from "@/styles/container";
 import {
   Main,
@@ -73,8 +73,19 @@ const faqData: SectionType[] = [
   },
 ];
 
+type SectionRefs = {
+  [key: string]: RefObject<HTMLDivElement>;
+};
+
 const Faq: FC = () => {
   const [openQuestions, setOpenQuestions] = useState<number[]>([]);
+  
+  const sectionRefs = useRef<SectionRefs>(
+    faqData.reduce((acc, section) => ({
+      ...acc,
+      [section.id]: createRef<HTMLDivElement>(),
+    }), {})
+  );
 
   const toggleQuestion = (questionId: number) => {
     setOpenQuestions((prev) =>
@@ -85,9 +96,9 @@ const Faq: FC = () => {
   };
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+    const targetRef = sectionRefs.current[sectionId];
+    if (targetRef.current) {
+      targetRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -98,7 +109,10 @@ const Faq: FC = () => {
         <Navigation>
           <CategoryList>
             {faqData.map((section) => (
-              <CategoryItem key={section.id} onClick={() => scrollToSection(section.id)}>
+              <CategoryItem 
+                key={section.id} 
+                onClick={() => scrollToSection(section.id)}
+              >
                 {section.title}
               </CategoryItem>
             ))}
@@ -106,7 +120,11 @@ const Faq: FC = () => {
         </Navigation>
         <Content>
           {faqData.map((section) => (
-            <Question key={section.id} id={section.id}>
+            <Question 
+              key={section.id} 
+              id={section.id}
+              ref={sectionRefs.current[section.id]}
+            >
               <Title>{section.title}</Title>
               <QuestionList>
                 {section.questions.map((item) => (
@@ -118,7 +136,9 @@ const Faq: FC = () => {
                         <MdAdd size={24} />
                       </ToggleIcon>
                     </QuestionHeader>
-                    <QuestionContent $isOpen={openQuestions.includes(item.id)}>{item.answer}</QuestionContent>
+                    <QuestionContent $isOpen={openQuestions.includes(item.id)}>
+                      {item.answer}
+                    </QuestionContent>
                   </QuestionItem>
                 ))}
               </QuestionList>

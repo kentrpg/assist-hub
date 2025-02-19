@@ -2,7 +2,6 @@ import { chineseTextStyle } from "@/helpers/format/textFormatting";
 import { RoundedFull } from "@/styles/borderRadius";
 import { Desktop, Mobile, Tablet } from "@/styles/container";
 import { H1 } from "@/styles/typography";
-import { IsOpen } from "@/types/uiProps";
 import styled from "styled-components";
 
 export const Header = styled.h1`
@@ -94,23 +93,11 @@ export const QuestionList = styled.div`
   flex-direction: column;
 `;
 
-export const QuestionItem = styled.div`
-  padding: 10px 0;
-
-  @media ${Tablet} {
-    padding: 20px 0;
-  }
-`;
-
 export const QuestionHeader = styled.div`
   display: flex;
   align-items: center;
   padding: 10px 0;
-
-  &,
-  & > * {
-    cursor: pointer;
-  }
+  gap: 0;
 
   @media ${Mobile} {
     gap: 40px;
@@ -123,9 +110,15 @@ export const QuestionBadge = styled.div`
   text-align: center;
   ${RoundedFull};
   background-color: ${({ theme }) => theme.colors.primary};
-  color: white;
+  color: ${({ theme }) => theme.colors.white};
+  transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
   font-size: 20px;
   font-weight: 400;
+
+  ${QuestionHeader}:hover & {
+    background-color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.primary};
+  }
 
   @media ${Mobile} {
     width: 50px;
@@ -146,29 +139,50 @@ export const QuestionTitle = styled.h3`
   }
 `;
 
-export const ToggleIcon = styled.div<IsOpen>`
+export const ToggleIcon = styled.div`
+  color: ${({ theme }) => theme.colors.primary};
   font-size: 0;
   padding: 6px;
-  transform: ${({ $isOpen }) => ($isOpen ? "rotate(90deg)" : "none")};
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.18s ease-in-out;
+
+  input:checked ~ div & {
+    transform: rotate(90deg);
+  }
 
   @media ${Mobile} {
     padding: 13px;
   }
 `;
 
-export const QuestionContent = styled.div<IsOpen>`
-  max-height: ${({ $isOpen }) => ($isOpen ? "1000px" : "0")};
-  opacity: ${({ $isOpen }) => ($isOpen ? "1" : "0")};
-  margin-top: ${({ $isOpen }) => ($isOpen ? "16px" : "0")};
-  margin-left: 49px;
-  margin-right: 26px;
-  transition: all 0.3s ease-in-out;
+export const QuestionItem = styled.label`
+  padding: 10px 0;
+
+  @media ${Tablet} {
+    padding: 20px 0;
+  }
+`;
+
+export const HiddenCheckbox = styled.input`
+  display: none;
+`;
+
+export const QuestionBody = styled.div`
   ${chineseTextStyle};
-  font-size: 16px;
-  color: ${({ theme }) => theme.colors.textSecondary};
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.25s ease, padding 0.35s ease;
+  padding: 0 16px 0 50px;
+
+  input:checked + div + & {
+    max-height: 200px;
+    padding: 0 16px 0 50px;
+  }
 
   @media ${Mobile} {
-    margin-left: 90px;
+    padding: 0 16px 0 90px;
+
+    input:checked + div + & {
+      padding: 4px 16px 4px 90px;
+    }
   }
 `;

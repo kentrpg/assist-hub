@@ -254,37 +254,6 @@ export const RentalSummaryAmount = styled.span`
   }
 `;
 
-export const RentalGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: end;
-  gap: 12px;
-
-  > * {
-    white-space: nowrap;
-  }
-
-  @media ${Mobile} {
-    gap: 20px;
-  }
-
-  @media ${Mobile} {
-    flex-direction: row;
-    align-items: center;
-  }
-`;
-
-export const RentalSummaryAmount = styled.span`
-  text-align: end;
-  font-size: 16px;
-  font-weight: 700;
-  color: ${({ theme }) => theme.colors.textPrimary};
-
-  @media ${Mobile} {
-    font-size: 18px;
-  }
-`;
-
 export const Rental = styled.div`
   display: flex;
   justify-content: space-between;

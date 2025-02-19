@@ -67,7 +67,7 @@ export const BannerContent = styled.div`
   row-gap: 16px;
   @media (${Mobile}) {
     top: 40px;
-    row-gap: 32px;
+    row-gap: 24px;
   }
   @media (${Tablet}) {
     position: static;
@@ -80,9 +80,12 @@ export const BannerContent = styled.div`
 `;
 
 export const BannerTitle = styled.h1`
-  font-size: 40px;
+  font-size: 34px;
   color: #08204d;
   font-weight: 500;
+  @media (min-width: 650px) {
+    font-size: 40px;
+  }
 `;
 
 export const BannerDes = styled.h5`

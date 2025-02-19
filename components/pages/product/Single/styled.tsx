@@ -145,12 +145,9 @@ export const InquiryIcon = styled.div`
   background-image: url(${productPath}/accessible.svg);
   background-size: contain;
   background-repeat: no-repeat;
-  display: none;
-  @media (${Tablet}) {
-    display: block;
-    width: 27px;
-    height: 27px;
-  }
+  display: block;
+  width: 27px;
+  height: 27px;
 `;
 
 export const InquiryBtn = styled.button`
@@ -188,7 +185,9 @@ export const InquiryBtn = styled.button`
     width: 100%;
     color: transparent;
     text-shadow: 0 0 0 rgba(0, 0, 0, 0);
-    transition: color 0.5s ease, max-width 0.5s ease;
+    transition:
+      color 0.5s ease,
+      max-width 0.5s ease;
     span {
       display: none;
     }
@@ -462,7 +461,9 @@ export const CarouselItem = styled.div`
   position: relative;
   overflow: hidden;
 
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   &:hover {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
     outline: 1px solid #103f99;
@@ -475,6 +476,7 @@ export const CarouselItem = styled.div`
 
 export const CarouselBtn = styled.button`
   position: absolute;
+  color: black;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -489,7 +491,9 @@ export const CarouselBtn = styled.button`
   font-weight: 500;
   cursor: pointer;
   opacity: 1;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 
   &:hover {
     background-color: #b28f12;

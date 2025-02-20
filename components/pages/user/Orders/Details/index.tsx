@@ -90,10 +90,6 @@ const Details: React.FC<DetailsProps> = ({ onBack, orderData }) => {
   const validShipping: "delivery" | "store" =
     shipping === "delivery" || shipping === "store" ? shipping : "delivery";
 
-  const shippingFee = shipping === "delivery" ? (fee ?? 0) : 0;
-  const totalAmount =
-    (quantity ?? 0) * ((rent ?? 0) + (deposit ?? 0)) + shippingFee;
-
   return (
     <DetailContainer>
       <BackToOrders>
@@ -119,7 +115,7 @@ const Details: React.FC<DetailsProps> = ({ onBack, orderData }) => {
               </Created>
             </Info>
           </Major>
-          <Total>{formatCurrency(totalAmount)}</Total>
+          <Total>{formatCurrency(finalAmount)}</Total>
         </Header>
         <Main>
           {shipping === "delivery" ? (

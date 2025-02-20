@@ -20,6 +20,7 @@ import {
 } from "./styled";
 import { MdAdd } from "react-icons/md";
 import { faqData, SectionRefs } from "./data";
+
 const Faq: React.FC = () => {
   const sectionRefs = useRef<SectionRefs>(
     faqData.reduce(
@@ -65,7 +66,7 @@ const Faq: React.FC = () => {
               <QuestionList>
                 {section.questions.map((item) => (
                   <QuestionItem key={item.id}>
-                    <HiddenCheckbox type="checkbox" id={item.id.toString()} />
+                    <HiddenCheckbox type="checkbox" />
                     <QuestionHeader>
                       <QuestionBadge>Q</QuestionBadge>
                       <QuestionTitle>{item.question}</QuestionTitle>

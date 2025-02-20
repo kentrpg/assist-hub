@@ -2,6 +2,7 @@ import { chineseTextStyle } from "@/helpers/format/textFormatting";
 import { RoundedFull } from "@/styles/borderRadius";
 import { Desktop, Mobile, Tablet } from "@/styles/container";
 import { H1 } from "@/styles/typography";
+import { IsActive } from "@/types/uiProps";
 import styled from "styled-components";
 
 export const Header = styled.h1`
@@ -93,6 +94,14 @@ export const QuestionList = styled.div`
   flex-direction: column;
 `;
 
+export const QuestionItem = styled.label`
+  padding: 10px 0;
+
+  @media ${Tablet} {
+    padding: 20px 0;
+  }
+`;
+
 export const QuestionHeader = styled.div`
   display: flex;
   align-items: center;
@@ -115,7 +124,7 @@ export const QuestionBadge = styled.div`
   font-size: 20px;
   font-weight: 400;
 
-  ${QuestionHeader}:hover & {
+  ${QuestionItem}:hover & {
     background-color: ${({ theme }) => theme.colors.white};
     color: ${({ theme }) => theme.colors.primary};
   }
@@ -145,20 +154,12 @@ export const ToggleIcon = styled.div`
   padding: 6px;
   transition: transform 0.18s ease-in-out;
 
-  input:checked ~ div & {
+  input:checked ~ ${QuestionHeader} > & {
     transform: rotate(90deg);
   }
 
   @media ${Mobile} {
     padding: 13px;
-  }
-`;
-
-export const QuestionItem = styled.label`
-  padding: 10px 0;
-
-  @media ${Tablet} {
-    padding: 20px 0;
   }
 `;
 
@@ -170,19 +171,15 @@ export const QuestionBody = styled.div`
   ${chineseTextStyle};
   overflow: hidden;
   max-height: 0;
-  transition: max-height 0.25s ease, padding 0.35s ease;
+  transition: max-height 0.25s ease;
   padding: 0 16px 0 50px;
 
-  input:checked + div + & {
+  input:checked ~ &:last-child {
+    transition: max-height 0.8s ease;
     max-height: 200px;
-    padding: 0 16px 0 50px;
   }
 
   @media ${Mobile} {
     padding: 0 16px 0 90px;
-
-    input:checked + div + & {
-      padding: 4px 16px 4px 90px;
-    }
   }
 `;

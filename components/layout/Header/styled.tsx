@@ -15,7 +15,7 @@ import {
 import { SecondaryIconButton } from "@/styles/link";
 import { DropdownTransition } from "@/styles/effect";
 import { DropdownHeight, DropdownWidth } from "@/constants/layout";
-import { Padding } from "@/types/uiProps";
+import { IsActive, Padding } from "@/types/uiProps";
 
 export const Wrapper = styled.header`
   width: 100%;
@@ -89,12 +89,12 @@ export const NavLinks = styled.div`
   }
 `;
 
-export const NavLink = styled(NextLink)<{ $active?: boolean }>`
+export const NavLink = styled(NextLink)<IsActive>`
   position: relative;
   font-size: 16px;
   font-weight: 700;
-  color: ${({ $active, theme }) =>
-    $active ? theme.colors.primary : theme.colors.textPrimary};
+  color: ${({ theme, $isActive }) =>
+    $isActive ? theme.colors.primary : theme.colors.textPrimary};
   padding: 8px;
   ${NavLinkHover};
 
@@ -109,10 +109,9 @@ export const NavLink = styled(NextLink)<{ $active?: boolean }>`
     position: absolute;
     bottom: 0;
     left: 0;
-    width: ${({ $active }) => ($active ? "100%" : "0")};
+    width: ${({ $isActive }) => ($isActive ? "100%" : "0")};
     height: 1px;
     background-color: ${({ theme }) => theme.colors.primary};
-    /* transition: width 0.3s ease-in-out; */
   }
 `;
 

@@ -70,9 +70,6 @@ const ListItem: React.FC<ListProps> = ({ order, onViewDetails }) => {
     },
   } = order;
 
-  const shippingFee = shipping === "delivery" ? fee : 0;
-  const totalAmount = quantity * (rent + deposit) + shippingFee;
-
   const handleViewDetails = () => {
     setIsLoading(true);
     onViewDetails();
@@ -101,7 +98,7 @@ const ListItem: React.FC<ListProps> = ({ order, onViewDetails }) => {
             <Created>訂單時間 {formatDate(createdDate)}</Created>
           </Info>
         </Major>
-        <Total>{formatCurrency(totalAmount)}</Total>
+        <Total>{formatCurrency(finalAmount)}</Total>
       </Header>
       <Main>
         {shipping === "delivery" ? (

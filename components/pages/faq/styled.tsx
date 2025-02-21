@@ -3,6 +3,7 @@ import { RoundedFull } from "@/styles/borderRadius";
 import { Desktop, Mobile, Tablet } from "@/styles/container";
 import { H1 } from "@/styles/typography";
 import { IsActive } from "@/types/uiProps";
+import Link from "next/link";
 import styled from "styled-components";
 
 export const Header = styled.h1`
@@ -41,7 +42,7 @@ export const Navigation = styled.div`
   }
 `;
 
-export const CategoryList = styled.ul`
+export const CategoryList = styled.nav`
   display: flex;
   flex-direction: row;
   gap: 24px;
@@ -51,7 +52,7 @@ export const CategoryList = styled.ul`
   }
 `;
 
-export const CategoryItem = styled.li<IsActive>`
+export const CategoryItem = styled(Link)<IsActive>`
   font-size: 16px;
   font-weight: ${({ $isActive }) => ($isActive ? 700 : 400)};
   color: ${({ theme, $isActive }) =>
@@ -176,7 +177,7 @@ export const QuestionBody = styled.div`
   ${chineseTextStyle};
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.2s ease-in-out;
+  transition: grid-template-rows 0.2s ease;
   padding: 0 16px 0 50px;
 
   input:checked ~ & {

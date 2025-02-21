@@ -35,17 +35,7 @@ const Faq: React.FC = () => {
     ),
   );
 
-  const scrollToSection = (sectionId: string) => {
-    const targetRef = sectionRefs.current[sectionId];
-    if (targetRef.current) {
-      targetRef.current.scrollIntoView({ behavior: "smooth" });
-
-      router.replace(router.pathname, `/faq/${sectionId}`, {
-        shallow: true,
-        scroll: false,
-      });
-    }
-  };
+  const currentHash = router.asPath.split("#")[1] || "";
 
   return (
     <Container>
@@ -56,8 +46,9 @@ const Faq: React.FC = () => {
             {faqData.map((section) => (
               <CategoryItem
                 key={section.id}
-                onClick={() => scrollToSection(section.id)}
-                $isActive={router.asPath === `/faq/${section.id}`}
+                href={`/faq/#${section.id}`}
+                scroll={false}
+                $isActive={currentHash === section.id}
               >
                 {section.title}
               </CategoryItem>

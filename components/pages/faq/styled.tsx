@@ -18,7 +18,7 @@ export const Header = styled.h1`
 export const Main = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 36px;
 
   @media ${Tablet} {
     flex-direction: row;
@@ -43,14 +43,19 @@ export const Navigation = styled.div`
 
 export const CategoryList = styled.ul`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 24px;
+
+  @media ${Tablet} {
+    flex-direction: column;
+  }
 `;
 
-export const CategoryItem = styled.li`
+export const CategoryItem = styled.li<IsActive>`
   font-size: 16px;
-  font-weight: 400;
-  color: ${({ theme }) => theme.colors.grey100};
+  font-weight: ${({ $isActive }) => ($isActive ? 700 : 400)};
+  color: ${({ theme, $isActive }) =>
+    $isActive ? theme.colors.primary : theme.colors.grey100};
   cursor: pointer;
   transition: color 0.1s ease-in-out, font-weight 0.2s ease-in-out;
 
@@ -169,17 +174,20 @@ export const HiddenCheckbox = styled.input`
 
 export const QuestionBody = styled.div`
   ${chineseTextStyle};
-  overflow: hidden;
-  max-height: 0;
-  transition: max-height 0.25s ease;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.2s ease-in-out;
   padding: 0 16px 0 50px;
 
-  input:checked ~ &:last-child {
-    transition: max-height 0.8s ease;
-    max-height: 200px;
+  input:checked ~ & {
+    grid-template-rows: 1fr;
   }
 
   @media ${Mobile} {
     padding: 0 16px 0 90px;
   }
+`;
+
+export const QuestionContent = styled.p`
+  overflow: hidden;
 `;

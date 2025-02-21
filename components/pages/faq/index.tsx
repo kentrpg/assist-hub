@@ -17,11 +17,14 @@ import {
   HiddenCheckbox,
   QuestionBody,
   QuestionItem,
+  QuestionContent,
 } from "./styled";
 import { MdAdd } from "react-icons/md";
 import { faqData, SectionRefs } from "./data";
+import { useRouter } from "next/router";
 
 const Faq: React.FC = () => {
+  const router = useRouter();
   const sectionRefs = useRef<SectionRefs>(
     faqData.reduce(
       (acc, section) => ({
@@ -36,6 +39,11 @@ const Faq: React.FC = () => {
     const targetRef = sectionRefs.current[sectionId];
     if (targetRef.current) {
       targetRef.current.scrollIntoView({ behavior: "smooth" });
+
+      router.replace(router.pathname, `/faq/${sectionId}`, {
+        shallow: true,
+        scroll: false,
+      });
     }
   };
 
@@ -49,6 +57,7 @@ const Faq: React.FC = () => {
               <CategoryItem
                 key={section.id}
                 onClick={() => scrollToSection(section.id)}
+                $isActive={router.asPath === `/faq/${section.id}`}
               >
                 {section.title}
               </CategoryItem>
@@ -74,7 +83,9 @@ const Faq: React.FC = () => {
                         <MdAdd size={24} />
                       </ToggleIcon>
                     </QuestionHeader>
-                    <QuestionBody>{item.answer}</QuestionBody>
+                    <QuestionBody>
+                      <QuestionContent>{item.answer}</QuestionContent>
+                    </QuestionBody>
                   </QuestionItem>
                 ))}
               </QuestionList>

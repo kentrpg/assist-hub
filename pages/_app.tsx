@@ -14,11 +14,18 @@ export default function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const handleStart = () => setLoading(true);
-    const handleComplete = () => {
-      setLoading(false);
-      if (typeof window !== "undefined") {
-        window.scrollTo({ top: 0, behavior: "smooth" }); // 滾動到頂部
+    const handleStart = (_: string, { shallow }: { shallow: boolean }) => {
+      if (!shallow) {
+        setLoading(true);
+      }
+    };
+
+    const handleComplete = (_: string, { shallow }: { shallow: boolean }) => {
+      if (!shallow) {
+        setLoading(false);
+        if (typeof window !== "undefined") {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
       }
     };
 

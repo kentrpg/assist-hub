@@ -157,7 +157,7 @@ const Header = ({ isAuthenticated, isLoading }: HeaderProps) => {
             {!isTablet && (
               <NavLink
                 href="/"
-                $active={router.pathname === "/"}
+                $isActive={router.pathname === "/"}
                 onClick={handleNavLinkClick}
               >
                 首頁
@@ -165,7 +165,7 @@ const Header = ({ isAuthenticated, isLoading }: HeaderProps) => {
             )}
             <NavLink
               href="/product"
-              $active={router.pathname === "/product"}
+              $isActive={router.pathname === "/product"}
               onClick={handleNavLinkClick}
             >
               所有輔具
@@ -173,13 +173,13 @@ const Header = ({ isAuthenticated, isLoading }: HeaderProps) => {
             <NavLink
               href="/faq"
               onClick={handleNavLinkClick}
-              $active={router.pathname === "/faq"}
+              $isActive={router.pathname === "/faq"}
             >
               常見問題
             </NavLink>
             <NavLink
               href="/inquiry"
-              $active={router.pathname === "/inquiry"}
+              $isActive={router.pathname === "/inquiry"}
               onClick={handleNavLinkClick}
             >
               詢問單

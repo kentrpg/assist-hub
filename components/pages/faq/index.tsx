@@ -1,4 +1,4 @@
-import { useRef, createRef } from "react";
+import { useRef, createRef, useEffect, useState } from "react";
 import { Container1164 as Container } from "@/styles/container";
 import {
   Main,
@@ -17,11 +17,19 @@ import {
   HiddenCheckbox,
   QuestionBody,
   QuestionItem,
+  QuestionContent,
 } from "./styled";
 import { MdAdd } from "react-icons/md";
 import { faqData, SectionRefs } from "./data";
+import { useRouter } from "next/router";
+import Link from "next/link";
+
 const Faq: React.FC = () => {
-  const sectionRefs = useRef<SectionRefs>(
+  const router = useRouter();
+  const [activeSectionId, setActiveSectionId] = useState(
+    router.asPath.split("#")[1] || "",
+  );
+  const faqSectionRefs = useRef<SectionRefs>(
     faqData.reduce(
       (acc, section) => ({
         ...acc,
@@ -31,10 +39,26 @@ const Faq: React.FC = () => {
     ),
   );
 
-  const scrollToSection = (sectionId: string) => {
-    const targetRef = sectionRefs.current[sectionId];
+  useEffect(() => {
+    const hash = router.asPath.split("#")[1];
+    if (!hash) return;
+
+    const targetRef = faqSectionRefs.current[hash]?.current;
+    if (targetRef) {
+      setTimeout(() => targetRef.scrollIntoView({ behavior: "smooth" }), 100);
+    }
+  }, []);
+
+  const handleSectionClick = (sectionId: string, e: React.MouseEvent) => {
+    e.preventDefault();
+
+    const targetRef = faqSectionRefs.current[sectionId];
     if (targetRef.current) {
       targetRef.current.scrollIntoView({ behavior: "smooth" });
+
+      const newPath = `${router.pathname}#${sectionId}`;
+      window.history.replaceState(null, "", newPath);
+      setActiveSectionId(sectionId);
     }
   };
 
@@ -45,12 +69,19 @@ const Faq: React.FC = () => {
         <Navigation>
           <CategoryList>
             {faqData.map((section) => (
-              <CategoryItem
+              <Link
                 key={section.id}
-                onClick={() => scrollToSection(section.id)}
+                href={`/faq/#${section.id}`}
+                legacyBehavior
+                passHref
               >
-                {section.title}
-              </CategoryItem>
+                <CategoryItem
+                  onClick={(e) => handleSectionClick(section.id, e)}
+                  $isActive={activeSectionId === section.id}
+                >
+                  {section.title}
+                </CategoryItem>
+              </Link>
             ))}
           </CategoryList>
         </Navigation>
@@ -59,13 +90,13 @@ const Faq: React.FC = () => {
             <Question
               key={section.id}
               id={section.id}
-              ref={sectionRefs.current[section.id]}
+              ref={faqSectionRefs.current[section.id]}
             >
               <Title>{section.title}</Title>
               <QuestionList>
                 {section.questions.map((item) => (
                   <QuestionItem key={item.id}>
-                    <HiddenCheckbox type="checkbox" id={item.id.toString()} />
+                    <HiddenCheckbox type="checkbox" />
                     <QuestionHeader>
                       <QuestionBadge>Q</QuestionBadge>
                       <QuestionTitle>{item.question}</QuestionTitle>
@@ -73,7 +104,9 @@ const Faq: React.FC = () => {
                         <MdAdd size={24} />
                       </ToggleIcon>
                     </QuestionHeader>
-                    <QuestionBody>{item.answer}</QuestionBody>
+                    <QuestionBody>
+                      <QuestionContent>{item.answer}</QuestionContent>
+                    </QuestionBody>
                   </QuestionItem>
                 ))}
               </QuestionList>

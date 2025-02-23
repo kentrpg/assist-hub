@@ -2,6 +2,7 @@ import { chineseTextStyle } from "@/helpers/format/textFormatting";
 import { RoundedFull } from "@/styles/borderRadius";
 import { Desktop, Mobile, Tablet } from "@/styles/container";
 import { H1 } from "@/styles/typography";
+import { IsActive } from "@/types/uiProps";
 import styled from "styled-components";
 
 export const Header = styled.h1`
@@ -17,7 +18,7 @@ export const Header = styled.h1`
 export const Main = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 36px;
 
   @media ${Tablet} {
     flex-direction: row;
@@ -40,22 +41,29 @@ export const Navigation = styled.div`
   }
 `;
 
-export const CategoryList = styled.ul`
+export const CategoryList = styled.nav`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 24px;
+
+  @media ${Tablet} {
+    flex-direction: column;
+  }
 `;
 
-export const CategoryItem = styled.li`
+export const CategoryItem = styled.a<IsActive>`
   font-size: 16px;
-  font-weight: 400;
-  color: ${({ theme }) => theme.colors.grey100};
+  font-weight: ${({ $isActive }) => ($isActive ? 700 : 400)};
+  color: ${({ theme, $isActive }) =>
+    $isActive ? theme.colors.primary : theme.colors.grey100};
   cursor: pointer;
   transition: color 0.1s ease-in-out, font-weight 0.2s ease-in-out;
 
-  &:hover {
-    color: ${({ theme }) => theme.colors.primary};
-    font-weight: 700;
+  @media (hover: hover) {
+    &:hover {
+      color: ${({ theme }) => theme.colors.primary};
+      font-weight: 700;
+    }
   }
 `;
 
@@ -93,6 +101,18 @@ export const QuestionList = styled.div`
   flex-direction: column;
 `;
 
+export const QuestionItem = styled.label`
+  padding: 10px 0;
+
+  @media ${Tablet} {
+    padding: 20px 0;
+  }
+`;
+
+export const HiddenCheckbox = styled.input`
+  display: none;
+`;
+
 export const QuestionHeader = styled.div`
   display: flex;
   align-items: center;
@@ -115,9 +135,11 @@ export const QuestionBadge = styled.div`
   font-size: 20px;
   font-weight: 400;
 
-  ${QuestionHeader}:hover & {
-    background-color: ${({ theme }) => theme.colors.white};
-    color: ${({ theme }) => theme.colors.primary};
+  @media (hover: hover) {
+    ${QuestionItem}:hover & {
+      background-color: ${({ theme }) => theme.colors.white};
+      color: ${({ theme }) => theme.colors.primary};
+    }
   }
 
   @media ${Mobile} {
@@ -145,7 +167,7 @@ export const ToggleIcon = styled.div`
   padding: 6px;
   transition: transform 0.18s ease-in-out;
 
-  input:checked ~ div & {
+  input:checked ~ ${QuestionHeader} > & {
     transform: rotate(90deg);
   }
 
@@ -154,35 +176,22 @@ export const ToggleIcon = styled.div`
   }
 `;
 
-export const QuestionItem = styled.label`
-  padding: 10px 0;
-
-  @media ${Tablet} {
-    padding: 20px 0;
-  }
-`;
-
-export const HiddenCheckbox = styled.input`
-  display: none;
-`;
-
 export const QuestionBody = styled.div`
   ${chineseTextStyle};
-  overflow: hidden;
-  max-height: 0;
-  transition: max-height 0.25s ease, padding 0.35s ease;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.15s ease;
   padding: 0 16px 0 50px;
 
-  input:checked + div + & {
-    max-height: 200px;
-    padding: 0 16px 0 50px;
+  input:checked ~ & {
+    grid-template-rows: 1fr;
   }
 
   @media ${Mobile} {
     padding: 0 16px 0 90px;
-
-    input:checked + div + & {
-      padding: 4px 16px 4px 90px;
-    }
   }
+`;
+
+export const QuestionContent = styled.p`
+  overflow: hidden;
 `;

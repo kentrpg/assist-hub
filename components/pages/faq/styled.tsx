@@ -3,7 +3,6 @@ import { RoundedFull } from "@/styles/borderRadius";
 import { Desktop, Mobile, Tablet } from "@/styles/container";
 import { H1 } from "@/styles/typography";
 import { IsActive } from "@/types/uiProps";
-import Link from "next/link";
 import styled from "styled-components";
 
 export const Header = styled.h1`
@@ -52,7 +51,7 @@ export const CategoryList = styled.nav`
   }
 `;
 
-export const CategoryItem = styled(Link)<IsActive>`
+export const CategoryItem = styled.a<IsActive>`
   font-size: 16px;
   font-weight: ${({ $isActive }) => ($isActive ? 700 : 400)};
   color: ${({ theme, $isActive }) =>
@@ -60,9 +59,11 @@ export const CategoryItem = styled(Link)<IsActive>`
   cursor: pointer;
   transition: color 0.1s ease-in-out, font-weight 0.2s ease-in-out;
 
-  &:hover {
-    color: ${({ theme }) => theme.colors.primary};
-    font-weight: 700;
+  @media (hover: hover) {
+    &:hover {
+      color: ${({ theme }) => theme.colors.primary};
+      font-weight: 700;
+    }
   }
 `;
 
@@ -108,6 +109,10 @@ export const QuestionItem = styled.label`
   }
 `;
 
+export const HiddenCheckbox = styled.input`
+  display: none;
+`;
+
 export const QuestionHeader = styled.div`
   display: flex;
   align-items: center;
@@ -130,9 +135,11 @@ export const QuestionBadge = styled.div`
   font-size: 20px;
   font-weight: 400;
 
-  ${QuestionItem}:hover & {
-    background-color: ${({ theme }) => theme.colors.white};
-    color: ${({ theme }) => theme.colors.primary};
+  @media (hover: hover) {
+    ${QuestionItem}:hover & {
+      background-color: ${({ theme }) => theme.colors.white};
+      color: ${({ theme }) => theme.colors.primary};
+    }
   }
 
   @media ${Mobile} {
@@ -169,15 +176,11 @@ export const ToggleIcon = styled.div`
   }
 `;
 
-export const HiddenCheckbox = styled.input`
-  display: none;
-`;
-
 export const QuestionBody = styled.div`
   ${chineseTextStyle};
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.2s ease;
+  transition: grid-template-rows 0.15s ease;
   padding: 0 16px 0 50px;
 
   input:checked ~ & {

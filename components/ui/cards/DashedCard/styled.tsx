@@ -2,10 +2,11 @@ import styled from "styled-components";
 import { CardRadius } from "@/styles/borderRadius";
 import { SecondaryIconButton } from "@/styles/link";
 import { StretchedLink } from "@/components/ui/StretchedLink";
+import { Tablet } from "@/styles/container";
 
 export const YellowDashedCard = styled.div`
   position: relative;
-  flex: 0 0 calc((100% - 2 * 24px) / 3);
+  grid-row: span 3;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,6 +48,10 @@ export const YellowDashedCard = styled.div`
   background-position: 0 0, 0 0, 100% 0, 0 100%;
   background-repeat: no-repeat;
   padding: 60px 10px;
+
+  @media ${Tablet} {
+    padding: 0;
+  }
 `;
 
 export const ActionButton = styled(SecondaryIconButton)`

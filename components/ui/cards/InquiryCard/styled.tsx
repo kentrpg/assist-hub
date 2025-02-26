@@ -7,15 +7,16 @@ import styled from "styled-components";
 import { singleEllipsis } from "@/styles/singleEllipsis";
 
 export const Card = styled.div<Color>`
-  height: 100%;
-  flex: 0 0 calc((100% - 2 * 24px) / 3);
-  border: 1px solid transparent;
+  display: grid;
+  gap: 12px;
   ${CardRadius};
-  background: ${({ theme, $color }) =>
-    $color ? theme.colors[`${$color}Light`] : theme.colors.white};
-  border-color: ${({ theme, $color }) => theme.colors[$color]};
+  background: ${({ theme, $color }) => theme.colors[`${$color}Light`]};
+  border: 1px solid ${({ theme, $color }) => theme.colors[$color]};
   padding: 20px;
+
   @media ${Tablet} {
+    grid-template-rows: subgrid;
+    grid-row: span 3;
     text-align: center;
   }
   @media ${Desktop} {
@@ -23,58 +24,44 @@ export const Card = styled.div<Color>`
   }
 `;
 
-export const FlexFullHeight = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
-export const CardContent = styled.div`
-  /* flex: 0 0 auto; */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  column-gap: 8px;
-`;
-
-export const ContentWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-
-  @media ${Tablet} {
-    flex-direction: column;
-    align-items: center;
-  }
-  @media ${Desktop} {
-    flex-direction: row;
-  }
-`;
-
-export const DetailsWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  flex-grow: 1;
-  gap: 10px;
-`;
-
-export const Details = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const Name = styled.h3`
-  ${singleEllipsis(1)};
+export const Title = styled.h3`
+  text-align: left;
   color: ${({ theme }) => theme.colors.textPrimary};
   font-size: 18px;
-  margin-bottom: 8px;
 
   @media ${Tablet} {
     ${H6};
   }
   @media ${Desktop} {
     margin-bottom: 0px;
+  }
+`;
+
+export const Content = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+
+  @media ${Tablet} {
+    flex-direction: column;
+  }
+  @media ${Desktop} {
+    flex-direction: row;
+  }
+`;
+
+export const Info = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+  gap: 10px;
+
+  @media ${Tablet} {
+    align-items: center;
+  }
+  @media ${Desktop} {
+    align-items: normal;
   }
 `;
 
@@ -125,14 +112,10 @@ export const Image = styled.img`
 `;
 
 export const Features = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
   border-top: 1px solid ${({ theme }) => theme.colors.textMuted};
-  margin-top: 16px;
-  padding: 16px 0 0;
+  padding-top: 16px;
 
-  @media ${Mobile} {
+  @media ${Tablet} {
     padding: 16px 0;
   }
 `;
@@ -146,7 +129,6 @@ export const FeatureTitle = styled.h4`
 
 export const FeatureGroup = styled.ul`
   display: flex;
-  flex: 1;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
@@ -168,7 +150,8 @@ export const Feature = styled.li`
   font-size: 14px;
   font-weight: 400;
   color: ${({ theme }) => theme.colors.textSecondary};
-  @media ${Tablet} {
+
+  @media ${Desktop} {
     gap: 16px;
   }
 `;

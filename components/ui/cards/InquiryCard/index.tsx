@@ -1,18 +1,15 @@
 import { InquiryCheck } from "@/utils/react-icons/CheckIcon";
 import {
   Card,
-  CardContent,
-  ContentWrapper,
+  Content,
   Description,
-  Details,
-  DetailsWrapper,
+  Info,
   Feature,
   FeatureGroup,
   Features,
   FeatureTitle,
-  FlexFullHeight,
   Image,
-  Name,
+  Title,
   Price,
   PriceUnit,
 } from "./styled";
@@ -29,38 +26,34 @@ const InquiryCard = ({
   imgAlt,
   features,
 }: InquiryProduct) => {
+  const defaultedFeatures = features.length ? features : ["店家推薦"];
+
   return (
     <Card $color={$color}>
-      <FlexFullHeight>
-        <CardContent>
-          <Name>{name}</Name>
-          <ContentWrapper>
-            <DetailsWrapper>
-              <Details>
-                <Description>{description}</Description>
-              </Details>
-              <Price>
-                {formatCurrency(rent)}
-                <PriceUnit>/月</PriceUnit>
-              </Price>
-            </DetailsWrapper>
-            <ImageWrapper>
-              <Image src={imgSrc} alt={imgAlt} />
-            </ImageWrapper>
-          </ContentWrapper>
-        </CardContent>
-        <Features>
-          <FeatureTitle>輔具特色</FeatureTitle>
-          <FeatureGroup>
-            {features.map((feature, index) => (
-              <Feature key={index}>
-                <InquiryCheck />
-                {feature}
-              </Feature>
-            ))}
-          </FeatureGroup>
-        </Features>
-      </FlexFullHeight>
+      <Title>{name}</Title>
+      <Content>
+        <Info>
+          <Description>{description}</Description>
+          <Price>
+            {formatCurrency(rent)}
+            <PriceUnit>/月</PriceUnit>
+          </Price>
+        </Info>
+        <ImageWrapper>
+          <Image src={imgSrc} alt={imgAlt} />
+        </ImageWrapper>
+      </Content>
+      <Features>
+        <FeatureTitle>輔具特色</FeatureTitle>
+        <FeatureGroup>
+          {defaultedFeatures.map((feature, index) => (
+            <Feature key={index}>
+              <InquiryCheck />
+              {feature}
+            </Feature>
+          ))}
+        </FeatureGroup>
+      </Features>
     </Card>
   );
 };

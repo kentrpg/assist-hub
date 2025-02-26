@@ -64,28 +64,25 @@ export const DeleteButton = styled.button`
 
 export const CardGroup = styled.div`
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
   gap: 24px;
   margin: 20px 0;
 
-  & > * {
-    height: 100%;
-    display: flex;
-  }
-
-  & > div > div {
-    flex: 1;
-  }
-
   @media ${Tablet} {
     grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto auto;
   }
 `;
 
-export const Card = styled.div`
+export const CardWrapper = styled.div`
   position: relative;
-  display: flex;
-  flex-direction: column;
+
+  @media ${Tablet} {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 3;
+  }
 `;
 
 export const AccentButton = styled(PrimaryButton)`

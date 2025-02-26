@@ -7,7 +7,7 @@ import {
   CardGroup,
   AccentButton,
   ActionAssessment,
-  Card,
+  CardWrapper,
   DeleteButton,
 } from "../styled";
 import { MdClose } from "react-icons/md";
@@ -101,7 +101,7 @@ const DraftInquiry = () => {
         {isLoading && <Loading />}
         <CardGroup>
           {inquiryBar.map(({ id, ...props }, index) => (
-            <Card key={id}>
+            <CardWrapper key={id}>
               <DeleteButton onClick={() => handleDelete(id)}>
                 <MdClose size={24} />
               </DeleteButton>
@@ -110,7 +110,7 @@ const DraftInquiry = () => {
                 {...props}
                 $color={inquiryCardColors[index]}
               />
-            </Card>
+            </CardWrapper>
           ))}
           {cardSlots.map((_, index) => (
             <DashedCard key={`empty-${index}`} />

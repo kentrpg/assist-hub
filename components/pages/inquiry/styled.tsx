@@ -75,10 +75,14 @@ export const CardGroup = styled.div`
   }
 `;
 
-export const Card = styled.div`
+export const CardWrapper = styled.div`
   position: relative;
-  display: flex;
-  flex-direction: column;
+
+  @media ${Tablet} {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 3;
+  }
 `;
 
 export const AccentButton = styled(PrimaryButton)`

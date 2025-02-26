@@ -10,7 +10,6 @@ import {
   FeatureGroup,
   Features,
   FeatureTitle,
-  FlexFullHeight,
   Image,
   Name,
   Price,
@@ -31,36 +30,34 @@ const InquiryCard = ({
 }: InquiryProduct) => {
   return (
     <Card $color={$color}>
-      <FlexFullHeight>
-        <CardContent>
-          <Name>{name}</Name>
-          <ContentWrapper>
-            <DetailsWrapper>
-              <Details>
-                <Description>{description}</Description>
-              </Details>
-              <Price>
-                {formatCurrency(rent)}
-                <PriceUnit>/月</PriceUnit>
-              </Price>
-            </DetailsWrapper>
-            <ImageWrapper>
-              <Image src={imgSrc} alt={imgAlt} />
-            </ImageWrapper>
-          </ContentWrapper>
-        </CardContent>
-        <Features>
-          <FeatureTitle>輔具特色</FeatureTitle>
-          <FeatureGroup>
-            {features.map((feature, index) => (
-              <Feature key={index}>
-                <InquiryCheck />
-                {feature}
-              </Feature>
-            ))}
-          </FeatureGroup>
-        </Features>
-      </FlexFullHeight>
+      <CardContent>
+        <Name>{name}</Name>
+        <ContentWrapper>
+          <DetailsWrapper>
+            <Details>
+              <Description>{description}</Description>
+            </Details>
+            <Price>
+              {formatCurrency(rent)}
+              <PriceUnit>/月</PriceUnit>
+            </Price>
+          </DetailsWrapper>
+          <ImageWrapper>
+            <Image src={imgSrc} alt={imgAlt} />
+          </ImageWrapper>
+        </ContentWrapper>
+      </CardContent>
+      <Features>
+        <FeatureTitle>輔具特色</FeatureTitle>
+        <FeatureGroup>
+          {features.map((feature, index) => (
+            <Feature key={index}>
+              <InquiryCheck />
+              {feature}
+            </Feature>
+          ))}
+        </FeatureGroup>
+      </Features>
     </Card>
   );
 };

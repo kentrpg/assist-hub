@@ -26,6 +26,8 @@ const InquiryCard = ({
   imgAlt,
   features,
 }: InquiryProduct) => {
+  const defaultedFeatures = features.length ? features : ["店家推薦"];
+
   return (
     <Card $color={$color}>
       <Title>{name}</Title>
@@ -44,7 +46,7 @@ const InquiryCard = ({
       <Features>
         <FeatureTitle>輔具特色</FeatureTitle>
         <FeatureGroup>
-          {features.map((feature, index) => (
+          {defaultedFeatures.map((feature, index) => (
             <Feature key={index}>
               <InquiryCheck />
               {feature}

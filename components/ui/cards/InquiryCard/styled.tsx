@@ -10,8 +10,7 @@ export const Card = styled.div<Color>`
   display: grid;
   gap: 12px;
   ${CardRadius};
-  background: ${({ theme, $color }) =>
-    $color ? theme.colors[`${$color}Light`] : theme.colors.white};
+  background: ${({ theme, $color }) => theme.colors[`${$color}Light`]};
   border: 1px solid ${({ theme, $color }) => theme.colors[$color]};
   padding: 20px;
 

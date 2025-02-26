@@ -1,17 +1,15 @@
 import { InquiryCheck } from "@/utils/react-icons/CheckIcon";
 import {
   Card,
-  CardContent,
-  ContentWrapper,
+  Content,
   Description,
-  Details,
-  DetailsWrapper,
+  Info,
   Feature,
   FeatureGroup,
   Features,
   FeatureTitle,
   Image,
-  Name,
+  Title,
   Price,
   PriceUnit,
 } from "./styled";
@@ -30,23 +28,19 @@ const InquiryCard = ({
 }: InquiryProduct) => {
   return (
     <Card $color={$color}>
-      <CardContent>
-        <Name>{name}</Name>
-        <ContentWrapper>
-          <DetailsWrapper>
-            <Details>
-              <Description>{description}</Description>
-            </Details>
-            <Price>
-              {formatCurrency(rent)}
-              <PriceUnit>/月</PriceUnit>
-            </Price>
-          </DetailsWrapper>
-          <ImageWrapper>
-            <Image src={imgSrc} alt={imgAlt} />
-          </ImageWrapper>
-        </ContentWrapper>
-      </CardContent>
+      <Title>{name}</Title>
+      <Content>
+        <Info>
+          <Description>{description}</Description>
+          <Price>
+            {formatCurrency(rent)}
+            <PriceUnit>/月</PriceUnit>
+          </Price>
+        </Info>
+        <ImageWrapper>
+          <Image src={imgSrc} alt={imgAlt} />
+        </ImageWrapper>
+      </Content>
       <Features>
         <FeatureTitle>輔具特色</FeatureTitle>
         <FeatureGroup>

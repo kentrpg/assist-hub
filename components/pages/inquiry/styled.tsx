@@ -71,7 +71,7 @@ export const CardGroup = styled.div`
 
   @media ${Tablet} {
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto auto;
+    grid-template-rows: auto auto auto;
   }
 `;
 

@@ -8,16 +8,16 @@ import { singleEllipsis } from "@/styles/singleEllipsis";
 
 export const Card = styled.div<Color>`
   display: grid;
+  gap: 12px;
   ${CardRadius};
   background: ${({ theme, $color }) =>
     $color ? theme.colors[`${$color}Light`] : theme.colors.white};
   border: 1px solid ${({ theme, $color }) => theme.colors[$color]};
   padding: 20px;
-  gap: 16px;
 
   @media ${Tablet} {
     grid-template-rows: subgrid;
-    grid-row: span 2;
+    grid-row: span 3;
     text-align: center;
   }
   @media ${Desktop} {
@@ -25,50 +25,44 @@ export const Card = styled.div<Color>`
   }
 `;
 
-export const CardContent = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const ContentWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  flex: 1;
-
-  @media ${Tablet} {
-    flex-direction: column;
-    align-items: center;
-  }
-  @media ${Desktop} {
-    flex-direction: row;
-  }
-`;
-
-export const DetailsWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 10px;
-`;
-
-export const Details = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const Name = styled.h3`
-  flex: 1;
+export const Title = styled.h3`
   text-align: left;
   color: ${({ theme }) => theme.colors.textPrimary};
   font-size: 18px;
-  margin-bottom: 8px;
 
   @media ${Tablet} {
     ${H6};
   }
   @media ${Desktop} {
     margin-bottom: 0px;
+  }
+`;
+
+export const Content = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+
+  @media ${Tablet} {
+    flex-direction: column;
+  }
+  @media ${Desktop} {
+    flex-direction: row;
+  }
+`;
+
+export const Info = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+  gap: 10px;
+
+  @media ${Tablet} {
+    align-items: center;
+  }
+  @media ${Desktop} {
+    align-items: normal;
   }
 `;
 

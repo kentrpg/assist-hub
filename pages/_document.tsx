@@ -42,7 +42,9 @@ export default class MyDocument extends Document {
     return (
       <Html lang="zh-Hant">
         {/* 未來擴充全域 meta 標籤、字體或其他標籤 */}
-        <Head />
+        <Head>
+          <link rel="icon" href="/favicon.ico" sizes="any" />
+        </Head>
         <body>
           <Main />
           <NextScript />

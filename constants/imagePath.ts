@@ -10,6 +10,7 @@ export const userPath = `${basePath}/user`;
 export const layoutPath = `${basePath}/layout`;
 export const productPath = `${basePath}/product`;
 export const homePath = `${basePath}/home`;
+export const opengraphPath = `${basePath}/opengraph`;
 
 export const footerWaveImages = {
   mobile: `${layoutPath}/wave375.webp`,

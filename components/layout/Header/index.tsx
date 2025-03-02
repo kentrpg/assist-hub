@@ -25,7 +25,7 @@ import {
   DropdownItemButton,
   DropdownItemLink,
 } from "./styled";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useBreakpoint } from "@/hooks/useBreakpoint";
 import { breakpoints } from "@/styles/container";
 import { ImageLink as LogoWrapperDesktop } from "@/components/ui/images";
@@ -42,6 +42,18 @@ const Header = ({ isAuthenticated, isLoading }: HeaderProps) => {
   const [isDropdownToggled, setIsDropdownToggled] = useState(false);
   const { openToast, Toast } = useToast();
 
+  useEffect(() => {
+    const handleRouteChangeStart = () => {
+      setMenuOpen(false);
+    };
+
+    router.events.on("routeChangeStart", handleRouteChangeStart);
+
+    return () => {
+      router.events.off("routeChangeStart", handleRouteChangeStart);
+    };
+  }, [router]);
+
   const triggerButtonRef = useOutsideClick(
     () => setIsDropdownToggled(false),
     true,
@@ -49,10 +61,6 @@ const Header = ({ isAuthenticated, isLoading }: HeaderProps) => {
 
   const toggleMenu = () => {
     setMenuOpen((prevState) => !prevState);
-  };
-
-  const handleNavLinkClick = () => {
-    setMenuOpen(false);
   };
 
   const toggleAccountMenu = () => {
@@ -155,33 +163,17 @@ const Header = ({ isAuthenticated, isLoading }: HeaderProps) => {
           )}
           <NavLinks>
             {!isTablet && (
-              <NavLink
-                href="/"
-                $isActive={router.pathname === "/"}
-                onClick={handleNavLinkClick}
-              >
+              <NavLink href="/" $isActive={router.pathname === "/"}>
                 首頁
               </NavLink>
             )}
-            <NavLink
-              href="/product"
-              $isActive={router.pathname === "/product"}
-              onClick={handleNavLinkClick}
-            >
+            <NavLink href="/product" $isActive={router.pathname === "/product"}>
               所有輔具
             </NavLink>
-            <NavLink
-              href="/faq"
-              onClick={handleNavLinkClick}
-              $isActive={router.pathname === "/faq"}
-            >
+            <NavLink href="/faq" $isActive={router.pathname === "/faq"}>
               常見問題
             </NavLink>
-            <NavLink
-              href="/inquiry"
-              $isActive={router.pathname === "/inquiry"}
-              onClick={handleNavLinkClick}
-            >
+            <NavLink href="/inquiry" $isActive={router.pathname === "/inquiry"}>
               詢問單
             </NavLink>
           </NavLinks>

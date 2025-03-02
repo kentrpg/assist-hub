@@ -32,6 +32,13 @@ const InquiryBar: React.FC = () => {
     .fill(null)
     .map((_, index) => index + inquiryBar.length + 1);
 
+  const handleInquiryBtnClick = () => {
+    if (router.pathname === "/inquiry") {
+      return;
+    }
+    router.push("/inquiry");
+  };
+
   // 如果沒有任何商品，則不顯示 Bar
   if (inquiryBar.length === 0) return null;
 
@@ -71,22 +78,7 @@ const InquiryBar: React.FC = () => {
           </EmptyCircle>
         ))}
       </Products>
-      <Link href={`/inquiry`} passHref>
-        <InquiryBtn
-          onClick={(e) => {
-            e.preventDefault(); // 阻止瀏覽器的默認行為（例如新分頁開啟）
-            if (!e.metaKey && !e.ctrlKey) {
-              // 確保不是通過 `Ctrl` 或 `Cmd` 點擊，然後執行路由跳轉
-              router.push("/inquiry");
-            }
-          }}
-          onContextMenu={(e) => {
-            e.preventDefault(); // 阻止右鍵功能
-          }}
-        >
-          前往詢問單
-        </InquiryBtn>
-      </Link>
+      <InquiryBtn onClick={handleInquiryBtnClick}>前往詢問單</InquiryBtn>
     </BarContainer>
   );
 };

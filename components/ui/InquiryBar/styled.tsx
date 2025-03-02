@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { Container1344 } from "@/styles/container";
 import { Tablet, Desktop, Mobile, ExtraLarge } from "@/styles/container";
+import { buttonSizes } from "../buttons/Layout";
+import { ButtonScaleUp } from "@/styles/effect";
+import { PrimaryButton } from "@/components/ui/buttons/Layout";
 
 export const BarContainer = styled(Container1344)`
   display: flex;
@@ -19,9 +22,7 @@ export const BarContainer = styled(Container1344)`
   transform: translateX(-50%);
   background-color: white;
   z-index: 1000;
-  transition:
-    transform 0.3s ease,
-    bottom 0.3s ease;
+  transition: transform 0.3s ease, bottom 0.3s ease;
   @media ${Mobile} {
     padding: 20px 24px;
   }
@@ -80,24 +81,15 @@ export const Img = styled.img`
   }
 `;
 
-export const InquiryBtn = styled.button`
-  white-space: nowrap;
-  border-radius: 30px;
-  background-color: #103f99;
-  color: white;
-  padding: 10px 40px;
-  font-size: 18px;
-  height: 47px;
-  font-weight: 500;
-  transition:
-    background-color 0.3s ease,
-    box-shadow 0.3s ease,
+export const InquiryBtn = styled(PrimaryButton)`
+  ${buttonSizes.xlarge};
+  transition: background-color 0.3s ease, box-shadow 0.3s ease,
     transform 0.3s ease;
 
   &:hover {
-    background-color: #0b2c6b;
+    background-color: ${({ theme }) => theme.colors.primaryHover};
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transform: scale(1.1);
+    ${ButtonScaleUp};
   }
 `;
 
@@ -109,9 +101,7 @@ export const IconWrapper = styled.div`
   background-color: #103f99;
   width: 24px;
   height: 24px;
-  transition:
-    background-color 0.3s ease,
-    box-shadow 0.2s ease,
+  transition: background-color 0.3s ease, box-shadow 0.2s ease,
     transform 0.2s ease;
 
   &:hover {

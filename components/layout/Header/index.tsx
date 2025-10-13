@@ -34,9 +34,13 @@ import { HeaderProps } from "./data";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { useToast } from "@/components/ui/Toast";
 import { layoutPath } from "@/constants/imagePath";
+import { useSelector } from "react-redux";
+import { RootState } from "@/utils/redux/store";
 
-const Header = ({ isAuthenticated, isLoading }: HeaderProps) => {
+const Header = () => {
   const router = useRouter();
+  const user = useSelector((state: RootState) => state.user);
+  const isAuthenticated = user.name !== "";
   const [menuOpen, setMenuOpen] = useState(false);
   const isTablet = useBreakpoint(breakpoints.md);
   const [isDropdownToggled, setIsDropdownToggled] = useState(false);
@@ -195,7 +199,7 @@ const Header = ({ isAuthenticated, isLoading }: HeaderProps) => {
                 onClick={toggleAccountMenu}
                 $padding="14px 25px"
               >
-                {!isLoading && <Avatar />}
+                <Avatar />
                 <ButtonText>我的帳戶</ButtonText>
               </TriggerButton>
             ) : (

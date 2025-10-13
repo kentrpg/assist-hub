@@ -11,6 +11,7 @@
 !.yarn/versions
 pnpm-lock.yaml
 .cursorrules
+.claude/
 
 # testing
 /coverage

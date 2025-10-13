@@ -24,6 +24,7 @@ import { ErrorMessage } from "@/utils/react-hook-form/FormError/styled";
 import { BASE_URL } from "@/constants/environment";
 import { hasError, isEmptyData } from "@/helpers/api/status";
 import { default_redirect, routes } from "@/constants/routes";
+import { useRouter } from "next/router";
 
 const Signin: React.FC = () => {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ const Signin: React.FC = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const theme = useTheme();
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<SignInInputs> = async (data) => {
     const { remember, ...signinData } = data;
@@ -70,7 +72,7 @@ const Signin: React.FC = () => {
     switch (result.statusCode) {
       case 200:
         !isEmptyData(result) && dispatch(setUser(result.data));
-        window.location.href = redirectPath;
+        router.push(redirectPath);
         break;
       case 404:
         setError("email", { type: "manual", message: "帳號或密碼錯誤" });
@@ -118,7 +120,9 @@ const Signin: React.FC = () => {
             $color="textMuted"
             label="記住我"
           />
-          <InfoLink href="#">忘記密碼</InfoLink>
+          <InfoLink href="#" prefetch={false}>
+            忘記密碼
+          </InfoLink>
         </Remember>
         {errors.root?.serverError && (
           <ErrorMessage $margin="4px">

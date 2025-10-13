@@ -4,7 +4,7 @@ import getProfile from "@/utils/api/member/getProfile";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Result>
+  res: NextApiResponse<Result>,
 ) {
   const result = await getProfile(req.cookies.token || "");
   return res.json(result);

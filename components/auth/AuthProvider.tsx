@@ -1,54 +1,57 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setUser } from "@/utils/redux/slices/user";
-import { RootState } from "@/utils/redux/store";
 import Layout from "@/components/layout/Layout";
 import Loading from "@/components/ui/Loading";
-import { hasError, isEmptyData, isValid } from "@/helpers/api/status";
-import AdminLayout from "@/components/pages/admin/Layout";
+import { hasError, isEmptyData } from "@/helpers/api/status";
 
 type AuthProviderProps = {
   children: React.ReactNode;
 };
 
+let didInit = false;
+
 export default function AuthProvider({ children }: AuthProviderProps) {
   const [isLoading, setIsLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isUserDataLoading, setIsUserDataLoading] = useState(true);
   const router = useRouter();
   const isAdminPage = router.pathname.startsWith("/admin");
   const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      const res = await fetch("/api/getToken");
-      const result = await res.json();
-
-      isValid(result) && setIsAuthenticated(result.status);
-      await setUserData();
+    if (didInit) {
       setIsLoading(false);
-    };
+      return;
+    }
 
-    const setUserData = async () => {
-      setIsUserDataLoading(true);
-      if (user.name !== "") return;
+    didInit = true;
+    let ignore = false;
 
-      const res = await fetch("/api/member/getProfile");
-      const result = await res.json();
+    const fetchUserProfile = async () => {
+      try {
+        const res = await fetch("/api/member/getProfile");
+        const result = await res.json();
 
-      if (hasError(result) || isEmptyData(result)) {
-        setIsAuthenticated(false);
-        return;
+        if (ignore || hasError(result) || isEmptyData(result)) {
+          console.log("fetchUserProfile failed", result);
+          return;
+        }
+
+        console.log("fetchUserProfile success", result);
+        dispatch(setUser(result.data));
+      } finally {
+        if (!ignore) {
+          setIsLoading(false);
+        }
       }
-
-      dispatch(setUser(result.data));
-      setIsUserDataLoading(false);
     };
 
-    checkAuth();
-  }, []);
+    fetchUserProfile();
+
+    return () => {
+      ignore = true;
+    };
+  }, [dispatch]);
 
   if (isLoading) {
     return <Loading />;
@@ -58,9 +61,5 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     return <>{children}</>;
   }
 
-  return (
-    <Layout isAuthenticated={isAuthenticated} isLoading={isUserDataLoading}>
-      {children}
-    </Layout>
-  );
+  return <Layout>{children}</Layout>;
 }

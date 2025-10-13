@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 
 import Head from "next/head";
 import Register from "@/components/pages/auth/Register";
@@ -7,23 +7,19 @@ import { MainWrapper } from "@/styles/wrappers";
 
 const allowedMethods = ["signin", "register"];
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = allowedMethods.map((method) => ({
-    params: { method },
-  }));
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const methodParam = params?.method;
+  const method = Array.isArray(methodParam) ? methodParam[0] : methodParam;
+  console.log("getServerSideProps auth/[method]", method, methodParam);
+  console.log("method", method, !method || !allowedMethods.includes(method));
 
-  return {
-    paths,
-    fallback: false,
-  };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const method = params?.method as string;
-
-  if (!allowedMethods.includes(method)) {
+  if (!method || !allowedMethods.includes(method)) {
+    console.log("redirect to /auth/signin");
     return {
-      notFound: true,
+      redirect: {
+        destination: "/auth/signin",
+        permanent: false,
+      },
     };
   }
 
@@ -35,6 +31,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 const Auth = ({ method }: { method: string }) => {
+  console.log("Auth page", method);
   return (
     <>
       <Head>
